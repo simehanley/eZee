@@ -2,6 +2,8 @@ package com.ezee.model.entity;
 
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.joda.time.LocalDate;
 
 /**
  * 
@@ -51,25 +51,29 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 	private boolean paid = Boolean.FALSE;
 
 	@Column(name = "DUE_DATE")
-	private LocalDate dateDue;
+	private Date dateDue;
 
 	@Column(name = "PAYMENT_DATE")
-	private LocalDate datePaid;
+	private Date datePaid;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "EZEE_INVOICE_TO_DEBT_AGE_MAPPING", joinColumns = @JoinColumn(name = "INVOICE_ID") , inverseJoinColumns = @JoinColumn(name = "DEBT_AGE_RULE_ID") )
+	private EzeeDebtAgeRule ageRule;
 
 	public EzeeInvoice() {
 		super();
 	}
 
 	public EzeeInvoice(final String invoiceId, final EzeePayee payee, final EzeePayer payer, final double amount,
-			final double tax, final String description, final boolean taxable, final boolean paid,
-			final LocalDate dateDue, final LocalDate datePaid, final LocalDate created, final LocalDate updated) {
+			final double tax, final String description, final boolean taxable, final boolean paid, final Date dateDue,
+			final Date datePaid, final Date created, final Date updated) {
 		this(NULL_ID, invoiceId, payee, payer, amount, tax, description, taxable, paid, dateDue, datePaid, created,
 				updated);
 	}
 
 	public EzeeInvoice(final Long id, final String invoiceId, final EzeePayee payee, final EzeePayer payer,
 			final double amount, final double tax, final String description, final boolean taxable, final boolean paid,
-			final LocalDate dateDue, final LocalDate datePaid, final LocalDate created, final LocalDate updated) {
+			final Date dateDue, final Date datePaid, final Date created, final Date updated) {
 		super(id, created, updated);
 		this.invoiceId = invoiceId;
 		this.payee = payee;
@@ -115,11 +119,11 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 		return paid;
 	}
 
-	public final LocalDate getDateDue() {
+	public final Date getDateDue() {
 		return dateDue;
 	}
 
-	public final LocalDate getDatePaid() {
+	public final Date getDatePaid() {
 		return datePaid;
 	}
 
@@ -155,11 +159,11 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 		this.paid = paid;
 	}
 
-	public void setDateDue(LocalDate dateDue) {
+	public void setDateDue(Date dateDue) {
 		this.dateDue = dateDue;
 	}
 
-	public void setDatePaid(LocalDate datePaid) {
+	public void setDatePaid(Date datePaid) {
 		this.datePaid = datePaid;
 	}
 }

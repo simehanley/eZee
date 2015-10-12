@@ -2,10 +2,10 @@ package com.ezee.model.entity;
 
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-
-import org.joda.time.LocalDate;
 
 /**
  * 
@@ -47,13 +47,13 @@ public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity {
 
 	public EzeeFinancialEntity(final String name, final String addressLineOne, final String addressLineTwo,
 			final String suburb, final String city, final String state, final String postcode, final String phone,
-			final LocalDate created, final LocalDate updated) {
+			final Date created, final Date updated) {
 		this(NULL_ID, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, created, updated);
 	}
 
 	public EzeeFinancialEntity(final Long id, final String name, final String addressLineOne,
 			final String addressLineTwo, final String suburb, final String city, final String state,
-			final String postcode, final String phone, final LocalDate created, final LocalDate updated) {
+			final String postcode, final String phone, final Date created, final Date updated) {
 		super(id, created, updated);
 		this.name = name;
 		this.addressLineOne = addressLineOne;
