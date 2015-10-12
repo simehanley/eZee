@@ -41,7 +41,10 @@ public class EzeeBaseDao<T extends EzeeDatabaseEntity> extends HibernateDaoSuppo
 
 	@SuppressWarnings("unchecked")
 	public List<T> get(final Class<T> entity) {
-		DetachedCriteria criteria = DetachedCriteria.forClass(entity);
-		return (List<T>) getHibernateTemplate().findByCriteria(criteria);
+		if (entity != null) {
+			DetachedCriteria criteria = DetachedCriteria.forClass(entity);
+			return (List<T>) getHibernateTemplate().findByCriteria(criteria);
+		}
+		return null;
 	}
 }
