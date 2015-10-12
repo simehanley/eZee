@@ -3,14 +3,9 @@ package com.ezee.client;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ezee.model.entity.EzeePayer;
+import com.ezee.client.main.EzeeInvoiceMain;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 /**
  * 
@@ -21,41 +16,18 @@ public class EzeeInvoiceWeb implements EntryPoint {
 
 	private static final Logger log = Logger.getLogger("EzeeInvoiceWeb");
 
-	private final EzeeInvoiceServiceAsync invoiceService = GWT.create(EzeeInvoiceService.class);
-
 	public void onModuleLoad() {
-		final Button sendButton = new Button("PAYER");
-		sendButton.addStyleName("sendButton");
+		init();
+	}
 
-		RootPanel.get("sendButtonContainer").add(sendButton);
+	private void init() {
+		initMain();
+	}
 
-		// Create a handler for the sendButton and nameField
-		class MyHandler implements ClickHandler {
-			public void onClick(ClickEvent event) {
-				sendNameToServer();
-			}
-
-			private void sendNameToServer() {
-				sendButton.setEnabled(false);
-				invoiceService.getPayer("TEST", new AsyncCallback<EzeePayer>() {
-
-					@Override
-					public void onFailure(Throwable throwable) {
-						log.log(Level.SEVERE, "Failed to get payer.", throwable);
-						sendButton.setEnabled(true);
-					}
-
-					@Override
-					public void onSuccess(EzeePayer result) {
-						log.log(Level.SEVERE, "Successfully retrieved payer.");
-						sendButton.setEnabled(true);
-					}
-				});
-			}
-		}
-
-		// Add a handler to send the name to the server
-		MyHandler handler = new MyHandler();
-		sendButton.addClickHandler(handler);
+	private void initMain() {
+		log.log(Level.INFO, "Initialising application.");
+		EzeeInvoiceMain main = new EzeeInvoiceMain();
+		RootLayoutPanel.get().add(main);
+		log.log(Level.INFO, "Application initialised.");
 	}
 }
