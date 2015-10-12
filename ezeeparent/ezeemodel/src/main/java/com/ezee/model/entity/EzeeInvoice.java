@@ -2,6 +2,7 @@ package com.ezee.model.entity;
 
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
+import java.beans.Transient;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -85,6 +86,11 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 		this.paid = paid;
 		this.dateDue = dateDue;
 		this.datePaid = datePaid;
+	}
+
+	@Transient
+	public final double getInvoiceAmount() {
+		return getAmount() + getTax();
 	}
 
 	public final String getInvoiceId() {

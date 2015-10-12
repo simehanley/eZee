@@ -3,6 +3,7 @@ package com.ezee.dao;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -21,6 +22,7 @@ public class EzeeBaseDao<T extends EzeeDatabaseEntity> extends HibernateDaoSuppo
 	@Transactional(propagation = REQUIRED, readOnly = false)
 	public void save(final T entity) {
 		if (entity != null) {
+			entity.setUpdated(new Date());
 			getHibernateTemplate().saveOrUpdate(entity);
 		}
 	}
