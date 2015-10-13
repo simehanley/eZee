@@ -7,5 +7,5 @@ import com.ezee.model.entity.EzeePayee;
  * @author siborg
  *
  */
-public class EzeePayeeDao extends EzeeBaseDao<EzeePayee> {
+public interface EzeePayeeDao extends EzeeBaseDao<EzeePayee> {
 }
