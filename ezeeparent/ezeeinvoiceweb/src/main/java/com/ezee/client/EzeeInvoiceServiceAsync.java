@@ -10,5 +10,5 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface EzeeInvoiceServiceAsync {
 
-	void getPayer(String name, AsyncCallback<EzeePayer> payer);
+	void getPayer(long id, AsyncCallback<EzeePayer> payer);
 }

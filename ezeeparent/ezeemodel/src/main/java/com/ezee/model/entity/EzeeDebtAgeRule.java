@@ -25,7 +25,7 @@ public class EzeeDebtAgeRule extends EzeeDatabaseEntity {
 	@Column(name = "EOM")
 	private boolean eom = Boolean.TRUE;
 
-	@Column(name = "INTERVAL")
+	@Column(name = "INTERVAL_LENGTH")
 	private int interval;
 
 	@Enumerated(EnumType.STRING)

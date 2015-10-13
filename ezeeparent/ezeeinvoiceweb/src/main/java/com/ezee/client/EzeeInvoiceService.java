@@ -12,5 +12,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("invoiceservice")
 public interface EzeeInvoiceService extends RemoteService {
 
-	EzeePayer getPayer(String name);
+	EzeePayer getPayer(long id);
 }

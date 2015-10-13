@@ -30,11 +30,11 @@ public class EzeePayment extends EzeeDatabaseEntity {
 
 	private static final long serialVersionUID = 607584929798342009L;
 
-	@Column(name = "DATE")
+	@Column(name = "PAYMENT_DATE")
 	private Date paymentDate;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "TYPE")
+	@Column(name = "PAYMENT_TYPE")
 	private EzeePaymentType type;
 
 	@Column(name = "DESCRIPTION")
