@@ -58,10 +58,13 @@ public class EzeePayment extends EzeeDatabaseEntity {
 
 	@Transient
 	public final double getPaymentAmount() {
+		double payment = ZERO_DBL;
 		if (!isEmpty(invoices)) {
-			return invoices.stream().mapToDouble(invoice -> invoice.getInvoiceAmount()).sum();
+			for (EzeeInvoice invoice : invoices) {
+				payment += invoice.getInvoiceAmount();
+			}
 		}
-		return ZERO_DBL;
+		return payment;
 	}
 
 	public final Date getPaymentDate() {

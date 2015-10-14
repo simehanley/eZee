@@ -1,6 +1,8 @@
 package com.ezee.client;
 
-import com.ezee.model.entity.EzeePayer;
+import java.util.List;
+
+import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -12,5 +14,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("invoiceservice")
 public interface EzeeInvoiceService extends RemoteService {
 
-	EzeePayer getPayer(long id);
+	<T extends EzeeDatabaseEntity> List<T> getEntities(String clazz);
 }

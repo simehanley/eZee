@@ -1,58 +1,40 @@
 package com.ezee.client.main;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import com.ezee.client.EzeeInvoiceServiceAsync;
-import com.ezee.model.entity.EzeePayer;
+import com.ezee.client.grid.EzeeHasGrid;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * 
- * @author siborg
- *
- */
 public class EzeeInvoiceMain extends Composite {
 
-	private static final Logger log = Logger.getLogger("EzeeInvoiceMain");
-
-	private EzeeInvoiceServiceAsync service;
-
 	private static EzeeInvoiceMainUiBinder uiBinder = GWT.create(EzeeInvoiceMainUiBinder.class);
+
+	@UiField
+	TabLayoutPanel tab;
 
 	interface EzeeInvoiceMainUiBinder extends UiBinder<Widget, EzeeInvoiceMain> {
 	}
 
 	public EzeeInvoiceMain() {
 		initWidget(uiBinder.createAndBindUi(this));
+		addTabHandler();
 	}
 
-	public final EzeeInvoiceServiceAsync getService() {
-		return service;
+	public final TabLayoutPanel getTab() {
+		return tab;
 	}
 
-	public void setService(EzeeInvoiceServiceAsync service) {
-		this.service = service;
-	}
-
-	@UiHandler("btnRefresh")
-	void onBtnRefreshClick(ClickEvent event) {
-		service.getPayer(1, new AsyncCallback<EzeePayer>() {
-
-			@Override
-			public void onSuccess(EzeePayer payer) {
-				log.log(Level.INFO, "Got payer with name '" + payer.getName() + "'.");
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				log.log(Level.SEVERE, "Error retrieving user.", caught);
+	private void addTabHandler() {
+		tab.addSelectionHandler(new SelectionHandler<Integer>() {
+			public void onSelection(SelectionEvent<Integer> event) {
+				int tabId = event.getSelectedItem();
+				EzeeHasGrid<?> grid = (EzeeHasGrid<?>) tab.getWidget(tabId);
+				grid.getGrid().redraw();
 			}
 		});
 	}

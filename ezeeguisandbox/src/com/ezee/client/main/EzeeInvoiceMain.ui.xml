@@ -1,37 +1,48 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style>
-	</ui:style>
+
+	<ui:with type="com.ezee.client.css.EzeeInvoiceDefaultResources" field="res" />
+
 	<g:DockLayoutPanel unit="EM">
-		<g:north size="8">
-			<g:DockLayoutPanel unit="EM" width="100%" height="100%">
-				<g:north size="5">
-					<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" width="100%" height="100%">
-						<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="100%" height="100%">
-							<g:HTML text="eZee Invoices" wordWrap="true" height="50%" />
-						</g:cell>
-					</g:HorizontalPanel>
-				</g:north>
-				<g:south size="3">
-					<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" width="100%" height="100%">
-						<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="500px"
-							height="100%">
-							<g:Label text="Tenant" width="55px" ui:field="lblTenant" horizontalAlignment="ALIGN_CENTER" />
-							<g:TextBox ui:field="txtTenant" />
-							<g:Label text="Premises" width="70px" ui:field="lblPremises" horizontalAlignment="ALIGN_CENTER" />
-							<g:TextBox ui:field="txtPremises" />
-							<g:Label text="Category" ui:field="lblCategory" width="70px" horizontalAlignment="ALIGN_CENTER" />
-							<g:TextBox ui:field="txtCategory" />
-							<g:Button text="Refresh" ui:field="btnRefresh" width="60px" />
-							<g:Button text="Save" ui:field="btnSave" width="60px" />
-							<g:Button text="E-mail" ui:field="btnEmail" width="60px" />
-							<g:Button text="Action" ui:field="btnToAction" width="60px" />
-							<g:CheckBox ui:field="chkShowInactive" />
-							<g:Label text="Show Inactive" width="100px" horizontalAlignment="ALIGN_CENTER" />
-						</g:HorizontalPanel>
-					</g:HorizontalPanel>
-				</g:south>
-			</g:DockLayoutPanel>
+		<g:north size="5">
+			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" title="header" height="100%" width="100%"
+				styleName="{res.css.header}">
+				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="100%" height="100%">
+					<g:HTML text="eZee Invoices" styleName="{res.css.headerLabel}"></g:HTML>
+				</g:cell>
+			</g:HorizontalPanel>
 		</g:north>
+		<g:south size="3">
+			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" title="footer" height="100%" width="100%"
+				styleName="{res.css.footer}">
+				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="100%" height="100%">
+					<g:HTML text="Provided by Haich + Gee Pty Ltd" styleName="{res.css.footerLabel}"></g:HTML>
+				</g:cell>
+			</g:HorizontalPanel>
+		</g:south>
+		<g:center>
+			<g:SplitLayoutPanel>
+				<g:west size="150">
+					<g:VerticalPanel height="100%" width="100%" styleName="{res.css.navigation}">
+						<g:AbsolutePanel height="100%">
+							<g:at top="10" left="10">
+								<g:Label text="Link 1 - TODO" width="130px" height="18px" styleName="{res.css.navigationLink}" />
+							</g:at>
+							<g:at top="38" left="10">
+								<g:Label text="Link 2 - TODO" width="130px" height="18px" styleName="{res.css.navigationLink}" />
+							</g:at>
+						</g:AbsolutePanel>
+					</g:VerticalPanel>
+				</g:west>
+				<g:center>
+					<g:DockLayoutPanel unit="EM">
+						<g:center>
+							<g:TabLayoutPanel barHeight="20" height="100%" width="100%" ui:field="tab" />
+						</g:center>
+					</g:DockLayoutPanel>
+				</g:center>
+			</g:SplitLayoutPanel>
+		</g:center>
 	</g:DockLayoutPanel>
+
 </ui:UiBinder> 

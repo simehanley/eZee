@@ -2,6 +2,7 @@ package com.ezee.server.cache;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -46,6 +47,10 @@ public class EzeeEntitiesCache {
 		loadEntities(daoFactory.getInvoiceDao(), EzeeInvoice.class);
 		loadEntities(daoFactory.getDebtAgeRuleDao(), EzeeDebtAgeRule.class);
 		log.info("Ezee entities cache fully initialised.");
+	}
+
+	public final <T extends EzeeDatabaseEntity> List<T> get(final Class<T> clazz) {
+		return new ArrayList<T>(getCache(clazz).values());
 	}
 
 	public final <T extends EzeeDatabaseEntity> T get(final long id, final Class<T> clazz) {

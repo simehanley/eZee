@@ -1,6 +1,8 @@
 package com.ezee.client;
 
-import com.ezee.model.entity.EzeePayer;
+import java.util.List;
+
+import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
@@ -10,5 +12,5 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface EzeeInvoiceServiceAsync {
 
-	void getPayer(long id, AsyncCallback<EzeePayer> payer);
+	<T extends EzeeDatabaseEntity> void getEntities(String clazz, AsyncCallback<List<T>> entities);
 }

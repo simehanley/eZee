@@ -4,12 +4,17 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 
 public class EzeeInvoiceMain extends Composite {
 
 	private static EzeeInvoiceMainUiBinder uiBinder = GWT.create(EzeeInvoiceMainUiBinder.class);
+
+	@UiField
+	TabLayoutPanel tab;
 
 	interface EzeeInvoiceMainUiBinder extends UiBinder<Widget, EzeeInvoiceMain> {
 	}
@@ -18,7 +23,7 @@ public class EzeeInvoiceMain extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	@UiHandler("btnRefresh")
-	void onBtnRefreshClick(ClickEvent event) {
+	public final TabLayoutPanel getTab() {
+		return tab;
 	}
 }

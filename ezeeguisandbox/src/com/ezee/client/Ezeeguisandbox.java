@@ -3,6 +3,7 @@ package com.ezee.client;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.ezee.client.css.EzeeInvoiceDefaultResources;
 import com.ezee.client.main.EzeeInvoiceMain;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -16,7 +17,12 @@ public class Ezeeguisandbox implements EntryPoint {
 	}
 
 	private void init() {
+		initResources();
 		initMain();
+	}
+
+	private void initResources() {
+		EzeeInvoiceDefaultResources.INSTANCE.css().ensureInjected();
 	}
 
 	private void initMain() {

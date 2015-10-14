@@ -27,10 +27,12 @@
 			<groupId>com.ezee</groupId>
 			<artifactId>ezeemodel</artifactId>
 			<version>${project.version}</version>
+			<classifier>sources</classifier>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.ezee</groupId>
-			<artifactId>ezeemodel</artifactId>
+			<artifactId>ezeecommon</artifactId>
 			<version>${project.version}</version>
 			<classifier>sources</classifier>
 			<scope>compile</scope>
