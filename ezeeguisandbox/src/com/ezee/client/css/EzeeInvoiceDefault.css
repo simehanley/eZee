@@ -1,0 +1,52 @@
+.lightgray {
+	background-color: #F8F8F8;
+}
+
+.lightblue {
+	background-color: #00CCFF;
+}
+
+.mediumblue {
+	background-color: #0066FF;
+}
+
+.green {
+	background-color: #009933;
+}
+
+.lightorange {
+	background-color: #FFCC33;
+}
+
+.header {
+	background-color: #6699CC;
+	border: 1px solid #6f7277;
+}
+
+.headerLabel {
+	font-weight: bold;
+	font-size: 30px;
+	color: white;
+}
+
+.footer {
+	background-color: #6699CC;
+	border: 1px solid #6f7277;
+}
+
+.footerLabel {
+	font-weight: bold;
+	font-size: 15px;
+	color: white;
+}
+
+.navigation {
+	background-color: #C8C8C8;
+	border: 1px solid #6f7277;
+}
+
+.navigationLink {
+	font-weight: bold;
+	color: white;
+	text-decoration: underline;
+}
