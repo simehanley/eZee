@@ -1,6 +1,7 @@
 package com.ezee.client.grid;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
@@ -18,6 +19,7 @@ public class EzeeInvoiceGrid<T> extends Composite {
 	}
 
 	public EzeeInvoiceGrid() {
+		grid.setMinimumTableWidth(500, Unit.PX);
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

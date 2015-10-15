@@ -8,5 +8,5 @@ import com.ezee.model.entity.EzeePayer;
  * @author siborg
  *
  */
-public class EzeePayerGridModel extends EzeeFinancialEntityGridModel<EzeePayer>{
+public class EzeePayerGridModel extends EzeeFinancialEntityGridModel<EzeePayer> {
 }
