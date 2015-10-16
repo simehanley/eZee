@@ -15,6 +15,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite implements EzeeHasGrid<T> {
@@ -33,6 +34,8 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite i
 
 	protected EzeeInvoiceServiceAsync service;
 
+	protected PopupPanel contextMenu;
+
 	interface EzeeGridUiBinder extends UiBinder<Widget, EzeeGrid<?>> {
 	}
 
@@ -50,6 +53,7 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite i
 	private void init() {
 		initGrid();
 		loadEntities();
+		initContextMenu();
 	}
 
 	protected void initGrid() {
@@ -79,4 +83,6 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite i
 	}
 
 	public abstract String getGridClass();
+
+	public abstract void initContextMenu();
 }

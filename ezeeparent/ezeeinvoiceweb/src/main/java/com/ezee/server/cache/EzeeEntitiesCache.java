@@ -1,24 +1,17 @@
 package com.ezee.server.cache;
 
-import static org.springframework.util.CollectionUtils.isEmpty;
+import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-import javax.annotation.PostConstruct;
+import org.hibernate.collection.spi.PersistentCollection;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.ezee.dao.EzeeBaseDao;
 import com.ezee.model.entity.EzeeDatabaseEntity;
-import com.ezee.model.entity.EzeeDebtAgeRule;
-import com.ezee.model.entity.EzeeInvoice;
-import com.ezee.model.entity.EzeePayee;
-import com.ezee.model.entity.EzeePayer;
 import com.ezee.model.entity.EzeePayment;
-import com.ezee.server.dao.EzeeDaoFactory;
 
 /**
  * 
@@ -27,34 +20,32 @@ import com.ezee.server.dao.EzeeDaoFactory;
  */
 public class EzeeEntitiesCache {
 
-	private final Logger log = LoggerFactory.getLogger(EzeeEntitiesCache.class);
+	private final Map<Class<?>, EzeeEntityCache<?>> cache = new ConcurrentHashMap<>();
 
-	@Autowired
-	private EzeeDaoFactory daoFactory;
+	private final EzeeEntitiesCachePostProcessor postprocessor = new EzeeEntitiesCachePostProcessor();
 
-	private final EzeeEntityCache<Long, EzeePayer> payers = new EzeeEntityCache<>();
-	private final EzeeEntityCache<Long, EzeePayee> payees = new EzeeEntityCache<>();
-	private final EzeeEntityCache<Long, EzeePayment> payments = new EzeeEntityCache<>();
-	private final EzeeEntityCache<Long, EzeeInvoice> invoices = new EzeeEntityCache<>();
-	private final EzeeEntityCache<Long, EzeeDebtAgeRule> debtrules = new EzeeEntityCache<>();
-
-	@PostConstruct
-	public void init() {
-		log.info("Initialising ezee entities cache.");
-		loadEntities(daoFactory.getPayerDao(), EzeePayer.class);
-		loadEntities(daoFactory.getPayeeDao(), EzeePayee.class);
-		loadEntities(daoFactory.getPaymentDao(), EzeePayment.class);
-		loadEntities(daoFactory.getInvoiceDao(), EzeeInvoice.class);
-		loadEntities(daoFactory.getDebtAgeRuleDao(), EzeeDebtAgeRule.class);
-		log.info("Ezee entities cache fully initialised.");
+	public EzeeEntitiesCache(final List<EzeeEntityCache<?>> entityCaches) {
+		for (EzeeEntityCache<?> entityCache : entityCaches) {
+			cache.put(entityCache.type(), entityCache);
+		}
 	}
 
 	public final <T extends EzeeDatabaseEntity> List<T> get(final Class<T> clazz) {
-		return new ArrayList<T>(getCache(clazz).values());
+		List<T> entities = new ArrayList<T>(getCache(clazz).values());
+		if (!isEmpty(entities)) {
+			for (T entity : entities) {
+				postprocessor.postProcessEntity(entity);
+			}
+		}
+		return entities;
 	}
 
 	public final <T extends EzeeDatabaseEntity> T get(final long id, final Class<T> clazz) {
-		return getCache(clazz).get(id);
+		T entity = getCache(clazz).get(id);
+		if (entity != null) {
+			postprocessor.postProcessEntity(entity);
+		}
+		return entity;
 	}
 
 	public <T extends EzeeDatabaseEntity> void put(final Class<T> clazz, final T entity) {
@@ -66,27 +57,26 @@ public class EzeeEntitiesCache {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <Key, T extends EzeeDatabaseEntity> void loadEntities(final EzeeBaseDao<T> dao, Class<T> clazz) {
-		List<T> entities = dao.get(clazz);
-		EzeeEntityCache<Key, T> cache = getCache(clazz);
-		if (!isEmpty(entities)) {
-			entities.forEach(entity -> cache.put((Key) entity.getId(), entity));
-		}
+	public <Key, T extends EzeeDatabaseEntity> EzeeEntityCache<T> getCache(final Class<T> clazz) {
+		return (EzeeEntityCache<T>) cache.get(clazz);
 	}
 
-	@SuppressWarnings("unchecked")
-	private <Key, T extends EzeeDatabaseEntity> EzeeEntityCache<Key, T> getCache(final Class<T> clazz) {
+	private static class EzeeEntitiesCachePostProcessor {
 
-		if (clazz.equals(EzeePayer.class)) {
-			return (EzeeEntityCache<Key, T>) payers;
-		} else if (clazz.equals(EzeePayee.class)) {
-			return (EzeeEntityCache<Key, T>) payees;
-		} else if (clazz.equals(EzeePayment.class)) {
-			return (EzeeEntityCache<Key, T>) payments;
-		} else if (clazz.equals(EzeeInvoice.class)) {
-			return (EzeeEntityCache<Key, T>) invoices;
-		} else {
-			return (EzeeEntityCache<Key, T>) debtrules;
+		public <T extends EzeeDatabaseEntity> void postProcessEntity(final T entity) {
+			if (entity instanceof EzeePayment) {
+				postProcessPayment((EzeePayment) entity);
+			}
+		}
+
+		/**
+		 * Post process {@link EzeePayment} to remove non serializable
+		 * {@link PersistentCollection}
+		 */
+		public void postProcessPayment(final EzeePayment payment) {
+			if (!isEmpty(payment.getInvoices())) {
+				payment.setInvoices(new HashSet<>(payment.getInvoices()));
+			}
 		}
 	}
 }

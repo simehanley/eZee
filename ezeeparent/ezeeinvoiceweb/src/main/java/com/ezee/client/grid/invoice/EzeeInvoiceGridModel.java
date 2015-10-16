@@ -21,7 +21,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 
 	private static final String INVOICE_NUM = "Invoice Num";
 	private static final String SUPPLIER = "Supplier";
-	private static final String PAYER = "Payer";
+	private static final String PREMISES = "Premises";
 	private static final String AMOUNT = "Amount";
 	private static final String TAX = "Tax";
 	private static final String TOTAL = "Total";
@@ -32,7 +32,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 
 	private static final String INVOICE_NUM_WIDTH = "200px";
 	private static final String SUPPLIER_WIDTH = "300px";
-	private static final String PAYER_WIDTH = "300px";
+	private static final String PREMISES_WIDTH = "300px";
 	private static final String DESCRIPTION_WIDTH = "400px";
 
 	@Override
@@ -40,7 +40,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		Map<String, Column<EzeeInvoice, ?>> columns = new HashMap<>();
 		createTextColumn(columns, grid, INVOICE_NUM, INVOICE_NUM_WIDTH, true);
 		createTextColumn(columns, grid, SUPPLIER, SUPPLIER_WIDTH, true);
-		createTextColumn(columns, grid, PAYER, PAYER_WIDTH, true);
+		createTextColumn(columns, grid, PREMISES, PREMISES_WIDTH, true);
 		createNumericColumn(columns, grid, AMOUNT, NUMERIC_FIELD_WIDTH);
 		createNumericColumn(columns, grid, TAX, NUMERIC_FIELD_WIDTH);
 		createNumericColumn(columns, grid, TOTAL, NUMERIC_FIELD_WIDTH);
@@ -58,7 +58,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 			return invoice.getInvoiceId();
 		case SUPPLIER:
 			return invoice.getPayee().getName();
-		case PAYER:
+		case PREMISES:
 			return invoice.getPayer().getName();
 		case DESCRIPTION:
 			return invoice.getDescription();
@@ -107,7 +107,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 			}
 		});
 
-		handler.setComparator(columns.get(PAYER), new Comparator<EzeeInvoice>() {
+		handler.setComparator(columns.get(PREMISES), new Comparator<EzeeInvoice>() {
 
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
@@ -144,7 +144,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	protected void addSortColumns(final DataGrid<EzeeInvoice> grid, final Map<String, Column<EzeeInvoice, ?>> columns) {
 		grid.getColumnSortList().push(columns.get(INVOICE_NUM));
 		grid.getColumnSortList().push(columns.get(SUPPLIER));
-		grid.getColumnSortList().push(columns.get(PAYER));
+		grid.getColumnSortList().push(columns.get(PREMISES));
 		grid.getColumnSortList().push(columns.get(PAID));
 		grid.getColumnSortList().push(columns.get(DUE_DATE));
 		grid.getColumnSortList().push(columns.get(PAID_PATE));

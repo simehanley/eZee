@@ -25,4 +25,9 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> {
 	public String getGridClass() {
 		return EzeePayment.class.getName();
 	}
+
+	@Override
+	public void initContextMenu() {
+		/* implement me */
+	}
 }

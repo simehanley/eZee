@@ -38,6 +38,22 @@ public interface EzeeInvoiceDefaultResources extends ClientBundle {
 		String navigationLink();
 
 		String toolbar();
+
+		String gwtLabelBig();
+
+		String gwtLabelMedium();
+
+		String gwtTextBoxSmall();
+
+		String gwtTextBoxMedium();
+
+		String gwtTextBoxLarge();
+
+		String gwtListBoxSmall();
+
+		String gwtPanelBorder();
+
+		String gwtButton();
 	}
 
 	@Source("EzeeInvoiceDefault.css")

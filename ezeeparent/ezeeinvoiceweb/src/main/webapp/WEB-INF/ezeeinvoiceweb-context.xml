@@ -10,6 +10,7 @@
 
 	<import resource="ezeeinvoiceweb-db-context.xml" />
 	<import resource="classpath:ezeedao-context.xml" />
+	<import resource="ezeeinvoiceweb-cache-context.xml" />
 
 	<bean id="ezeeinvoice-web-properties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="ignoreResourceNotFound" value="true" />
@@ -21,9 +22,5 @@
 			</list>
 		</property>
 	</bean>
-
-	<bean id="daoFactory" class="com.ezee.server.dao.EzeeDaoFactory" />
-
-	<bean id="entitiesCache" class="com.ezee.server.cache.EzeeEntitiesCache" />
 
 </beans>

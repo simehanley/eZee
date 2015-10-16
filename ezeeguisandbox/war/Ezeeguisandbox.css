@@ -32,3 +32,57 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+.gwt-Label-Big {
+	width: 200px;
+	border: 1px solid black;
+	padding: 5px;
+	font-weight: bold;
+}
+
+.gwt-Label-Medium {
+  	width: 150px;
+  	height: 20px;
+	padding: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwt-TextBox-Small {
+	width: 100px;
+	height: 20px;
+	padding: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwt-TextBox-Medium {
+	width: 200px;
+	height: 20px;
+	padding: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+.gwt-TextBox-Large {
+	width: 300px;
+	height: 20px;
+	padding: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwt-ListBox-Small {
+	width: 110px;
+	height: 30px;
+	padding: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+.gwt-Panel-Border {
+	border: 1px solid black;
+}
+.gwt-Button {
+	width: 90px;
+	height: 30px;
+	font-weight: bold;
+}

@@ -26,7 +26,7 @@
 					<g:VerticalPanel height="100%" width="100%" styleName="{res.css.navigation}">
 						<g:AbsolutePanel height="100%">
 							<g:at top="10" left="10">
-								<g:Label text="Link 1 - TODO" width="130px" height="18px" styleName="{res.css.navigationLink}" />
+								<g:Label text="Link 1 - TODO" width="130px" height="18px" styleName="{res.css.navigationLink}" ui:field="label" />
 							</g:at>
 							<g:at top="38" left="10">
 								<g:Label text="Link 2 - TODO" width="130px" height="18px" styleName="{res.css.navigationLink}" />

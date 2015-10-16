@@ -1,5 +1,10 @@
 package com.ezee.client;
 
+import static com.ezee.client.EzeeInvoiceWebConstants.INVOICES;
+import static com.ezee.client.EzeeInvoiceWebConstants.PAYMENTS;
+import static com.ezee.client.EzeeInvoiceWebConstants.PREMISES;
+import static com.ezee.client.EzeeInvoiceWebConstants.SUPPLIERS;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,11 +46,11 @@ public class EzeeInvoiceWeb implements EntryPoint {
 
 	private void initMain() {
 		log.log(Level.INFO, "Initialising application.");
-		EzeeInvoiceMain main = new EzeeInvoiceMain();
-		main.getTab().add(new EzeeInvoiceGrid(service), "INVOICES");
-		main.getTab().add(new EzeePaymentGrid(service), "PAYMENTS");
-		main.getTab().add(new EzeePayeeGrid(service), "SUPPLIER");
-		main.getTab().add(new EzeePayerGrid(service), "PAYER");
+		EzeeInvoiceMain main = new EzeeInvoiceMain(service);
+		main.getTab().add(new EzeeInvoiceGrid(service), INVOICES);
+		main.getTab().add(new EzeePaymentGrid(service), PAYMENTS);
+		main.getTab().add(new EzeePayeeGrid(service), SUPPLIERS);
+		main.getTab().add(new EzeePayerGrid(service), PREMISES);
 		RootLayoutPanel.get().add(main);
 		log.log(Level.INFO, "Application initialised.");
 	}

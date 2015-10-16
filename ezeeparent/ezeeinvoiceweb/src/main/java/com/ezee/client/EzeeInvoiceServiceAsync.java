@@ -13,4 +13,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface EzeeInvoiceServiceAsync {
 
 	<T extends EzeeDatabaseEntity> void getEntities(String clazz, AsyncCallback<List<T>> entities);
+
+	<T extends EzeeDatabaseEntity> void saveEntity(String clazz, T entity, AsyncCallback<Void> result);
+
+	<T extends EzeeDatabaseEntity> void deleteEntity(String clazz, T entity, AsyncCallback<Void> result);
 }

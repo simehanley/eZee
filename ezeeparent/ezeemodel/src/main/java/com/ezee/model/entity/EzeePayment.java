@@ -8,10 +8,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
@@ -40,7 +42,7 @@ public class EzeePayment extends EzeeDatabaseEntity {
 	@Column(name = "DESCRIPTION")
 	private String paymentDescription;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "EZEE_PAYMENT_TO_INVOICE_MAPPING", joinColumns = @JoinColumn(name = "PAYMENT_ID") , inverseJoinColumns = @JoinColumn(name = "INVOICE_ID") )
 	private Set<EzeeInvoice> invoices;
 
@@ -83,9 +85,13 @@ public class EzeePayment extends EzeeDatabaseEntity {
 		return invoices;
 	}
 
+	public final void setInvoices(Set<EzeeInvoice> invoices) {
+		this.invoices = invoices;
+	}
+
 	public void addInvoice(final EzeeInvoice invoice) {
 		if (isEmpty(invoices)) {
-			invoices = new HashSet<>();
+			invoices = new HashSet<EzeeInvoice>();
 		}
 		invoices.add(invoice);
 	}

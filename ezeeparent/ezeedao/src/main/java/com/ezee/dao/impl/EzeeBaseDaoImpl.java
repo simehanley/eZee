@@ -6,6 +6,7 @@ import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +47,7 @@ public class EzeeBaseDaoImpl<T extends EzeeDatabaseEntity> extends HibernateDaoS
 	public List<T> get(final Class<T> entity) {
 		if (entity != null) {
 			DetachedCriteria criteria = DetachedCriteria.forClass(entity);
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			return (List<T>) getHibernateTemplate().findByCriteria(criteria);
 		}
 		return null;

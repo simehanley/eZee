@@ -1,6 +1,7 @@
 package com.ezee.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -32,5 +33,7 @@ public class EzeePaymentDaoTest extends AbstractEzeeDaoTest {
 		TestCase.assertNull(payment.getId());
 		getCtx().getBean(EzeePaymentDao.class).save(payment);
 		TestCase.assertNotNull(payment.getId());
+		List<EzeePayment> pmt = getCtx().getBean(EzeePaymentDao.class).get(EzeePayment.class);
+		TestCase.assertTrue(pmt.size() == 1);
 	}
 }
