@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<bean id="payeeCache" class="com.ezee.server.cache.EzeeEntityCache">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeePayee" />
+		<constructor-arg name="dao" ref="payeeDao" />
+	</bean>
+
+	<bean id="payerCache" class="com.ezee.server.cache.EzeeEntityCache">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeePayer" />
+		<constructor-arg name="dao" ref="payerDao" />
+	</bean>
+
+	<bean id="paymentCache" class="com.ezee.server.cache.EzeeEntityCache">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeePayment" />
+		<constructor-arg name="dao" ref="paymentDao" />
+	</bean>
+
+	<bean id="invoiceCache" class="com.ezee.server.cache.EzeeEntityCache">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeeInvoice" />
+		<constructor-arg name="dao" ref="invoiceDao" />
+	</bean>
+
+	<util:list id="entityCaches">
+		<ref bean="payeeCache" />
+		<ref bean="payerCache" />
+		<ref bean="paymentCache" />
+		<ref bean="invoiceCache" />
+	</util:list>
+
+	<bean id="entitiesCache" class="com.ezee.server.cache.EzeeEntitiesCache">
+		<constructor-arg name="entityCaches" ref="entityCaches" />
+	</bean>
+
+</beans>
