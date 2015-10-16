@@ -1,0 +1,19 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.ezee.client.crud.common">
+	<ui:style>
+	
+	</ui:style>
+	<g:HTMLPanel>
+		<g:AbsolutePanel height="330px" width="511px">
+			<g:at top="10" left="10">
+				<p1:EzeePayerPayeeCommon ui:field="payer"/>
+			</g:at>
+			<g:at top="295" left="414">
+				<g:Button text="Close" ui:field="btnClose"/>
+			</g:at>
+			<g:at top="295" left="318">
+				<g:Button text="Save" ui:field="btnSave"/>
+			</g:at>
+		</g:AbsolutePanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

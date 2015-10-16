@@ -1,0 +1,58 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	</ui:style>
+	<g:HTMLPanel>
+		<g:AbsolutePanel height="279px" width="490px" styleName="gwt-Panel-Border">
+			<g:at top="10" left="10">
+				<g:Label text="Name" styleName="gwt-Label-Medium"/>
+			</g:at>
+			<g:at top="42" left="10">
+				<g:Label text="Address Line One" styleName="gwt-Label-Medium"/>
+			</g:at>
+			<g:at top="74" left="10">
+				<g:Label text="Address Line Two" styleName="gwt-Label-Medium"/>
+			</g:at>
+			<g:at top="106" left="10">
+				<g:Label text="Suburb" styleName="gwt-Label-Medium"/>
+			</g:at>
+			<g:at top="138" left="10">
+				<g:Label text="City" styleName="gwt-Label-Medium"/>
+			</g:at>
+			<g:at top="170" left="10">
+				<g:Label text="State" styleName="gwt-Label-Medium"/>
+			</g:at>
+			<g:at top="238" left="10">
+				<g:Label text="Phone" styleName="gwt-Label-Medium"/>
+			</g:at>
+			<g:at top="204" left="10">
+				<g:Label text="Post Code" styleName="gwt-Label-Medium"/>
+			</g:at>
+			<g:at top="10" left="174">
+				<g:TextBox styleName="gwt-TextBox-Large" ui:field="txtName"/>
+			</g:at>
+			<g:at top="42" left="174">
+				<g:TextBox styleName="gwt-TextBox-Large" ui:field="txtAddressLine1"/>
+			</g:at>
+			<g:at top="74" left="174">
+				<g:TextBox styleName="gwt-TextBox-Large" ui:field="txtAddressLine2"/>
+			</g:at>
+			<g:at top="106" left="174">
+				<g:TextBox styleName="gwt-TextBox-Large" ui:field="txtSuburb"/>
+			</g:at>
+			<g:at top="138" left="174">
+				<g:TextBox styleName="gwt-TextBox-Large" ui:field="txtCity"/>
+			</g:at>
+			<g:at top="204" left="174">
+				<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtPostCode"/>
+			</g:at>
+			<g:at top="238" left="174">
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtPhone"/>
+			</g:at>
+			<g:at top="170" left="174">
+				<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstState"/>
+			</g:at>
+		</g:AbsolutePanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
