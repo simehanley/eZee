@@ -1,0 +1,58 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:with type="com.ezee.client.css.EzeeInvoiceDefaultResources" field="res" />
+
+	<g:HTMLPanel>
+		<g:AbsolutePanel height="279px" width="490px" styleName="gwt-Panel-Border">
+			<g:at top="10" left="10">
+				<g:Label text="Name" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="42" left="10">
+				<g:Label text="Address Line One" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="74" left="10">
+				<g:Label text="Address Line Two" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="106" left="10">
+				<g:Label text="Suburb" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="138" left="10">
+				<g:Label text="City" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="170" left="10">
+				<g:Label text="State" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="238" left="10">
+				<g:Label text="Phone" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="204" left="10">
+				<g:Label text="Post Code" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="10" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtName" />
+			</g:at>
+			<g:at top="42" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtAddressLine1" />
+			</g:at>
+			<g:at top="74" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtAddressLine2" />
+			</g:at>
+			<g:at top="106" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtSuburb" />
+			</g:at>
+			<g:at top="138" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtCity" />
+			</g:at>
+			<g:at top="170" left="174">
+				<g:ListBox styleName="{res.css.gwtListBoxSmall}" ui:field="lstState" />
+			</g:at>
+			<g:at top="204" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtPostCode" />
+			</g:at>
+			<g:at top="238" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtPhone" />
+			</g:at>
+		</g:AbsolutePanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
