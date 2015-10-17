@@ -50,4 +50,27 @@ public class EzeePayeeBank extends Composite {
 	public final String getAccountBsb() {
 		return txtAccountBsb.getText();
 	}
+
+	public void setBank(final String bank) {
+		txtBank.setText(bank);
+	}
+
+	public void setAccountName(final String accountName) {
+		txtAccountName.setText(accountName);
+	}
+
+	public void setAccountNumber(final String accountNumber) {
+		txtAccountNumber.setText(accountNumber);
+	}
+
+	public void setAccountBsb(final String accountBsb) {
+		txtAccountBsb.setText(accountBsb);
+	}
+
+	public void disable() {
+		txtBank.setEnabled(false);
+		txtAccountName.setEnabled(false);
+		txtAccountNumber.setEnabled(false);
+		txtAccountBsb.setEnabled(false);
+	}
 }

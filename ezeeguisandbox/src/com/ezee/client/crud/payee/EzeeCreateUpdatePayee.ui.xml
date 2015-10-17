@@ -12,6 +12,9 @@
 			<g:at top="10" left="508">
 				<p1:EzeePayeeBank />
 			</g:at>
+			<g:at top="261" left="622">
+				<g:Button ui:field="btnDelete" text="Delete"/>
+			</g:at>
 			<g:at top="261" left="717">
 				<g:Button ui:field="btnSave" text="Save" />
 			</g:at>

@@ -9,11 +9,23 @@ import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 public abstract class EzeeFinancialEntityGrid<T extends EzeeFinancialEntity> extends EzeeGrid<T> {
 
 	public EzeeFinancialEntityGrid(final EzeeInvoiceServiceAsync service) {
 		super(service);
+	}
+
+	@Override
+	protected void initGrid() {
+		super.initGrid();
+		SingleSelectionModel<T> model = new SingleSelectionModel<>();
+		grid.setSelectionModel(model);
+	}
+
+	protected T getSelected() {
+		return grid.getVisibleItem(grid.getKeyboardSelectedRow());
 	}
 
 	@Override
@@ -61,12 +73,9 @@ public abstract class EzeeFinancialEntityGrid<T extends EzeeFinancialEntity> ext
 		return menu;
 	}
 
-	private void deleteEntity() {
-	}
+	protected abstract void deleteEntity();
 
-	private void newEntity() {
-	}
+	protected abstract void newEntity();
 
-	private void editEntity() {
-	}
+	protected abstract void editEntity();
 }

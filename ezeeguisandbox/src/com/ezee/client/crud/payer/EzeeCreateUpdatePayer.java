@@ -20,6 +20,7 @@ public class EzeeCreateUpdatePayer extends DialogBox {
 
 	@UiField
 	Button btnClose;
+	@UiField Button btnDelete;
 
 	interface EzeeCreateUpdatePayerUiBinder extends UiBinder<Widget, EzeeCreateUpdatePayer> {
 	}

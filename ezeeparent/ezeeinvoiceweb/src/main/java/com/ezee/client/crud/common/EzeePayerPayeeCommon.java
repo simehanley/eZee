@@ -1,5 +1,7 @@
 package com.ezee.client.crud.common;
 
+import static com.ezee.common.EzeeCommonConstants.ZERO;
+
 import com.ezee.common.EzeeCommonConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -91,5 +93,57 @@ public class EzeePayerPayeeCommon extends Composite {
 		lstState.addItem("NT");
 		lstState.addItem("ACT");
 		lstState.setSelectedIndex(EzeeCommonConstants.ZERO);
+	}
+
+	public void setName(final String name) {
+		txtName.setText(name);
+	}
+
+	public void setAddressLine1(final String addressLine1) {
+		txtAddressLine1.setText(addressLine1);
+	}
+
+	public void setAddressLine2(final String addressLine2) {
+		txtAddressLine2.setText(addressLine2);
+	}
+
+	public void setSuburb(final String suburb) {
+		txtSuburb.setText(suburb);
+	}
+
+	public void setCity(final String city) {
+		txtCity.setText(city);
+	}
+
+	public void setPostCode(final String postCode) {
+		txtPostCode.setText(postCode);
+	}
+
+	public void setState(final String state) {
+		lstState.setSelectedIndex(getStateIndex(state));
+	}
+
+	public void setPhone(final String phone) {
+		txtPhone.setText(phone);
+	}
+
+	private int getStateIndex(final String state) {
+		for (int i = ZERO; i < lstState.getItemCount(); i++) {
+			if (state.equals(lstState.getItemText(i))) {
+				return i;
+			}
+		}
+		return ZERO;
+	}
+
+	public void disable() {
+		txtName.setEnabled(false);
+		txtAddressLine1.setEnabled(false);
+		txtAddressLine2.setEnabled(false);
+		txtSuburb.setEnabled(false);
+		txtCity.setEnabled(false);
+		txtPostCode.setEnabled(false);
+		lstState.setEnabled(false);
+		txtPhone.setEnabled(false);
 	}
 }

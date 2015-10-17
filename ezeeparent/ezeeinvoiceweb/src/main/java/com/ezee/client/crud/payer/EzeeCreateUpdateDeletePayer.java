@@ -1,13 +1,16 @@
 package com.ezee.client.crud.payer;
 
+import static com.ezee.client.EzeeInvoiceWebConstants.DELETE_PREMISES;
 import static com.ezee.client.EzeeInvoiceWebConstants.EDIT_PREMISES;
 import static com.ezee.client.EzeeInvoiceWebConstants.NEW_PREMISES;
+import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.create;
 
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ezee.client.EzeeInvoiceServiceAsync;
+import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.client.crud.common.EzeeCreateUpdateDeleteFinancialEntity;
 import com.ezee.client.crud.common.EzeePayerPayeeCommon;
 import com.ezee.model.entity.EzeePayer;
@@ -38,29 +41,50 @@ public class EzeeCreateUpdateDeletePayer extends EzeeCreateUpdateDeleteFinancial
 	@UiField
 	Button btnClose;
 
-	public EzeeCreateUpdateDeletePayer(final EzeeInvoiceServiceAsync invoiceService) {
-		this(null, invoiceService);
+	@UiField
+	Button btnDelete;
+
+	public EzeeCreateUpdateDeletePayer(final EzeeInvoiceServiceAsync service) {
+		this(null, service, create);
 	}
 
-	public EzeeCreateUpdateDeletePayer(final EzeePayer entity, final EzeeInvoiceServiceAsync invoiceService) {
-		super(entity, invoiceService);
+	public EzeeCreateUpdateDeletePayer(final EzeePayer entity, final EzeeInvoiceServiceAsync service,
+			final EzeeCreateUpdateDeleteEntityType type) {
+		super(entity, service, type);
 		setWidget(uiBinder.createAndBindUi(this));
 	}
 
 	@Override
 	public void center() {
-		if (entity != null) {
+		switch (type) {
+		case create:
+			setText(NEW_PREMISES);
+			btnDelete.setEnabled(false);
+			break;
+		case update:
 			setText(EDIT_PREMISES);
 			initialise();
-		} else {
-			setText(NEW_PREMISES);
+			btnDelete.setEnabled(false);
+			break;
+		case delete:
+			setText(DELETE_PREMISES);
+			initialise();
+			disable();
+			break;
 		}
 		super.center();
 	}
 
 	@Override
 	protected void initialise() {
-		/** for editing initialise fields **/
+		payer.setName(entity.getName());
+		payer.setAddressLine1(entity.getAddressLineOne());
+		payer.setAddressLine2(entity.getAddressLineTwo());
+		payer.setSuburb(entity.getSuburb());
+		payer.setCity(entity.getCity());
+		payer.setState(entity.getState());
+		payer.setPostCode(entity.getPostcode());
+		payer.setPhone(entity.getPhone());
 	}
 
 	@Override
@@ -77,6 +101,12 @@ public class EzeeCreateUpdateDeletePayer extends EzeeCreateUpdateDeleteFinancial
 		entity.setState(payer.getState());
 		entity.setPostcode(payer.getPostCode());
 		entity.setPhone(payer.getPhone());
+		entity.setUpdated(new Date());
+	}
+
+	private void disable() {
+		payer.disable();
+		btnSave.setEnabled(false);
 	}
 
 	@UiHandler("btnClose")
@@ -87,16 +117,33 @@ public class EzeeCreateUpdateDeletePayer extends EzeeCreateUpdateDeleteFinancial
 	@UiHandler("btnSave")
 	void onSaveClick(ClickEvent event) {
 		bind();
-		invoiceService.saveEntity(EzeePayer.class.getName(), entity, new AsyncCallback<Void>() {
+		service.saveEntity(EzeePayer.class.getName(), entity, new AsyncCallback<Void>() {
 
 			@Override
 			public void onFailure(final Throwable caught) {
-				log.log(Level.SEVERE, "Error persisting premises.", caught);
+				log.log(Level.SEVERE, "Error persisting premises '" + entity + "'.", caught);
 			}
 
 			@Override
 			public void onSuccess(final Void result) {
-				log.log(Level.INFO, "Saved premises successfully");
+				log.log(Level.INFO, "Saved premises '" + entity + "' successfully");
+				close();
+			}
+		});
+	}
+
+	@UiHandler("btnDelete")
+	void onDeleteClick(ClickEvent event) {
+		service.deleteEntity(EzeePayer.class.getName(), entity, new AsyncCallback<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				log.log(Level.SEVERE, "Error deleting premises '" + entity + "'.", caught);
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				log.log(Level.INFO, "Premises '" + entity + "' deleted successfully");
 				close();
 			}
 		});

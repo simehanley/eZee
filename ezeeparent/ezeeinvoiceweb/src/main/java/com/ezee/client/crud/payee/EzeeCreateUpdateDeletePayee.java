@@ -1,13 +1,16 @@
 package com.ezee.client.crud.payee;
 
+import static com.ezee.client.EzeeInvoiceWebConstants.DELETE_SUPPLIER;
 import static com.ezee.client.EzeeInvoiceWebConstants.EDIT_SUPPLIER;
 import static com.ezee.client.EzeeInvoiceWebConstants.NEW_SUPPLIER;
+import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.create;
 
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ezee.client.EzeeInvoiceServiceAsync;
+import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.client.crud.common.EzeeCreateUpdateDeleteFinancialEntity;
 import com.ezee.client.crud.common.EzeePayeeBank;
 import com.ezee.client.crud.common.EzeePayerPayeeCommon;
@@ -29,7 +32,7 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 
 	interface EzeeCreateUpdateDeletePayeeUiBinder extends UiBinder<Widget, EzeeCreateUpdateDeletePayee> {
 	}
-	
+
 	@UiField
 	EzeePayerPayeeCommon payee;
 
@@ -42,29 +45,54 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 	@UiField
 	Button btnSave;
 
-	public EzeeCreateUpdateDeletePayee(final EzeeInvoiceServiceAsync invoiceService) {
-		this(null, invoiceService);
+	@UiField
+	Button btnDelete;
+
+	public EzeeCreateUpdateDeletePayee(final EzeeInvoiceServiceAsync service) {
+		this(null, service, create);
 	}
 
-	public EzeeCreateUpdateDeletePayee(final EzeePayee entity, final EzeeInvoiceServiceAsync invoiceService) {
-		super(entity, invoiceService);
+	public EzeeCreateUpdateDeletePayee(final EzeePayee entity, final EzeeInvoiceServiceAsync service,
+			final EzeeCreateUpdateDeleteEntityType type) {
+		super(entity, service, type);
 		setWidget(uiBinder.createAndBindUi(this));
 	}
 
 	@Override
 	public void center() {
-		if (entity != null) {
+		switch (type) {
+		case create:
+			setText(NEW_SUPPLIER);
+			btnDelete.setEnabled(false);
+			break;
+		case update:
 			setText(EDIT_SUPPLIER);
 			initialise();
-		} else {
-			setText(NEW_SUPPLIER);
+			btnDelete.setEnabled(false);
+			break;
+		case delete:
+			setText(DELETE_SUPPLIER);
+			initialise();
+			disable();
+			break;
 		}
 		super.center();
 	}
 
 	@Override
 	protected void initialise() {
-		/* implement me */
+		payee.setName(entity.getName());
+		payee.setAddressLine1(entity.getAddressLineOne());
+		payee.setAddressLine2(entity.getAddressLineTwo());
+		payee.setSuburb(entity.getSuburb());
+		payee.setCity(entity.getCity());
+		payee.setState(entity.getState());
+		payee.setPostCode(entity.getPostcode());
+		payee.setPhone(entity.getPhone());
+		payeebank.setBank(entity.getBank());
+		payeebank.setAccountName(entity.getAccountName());
+		payeebank.setAccountNumber(entity.getAccountNumber());
+		payeebank.setAccountBsb(entity.getAccountBsb());
 	}
 
 	@Override
@@ -88,6 +116,12 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 		entity.setUpdated(new Date());
 	}
 
+	private void disable() {
+		payee.disable();
+		payeebank.disable();
+		btnSave.setEnabled(false);
+	}
+
 	@UiHandler("btnClose")
 	void onCloseClick(ClickEvent event) {
 		close();
@@ -96,16 +130,33 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 	@UiHandler("btnSave")
 	void onSaveClick(ClickEvent event) {
 		bind();
-		invoiceService.saveEntity(EzeePayee.class.getName(), entity, new AsyncCallback<Void>() {
+		service.saveEntity(EzeePayee.class.getName(), entity, new AsyncCallback<Void>() {
 
 			@Override
 			public void onFailure(final Throwable caught) {
-				log.log(Level.SEVERE, "Error persisting supplier.", caught);
+				log.log(Level.SEVERE, "Error persisting supplier '" + entity + "'.", caught);
 			}
 
 			@Override
 			public void onSuccess(final Void result) {
-				log.log(Level.INFO, "Saved supplier successfully");
+				log.log(Level.INFO, "Saved supplier '" + entity + "' successfully");
+				close();
+			}
+		});
+	}
+	
+	@UiHandler("btnDelete")
+	void onDeleteClick(ClickEvent event) {
+		service.deleteEntity(EzeePayee.class.getName(), entity, new AsyncCallback<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				log.log(Level.SEVERE, "Error deleting supplier '" + entity + "'.", caught);
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				log.log(Level.INFO, "Supplier '" + entity + "' deleted successfully");
 				close();
 			}
 		});

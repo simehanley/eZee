@@ -1,5 +1,7 @@
 package com.ezee.client.crud;
 
+import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.create;
+
 import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -13,16 +15,20 @@ public abstract class EzeeCreateUpdateDeleteEntity<T extends EzeeDatabaseEntity>
 
 	protected T entity;
 
-	protected final EzeeInvoiceServiceAsync invoiceService;
+	protected final EzeeInvoiceServiceAsync service;
 
-	public EzeeCreateUpdateDeleteEntity(final EzeeInvoiceServiceAsync invoiceService) {
-		this(null, invoiceService);
+	protected final EzeeCreateUpdateDeleteEntityType type;
+
+	public EzeeCreateUpdateDeleteEntity(final EzeeInvoiceServiceAsync service) {
+		this(null, service, create);
 	}
 
-	public EzeeCreateUpdateDeleteEntity(final T entity, final EzeeInvoiceServiceAsync invoiceService) {
+	public EzeeCreateUpdateDeleteEntity(final T entity, final EzeeInvoiceServiceAsync service,
+			final EzeeCreateUpdateDeleteEntityType type) {
 		super(false, false);
 		this.entity = entity;
-		this.invoiceService = invoiceService;
+		this.service = service;
+		this.type = type;
 	}
 
 	public final T getEntity() {

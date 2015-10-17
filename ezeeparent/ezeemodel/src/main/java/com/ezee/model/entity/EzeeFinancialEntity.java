@@ -128,4 +128,9 @@ public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
+	@Override
+	public String toString() {
+		return "EzeeFinancialEntity [name=" + name + "]";
+	}
 }

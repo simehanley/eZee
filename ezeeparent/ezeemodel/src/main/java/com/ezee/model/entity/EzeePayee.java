@@ -76,4 +76,9 @@ public class EzeePayee extends EzeeFinancialEntity {
 	public void setAccountBsb(String accountBsb) {
 		this.accountBsb = accountBsb;
 	}
+
+	@Override
+	public String toString() {
+		return "EzeePayee [getName()=" + getName() + "]";
+	}
 }

@@ -12,6 +12,7 @@ public class EzeeCreateUpdatePayee extends Composite {
 	private static EzeeCreateUpdatePayeeUiBinder uiBinder = GWT.create(EzeeCreateUpdatePayeeUiBinder.class);
 	@UiField Button btnClose;
 	@UiField Button btnSave;
+	@UiField Button btnDelete;
 
 	interface EzeeCreateUpdatePayeeUiBinder extends UiBinder<Widget, EzeeCreateUpdatePayee> {
 	}

@@ -31,4 +31,9 @@ public class EzeePayer extends EzeeFinancialEntity {
 			final Date updated) {
 		super(name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, created, updated);
 	}
+
+	@Override
+	public String toString() {
+		return "EzeePayer [getName()=" + getName() + "]";
+	}
 }
