@@ -1,6 +1,7 @@
 package com.ezee.client.grid.payment;
 
 import com.ezee.client.EzeeInvoiceServiceAsync;
+import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.grid.EzeeGrid;
 import com.ezee.model.entity.EzeePayment;
 
@@ -11,8 +12,8 @@ import com.ezee.model.entity.EzeePayment;
  */
 public class EzeePaymentGrid extends EzeeGrid<EzeePayment> {
 
-	public EzeePaymentGrid(final EzeeInvoiceServiceAsync service) {
-		super(service);
+	public EzeePaymentGrid(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache) {
+		super(service, cache);
 	}
 
 	protected void initGrid() {
@@ -27,7 +28,14 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> {
 	}
 
 	@Override
-	public void initContextMenu() {
-		/* implement me */
+	protected void deleteEntity() {
+	}
+
+	@Override
+	protected void newEntity() {
+	}
+
+	@Override
+	protected void editEntity() {
 	}
 }

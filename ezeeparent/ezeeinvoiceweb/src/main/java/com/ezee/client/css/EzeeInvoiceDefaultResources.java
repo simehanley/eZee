@@ -51,9 +51,17 @@ public interface EzeeInvoiceDefaultResources extends ClientBundle {
 
 		String gwtListBoxSmall();
 
+		String gwtListBoxMedium();
+
 		String gwtPanelBorder();
 
 		String gwtButton();
+
+		String gwtRichTextAreaMedium();
+
+		String gwtDateBoxSmall();
+
+		String gwtCheckBoxSmall();
 	}
 
 	@Source("EzeeInvoiceDefault.css")

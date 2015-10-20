@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
 
 /**
@@ -19,6 +21,11 @@ import javax.persistence.Table;
  * @author siborg
  *
  */
+
+@NamedNativeQueries({
+		@NamedNativeQuery(name = "deletePayeeMappingsSql", query = "delete from EZEE_INVOICE_TO_PAYEE_MAPPING where INVOICE_ID = :id"),
+		@NamedNativeQuery(name = "deletePayerMappingsSql", query = "delete from EZEE_INVOICE_TO_PAYER_MAPPING where INVOICE_ID = :id"),
+		@NamedNativeQuery(name = "deleteAgeDebtMappingsSql", query = "delete from EZEE_INVOICE_TO_DEBT_AGE_MAPPING where INVOICE_ID = :id") })
 @Entity
 @Table(name = "EZEE_INVOICE")
 public class EzeeInvoice extends EzeeDatabaseEntity {
@@ -171,5 +178,18 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 
 	public void setDatePaid(Date datePaid) {
 		this.datePaid = datePaid;
+	}
+
+	public final EzeeDebtAgeRule getAgeRule() {
+		return ageRule;
+	}
+
+	public void setAgeRule(EzeeDebtAgeRule ageRule) {
+		this.ageRule = ageRule;
+	}
+
+	@Override
+	public String toString() {
+		return "EzeeInvoice [invoiceId=" + invoiceId + "]";
 	}
 }

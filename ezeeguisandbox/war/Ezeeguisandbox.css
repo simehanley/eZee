@@ -86,3 +86,25 @@ h1 {
 	height: 30px;
 	font-weight: bold;
 }
+.gwt-ListBox-Medium {
+	width: 210px;
+	height: 30px;
+	padding: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+.gwt-RichTextArea-Medium {
+	border: 1px solid black;
+	font-weight: bold;
+}
+.gwt-DateBox-Small {
+	height: 24px;
+	width: 100px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+.gwt-CheckBox-Small {
+	padding: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}

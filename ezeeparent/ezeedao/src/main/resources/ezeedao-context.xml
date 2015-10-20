@@ -36,4 +36,6 @@
 
 	<bean id="paymentDao" class="com.ezee.dao.impl.EzeePaymentDaoImpl" parent="baseDao" />
 
+	<bean id="configDao" class="com.ezee.dao.impl.EzeeConfigurationDaoImpl" parent="baseDao" />
+
 </beans>

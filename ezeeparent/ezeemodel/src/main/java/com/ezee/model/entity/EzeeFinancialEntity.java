@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass;
  *
  */
 @MappedSuperclass
-public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity {
+public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity implements EzeeHasName {
 
 	private static final long serialVersionUID = -6079993940796041714L;
 
@@ -65,6 +65,7 @@ public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity {
 		this.phone = phone;
 	}
 
+	@Override
 	public final String getName() {
 		return name;
 	}

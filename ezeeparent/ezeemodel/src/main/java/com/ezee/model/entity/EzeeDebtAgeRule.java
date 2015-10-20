@@ -15,7 +15,7 @@ import com.ezee.model.entity.enums.EzeeDebtAgeRuleIntervalType;
  */
 @Entity
 @Table(name = "EZEE_DEBT_AGE_RULE")
-public class EzeeDebtAgeRule extends EzeeDatabaseEntity {
+public class EzeeDebtAgeRule extends EzeeDatabaseEntity implements EzeeHasName {
 
 	private static final long serialVersionUID = 1967457003204614100L;
 
@@ -31,4 +31,20 @@ public class EzeeDebtAgeRule extends EzeeDatabaseEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "INTERVAL_TYPE")
 	private EzeeDebtAgeRuleIntervalType type;
+
+	public final String getName() {
+		return name;
+	}
+
+	public final boolean isEom() {
+		return eom;
+	}
+
+	public final int getInterval() {
+		return interval;
+	}
+
+	public final EzeeDebtAgeRuleIntervalType getType() {
+		return type;
+	}
 }

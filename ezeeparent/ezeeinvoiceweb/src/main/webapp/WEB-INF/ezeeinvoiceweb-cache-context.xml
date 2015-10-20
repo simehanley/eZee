@@ -27,11 +27,23 @@
 		<constructor-arg name="dao" ref="invoiceDao" />
 	</bean>
 
+	<bean id="debtAgeCache" class="com.ezee.server.cache.EzeeEntityCache">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeeDebtAgeRule" />
+		<constructor-arg name="dao" ref="debtAgeDao" />
+	</bean>
+
+	<bean id="configCache" class="com.ezee.server.cache.EzeeEntityCache">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeeConfiguration" />
+		<constructor-arg name="dao" ref="configDao" />
+	</bean>
+
 	<util:list id="entityCaches">
 		<ref bean="payeeCache" />
 		<ref bean="payerCache" />
 		<ref bean="paymentCache" />
 		<ref bean="invoiceCache" />
+		<ref bean="debtAgeCache" />
+		<ref bean="configCache" />
 	</util:list>
 
 	<bean id="entitiesCache" class="com.ezee.server.cache.EzeeEntitiesCache">

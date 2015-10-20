@@ -1,9 +1,18 @@
 package com.ezee.client.main;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.ezee.client.EzeeInvoiceServiceAsync;
+import com.ezee.client.cache.EzeeInvoiceEntityCache;
+import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
+import com.ezee.client.crud.invoice.EzeeCreateUpdateDeleteInvoice;
 import com.ezee.client.crud.payee.EzeeCreateUpdateDeletePayee;
 import com.ezee.client.crud.payer.EzeeCreateUpdateDeletePayer;
 import com.ezee.client.grid.EzeeHasGrid;
+import com.ezee.model.entity.EzeeInvoice;
+import com.ezee.model.entity.EzeePayee;
+import com.ezee.model.entity.EzeePayer;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -22,6 +31,10 @@ public class EzeeInvoiceMain extends Composite {
 
 	private final EzeeInvoiceServiceAsync service;
 
+	private final EzeeInvoiceEntityCache cache;
+
+	private final Map<Class<?>, EzeeCreateUpdateDeleteEntityHandler<?>> handlers = new HashMap<>();
+
 	@UiField
 	TabLayoutPanel tab;
 
@@ -31,11 +44,15 @@ public class EzeeInvoiceMain extends Composite {
 	@UiField
 	Label newsupplier;
 
+	@UiField
+	Label newinvoice;
+
 	interface EzeeInvoiceMainUiBinder extends UiBinder<Widget, EzeeInvoiceMain> {
 	}
 
-	public EzeeInvoiceMain(final EzeeInvoiceServiceAsync service) {
+	public EzeeInvoiceMain(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache) {
 		this.service = service;
+		this.cache = cache;
 		initWidget(uiBinder.createAndBindUi(this));
 		addTabHandler();
 	}
@@ -54,13 +71,28 @@ public class EzeeInvoiceMain extends Composite {
 		});
 	}
 
-	@UiHandler("newpremises")
-	void onNewPremisesClick(final ClickEvent event) {
-		new EzeeCreateUpdateDeletePayer(service).center();
+	public void addHandler(Class<?> clazz, EzeeCreateUpdateDeleteEntityHandler<?> handler) {
+		handlers.put(clazz, handler);
 	}
 
+	@SuppressWarnings("unchecked")
+	@UiHandler("newpremises")
+	void onNewPremisesClick(final ClickEvent event) {
+		new EzeeCreateUpdateDeletePayer(service, cache,
+				(EzeeCreateUpdateDeleteEntityHandler<EzeePayer>) handlers.get(EzeePayer.class)).center();
+	}
+
+	@SuppressWarnings("unchecked")
 	@UiHandler("newsupplier")
 	void onNewSupplierClick(final ClickEvent event) {
-		new EzeeCreateUpdateDeletePayee(service).center();
+		new EzeeCreateUpdateDeletePayee(service, cache,
+				(EzeeCreateUpdateDeleteEntityHandler<EzeePayee>) handlers.get(EzeePayee.class)).center();
+	}
+
+	@SuppressWarnings("unchecked")
+	@UiHandler("newinvoice")
+	void onNewInvoiceClick(final ClickEvent event) {
+		new EzeeCreateUpdateDeleteInvoice(service, cache,
+				(EzeeCreateUpdateDeleteEntityHandler<EzeeInvoice>) handlers.get(EzeeInvoice.class)).center();
 	}
 }

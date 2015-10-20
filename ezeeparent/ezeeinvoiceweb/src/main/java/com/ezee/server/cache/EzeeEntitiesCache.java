@@ -57,7 +57,7 @@ public class EzeeEntitiesCache {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <Key, T extends EzeeDatabaseEntity> EzeeEntityCache<T> getCache(final Class<T> clazz) {
+	public <T extends EzeeDatabaseEntity> EzeeEntityCache<T> getCache(final Class<T> clazz) {
 		return (EzeeEntityCache<T>) cache.get(clazz);
 	}
 

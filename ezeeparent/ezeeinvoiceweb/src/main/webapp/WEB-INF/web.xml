@@ -9,11 +9,11 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/ezeeinvoiceweb-context.xml</param-value>
 	</context-param>
-	
+
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+
 	<servlet>
 		<servlet-name>invoiceService</servlet-name>
 		<servlet-class>com.ezee.server.EzeeInvoiceServiceImpl</servlet-class>
@@ -23,6 +23,17 @@
 		<servlet-name>invoiceService</servlet-name>
 		<url-pattern>/EzeeInvoiceWeb/invoiceservice</url-pattern>
 	</servlet-mapping>
+
+	<!--servlet>
+		<servlet-name>ErraiServlet</servlet-name>
+		<servlet-class>org.jboss.errai.bus.server.servlet.DefaultBlockingServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ErraiServlet</servlet-name>
+		<url-pattern>*.erraiBus</url-pattern>
+	</servlet-mapping-->
 
 
 	<welcome-file-list>

@@ -14,4 +14,8 @@ public interface EzeeInvoiceWebConstants {
 	String EDIT_SUPPLIER = "Edit Supplier";
 	String NEW_SUPPLIER = "New Supplier";
 	String DELETE_SUPPLIER = "Delete Supplier";
+
+	String EDIT_INVOICE = "Edit Invoice";
+	String NEW_INVOICE = "New Invoice";
+	String DELETE_INVOICE = "Delete Invoice";
 }

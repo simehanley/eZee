@@ -113,4 +113,27 @@
 	height: 30px;
 	font-weight: bold;
 }
+
+.gwtListBoxMedium {
+	width: 210px;
+	height: 30px;
+	padding: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+.gwtRichTextAreaMedium {
+	border: 1px solid black;
+	font-weight: bold;
+}
+.gwtDateBoxSmall {
+	height: 24px;
+	width: 100px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+.gwtCheckBoxSmall {
+	padding: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
 /** GWT Component Overrides **/

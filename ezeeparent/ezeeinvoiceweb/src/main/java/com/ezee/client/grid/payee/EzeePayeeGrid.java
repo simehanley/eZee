@@ -4,6 +4,7 @@ import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.delete;
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.update;
 
 import com.ezee.client.EzeeInvoiceServiceAsync;
+import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.payee.EzeeCreateUpdateDeletePayee;
 import com.ezee.client.grid.EzeeFinancialEntityGrid;
 import com.ezee.model.entity.EzeePayee;
@@ -15,8 +16,8 @@ import com.ezee.model.entity.EzeePayee;
  */
 public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
 
-	public EzeePayeeGrid(final EzeeInvoiceServiceAsync service) {
-		super(service);
+	public EzeePayeeGrid(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache) {
+		super(service, cache);
 	}
 
 	protected void initGrid() {
@@ -34,33 +35,20 @@ public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
 	protected void deleteEntity() {
 		EzeePayee entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayee(getSelected(), service, delete).center();
-			// model.getHandler().getList().remove(entity);
-			/*
-			 * change to move to a model where we receive the deleted entity via
-			 * a message bus update
-			 */
+			new EzeeCreateUpdateDeletePayee(service, cache, this, entity, delete).center();
 		}
 	}
 
 	@Override
 	protected void newEntity() {
-		new EzeeCreateUpdateDeletePayee(service).center();
-		/*
-		 * change to move to a model where we receive the new entity via a
-		 * message bus update
-		 */
+		new EzeeCreateUpdateDeletePayee(service, cache, this).center();
 	}
 
 	@Override
 	protected void editEntity() {
 		EzeePayee entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayee(getSelected(), service, update).center();
-			/*
-			 * change to move to a model where we receive the edited entity via
-			 * a message bus update
-			 */
+			new EzeeCreateUpdateDeletePayee(service, cache, this, entity, update).center();
 		}
 	}
 }

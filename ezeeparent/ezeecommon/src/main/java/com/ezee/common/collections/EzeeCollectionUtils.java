@@ -3,6 +3,7 @@ package com.ezee.common.collections;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * 
@@ -16,6 +17,13 @@ public final class EzeeCollectionUtils {
 
 	public static boolean isEmpty(Collection<?> collection) {
 		if (collection==null || collection.size()==ZERO) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean isEmpty(Map<?, ?> map) {
+		if (map==null || map.size()==ZERO) {
 			return true;
 		}
 		return false;
