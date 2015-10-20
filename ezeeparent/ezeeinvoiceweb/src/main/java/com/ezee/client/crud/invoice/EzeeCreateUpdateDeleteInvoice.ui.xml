@@ -1,0 +1,83 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:p1="urn:import:com.google.gwt.user.datepicker.client">
+
+	<ui:with type="com.ezee.client.css.EzeeInvoiceDefaultResources" field="res" />
+
+	<g:HTMLPanel>
+		<g:AbsolutePanel height="284px" width="940px">
+			<g:at top="10" left="10">
+				<g:Label text="Invoice Number" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="44" left="10">
+				<g:Label text="Premises" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="78" left="10">
+				<g:Label text="Supplier" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="112" left="10">
+				<g:Label text="Amount" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="146" left="10">
+				<g:Label text="Tax" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="180" left="10">
+				<g:Label text="Total" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="10" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtInvoiceNumber" />
+			</g:at>
+			<g:at top="44" left="174">
+				<g:ListBox styleName="{res.css.gwtListBoxMedium}" ui:field="lstPremises" />
+			</g:at>
+			<g:at top="78" left="174">
+				<g:ListBox styleName="{res.css.gwtListBoxMedium}" ui:field="lstSupplier" />
+			</g:at>
+			<g:at top="112" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtAmount" />
+			</g:at>
+			<g:at top="146" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtTax" />
+			</g:at>
+			<g:at top="180" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtTotal" />
+			</g:at>
+			<g:at top="214" left="10">
+				<g:Label text="Due Date" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="214" left="174">
+				<p1:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtDue" />
+			</g:at>
+			<g:at top="214" left="284">
+				<g:Label text="Paid Date" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="214" left="448">
+				<p1:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtPaid" />
+			</g:at>
+			<g:at top="214" left="558">
+				<g:Label text="Debt Age Rule" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="214" left="722">
+				<g:ListBox styleName="{res.css.gwtListBoxMedium}" ui:field="lstDebtAge" />
+			</g:at>
+			<g:at top="10" left="388">
+				<g:Label text="Description" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="44" left="390">
+				<g:RichTextArea width="540px" height="162px" styleName="{res.css.gwtRichTextAreaMedium}" ui:field="txtDescription" />
+			</g:at>
+			<g:at top="11" left="855">
+				<g:CheckBox text="Taxable" styleName="{res.css.gwtCheckBoxSmall}" value="true" ui:field="chkTaxable" />
+			</g:at>
+			<g:at top="248" left="650">
+				<g:Button ui:field="btnDelete" text="Delete" styleName="{res.css.gwtButton}" />
+			</g:at>
+			<g:at top="248" left="746">
+				<g:Button ui:field="btnSave" text="Save" styleName="{res.css.gwtButton}" />
+			</g:at>
+			<g:at top="248" left="842">
+				<g:Button ui:field="btnClose" text="Close" styleName="{res.css.gwtButton}" />
+			</g:at>
+		</g:AbsolutePanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
