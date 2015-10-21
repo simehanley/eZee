@@ -22,6 +22,14 @@ import com.ezee.model.entity.EzeeDatabaseEntity;
 public class EzeeBaseDaoImpl<T extends EzeeDatabaseEntity> extends HibernateDaoSupport implements EzeeBaseDao<T> {
 
 	@Transactional(propagation = REQUIRED, readOnly = false)
+	public void merge(final T entity) {
+		if (entity != null) {
+			entity.setUpdated(new Date());
+			getHibernateTemplate().merge(entity);
+		}
+	}
+
+	@Transactional(propagation = REQUIRED, readOnly = false)
 	public void save(final T entity) {
 		if (entity != null) {
 			entity.setUpdated(new Date());
@@ -51,5 +59,10 @@ public class EzeeBaseDaoImpl<T extends EzeeDatabaseEntity> extends HibernateDaoS
 			return (List<T>) getHibernateTemplate().findByCriteria(criteria);
 		}
 		return null;
+	}
+
+	protected void deleteMappings(final T entity, final String mappingQuery) {
+		getSessionFactory().getCurrentSession().getNamedQuery(mappingQuery).setLong("id", entity.getId())
+				.executeUpdate();
 	}
 }

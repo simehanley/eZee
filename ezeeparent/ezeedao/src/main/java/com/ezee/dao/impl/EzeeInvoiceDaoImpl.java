@@ -1,6 +1,9 @@
 package com.ezee.dao.impl;
 
+import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
+
+import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +29,13 @@ public class EzeeInvoiceDaoImpl extends EzeeBaseDaoImpl<EzeeInvoice> implements 
 		super.delete(entity);
 	}
 
-	private void deleteMappings(final EzeeInvoice entity, final String mappingQuery) {
-		getSessionFactory().getCurrentSession().getNamedQuery(mappingQuery).setLong("id", entity.getId())
-				.executeUpdate();
+	@Override
+	@Transactional(propagation = REQUIRED, readOnly = false)
+	public void save(final Set<EzeeInvoice> invoices) {
+		if (!isEmpty(invoices)) {
+			for (EzeeInvoice invoice : invoices) {
+				save(invoice);
+			}
+		}
 	}
 }

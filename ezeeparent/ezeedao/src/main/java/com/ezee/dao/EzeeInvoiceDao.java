@@ -1,5 +1,7 @@
 package com.ezee.dao;
 
+import java.util.Set;
+
 import com.ezee.model.entity.EzeeInvoice;
 
 /**
@@ -8,4 +10,5 @@ import com.ezee.model.entity.EzeeInvoice;
  *
  */
 public interface EzeeInvoiceDao extends EzeeBaseDao<EzeeInvoice> {
+	void save(final Set<EzeeInvoice> invoices);
 }

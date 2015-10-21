@@ -3,6 +3,7 @@ package com.ezee.dao;
 import java.util.Date;
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayee;
@@ -17,10 +18,20 @@ import junit.framework.TestCase;
  */
 public class EzeeInvoiceDaoTest extends AbstractEzeeDaoTest {
 
+	@Autowired
+	private EzeePayeeDao payeeDao;
+
+	@Autowired
+	private EzeePayerDao payerDao;
+
 	@Test
 	public void canPersistAnEzeeInvoice() {
-		EzeeInvoice invoice = new EzeeInvoice("123456", new EzeePayee(), new EzeePayer(), 100., 10.,
-				"First invoice test.", true, false, null, null, new Date(), null);
+		EzeePayee payee = new EzeePayee();
+		EzeePayer payer = new EzeePayer();
+		payeeDao.save(payee);
+		payerDao.save(payer);
+		EzeeInvoice invoice = new EzeeInvoice("123456", payee, payer, 100., 10., "First invoice test.", true, false,
+				null, null, new Date(), null);
 		TestCase.assertNull(invoice.getId());
 		getCtx().getBean(EzeeInvoiceDao.class).save(invoice);
 		TestCase.assertNotNull(invoice.getId());
