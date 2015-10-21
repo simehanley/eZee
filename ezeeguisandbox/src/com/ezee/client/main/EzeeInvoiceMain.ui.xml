@@ -28,11 +28,14 @@
 							<g:at top="10" left="10">
 								<g:Label text="Link 1 - TODO" width="130px" height="18px" styleName="{res.css.navigationLink}" ui:field="label" />
 							</g:at>
-							<g:at top="38" left="10">
+							<g:at top="34" left="10">
 								<g:Label text="Link 2 - TODO" width="130px" height="18px" styleName="{res.css.navigationLink}" />
 							</g:at>
-							<g:at top="69" left="10">
+							<g:at top="58" left="10">
 								<g:Label text="Link 3 - TODO"/>
+							</g:at>
+							<g:at top="82" left="10">
+								<g:Label text="Link 4 - TODO"/>
 							</g:at>
 						</g:AbsolutePanel>
 					</g:VerticalPanel>
