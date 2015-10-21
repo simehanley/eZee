@@ -26,13 +26,16 @@
 					<g:VerticalPanel height="100%" width="100%" styleName="{res.css.navigation}">
 						<g:AbsolutePanel height="100%">
 							<g:at top="10" left="10">
-								<g:Label text="New Premises" width="130px" height="18px" styleName="{res.css.navigationLink}" ui:field="newpremises"/>
+								<g:Label text="New Premises" width="130px" height="18px" styleName="{res.css.navigationLink}" ui:field="newpremises" />
 							</g:at>
-							<g:at top="38" left="10">
-								<g:Label text="New Supplier" width="130px" height="18px" styleName="{res.css.navigationLink}" ui:field="newsupplier"/>
+							<g:at top="34" left="10">
+								<g:Label text="New Supplier" width="130px" height="18px" styleName="{res.css.navigationLink}" ui:field="newsupplier" />
 							</g:at>
-							<g:at top="69" left="10">
-								<g:Label text="New Invoice" width="130px" height="18px" styleName="{res.css.navigationLink}" ui:field="newinvoice"/>
+							<g:at top="58" left="10">
+								<g:Label text="New Invoice" width="130px" height="18px" styleName="{res.css.navigationLink}" ui:field="newinvoice" />
+							</g:at>
+							<g:at top="82" left="10">
+								<g:Label text="New Payment" width="130px" height="18px" styleName="{res.css.navigationLink}" ui:field="newpayment" />
 							</g:at>
 						</g:AbsolutePanel>
 					</g:VerticalPanel>
@@ -40,7 +43,7 @@
 				<g:center>
 					<g:DockLayoutPanel unit="EM">
 						<g:center>
-							<g:TabLayoutPanel barHeight="20" height="100%" width="100%" ui:field="tab"/>
+							<g:TabLayoutPanel barHeight="20" height="100%" width="100%" ui:field="tab" />
 						</g:center>
 					</g:DockLayoutPanel>
 				</g:center>

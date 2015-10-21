@@ -5,7 +5,6 @@ import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import java.beans.Transient;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,11 +34,11 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 	@Column(name = "INVOICE_ID")
 	private String invoiceId;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "EZEE_INVOICE_TO_PAYEE_MAPPING", joinColumns = @JoinColumn(name = "INVOICE_ID") , inverseJoinColumns = @JoinColumn(name = "PAYEE_ID") )
 	private EzeePayee payee;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "EZEE_INVOICE_TO_PAYER_MAPPING", joinColumns = @JoinColumn(name = "INVOICE_ID") , inverseJoinColumns = @JoinColumn(name = "PAYER_ID") )
 	private EzeePayer payer;
 
@@ -64,7 +63,7 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 	@Column(name = "PAYMENT_DATE")
 	private Date datePaid;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "EZEE_INVOICE_TO_DEBT_AGE_MAPPING", joinColumns = @JoinColumn(name = "INVOICE_ID") , inverseJoinColumns = @JoinColumn(name = "DEBT_AGE_RULE_ID") )
 	private EzeeDebtAgeRule ageRule;
 

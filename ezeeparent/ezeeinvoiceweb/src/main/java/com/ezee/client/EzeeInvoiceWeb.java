@@ -58,20 +58,42 @@ public class EzeeInvoiceWeb implements EntryPoint {
 
 	private void initMain() {
 		log.log(Level.INFO, "Initialising application.");
-		EzeePayeeGrid payee = new EzeePayeeGrid(service, cache);
-		EzeePayerGrid payer = new EzeePayerGrid(service, cache);
-		EzeeInvoiceGrid invoice = new EzeeInvoiceGrid(service, cache);
-		EzeePaymentGrid payment = new EzeePaymentGrid(service, cache);
 		EzeeInvoiceMain main = new EzeeInvoiceMain(service, cache);
-		main.addHandler(EzeePayee.class, payee);
-		main.addHandler(EzeePayer.class, payer);
-		main.addHandler(EzeeInvoice.class, invoice);
-		main.addHandler(EzeePayment.class, payment);
+		EzeePayeeGrid supplier = createPayeeGrid(main);
+		EzeePayerGrid premises = createPayerGrid(main);
+		EzeeInvoiceGrid invoice = createInvoiceGrid(main);
+		EzeePaymentGrid payment = createPaymentGrid(main);
+		invoice.setListener(payment);
+		payment.setListener(invoice);
 		main.getTab().add(invoice, INVOICES);
 		main.getTab().add(payment, PAYMENTS);
-		main.getTab().add(payee, SUPPLIERS);
-		main.getTab().add(payer, PREMISES);
+		main.getTab().add(supplier, SUPPLIERS);
+		main.getTab().add(premises, PREMISES);
 		RootLayoutPanel.get().add(main);
 		log.log(Level.INFO, "Application initialised.");
+	}
+
+	private EzeePayeeGrid createPayeeGrid(final EzeeInvoiceMain main) {
+		EzeePayeeGrid grid = new EzeePayeeGrid(service, cache);
+		main.addHandler(EzeePayee.class, grid);
+		return grid;
+	}
+
+	private EzeePayerGrid createPayerGrid(final EzeeInvoiceMain main) {
+		EzeePayerGrid grid = new EzeePayerGrid(service, cache);
+		main.addHandler(EzeePayer.class, grid);
+		return grid;
+	}
+
+	private EzeeInvoiceGrid createInvoiceGrid(final EzeeInvoiceMain main) {
+		EzeeInvoiceGrid grid = new EzeeInvoiceGrid(service, cache);
+		main.addHandler(EzeeInvoice.class, grid);
+		return grid;
+	}
+
+	private EzeePaymentGrid createPaymentGrid(final EzeeInvoiceMain main) {
+		EzeePaymentGrid grid = new EzeePaymentGrid(service, cache);
+		main.addHandler(EzeePayment.class, grid);
+		return grid;
 	}
 }

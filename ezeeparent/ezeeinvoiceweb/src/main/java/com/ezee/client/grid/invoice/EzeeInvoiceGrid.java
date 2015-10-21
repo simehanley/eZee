@@ -2,12 +2,19 @@ package com.ezee.client.grid.invoice;
 
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.delete;
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.update;
+import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.invoice.EzeeCreateUpdateDeleteInvoice;
 import com.ezee.client.grid.EzeeGrid;
+import com.ezee.client.grid.payment.EzeePaymentCreationListener;
 import com.ezee.model.entity.EzeeInvoice;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.view.client.MultiSelectionModel;
 
 /**
@@ -15,11 +22,12 @@ import com.google.gwt.view.client.MultiSelectionModel;
  * @author siborg
  *
  */
-public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice> {
+public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice> implements EzeeInvoiceChangeListener {
+
+	private EzeePaymentCreationListener listener;
 
 	public EzeeInvoiceGrid(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache) {
 		super(service, cache);
-		this.cache = cache;
 	}
 
 	protected void initGrid() {
@@ -28,6 +36,18 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice> {
 		grid.setSelectionModel(selectModel);
 		model = new EzeeInvoiceGridModel();
 		model.bind(grid);
+	}
+
+	protected MenuBar createContextMenu() {
+		MenuBar menu = super.createContextMenu();
+		menu.addItem("Payment", new Command() {
+			@Override
+			public void execute() {
+				newPayment();
+				contextMenu.hide();
+			}
+		});
+		return menu;
 	}
 
 	@Override
@@ -54,5 +74,39 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice> {
 		if (entity != null) {
 			new EzeeCreateUpdateDeleteInvoice(service, cache, this, entity, update).center();
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	protected void newPayment() {
+		if (listener != null) {
+			MultiSelectionModel<EzeeInvoice> model = (MultiSelectionModel<EzeeInvoice>) grid.getSelectionModel();
+			Set<EzeeInvoice> selected = model.getSelectedSet();
+			if (!isEmpty(selected)) {
+				Set<EzeeInvoice> unpaid = new HashSet<>();
+				for (EzeeInvoice invoice : selected) {
+					if (invoice.getDatePaid() == null) {
+						unpaid.add(invoice);
+					}
+				}
+				listener.onCreatePayment(unpaid);
+			}
+		}
+	}
+
+	@Override
+	public void onInvoicesChanged(final Set<EzeeInvoice> invoices) {
+		if (!isEmpty(invoices)) {
+			for (EzeeInvoice invoice : invoices) {
+				onSave(invoice);
+			}
+		}
+	}
+
+	public final EzeePaymentCreationListener getListener() {
+		return listener;
+	}
+
+	public void setListener(final EzeePaymentCreationListener listener) {
+		this.listener = listener;
 	}
 }

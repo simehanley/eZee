@@ -9,10 +9,12 @@ import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.client.crud.invoice.EzeeCreateUpdateDeleteInvoice;
 import com.ezee.client.crud.payee.EzeeCreateUpdateDeletePayee;
 import com.ezee.client.crud.payer.EzeeCreateUpdateDeletePayer;
+import com.ezee.client.crud.payment.EzeeCreateUpdateDeletePayment;
 import com.ezee.client.grid.EzeeHasGrid;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayee;
 import com.ezee.model.entity.EzeePayer;
+import com.ezee.model.entity.EzeePayment;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -45,7 +47,7 @@ public class EzeeInvoiceMain extends Composite {
 	Label newsupplier;
 
 	@UiField
-	Label newinvoice;
+	Label newpayment;
 
 	interface EzeeInvoiceMainUiBinder extends UiBinder<Widget, EzeeInvoiceMain> {
 	}
@@ -94,5 +96,12 @@ public class EzeeInvoiceMain extends Composite {
 	void onNewInvoiceClick(final ClickEvent event) {
 		new EzeeCreateUpdateDeleteInvoice(service, cache,
 				(EzeeCreateUpdateDeleteEntityHandler<EzeeInvoice>) handlers.get(EzeeInvoice.class)).center();
+	}
+
+	@SuppressWarnings("unchecked")
+	@UiHandler("newpayment")
+	void onNewPaymentClick(final ClickEvent event) {
+		new EzeeCreateUpdateDeletePayment(service, cache,
+				(EzeeCreateUpdateDeleteEntityHandler<EzeePayment>) handlers.get(EzeePayment.class), null).center();
 	}
 }

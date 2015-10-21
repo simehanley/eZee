@@ -13,11 +13,7 @@ import static com.google.gwt.event.dom.client.KeyCodes.KEY_BACKSPACE;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_DELETE;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_TAB;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -136,6 +132,9 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 			setText(EDIT_INVOICE);
 			initialise();
 			btnDelete.setEnabled(false);
+			if (entity.getDatePaid() != null) {
+				disable();
+			}
 			break;
 		case delete:
 			setText(DELETE_INVOICE);
@@ -154,6 +153,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		dtDue.setEnabled(false);
 		dtPaid.setEnabled(false);
 		txtDescription.setEnabled(false);
+		chkTaxable.setEnabled(false);
 		btnSave.setEnabled(false);
 	}
 
@@ -250,26 +250,6 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		loadEntities(EzeePayee.class, lstSupplier);
 		loadEntities(EzeePayer.class, lstPremises);
 		loadEntities(EzeeDebtAgeRule.class, lstDebtAge);
-	}
-
-	private <T extends EzeeHasName> void loadEntities(final Class<T> clazz, final ListBox listBox) {
-		Map<String, EzeeHasName> entities = cache.getEntities(clazz);
-		List<String> entityNames = new ArrayList<>(entities.keySet());
-		Collections.sort(entityNames);
-		for (String key : entityNames) {
-			listBox.addItem(key);
-		}
-	}
-
-	private int getItemIndex(final String value, final ListBox listBox) {
-		if (value != null) {
-			for (int i = ZERO; i < listBox.getItemCount(); i++) {
-				if (value.equals(listBox.getItemText(i))) {
-					return i;
-				}
-			}
-		}
-		return ZERO;
 	}
 
 	@UiHandler("btnClose")

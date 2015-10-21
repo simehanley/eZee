@@ -1,0 +1,61 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
+
+	<ui:with type="com.ezee.client.css.EzeeInvoiceDefaultResources" field="res" />
+
+	<g:HTMLPanel>
+		<g:AbsolutePanel height="478px" width="1313px">
+			<g:at top="10" left="10">
+				<g:Label text="Type" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="9" left="174">
+				<g:ListBox styleName="{res.css.gwtListBoxMedium}" ui:field="lstPaymentType" />
+			</g:at>
+			<g:at top="44" left="10">
+				<g:Label text="Description" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="78" left="10">
+				<g:RichTextArea width="1292px" height="76px" ui:field="txtDescription" styleName="{res.css.gwtRichTextAreaMedium}" />
+			</g:at>
+			<g:at top="162" left="10">
+				<g:Label text="Invoices" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="196" left="10">
+				<g:ResizeLayoutPanel width="1294px" height="207px" styleName="{res.css.gwtPanelBorder}">
+					<p1:DataGrid width="100%" height="100%" ui:field="grdInvoices" />
+				</g:ResizeLayoutPanel>
+			</g:at>
+			<g:at top="409" left="10">
+				<g:Label text="Totals" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="409" left="174">
+				<g:Label text="Amount" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="409" left="338">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtAmount" />
+			</g:at>
+			<g:at top="409" left="554">
+				<g:Label text="Tax" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="409" left="718">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtTax" />
+			</g:at>
+			<g:at top="409" left="932">
+				<g:Label text="Total" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="409" left="1096">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtTotal" />
+			</g:at>
+			<g:at top="443" left="1023">
+				<g:Button text="Delete" ui:field="btnDelete" styleName="{res.css.gwtButton}" />
+			</g:at>
+			<g:at top="443" left="1118">
+				<g:Button text="Save" ui:field="btnSave" styleName="{res.css.gwtButton}" />
+			</g:at>
+			<g:at top="443" left="1214">
+				<g:Button text="Close" ui:field="btnClose" styleName="{res.css.gwtButton}" />
+			</g:at>
+		</g:AbsolutePanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

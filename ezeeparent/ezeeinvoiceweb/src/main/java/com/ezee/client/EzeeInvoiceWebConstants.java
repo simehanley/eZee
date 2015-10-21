@@ -18,4 +18,8 @@ public interface EzeeInvoiceWebConstants {
 	String EDIT_INVOICE = "Edit Invoice";
 	String NEW_INVOICE = "New Invoice";
 	String DELETE_INVOICE = "Delete Invoice";
+
+	String EDIT_PAYMENT = "Edit Payment";
+	String NEW_PAYMENT = "New Payment";
+	String DELETE_PAYMENT = "Delete Payment";
 }

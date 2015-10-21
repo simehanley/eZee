@@ -1,7 +1,6 @@
 package com.ezee.client.crud.common;
 
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.create;
-import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 
 import java.util.Collection;
 import java.util.Map;
