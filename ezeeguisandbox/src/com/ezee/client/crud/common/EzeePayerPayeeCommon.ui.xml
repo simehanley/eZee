@@ -44,7 +44,7 @@
 			<g:at top="138" left="174">
 				<g:TextBox styleName="gwt-TextBox-Large" ui:field="txtCity"/>
 			</g:at>
-			<g:at top="204" left="174">
+			<g:at top="208" left="177">
 				<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtPostCode"/>
 			</g:at>
 			<g:at top="238" left="174">

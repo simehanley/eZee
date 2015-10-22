@@ -15,7 +15,13 @@
 		<g:south size="3">
 			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" title="footer" height="100%" width="100%"
 				styleName="{res.css.footer}">
-				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="100%" height="100%">
+				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="25%" height="100%">
+					<g:HTML text="Provided by Haich + Gee Pty Ltd" styleName="{res.css.footerLabel}"></g:HTML>
+				</g:cell>
+				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="50%" height="100%">
+					<g:HTML text="Provided by Haich + Gee Pty Ltd" styleName="{res.css.footerLabel}"></g:HTML>
+				</g:cell>
+				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="25%" height="100%">
 					<g:HTML text="Provided by Haich + Gee Pty Ltd" styleName="{res.css.footerLabel}"></g:HTML>
 				</g:cell>
 			</g:HorizontalPanel>
@@ -32,10 +38,10 @@
 								<g:Label text="Link 2 - TODO" width="130px" height="18px" styleName="{res.css.navigationLink}" />
 							</g:at>
 							<g:at top="58" left="10">
-								<g:Label text="Link 3 - TODO"/>
+								<g:Label text="Link 3 - TODO" />
 							</g:at>
 							<g:at top="82" left="10">
-								<g:Label text="Link 4 - TODO"/>
+								<g:Label text="Link 4 - TODO" />
 							</g:at>
 						</g:AbsolutePanel>
 					</g:VerticalPanel>
