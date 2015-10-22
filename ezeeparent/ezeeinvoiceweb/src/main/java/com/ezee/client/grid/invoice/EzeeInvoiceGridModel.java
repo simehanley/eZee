@@ -26,7 +26,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	private static final String TAX = "Tax";
 	private static final String TOTAL = "Total";
 	private static final String DESCRIPTION = "Description";
-	private static final String PAID = "Paid";
+	private static final String CREATED_DATE = "Created Date";
 	private static final String DUE_DATE = "Due Date";
 	private static final String PAID_PATE = "Pay Date";
 
@@ -45,7 +45,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		createNumericColumn(columns, grid, TAX, NUMERIC_FIELD_WIDTH);
 		createNumericColumn(columns, grid, TOTAL, NUMERIC_FIELD_WIDTH);
 		createTextColumn(columns, grid, DESCRIPTION, DESCRIPTION_WIDTH, false);
-		createCheckBoxColumn(columns, grid, PAID, BOOLEAN_FIELD_WIDTH);
+		createDateColumn(columns, grid, CREATED_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, DUE_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, PAID_PATE, DATE_FIELD_WIDTH, true);
 		return columns;
@@ -75,6 +75,8 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	@Override
 	protected Date resolveDateFieldValue(final String fieldName, final EzeeInvoice invoice) {
 		switch (fieldName) {
+		case CREATED_DATE:
+			return invoice.getCreated();
 		case DUE_DATE:
 			return invoice.getDateDue();
 		case PAID_PATE:
@@ -115,11 +117,11 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 			}
 		});
 
-		handler.setComparator(columns.get(PAID), new Comparator<EzeeInvoice>() {
+		handler.setComparator(columns.get(CREATED_DATE), new Comparator<EzeeInvoice>() {
 
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
-				return new Boolean(one.isPaid()).compareTo(new Boolean(two.isPaid()));
+				return one.getCreated().compareTo(two.getCreated());
 			}
 		});
 
@@ -145,7 +147,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		grid.getColumnSortList().push(columns.get(INVOICE_NUM));
 		grid.getColumnSortList().push(columns.get(SUPPLIER));
 		grid.getColumnSortList().push(columns.get(PREMISES));
-		grid.getColumnSortList().push(columns.get(PAID));
+		grid.getColumnSortList().push(columns.get(CREATED_DATE));
 		grid.getColumnSortList().push(columns.get(DUE_DATE));
 		grid.getColumnSortList().push(columns.get(PAID_PATE));
 	}

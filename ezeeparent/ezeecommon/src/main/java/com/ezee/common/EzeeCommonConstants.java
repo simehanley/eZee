@@ -10,4 +10,6 @@ public interface EzeeCommonConstants {
 	double ZERO_DBL = 0.;
 
 	int ZERO = 0;
+
+	String EMPTY_STRING = "";
 }

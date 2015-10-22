@@ -1,36 +1,37 @@
 package com.ezee.client.grid.payment;
 
+import static com.ezee.client.grid.payment.EzeePaymentUtils.getInvoiceNumbers;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import com.ezee.client.grid.EzeeGridModel;
-import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayment;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 
 public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 
-	protected static final String PAYMENT_DATE = "Pay Date";
-	protected static final String PAYMENT_TYPE = "Pay Type";
-	protected static final String PAYMENT_AMOUNT = "Pay Amount";
-	protected static final String DESCRIPTION = "Description";
-	protected static final String INVOICES = "Invoices";
+	private static final String PAYMENT_DATE = "Pay Date";
+	private static final String CREATED_DATE = "Created Date";
 
-	protected static final String PAYMENT_TYPE_WIDTH = "150px";
-	protected static final String DESCRIPTION_WIDTH = "400px";
-	protected static final String INVOICES_WIDTH = "400px";
+	private static final String PAYMENT_TYPE = "Pay Type";
+	private static final String PAYMENT_AMOUNT = "Pay Amount";
+	private static final String DESCRIPTION = "Description";
+	private static final String INVOICES = "Invoices";
+
+	private static final String PAYMENT_TYPE_WIDTH = "150px";
+	private static final String DESCRIPTION_WIDTH = "400px";
+	private static final String INVOICES_WIDTH = "400px";
 
 	@Override
 	protected Map<String, Column<EzeePayment, ?>> createColumns(final DataGrid<EzeePayment> grid) {
 		Map<String, Column<EzeePayment, ?>> columns = new HashMap<>();
 		createDateColumn(columns, grid, PAYMENT_DATE, DATE_FIELD_WIDTH, true);
+		createDateColumn(columns, grid, CREATED_DATE, DATE_FIELD_WIDTH, true);
 		createTextColumn(columns, grid, PAYMENT_TYPE, PAYMENT_TYPE_WIDTH, true);
 		createNumericColumn(columns, grid, PAYMENT_AMOUNT, NUMERIC_FIELD_WIDTH);
 		createTextColumn(columns, grid, DESCRIPTION, DESCRIPTION_WIDTH, false);
@@ -48,14 +49,20 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 		case PAYMENT_AMOUNT:
 			return getAmountFormat().format(payment.getPaymentAmount());
 		case INVOICES:
-			return resolveInvoiceNumbers(payment).toString();
+			return getInvoiceNumbers(payment);
 		}
 		return null;
 	}
 
 	@Override
 	protected Date resolveDateFieldValue(final String fieldName, final EzeePayment payment) {
-		return payment.getPaymentDate();
+		switch (fieldName) {
+		case PAYMENT_DATE:
+			return payment.getPaymentDate();
+		case CREATED_DATE:
+			return payment.getCreated();
+		}
+		return null;
 	}
 
 	@Override
@@ -74,6 +81,14 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 			}
 		});
 
+		handler.setComparator(columns.get(CREATED_DATE), new Comparator<EzeePayment>() {
+
+			@Override
+			public int compare(final EzeePayment one, final EzeePayment two) {
+				return one.getCreated().compareTo(two.getCreated());
+			}
+		});
+
 		handler.setComparator(columns.get(PAYMENT_TYPE), new Comparator<EzeePayment>() {
 
 			@Override
@@ -86,14 +101,7 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	@Override
 	protected void addSortColumns(final DataGrid<EzeePayment> grid, final Map<String, Column<EzeePayment, ?>> columns) {
 		grid.getColumnSortList().push(columns.get(PAYMENT_DATE));
+		grid.getColumnSortList().push(columns.get(CREATED_DATE));
 		grid.getColumnSortList().push(columns.get(PAYMENT_TYPE));
-	}
-
-	private Set<String> resolveInvoiceNumbers(final EzeePayment payment) {
-		Set<String> invoiceNumbers = new HashSet<>();
-		for (EzeeInvoice invoice : payment.getInvoices()) {
-			invoiceNumbers.add(invoice.getInvoiceId());
-		}
-		return invoiceNumbers;
 	}
 }

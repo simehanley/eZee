@@ -9,13 +9,13 @@
 			<g:at top="10" left="10">
 				<p1:EzeePayerPayeeCommon ui:field="payer" />
 			</g:at>
-			<g:at top="295" left="222">
+			<g:at top="293" left="222">
 				<g:Button ui:field="btnDelete" text="Delete" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="295" left="318">
+			<g:at top="293" left="318">
 				<g:Button text="Save" ui:field="btnSave" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="295" left="414">
+			<g:at top="293" left="414">
 				<g:Button text="Close" ui:field="btnClose" styleName="{res.css.gwtButton}" />
 			</g:at>
 		</g:AbsolutePanel>

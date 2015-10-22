@@ -42,6 +42,8 @@ public interface EzeeInvoiceDefaultResources extends ClientBundle {
 		String gwtLabelBig();
 
 		String gwtLabelMedium();
+		
+		String gwtLabelSmall();
 
 		String gwtTextBoxSmall();
 

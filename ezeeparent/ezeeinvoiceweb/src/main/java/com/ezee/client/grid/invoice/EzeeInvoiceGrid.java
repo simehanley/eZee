@@ -2,6 +2,8 @@ package com.ezee.client.grid.invoice;
 
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.delete;
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.update;
+import static com.ezee.client.css.EzeeInvoiceDefaultResources.INSTANCE;
+import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 
 import java.util.HashSet;
@@ -13,8 +15,11 @@ import com.ezee.client.crud.invoice.EzeeCreateUpdateDeleteInvoice;
 import com.ezee.client.grid.EzeeGrid;
 import com.ezee.client.grid.payment.EzeePaymentCreationListener;
 import com.ezee.model.entity.EzeeInvoice;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.view.client.MultiSelectionModel;
 
 /**
@@ -26,6 +31,12 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice> implements EzeeInvoic
 
 	private EzeePaymentCreationListener listener;
 
+	private TextBox invoiceNumberText;
+
+	private TextBox supplierText;
+
+	private TextBox premisesText;
+
 	public EzeeInvoiceGrid(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache) {
 		super(service, cache);
 	}
@@ -36,6 +47,35 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice> implements EzeeInvoic
 		grid.setSelectionModel(selectModel);
 		model = new EzeeInvoiceGridModel();
 		model.bind(grid);
+	}
+
+	@Override
+	protected void initFilter() {
+		super.initFilter();
+		Label invoiceNumberLabel = new Label("Invoice(s)");
+		invoiceNumberLabel.setStyleName(INSTANCE.css().gwtLabelMedium());
+		invoiceNumberText = new TextBox();
+		invoiceNumberText.setStyleName(INSTANCE.css().gwtTextBoxLarge());
+		Label supplierLabel = new Label("Supplier");
+		supplierLabel.setStyleName(INSTANCE.css().gwtLabelMedium());
+		supplierText = new TextBox();
+		supplierText.setStyleName(INSTANCE.css().gwtTextBoxMedium());
+		Label premisesLabel = new Label("Premises");
+		premisesLabel.setStyleName(INSTANCE.css().gwtLabelMedium());
+		premisesText = new TextBox();
+		premisesText.setStyleName(INSTANCE.css().gwtTextBoxMedium());
+		filterpanel.add(invoiceNumberLabel);
+		filterpanel.add(invoiceNumberText);
+		filterpanel.add(supplierLabel);
+		filterpanel.add(supplierText);
+		filterpanel.add(premisesLabel);
+		filterpanel.add(premisesText);
+		KeyPressHandler filterHandler = new EzeeFilterKeyPressHandler();
+		invoiceNumberText.addKeyPressHandler(filterHandler);
+		supplierText.addKeyPressHandler(filterHandler);
+		premisesText.addKeyPressHandler(filterHandler);
+		initRefreshButton();
+		initClearButton();
 	}
 
 	protected MenuBar createContextMenu() {
@@ -108,5 +148,19 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice> implements EzeeInvoic
 
 	public void setListener(final EzeePaymentCreationListener listener) {
 		this.listener = listener;
+	}
+
+	@Override
+	protected void clearFilter() {
+		invoiceNumberText.setText(EMPTY_STRING);
+		supplierText.setText(EMPTY_STRING);
+		premisesText.setText(EMPTY_STRING);
+		filter = null;
+		loadEntities();
+	}
+
+	@Override
+	protected EzeeInvoiceFilter createFilter() {
+		return new EzeeInvoiceFilter(invoiceNumberText.getText(), supplierText.getText(), premisesText.getText());
 	}
 }

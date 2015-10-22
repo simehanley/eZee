@@ -16,10 +16,6 @@ import com.ezee.client.grid.payee.EzeePayeeGrid;
 import com.ezee.client.grid.payer.EzeePayerGrid;
 import com.ezee.client.grid.payment.EzeePaymentGrid;
 import com.ezee.client.main.EzeeInvoiceMain;
-import com.ezee.model.entity.EzeeInvoice;
-import com.ezee.model.entity.EzeePayee;
-import com.ezee.model.entity.EzeePayer;
-import com.ezee.model.entity.EzeePayment;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -58,42 +54,32 @@ public class EzeeInvoiceWeb implements EntryPoint {
 
 	private void initMain() {
 		log.log(Level.INFO, "Initialising application.");
-		EzeeInvoiceMain main = new EzeeInvoiceMain(service, cache);
-		EzeePayeeGrid supplier = createPayeeGrid(main);
-		EzeePayerGrid premises = createPayerGrid(main);
-		EzeeInvoiceGrid invoice = createInvoiceGrid(main);
-		EzeePaymentGrid payment = createPaymentGrid(main);
+		EzeeInvoiceMain main = new EzeeInvoiceMain();
+		EzeeInvoiceGrid invoice = createInvoiceGrid();
+		EzeePaymentGrid payment = createPaymentGrid();
 		invoice.setListener(payment);
 		payment.setListener(invoice);
 		main.getTab().add(invoice, INVOICES);
 		main.getTab().add(payment, PAYMENTS);
-		main.getTab().add(supplier, SUPPLIERS);
-		main.getTab().add(premises, PREMISES);
+		main.getTab().add(createPayeeGrid(), SUPPLIERS);
+		main.getTab().add(createPayerGrid(), PREMISES);
 		RootLayoutPanel.get().add(main);
 		log.log(Level.INFO, "Application initialised.");
 	}
 
-	private EzeePayeeGrid createPayeeGrid(final EzeeInvoiceMain main) {
-		EzeePayeeGrid grid = new EzeePayeeGrid(service, cache);
-		main.addHandler(EzeePayee.class, grid);
-		return grid;
+	private EzeePayeeGrid createPayeeGrid() {
+		return new EzeePayeeGrid(service, cache);
 	}
 
-	private EzeePayerGrid createPayerGrid(final EzeeInvoiceMain main) {
-		EzeePayerGrid grid = new EzeePayerGrid(service, cache);
-		main.addHandler(EzeePayer.class, grid);
-		return grid;
+	private EzeePayerGrid createPayerGrid() {
+		return new EzeePayerGrid(service, cache);
 	}
 
-	private EzeeInvoiceGrid createInvoiceGrid(final EzeeInvoiceMain main) {
-		EzeeInvoiceGrid grid = new EzeeInvoiceGrid(service, cache);
-		main.addHandler(EzeeInvoice.class, grid);
-		return grid;
+	private EzeeInvoiceGrid createInvoiceGrid() {
+		return new EzeeInvoiceGrid(service, cache);
 	}
 
-	private EzeePaymentGrid createPaymentGrid(final EzeeInvoiceMain main) {
-		EzeePaymentGrid grid = new EzeePaymentGrid(service, cache);
-		main.addHandler(EzeePayment.class, grid);
-		return grid;
+	private EzeePaymentGrid createPaymentGrid() {
+		return new EzeePaymentGrid(service, cache);
 	}
 }

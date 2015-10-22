@@ -5,7 +5,7 @@
 	<ui:with type="com.ezee.client.css.EzeeInvoiceDefaultResources" field="res" />
 
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="284px" width="940px">
+		<g:AbsolutePanel height="284px" width="940px" styleName="{res.css.gwtPanelBorder}">
 			<g:at top="10" left="10">
 				<g:Label text="Invoice Number" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>

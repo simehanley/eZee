@@ -60,7 +60,8 @@
 .gwtLabelBig {
 	width: 200px;
 	border: 1px solid black;
-	padding: 5px;
+	padding: 3px;
+	margin: 3px;
 	font-weight: bold;
 }
 
@@ -68,6 +69,16 @@
 	width: 150px;
 	height: 20px;
 	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwtLabelSmall {
+	width: 75px;
+	height: 20px;
+	padding: 3px;
+	margin: 3px;
 	border: 1px solid black;
 	font-weight: bold;
 }
@@ -76,6 +87,7 @@
 	width: 100px;
 	height: 20px;
 	padding: 3px;
+	margin: 3px;
 	border: 1px solid black;
 	font-weight: bold;
 }
@@ -84,6 +96,7 @@
 	width: 200px;
 	height: 20px;
 	padding: 3px;
+	margin: 3px;
 	border: 1px solid black;
 	font-weight: bold;
 }
@@ -92,6 +105,7 @@
 	width: 300px;
 	height: 20px;
 	padding: 3px;
+	margin: 3px;
 	border: 1px solid black;
 	font-weight: bold;
 }
@@ -100,17 +114,20 @@
 	width: 110px;
 	height: 30px;
 	padding: 3px;
+	margin: 3px;
 	border: 1px solid black;
 	font-weight: bold;
 }
 
 .gwtPanelBorder {
+	margin: 3px;
 	border: 1px solid black;
 }
 
 .gwtButton {
 	width: 90px;
 	height: 30px;
+	margin: 3px;
 	font-weight: bold;
 }
 
@@ -118,21 +135,28 @@
 	width: 210px;
 	height: 30px;
 	padding: 3px;
+	margin: 3px;
 	border: 1px solid black;
 	font-weight: bold;
 }
+
 .gwtRichTextAreaMedium {
+	margin: 3px;
 	border: 1px solid black;
 	font-weight: bold;
 }
+
 .gwtDateBoxSmall {
 	height: 24px;
 	width: 100px;
+	margin: 3px;
 	border: 1px solid black;
 	font-weight: bold;
 }
+
 .gwtCheckBoxSmall {
 	padding: 3px;
+	margin: 3px;
 	border: 1px solid black;
 	font-weight: bold;
 }

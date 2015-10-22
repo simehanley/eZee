@@ -7,7 +7,9 @@
 	<g:DockLayoutPanel unit="EM">
 		<g:north size="3">
 			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" height="100%" width="100%" styleName="{res.css.toolbar}">
-				<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="500px"></g:HorizontalPanel>
+				<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="500px"
+					ui:field="filterpanel">
+				</g:HorizontalPanel>
 			</g:HorizontalPanel>
 		</g:north>
 		<g:center>

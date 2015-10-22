@@ -154,6 +154,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		dtPaid.setEnabled(false);
 		txtDescription.setEnabled(false);
 		chkTaxable.setEnabled(false);
+		lstDebtAge.setEnabled(false);
 		btnSave.setEnabled(false);
 	}
 
@@ -204,6 +205,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	private void initForm() {
 		dtDue.setFormat(getDateBoxFormat());
 		dtPaid.setFormat(getDateBoxFormat());
+		dtPaid.setEnabled(false);
 		txtTax.setEnabled(false);
 		txtTotal.setEnabled(false);
 		taxRate = cache.getConfiguration().getInvoiceTaxRate();
