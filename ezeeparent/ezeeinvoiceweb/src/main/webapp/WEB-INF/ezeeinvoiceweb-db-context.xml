@@ -18,7 +18,7 @@
 
 		<!-- database -->
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="${ezeeinvoice.web.db.url}" />
+		<property name="url" value="${ezeeinvoice.web.db.url}/${ezeeinvoice.web.db.name}" />
 		<property name="username" value="${ezeeinvoice.web.db.user}" />
 		<property name="password" value="${ezeeinvoice.web.db.pswd}" />
 	</bean>
