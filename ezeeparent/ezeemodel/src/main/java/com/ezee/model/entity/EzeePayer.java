@@ -22,14 +22,14 @@ public class EzeePayer extends EzeeFinancialEntity {
 
 	public EzeePayer(final Long id, final String name, final String addressLineOne, final String addressLineTwo,
 			final String suburb, final String city, final String state, final String postcode, final String phone,
-			final Date created, final Date updated) {
-		super(id, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, created, updated);
+			final String email, final Date created, final Date updated) {
+		super(id, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, email, created, updated);
 	}
 
 	public EzeePayer(final String name, final String addressLineOne, final String addressLineTwo, final String suburb,
-			final String city, final String state, final String postcode, final String phone, final Date created,
-			final Date updated) {
-		super(name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, created, updated);
+			final String city, final String state, final String postcode, final String phone, final String email,
+			final Date created, final Date updated) {
+		super(name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, email, created, updated);
 	}
 
 	@Override

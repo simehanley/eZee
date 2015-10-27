@@ -4,29 +4,29 @@
 	<ui:with type="com.ezee.client.css.EzeeInvoiceDefaultResources" field="res" />
 
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="147px" styleName="gwt-Panel-Border" width="392px">
+		<g:AbsolutePanel height="143px" styleName="gwt-Panel-Border" width="392px">
 			<g:at top="10" left="10">
 				<g:Label text="Bank" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>
-			<g:at top="44" left="10">
+			<g:at top="42" left="10">
 				<g:Label text="Account Name" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>
-			<g:at top="78" left="10">
+			<g:at top="74" left="10">
 				<g:Label text="Account Number" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>
-			<g:at top="112" left="10">
+			<g:at top="106" left="10">
 				<g:Label text="Bsb" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>
 			<g:at top="10" left="174">
 				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtBank" />
 			</g:at>
-			<g:at top="44" left="174">
+			<g:at top="42" left="174">
 				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtAccountName" />
 			</g:at>
-			<g:at top="78" left="174">
+			<g:at top="74" left="174">
 				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtAccountNumber" />
 			</g:at>
-			<g:at top="112" left="174">
+			<g:at top="106" left="174">
 				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtAccountBsb" />
 			</g:at>
 		</g:AbsolutePanel>

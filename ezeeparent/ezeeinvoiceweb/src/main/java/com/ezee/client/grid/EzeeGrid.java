@@ -11,14 +11,11 @@ import java.util.logging.Logger;
 import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
-import com.ezee.client.css.EzeeInvoiceDefaultResources;
 import com.ezee.client.css.EzeeInvoiceGwtOverridesResources;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
 import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
@@ -60,13 +57,13 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 
 	protected EzeeGridModel<T> model;
 
+	protected EzeeGridToolbar<T> toolBar;
+
 	protected EzeeInvoiceServiceAsync service;
 
 	protected EzeeInvoiceEntityCache cache;
 
 	protected PopupPanel contextMenu;
-
-	protected EzeeEntityFilter<T> filter;
 
 	interface EzeeGridUiBinder extends UiBinder<Widget, EzeeGrid<?>> {
 	}
@@ -88,10 +85,10 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	}
 
 	private void init() {
+		initFilter();
 		initGrid();
 		loadEntities();
 		initContextMenu();
-		initFilter();
 	}
 
 	protected void initGrid() {
@@ -107,40 +104,10 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		filterpanel = new HorizontalPanel();
 	}
 
-	protected void initRefreshButton() {
-		btnRefresh = new Button("Refresh");
-		btnRefresh.setStyleName(EzeeInvoiceDefaultResources.INSTANCE.css().gwtButton());
-		btnRefresh.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(final ClickEvent event) {
-				loadEntities();
-			}
-		});
-		filterpanel.add(btnRefresh);
-	}
-
-	protected void initClearButton() {
-		btnClear = new Button("Clear");
-		btnClear.setStyleName(EzeeInvoiceDefaultResources.INSTANCE.css().gwtButton());
-		btnClear.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(final ClickEvent event) {
-				clearFilter();
-			}
-		});
-		filterpanel.add(btnClear);
-	}
-
 	private void setEntities(final List<T> entities) {
 		model.getHandler().getList().clear();
-		filter = createFilter();
-		if (filter != null && !filter.empty()) {
-			model.getHandler().getList().addAll(filter.apply(entities));
-		} else {
-			model.getHandler().getList().addAll(entities);
-		}
+		EzeeEntityFilter<T> filter = resolveFilter();
+		model.getHandler().getList().addAll(filter.apply(entities));
 		grid.redraw();
 	}
 
@@ -234,6 +201,10 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		return ZERO;
 	}
 
+	protected EzeeEntityFilter<T> resolveFilter() {
+		return toolBar.resolveFilter();
+	}
+
 	private class EzeeGridDoubleClickHandler implements DoubleClickHandler {
 
 		@Override
@@ -252,25 +223,11 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		}
 	}
 
-	public class EzeeFilterKeyPressHandler implements KeyPressHandler {
-
-		@Override
-		public void onKeyPress(KeyPressEvent event) {
-			if (event.getNativeEvent().getKeyCode() == KEY_ENTER) {
-				loadEntities();
-			}
-		}
-	}
-
 	protected abstract void deleteEntity();
 
 	protected abstract void newEntity();
 
 	protected abstract void editEntity();
-
-	protected abstract void clearFilter();
-
-	protected abstract EzeeEntityFilter<T> createFilter();
 
 	public abstract String getGridClass();
 }

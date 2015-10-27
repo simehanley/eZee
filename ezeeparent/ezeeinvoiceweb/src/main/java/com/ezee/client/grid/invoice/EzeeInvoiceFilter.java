@@ -23,10 +23,14 @@ public class EzeeInvoiceFilter extends EzeeInvoiceNumberFilter<EzeeInvoice> {
 
 	private final RegExp premisesRegExp;
 
-	public EzeeInvoiceFilter(final String invoiceText, final String supplierText, final String premisesText) {
+	private final boolean showPaid;
+
+	public EzeeInvoiceFilter(final String invoiceText, final String supplierText, final String premisesText,
+			final boolean showPaid) {
 		super(invoiceText);
 		supplierRegExp = (hasLength(supplierText)) ? RegExp.compile(supplierText, "i") : null;
 		premisesRegExp = (hasLength(premisesText)) ? RegExp.compile(premisesText, "i") : null;
+		this.showPaid = showPaid;
 	}
 
 	@Override
@@ -34,7 +38,9 @@ public class EzeeInvoiceFilter extends EzeeInvoiceNumberFilter<EzeeInvoice> {
 		Set<EzeeInvoice> filtered = new HashSet<>();
 		for (EzeeInvoice invoice : unfiltered) {
 			if (empty()) {
-				filtered.add(invoice);
+				if (showPaid(invoice)) {
+					filtered.add(invoice);
+				}
 			} else {
 				checkInvoice(invoice, filtered);
 				checkSupplier(invoice, filtered);
@@ -52,7 +58,7 @@ public class EzeeInvoiceFilter extends EzeeInvoiceNumberFilter<EzeeInvoice> {
 	private void checkInvoice(final EzeeInvoice invoice, final Set<EzeeInvoice> filtered) {
 		if (!isEmpty(invoiceRegExp)) {
 			for (RegExp regExp : invoiceRegExp) {
-				if (regExp.exec(invoice.getInvoiceId()) != null) {
+				if (regExp.exec(invoice.getInvoiceId()) != null && showPaid(invoice)) {
 					filtered.add(invoice);
 					return;
 				}
@@ -62,7 +68,7 @@ public class EzeeInvoiceFilter extends EzeeInvoiceNumberFilter<EzeeInvoice> {
 
 	private void checkSupplier(final EzeeInvoice invoice, final Set<EzeeInvoice> filtered) {
 		if (supplierRegExp != null) {
-			if (supplierRegExp.exec(invoice.getPayee().getName()) != null) {
+			if (supplierRegExp.exec(invoice.getPayee().getName()) != null && showPaid(invoice)) {
 				filtered.add(invoice);
 			}
 		}
@@ -70,9 +76,16 @@ public class EzeeInvoiceFilter extends EzeeInvoiceNumberFilter<EzeeInvoice> {
 
 	private void checkPremises(final EzeeInvoice invoice, final Set<EzeeInvoice> filtered) {
 		if (premisesRegExp != null) {
-			if (premisesRegExp.exec(invoice.getPayer().getName()) != null) {
+			if (premisesRegExp.exec(invoice.getPayer().getName()) != null && showPaid(invoice)) {
 				filtered.add(invoice);
 			}
 		}
+	}
+
+	private boolean showPaid(final EzeeInvoice invoice) {
+		if (!invoice.isPaid() || (showPaid && invoice.isPaid())) {
+			return true;
+		}
+		return false;
 	}
 }

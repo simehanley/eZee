@@ -7,6 +7,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -14,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
+
+import com.ezee.model.entity.enums.EzeeInvoiceClassification;
 
 /**
  * 
@@ -67,20 +71,26 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 	@JoinTable(name = "EZEE_INVOICE_TO_DEBT_AGE_MAPPING", joinColumns = @JoinColumn(name = "INVOICE_ID") , inverseJoinColumns = @JoinColumn(name = "DEBT_AGE_RULE_ID") )
 	private EzeeDebtAgeRule ageRule;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "CLASSIFICATION")
+	private EzeeInvoiceClassification classification;
+
 	public EzeeInvoice() {
 		super();
 	}
 
 	public EzeeInvoice(final String invoiceId, final EzeePayee payee, final EzeePayer payer, final double amount,
 			final double tax, final String description, final boolean taxable, final boolean paid, final Date dateDue,
-			final Date datePaid, final Date created, final Date updated) {
+			final Date datePaid, final Date created, final Date updated,
+			final EzeeInvoiceClassification classification) {
 		this(NULL_ID, invoiceId, payee, payer, amount, tax, description, taxable, paid, dateDue, datePaid, created,
-				updated);
+				updated, classification);
 	}
 
 	public EzeeInvoice(final Long id, final String invoiceId, final EzeePayee payee, final EzeePayer payer,
 			final double amount, final double tax, final String description, final boolean taxable, final boolean paid,
-			final Date dateDue, final Date datePaid, final Date created, final Date updated) {
+			final Date dateDue, final Date datePaid, final Date created, final Date updated,
+			final EzeeInvoiceClassification classification) {
 		super(id, created, updated);
 		this.invoiceId = invoiceId;
 		this.payee = payee;
@@ -92,6 +102,7 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 		this.paid = paid;
 		this.dateDue = dateDue;
 		this.datePaid = datePaid;
+		this.classification = classification;
 	}
 
 	@Transient
@@ -185,6 +196,14 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 
 	public void setAgeRule(EzeeDebtAgeRule ageRule) {
 		this.ageRule = ageRule;
+	}
+
+	public final EzeeInvoiceClassification getClassification() {
+		return classification;
+	}
+
+	public void setClassification(EzeeInvoiceClassification classification) {
+		this.classification = classification;
 	}
 
 	@Override

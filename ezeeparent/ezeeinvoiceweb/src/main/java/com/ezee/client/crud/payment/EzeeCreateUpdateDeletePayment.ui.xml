@@ -12,6 +12,15 @@
 			<g:at top="9" left="174">
 				<g:ListBox styleName="{res.css.gwtListBoxMedium}" ui:field="lstPaymentType" />
 			</g:at>
+			<g:at top="10" left="391">
+				<g:Label text="Cheque Number" styleName="{res.css.gwtLabelMedium}" ui:field="lblChequeNumber" />
+			</g:at>
+			<g:at top="10" left="554">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtChequeNumber" />
+			</g:at>
+			<g:at top="10" left="767">
+				<g:CheckBox text="Presented" styleName="{res.css.gwtCheckBoxSmall}" ui:field="chkPresented" wordWrap="false" />
+			</g:at>
 			<g:at top="44" left="10">
 				<g:Label text="Description" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>

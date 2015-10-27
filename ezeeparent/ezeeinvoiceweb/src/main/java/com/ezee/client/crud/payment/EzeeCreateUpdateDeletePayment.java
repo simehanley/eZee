@@ -7,6 +7,8 @@ import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.create;
 import static com.ezee.client.css.EzeeInvoiceGwtOverridesResources.INSTANCE;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
+import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,6 +29,8 @@ import com.ezee.model.entity.EzeePayment;
 import com.ezee.model.entity.enums.EzeePaymentType;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -35,6 +39,8 @@ import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -52,6 +58,15 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 
 	@UiField
 	ListBox lstPaymentType;
+
+	@UiField
+	Label lblChequeNumber;
+
+	@UiField
+	TextBox txtChequeNumber;
+
+	@UiField
+	CheckBox chkPresented;
 
 	@UiField
 	RichTextArea txtDescription;
@@ -81,15 +96,19 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 
 	private EzeeInvoiceGridModel model;
 
+	private EzeePaymentType defaultType;
+
 	public EzeeCreateUpdateDeletePayment(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache,
 			final EzeeCreateUpdateDeleteEntityHandler<EzeePayment> handler, final Set<EzeeInvoice> invoices) {
-		this(service, cache, handler, null, create, invoices);
+		this(service, cache, handler, null, create, invoices, cheque);
 	}
 
 	public EzeeCreateUpdateDeletePayment(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache,
 			final EzeeCreateUpdateDeleteEntityHandler<EzeePayment> handler, final EzeePayment entity,
-			final EzeeCreateUpdateDeleteEntityType type, final Set<EzeeInvoice> invoices) {
+			final EzeeCreateUpdateDeleteEntityType type, final Set<EzeeInvoice> invoices,
+			final EzeePaymentType defaultType) {
 		super(service, cache, handler, entity, type);
+		this.defaultType = defaultType;
 		initGrid();
 		this.invoices = (entity != null) ? entity.getInvoices() : invoices;
 		setWidget(uiBinder.createAndBindUi(this));
@@ -137,6 +156,21 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 		txtAmount.setEnabled(false);
 		txtTax.setEnabled(false);
 		txtTotal.setEnabled(false);
+		lstPaymentType.setItemSelected(getItemIndex(defaultType.name(), lstPaymentType), true);
+		lstPaymentType.addChangeHandler(new ChangeHandler() {
+			@Override
+			public void onChange(ChangeEvent event) {
+				EzeePaymentType type = EzeePaymentType.valueOf(lstPaymentType.getSelectedItemText());
+				boolean showChequeFields = (type == cheque);
+				showCheckFields(showChequeFields);
+			}
+		});
+	}
+
+	private void showCheckFields(boolean show) {
+		lblChequeNumber.setVisible(show);
+		txtChequeNumber.setVisible(show);
+		chkPresented.setVisible(show);
 	}
 
 	private void loadInvoices() {
@@ -147,9 +181,7 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 	}
 
 	private void loadTypes() {
-		for (EzeePaymentType type : EzeePaymentType.values()) {
-			lstPaymentType.addItem(type.toString());
-		}
+		loadEnums(EzeePaymentType.values(), lstPaymentType);
 	}
 
 	private void updateTotals() {
@@ -173,6 +205,10 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 	protected void initialise() {
 		lstPaymentType.setItemSelected(getItemIndex(entity.getType().toString(), lstPaymentType), true);
 		txtDescription.setText(entity.getPaymentDescription());
+		boolean showChequeFields = (entity.getType() == cheque);
+		showCheckFields(showChequeFields);
+		txtChequeNumber.setText(entity.getChequeNumber());
+		chkPresented.setValue(entity.isChequePresented());
 	}
 
 	@Override
@@ -186,6 +222,12 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 		entity.setPaymentDescription(txtDescription.getText());
 		entity.setInvoices(new HashSet<>(model.getHandler().getList()));
 		entity.setUpdated(new Date());
+		if (hasLength(txtChequeNumber.getText())) {
+			entity.setChequeNumber(txtChequeNumber.getText());
+		} else {
+			entity.setChequeNumber(null);
+		}
+		entity.setChequePresented(chkPresented.getValue());
 	}
 
 	@UiHandler("btnClose")

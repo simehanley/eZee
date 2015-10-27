@@ -1,7 +1,9 @@
 package com.ezee.client.grid.payment;
 
+import static com.ezee.client.css.EzeeInvoiceDefaultResources.INSTANCE;
 import static com.ezee.client.grid.payment.EzeePaymentUtils.getInvoiceNumbers;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
+import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -15,11 +17,11 @@ import com.google.gwt.user.cellview.client.DataGrid;
 
 public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 
-	private static final String PAYMENT_DATE = "Pay Date";
-	private static final String CREATED_DATE = "Created Date";
+	private static final String PAYMENT_DATE = "Paid";
+	private static final String CREATED_DATE = "Created";
 
-	private static final String PAYMENT_TYPE = "Pay Type";
-	private static final String PAYMENT_AMOUNT = "Pay Amount";
+	private static final String PAYMENT_TYPE = "Type";
+	private static final String PAYMENT_AMOUNT = "Amount";
 	private static final String DESCRIPTION = "Description";
 	private static final String INVOICES = "Invoices";
 
@@ -103,5 +105,13 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 		grid.getColumnSortList().push(columns.get(PAYMENT_DATE));
 		grid.getColumnSortList().push(columns.get(CREATED_DATE));
 		grid.getColumnSortList().push(columns.get(PAYMENT_TYPE));
+	}
+
+	@Override
+	protected String resolveCellStyleNames(final EzeePayment payment) {
+		if (payment.getType() == cheque && !payment.isChequePresented()) {
+			return INSTANCE.css().lightorangeforeground();
+		}
+		return INSTANCE.css().greenforeground();
 	}
 }

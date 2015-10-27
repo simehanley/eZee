@@ -7,6 +7,7 @@ import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.payee.EzeeCreateUpdateDeletePayee;
 import com.ezee.client.grid.EzeeFinancialEntityGrid;
+import com.ezee.client.grid.EzeeFinancialEntityToolbar;
 import com.ezee.model.entity.EzeePayee;
 
 /**
@@ -24,6 +25,13 @@ public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
 		super.initGrid();
 		model = new EzeePayeeGridModel();
 		model.bind(grid);
+	}
+	
+	@Override
+	protected void initFilter() {
+		super.initFilter();
+		toolBar = new EzeeFinancialEntityToolbar<EzeePayee>(this);
+		filterpanel.add(toolBar);
 	}
 
 	@Override

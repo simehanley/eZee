@@ -60,6 +60,12 @@
 			<g:at top="214" left="722">
 				<g:ListBox styleName="{res.css.gwtListBoxMedium}" ui:field="lstDebtAge" />
 			</g:at>
+			<g:at top="248" left="10">
+				<g:Label text="Classification" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="247" left="174">
+				<g:ListBox styleName="{res.css.gwtListBoxSmall}" ui:field="lstClassification" />
+			</g:at>
 			<g:at top="10" left="388">
 				<g:Label text="Description" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>
@@ -68,6 +74,9 @@
 			</g:at>
 			<g:at top="11" left="855">
 				<g:CheckBox text="Taxable" styleName="{res.css.gwtCheckBoxSmall}" value="true" ui:field="chkTaxable" />
+			</g:at>
+			<g:at top="248" left="555">
+				<g:Button text="Upload" ui:field="btnUpload" styleName="{res.css.gwtButton}" />
 			</g:at>
 			<g:at top="248" left="650">
 				<g:Button ui:field="btnDelete" text="Delete" styleName="{res.css.gwtButton}" />

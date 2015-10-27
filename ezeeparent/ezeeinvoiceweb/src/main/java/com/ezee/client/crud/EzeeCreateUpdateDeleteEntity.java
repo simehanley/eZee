@@ -65,6 +65,14 @@ public abstract class EzeeCreateUpdateDeleteEntity<T extends EzeeDatabaseEntity>
 		}
 	}
 
+	protected <K extends Enum<K>> void loadEnums(final Enum<K>[] ezeeEnum, final ListBox listBox) {
+		if (ezeeEnum != null && ezeeEnum.length > ZERO) {
+			for (Enum<K> e : ezeeEnum) {
+				listBox.addItem(e.name());
+			}
+		}
+	}
+
 	protected int getItemIndex(final String value, final ListBox listBox) {
 		if (value != null) {
 			for (int i = ZERO; i < listBox.getItemCount(); i++) {

@@ -47,6 +47,9 @@ public class EzeePayerPayeeCommon extends Composite {
 	@UiField
 	TextBox txtPhone;
 
+	@UiField
+	TextBox txtEmail;
+
 	public EzeePayerPayeeCommon() {
 		initWidget(uiBinder.createAndBindUi(this));
 		initStates();
@@ -136,6 +139,14 @@ public class EzeePayerPayeeCommon extends Composite {
 		return ZERO;
 	}
 
+	public final String getEmail() {
+		return txtEmail.getText();
+	}
+
+	public void setEmail(final String eMail) {
+		this.txtEmail.setText(eMail);
+	}
+
 	public void disable() {
 		txtName.setEnabled(false);
 		txtAddressLine1.setEnabled(false);
@@ -145,5 +156,6 @@ public class EzeePayerPayeeCommon extends Composite {
 		txtPostCode.setEnabled(false);
 		lstState.setEnabled(false);
 		txtPhone.setEnabled(false);
+		txtEmail.setEnabled(false);
 	}
 }

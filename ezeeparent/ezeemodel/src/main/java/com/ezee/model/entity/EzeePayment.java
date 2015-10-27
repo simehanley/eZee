@@ -49,6 +49,12 @@ public class EzeePayment extends EzeeDatabaseEntity {
 	@JoinTable(name = "EZEE_PAYMENT_TO_INVOICE_MAPPING", joinColumns = @JoinColumn(name = "PAYMENT_ID") , inverseJoinColumns = @JoinColumn(name = "INVOICE_ID") )
 	private Set<EzeeInvoice> invoices;
 
+	@Column(name = "CHEQUE_NUMBER")
+	private String chequeNumber;
+
+	@Column(name = "CHEQUE_PRESENTED")
+	private boolean chequePresented;
+
 	public EzeePayment() {
 		super();
 	}
@@ -115,6 +121,22 @@ public class EzeePayment extends EzeeDatabaseEntity {
 
 	public void setPaymentDescription(String paymentDescription) {
 		this.paymentDescription = paymentDescription;
+	}
+
+	public String getChequeNumber() {
+		return chequeNumber;
+	}
+
+	public void setChequeNumber(String chequeNumber) {
+		this.chequeNumber = chequeNumber;
+	}
+
+	public boolean isChequePresented() {
+		return chequePresented;
+	}
+
+	public void setChequePresented(boolean chequePresented) {
+		this.chequePresented = chequePresented;
 	}
 
 	@Override

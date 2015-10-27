@@ -1,0 +1,18 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:p1="urn:import:com.google.gwt.user.datepicker.client">
+
+	<ui:with type="com.ezee.client.css.EzeeInvoiceDefaultResources" field="res" />
+
+	<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="500px"
+		height="45px">
+		<g:Label text="From" styleName="{res.css.gwtLabelSmall}" />
+		<p1:DateBox ui:field="dtFrom" styleName="{res.css.gwtDateBoxSmall}" />
+		<g:Label text="To" styleName="{res.css.gwtLabelSmall}" />
+		<p1:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtTo" />
+		<g:Label text="Invoice(s)" styleName="{res.css.gwtLabelMedium}" />
+		<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtInvoiceNumber" />
+		<g:Button text="Refresh" ui:field="btnRefresh" styleName="{res.css.gwtButton}" />
+		<g:Button text="Clear" ui:field="btnClear" styleName="{res.css.gwtButton}" />
+	</g:HorizontalPanel>
+</ui:UiBinder> 

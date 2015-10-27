@@ -1,5 +1,7 @@
 package com.ezee.dao;
 
+import static com.ezee.model.entity.enums.EzeeInvoiceClassification.expense;
+
 import java.util.Date;
 
 import org.junit.Test;
@@ -31,7 +33,7 @@ public class EzeeInvoiceDaoTest extends AbstractEzeeDaoTest {
 		payeeDao.save(payee);
 		payerDao.save(payer);
 		EzeeInvoice invoice = new EzeeInvoice("123456", payee, payer, 100., 10., "First invoice test.", true, false,
-				null, null, new Date(), null);
+				null, null, new Date(), null, expense);
 		TestCase.assertNull(invoice.getId());
 		getCtx().getBean(EzeeInvoiceDao.class).save(invoice);
 		TestCase.assertNotNull(invoice.getId());

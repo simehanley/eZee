@@ -10,14 +10,13 @@ import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.CheckBox;
 
 public class EzeeCreateUpdateDeletePayment extends DialogBox {
 
 	private static EzeeCreateUpdateDeletePaymentUiBinder uiBinder = GWT
 			.create(EzeeCreateUpdateDeletePaymentUiBinder.class);
-	
-	@UiField
-	ListBox lstPremises;
 	
 	@UiField
 	ListBox lstPaymentType;
@@ -33,6 +32,9 @@ public class EzeeCreateUpdateDeletePayment extends DialogBox {
 	@UiField Button btnDelete;
 	@UiField Button btnSave;
 	@UiField Button btnClose;
+	@UiField Label lblChequeNumber;
+	@UiField TextBox txtChequeNumber;
+	@UiField CheckBox chkPresented;
 
 	interface EzeeCreateUpdateDeletePaymentUiBinder extends UiBinder<Widget, EzeeCreateUpdateDeletePayment> {
 	}

@@ -41,19 +41,23 @@ public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity implements 
 	@Column(name = "PHONE")
 	private String phone;
 
+	@Column(name = "EMAIL")
+	private String email;
+
 	public EzeeFinancialEntity() {
 		super();
 	}
 
 	public EzeeFinancialEntity(final String name, final String addressLineOne, final String addressLineTwo,
 			final String suburb, final String city, final String state, final String postcode, final String phone,
-			final Date created, final Date updated) {
-		this(NULL_ID, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, created, updated);
+			final String email, final Date created, final Date updated) {
+		this(NULL_ID, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, email, created,
+				updated);
 	}
 
 	public EzeeFinancialEntity(final Long id, final String name, final String addressLineOne,
 			final String addressLineTwo, final String suburb, final String city, final String state,
-			final String postcode, final String phone, final Date created, final Date updated) {
+			final String postcode, final String phone, final String email, final Date created, final Date updated) {
 		super(id, created, updated);
 		this.name = name;
 		this.addressLineOne = addressLineOne;
@@ -128,6 +132,14 @@ public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity implements 
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override

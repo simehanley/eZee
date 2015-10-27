@@ -29,6 +29,7 @@ import com.ezee.model.entity.EzeeHasName;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayee;
 import com.ezee.model.entity.EzeePayer;
+import com.ezee.model.entity.enums.EzeeInvoiceClassification;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -90,6 +91,9 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	ListBox lstDebtAge;
 
 	@UiField
+	ListBox lstClassification;
+
+	@UiField
 	RichTextArea txtDescription;
 
 	@UiField
@@ -103,6 +107,9 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 	@UiField
 	Button btnDelete;
+
+	@UiField
+	Button btnUpload;
 
 	private double taxRate;
 
@@ -200,6 +207,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		entity.setPaid(dtPaid.getValue() != null);
 		entity.setDescription(txtDescription.getText());
 		entity.setUpdated(new Date());
+		entity.setClassification(EzeeInvoiceClassification.valueOf(lstClassification.getSelectedItemText()));
 	}
 
 	private void initForm() {
@@ -224,6 +232,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 			}
 		});
+		lstClassification.setItemSelected(getItemIndex(entity.getClassification().name(), lstClassification), true);
 		resolveDueDate();
 	}
 
@@ -252,6 +261,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		loadEntities(EzeePayee.class, lstSupplier);
 		loadEntities(EzeePayer.class, lstPremises);
 		loadEntities(EzeeDebtAgeRule.class, lstDebtAge);
+		loadEnums(EzeeInvoiceClassification.values(), lstClassification);
 	}
 
 	@UiHandler("btnClose")
@@ -297,6 +307,13 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 				close();
 			}
 		});
+	}
+
+	@UiHandler("btnUpload")
+	void onUploadClick(ClickEvent event) {
+		EzeeUploadInvoiceForm upload = new EzeeUploadInvoiceForm(txtInvoiceNumber.getText(),
+				lstPremises.getSelectedItemText(), lstSupplier.getSelectedItemText());
+		upload.center();
 	}
 
 	private final class NumericKeyPressHandler implements KeyPressHandler {

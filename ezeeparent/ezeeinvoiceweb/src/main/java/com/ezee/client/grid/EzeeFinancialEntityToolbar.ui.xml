@@ -1,0 +1,14 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:with type="com.ezee.client.css.EzeeInvoiceDefaultResources" field="res" />
+
+	<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="300px"
+		height="45px">
+		<g:Label text="Name" styleName="{res.css.gwtLabelSmall}" />
+		<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtName" />
+		<g:Button text="Refresh" ui:field="btnRefresh" styleName="{res.css.gwtButton}" />
+		<g:Button text="Clear" ui:field="btnClear" styleName="{res.css.gwtButton}" />
+	</g:HorizontalPanel>
+
+</ui:UiBinder> 

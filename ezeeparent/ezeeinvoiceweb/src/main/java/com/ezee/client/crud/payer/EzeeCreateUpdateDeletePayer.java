@@ -90,6 +90,7 @@ public class EzeeCreateUpdateDeletePayer extends EzeeCreateUpdateDeleteFinancial
 		payer.setState(entity.getState());
 		payer.setPostCode(entity.getPostcode());
 		payer.setPhone(entity.getPhone());
+		payer.setEmail(entity.getEmail());
 	}
 
 	@Override
@@ -106,6 +107,7 @@ public class EzeeCreateUpdateDeletePayer extends EzeeCreateUpdateDeleteFinancial
 		entity.setState(payer.getState());
 		entity.setPostcode(payer.getPostCode());
 		entity.setPhone(payer.getPhone());
+		entity.setEmail(payer.getEmail());
 		entity.setUpdated(new Date());
 	}
 

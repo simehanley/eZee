@@ -1,5 +1,6 @@
 package com.ezee.client.grid;
 
+import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.web.EzeeFromatUtils.getDateFormat;
 
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.user.cellview.client.Column;
@@ -22,7 +24,7 @@ import com.google.gwt.view.client.ListDataProvider;
  */
 public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 
-	protected static final String DATE_FIELD_WIDTH = "100px";
+	protected static final String DATE_FIELD_WIDTH = "75px";
 	protected static final String NUMERIC_FIELD_WIDTH = "160px";
 	protected static final String BOOLEAN_FIELD_WIDTH = "160px";
 
@@ -70,6 +72,11 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 			public String getValue(final T entity) {
 				return resolveTextFieldValue(fieldName, entity);
 			}
+
+			@Override
+			public String getCellStyleNames(final Context context, final T entity) {
+				return resolveCellStyleNames(entity);
+			}
 		};
 		createColumn(columns, grid, column, fieldName, width, sortable);
 	}
@@ -83,6 +90,11 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 			public Date getValue(final T entity) {
 				return resolveDateFieldValue(fieldName, entity);
 			}
+
+			@Override
+			public String getCellStyleNames(final Context context, final T entity) {
+				return resolveCellStyleNames(entity);
+			}
 		};
 		createColumn(columns, grid, column, fieldName, width, sortable);
 	}
@@ -93,6 +105,11 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 			@Override
 			public String getValue(final T entity) {
 				return resolveTextFieldValue(fieldName, entity);
+			}
+
+			@Override
+			public String getCellStyleNames(final Context context, final T entity) {
+				return resolveCellStyleNames(entity);
 			}
 		};
 		createColumn(columns, grid, column, fieldName, width, false);
@@ -106,6 +123,11 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 			public Boolean getValue(T entity) {
 				return resolveBooleanFieldValue(fieldName, entity);
 			}
+
+			@Override
+			public String getCellStyleNames(final Context context, final T entity) {
+				return resolveCellStyleNames(entity);
+			}
 		};
 		createColumn(columns, grid, column, fieldName, width, true);
 	}
@@ -116,5 +138,9 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 		grid.addColumn(column, fieldName);
 		grid.setColumnWidth(column, width);
 		columns.put(fieldName, column);
+	}
+
+	protected String resolveCellStyleNames(final T entity) {
+		return EMPTY_STRING;
 	}
 }

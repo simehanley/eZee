@@ -1,5 +1,6 @@
 package com.ezee.client.grid.invoice;
 
+import static com.ezee.client.css.EzeeInvoiceDefaultResources.INSTANCE;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 
 import java.util.Comparator;
@@ -26,9 +27,9 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	private static final String TAX = "Tax";
 	private static final String TOTAL = "Total";
 	private static final String DESCRIPTION = "Description";
-	private static final String CREATED_DATE = "Created Date";
-	private static final String DUE_DATE = "Due Date";
-	private static final String PAID_PATE = "Pay Date";
+	private static final String CREATED_DATE = "Created";
+	private static final String DUE_DATE = "Due";
+	private static final String PAID_PATE = "Paid";
 
 	private static final String INVOICE_NUM_WIDTH = "200px";
 	private static final String SUPPLIER_WIDTH = "300px";
@@ -150,5 +151,13 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		grid.getColumnSortList().push(columns.get(CREATED_DATE));
 		grid.getColumnSortList().push(columns.get(DUE_DATE));
 		grid.getColumnSortList().push(columns.get(PAID_PATE));
+	}
+
+	@Override
+	protected String resolveCellStyleNames(final EzeeInvoice invoice) {
+		if (invoice.isPaid()) {
+			return INSTANCE.css().greenforeground();
+		}
+		return INSTANCE.css().lightorangeforeground();
 	}
 }

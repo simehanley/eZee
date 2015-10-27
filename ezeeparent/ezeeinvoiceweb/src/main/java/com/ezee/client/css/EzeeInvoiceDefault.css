@@ -14,8 +14,18 @@
 	background-color: #009933;
 }
 
+.greenforeground {
+	color: #009933;
+	font-weight: bold;
+}
+
 .lightorange {
 	background-color: #FFCC33;
+}
+
+.lightorangeforeground {
+	color: orange;
+	font-weight: bold;
 }
 
 .header {
@@ -52,11 +62,20 @@
 }
 
 .toolbar {
+	padding: 3px;
 	background-color: #C8C8C8;
-	border: 1px solid #6f7277;
+	border: 2px solid #6f7277;
 }
 
 /** GWT Component Overrides **/
+.gwtLabelBigCentered {
+	width: 200px;
+	border: 1px solid black;
+	padding: 5px;
+	font-weight: bold;
+	text-align: center;
+}
+
 .gwtLabelBig {
 	width: 200px;
 	border: 1px solid black;
@@ -99,6 +118,17 @@
 	margin: 3px;
 	border: 1px solid black;
 	font-weight: bold;
+}
+
+.gwtTextBoxMediumEmail {
+	width: 200px;
+	height: 20px;
+	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+	color: blue;
+	text-decoration: underline;
 }
 
 .gwtTextBoxLarge {
@@ -155,6 +185,15 @@
 }
 
 .gwtCheckBoxSmall {
+	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwtFileUploadLarge {
+	width: 300px;
+	height: 20px;
 	padding: 3px;
 	margin: 3px;
 	border: 1px solid black;

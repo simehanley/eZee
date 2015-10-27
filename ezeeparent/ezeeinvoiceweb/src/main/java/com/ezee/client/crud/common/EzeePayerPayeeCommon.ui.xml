@@ -4,7 +4,7 @@
 	<ui:with type="com.ezee.client.css.EzeeInvoiceDefaultResources" field="res" />
 
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="279px" width="490px" styleName="gwt-Panel-Border">
+		<g:AbsolutePanel height="305px" width="490px">
 			<g:at top="10" left="10">
 				<g:Label text="Name" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>
@@ -23,10 +23,10 @@
 			<g:at top="170" left="10">
 				<g:Label text="State" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>
-			<g:at top="238" left="10">
+			<g:at top="235" left="10">
 				<g:Label text="Phone" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>
-			<g:at top="204" left="10">
+			<g:at top="203" left="10">
 				<g:Label text="Post Code" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>
 			<g:at top="10" left="174">
@@ -44,14 +44,20 @@
 			<g:at top="138" left="174">
 				<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtCity" />
 			</g:at>
+			<g:at top="203" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtPostCode" />
+			</g:at>
+			<g:at top="235" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtPhone" />
+			</g:at>
 			<g:at top="170" left="174">
 				<g:ListBox styleName="{res.css.gwtListBoxSmall}" ui:field="lstState" />
 			</g:at>
-			<g:at top="204" left="174">
-				<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtPostCode" />
+			<g:at top="267" left="10">
+				<g:Label text="EMail" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>
-			<g:at top="238" left="174">
-				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtPhone" />
+			<g:at top="267" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxMediumEmail}" ui:field="txtEmail" />
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>

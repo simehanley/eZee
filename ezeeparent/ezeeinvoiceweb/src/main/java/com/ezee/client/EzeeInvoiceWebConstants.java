@@ -22,4 +22,6 @@ public interface EzeeInvoiceWebConstants {
 	String EDIT_PAYMENT = "Edit Payment";
 	String NEW_PAYMENT = "New Payment";
 	String DELETE_PAYMENT = "Delete Payment";
+
+	String FILE_UPLOAD_SERVICE = "fileuploadservice";
 }

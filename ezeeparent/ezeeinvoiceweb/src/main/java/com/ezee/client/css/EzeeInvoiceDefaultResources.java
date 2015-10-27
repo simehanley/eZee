@@ -23,7 +23,11 @@ public interface EzeeInvoiceDefaultResources extends ClientBundle {
 
 		String green();
 
+		String greenforeground();
+
 		String lightorange();
+
+		String lightorangeforeground();
 
 		String header();
 
@@ -39,10 +43,12 @@ public interface EzeeInvoiceDefaultResources extends ClientBundle {
 
 		String toolbar();
 
+		String gwtLabelBigCentered();
+
 		String gwtLabelBig();
 
 		String gwtLabelMedium();
-		
+
 		String gwtLabelSmall();
 
 		String gwtTextBoxSmall();
@@ -64,6 +70,10 @@ public interface EzeeInvoiceDefaultResources extends ClientBundle {
 		String gwtDateBoxSmall();
 
 		String gwtCheckBoxSmall();
+
+		String gwtFileUploadLarge();
+		
+		String gwtTextBoxMediumEmail();
 	}
 
 	@Source("EzeeInvoiceDefault.css")

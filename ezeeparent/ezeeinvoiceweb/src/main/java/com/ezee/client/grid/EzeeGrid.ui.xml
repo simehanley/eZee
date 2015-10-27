@@ -5,16 +5,14 @@
 	<ui:with type="com.ezee.client.css.EzeeInvoiceDefaultResources" field="res" />
 
 	<g:DockLayoutPanel unit="EM">
-		<g:north size="3">
-			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" height="100%" width="100%" styleName="{res.css.toolbar}">
-				<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="500px"
-					ui:field="filterpanel">
-				</g:HorizontalPanel>
+		<g:north size="4">
+			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" height="100%"
+				width="100%" styleName="{res.css.toolbar}" ui:field="filterpanel">
 			</g:HorizontalPanel>
 		</g:north>
 		<g:center>
 			<g:ResizeLayoutPanel height="100%" width="100%">
-				<p1:DataGrid width="100%" height="100%" ui:field="grid" />
+				<p1:DataGrid width="100%" height="100%" ui:field="grid" styleName="{res.css.gwtPanelBorder}" />
 			</g:ResizeLayoutPanel>
 		</g:center>
 	</g:DockLayoutPanel>

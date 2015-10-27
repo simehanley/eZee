@@ -94,6 +94,7 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 		payee.setState(entity.getState());
 		payee.setPostCode(entity.getPostcode());
 		payee.setPhone(entity.getPhone());
+		payee.setEmail(entity.getEmail());
 		payeebank.setBank(entity.getBank());
 		payeebank.setAccountName(entity.getAccountName());
 		payeebank.setAccountNumber(entity.getAccountNumber());
@@ -114,6 +115,7 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 		entity.setState(payee.getState());
 		entity.setPostcode(payee.getPostCode());
 		entity.setPhone(payee.getPhone());
+		entity.setEmail(payee.getEmail());
 		entity.setBank(payeebank.getBank());
 		entity.setAccountName(payeebank.getAccountName());
 		entity.setAccountNumber(payeebank.getAccountNumber());
