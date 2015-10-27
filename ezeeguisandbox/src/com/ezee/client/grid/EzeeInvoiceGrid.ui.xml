@@ -7,17 +7,20 @@
 	<g:DockLayoutPanel unit="EM">
 		<g:north size="3">
 			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" height="100%">
-				<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="500px">
+				<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="1055px">
 					<g:Label text="New Label" styleName="gwt-Label-Medium"/>
 					<g:TextBox styleName="gwt-TextBox-Medium"/>
 					<g:Label text="New Label" styleName="gwt-Label-Medium"/>
 					<g:TextBox styleName="gwt-TextBox-Medium"/>
+					<g:Button/>
+					<g:Button/>
+					<g:CheckBox text="Show Paid" width="91px" styleName="gwt-CheckBox-Small"/>
 				</g:HorizontalPanel>
 			</g:HorizontalPanel>
 		</g:north>
 		<g:center>
 			<g:ResizeLayoutPanel height="100%" width="100%">
-				<p1:DataGrid width="450px" height="100%" ui:field="grid" />
+				<p1:DataGrid width="922px" height="100%" ui:field="grid" />
 			</g:ResizeLayoutPanel>
 		</g:center>
 	</g:DockLayoutPanel>

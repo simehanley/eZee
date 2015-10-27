@@ -7,16 +7,19 @@
 	<g:HTMLPanel>
 		<g:AbsolutePanel height="478px" width="1313px">
 			<g:at top="10" left="10">
-				<g:Label text="Premises" styleName="gwt-Label-Medium" />
-			</g:at>
-			<g:at top="9" left="174">
-				<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstPremises" />
-			</g:at>
-			<g:at top="10" left="390">
 				<g:Label text="Type" styleName="gwt-Label-Medium" />
 			</g:at>
-			<g:at top="9" left="554">
+			<g:at top="9" left="174">
 				<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstPaymentType" />
+			</g:at>
+			<g:at top="10" left="391">
+				<g:Label text="Cheque Number" styleName="gwt-Label-Medium" ui:field="lblChequeNumber" />
+			</g:at>
+			<g:at top="10" left="554">
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtChequeNumber" />
+			</g:at>
+			<g:at top="13" left="770">
+				<g:CheckBox text="Presented" styleName="gwt-CheckBox-Small" ui:field="chkPresented" />
 			</g:at>
 			<g:at top="44" left="10">
 				<g:Label text="Description" styleName="gwt-Label-Medium" />

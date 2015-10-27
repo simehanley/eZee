@@ -1,81 +1,91 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.google.gwt.user.datepicker.client">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:p1="urn:import:com.google.gwt.user.datepicker.client">
 	<ui:style>
 	
 	</ui:style>
 	<g:HTMLPanel>
 		<g:AbsolutePanel height="284px" width="940px">
 			<g:at top="10" left="10">
-				<g:Label text="Invoice Number" styleName="gwt-Label-Medium"/>
+				<g:Label text="Invoice Number" styleName="gwt-Label-Medium" />
 			</g:at>
 			<g:at top="44" left="10">
-				<g:Label text="Premises" styleName="gwt-Label-Medium"/>
+				<g:Label text="Premises" styleName="gwt-Label-Medium" />
 			</g:at>
 			<g:at top="78" left="10">
-				<g:Label text="Supplier" styleName="gwt-Label-Medium"/>
+				<g:Label text="Supplier" styleName="gwt-Label-Medium" />
 			</g:at>
 			<g:at top="112" left="10">
-				<g:Label text="Amount" styleName="gwt-Label-Medium"/>
+				<g:Label text="Amount" styleName="gwt-Label-Medium" />
 			</g:at>
 			<g:at top="146" left="10">
-				<g:Label text="Tax" styleName="gwt-Label-Medium"/>
+				<g:Label text="Tax" styleName="gwt-Label-Medium" />
 			</g:at>
 			<g:at top="180" left="10">
-				<g:Label text="Total" styleName="gwt-Label-Medium"/>
+				<g:Label text="Total" styleName="gwt-Label-Medium" />
 			</g:at>
 			<g:at top="10" left="174">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtInvoiceNumber"/>
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtInvoiceNumber" />
 			</g:at>
 			<g:at top="44" left="174">
-				<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstPremises"/>
+				<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstPremises" />
 			</g:at>
 			<g:at top="78" left="174">
-				<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstSupplier"/>
+				<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstSupplier" />
 			</g:at>
 			<g:at top="112" left="174">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtAmount"/>
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtAmount" />
 			</g:at>
 			<g:at top="146" left="174">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtTax"/>
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtTax" />
 			</g:at>
 			<g:at top="180" left="174">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtTotal"/>
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtTotal" />
 			</g:at>
 			<g:at top="10" left="388">
-				<g:Label text="Description" styleName="gwt-Label-Medium"/>
+				<g:Label text="Description" styleName="gwt-Label-Medium" />
 			</g:at>
 			<g:at top="44" left="390">
-				<g:RichTextArea width="540px" height="162px" styleName="gwt-RichTextArea-Medium" ui:field="txtDescription"/>
+				<g:RichTextArea width="540px" height="162px" styleName="gwt-RichTextArea-Medium" ui:field="txtDescription" />
 			</g:at>
 			<g:at top="214" left="174">
-				<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtDue"/>
+				<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtDue" />
 			</g:at>
 			<g:at top="214" left="10">
-				<g:Label text="Due Date" styleName="gwt-Label-Medium"/>
+				<g:Label text="Due Date" styleName="gwt-Label-Medium" />
 			</g:at>
 			<g:at top="214" left="284">
-				<g:Label text="Paid Date" styleName="gwt-Label-Medium"/>
+				<g:Label text="Paid Date" styleName="gwt-Label-Medium" />
 			</g:at>
 			<g:at top="214" left="448">
-				<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtPaid"/>
+				<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtPaid" />
 			</g:at>
 			<g:at top="214" left="558">
-				<g:Label text="Debt Age Rule" styleName="gwt-Label-Medium"/>
+				<g:Label text="Debt Age Rule" styleName="gwt-Label-Medium" />
 			</g:at>
 			<g:at top="214" left="722">
-				<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstDebtAge"/>
+				<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstDebtAge" />
 			</g:at>
 			<g:at top="11" left="855">
-				<g:CheckBox text="Taxable" styleName="gwt-CheckBox-Small" value="true" ui:field="chkTaxable"/>
+				<g:CheckBox text="Taxable" styleName="gwt-CheckBox-Small" value="true" ui:field="chkTaxable" />
+			</g:at>
+			<g:at top="248" left="555">
+				<g:Button text="Upload" ui:field="btnUpload" />
 			</g:at>
 			<g:at top="248" left="650">
-				<g:Button ui:field="btnDelete" text="Delete"/>
+				<g:Button ui:field="btnDelete" text="Delete" />
 			</g:at>
 			<g:at top="248" left="746">
-				<g:Button ui:field="btnEdit" text="Edit"/>
+				<g:Button ui:field="btnEdit" text="Edit" />
 			</g:at>
 			<g:at top="248" left="842">
-				<g:Button ui:field="btnClose" text="Close"/>
+				<g:Button ui:field="btnClose" text="Close" />
+			</g:at>
+			<g:at top="248" left="10">
+				<g:Label text="Classification" styleName="gwt-Label-Medium"/>
+			</g:at>
+			<g:at top="247" left="174">
+				<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstClassification"/>
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>

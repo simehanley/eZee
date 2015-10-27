@@ -4,7 +4,7 @@
 	
 	</ui:style>
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="279px" width="490px" styleName="gwt-Panel-Border">
+		<g:AbsolutePanel height="305px" width="490px" styleName="gwt-Panel-Border">
 			<g:at top="10" left="10">
 				<g:Label text="Name" styleName="gwt-Label-Medium"/>
 			</g:at>
@@ -23,10 +23,10 @@
 			<g:at top="170" left="10">
 				<g:Label text="State" styleName="gwt-Label-Medium"/>
 			</g:at>
-			<g:at top="238" left="10">
+			<g:at top="235" left="10">
 				<g:Label text="Phone" styleName="gwt-Label-Medium"/>
 			</g:at>
-			<g:at top="204" left="10">
+			<g:at top="203" left="10">
 				<g:Label text="Post Code" styleName="gwt-Label-Medium"/>
 			</g:at>
 			<g:at top="10" left="174">
@@ -44,14 +44,20 @@
 			<g:at top="138" left="174">
 				<g:TextBox styleName="gwt-TextBox-Large" ui:field="txtCity"/>
 			</g:at>
-			<g:at top="208" left="177">
+			<g:at top="206" left="177">
 				<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtPostCode"/>
 			</g:at>
-			<g:at top="238" left="174">
+			<g:at top="235" left="174">
 				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtPhone"/>
 			</g:at>
 			<g:at top="170" left="174">
 				<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstState"/>
+			</g:at>
+			<g:at top="267" left="10">
+				<g:Label text="EMail" styleName="gwt-Label-Medium"/>
+			</g:at>
+			<g:at top="267" left="174">
+				<g:Hyperlink text="New Hyperlink" targetHistoryToken="newHistoryToken" styleName="gwt-TextBox-Medium"/>
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>
