@@ -69,9 +69,6 @@
 			<g:at top="11" left="855">
 				<g:CheckBox text="Taxable" styleName="gwt-CheckBox-Small" value="true" ui:field="chkTaxable" />
 			</g:at>
-			<g:at top="248" left="555">
-				<g:Button text="Upload" ui:field="btnUpload" />
-			</g:at>
 			<g:at top="248" left="650">
 				<g:Button ui:field="btnDelete" text="Delete" />
 			</g:at>

@@ -110,8 +110,11 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	}
 
 	private void uploadInvoice() {
-		EzeeUploadInvoiceForm uploadInvoice = new EzeeUploadInvoiceForm(getSelected(), this);
-		uploadInvoice.center();
+		EzeeInvoice entity = getSelected();
+		if (entity != null) {
+			EzeeUploadInvoiceForm uploadInvoice = new EzeeUploadInvoiceForm(getSelected(), this);
+			uploadInvoice.center();
+		}
 	}
 
 	@Override
@@ -132,9 +135,11 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	}
 
 	@Override
-	public void invoieUploaded(final String filename) {
+	public void invoiceUploaded(final String filename) {
 		EzeeInvoice selected = getSelected();
-		selected.setFilename(filename);
-		onSave(selected);
+		if (selected != null) {
+			selected.setFilename(filename);
+			onSave(selected);
+		}
 	}
 }

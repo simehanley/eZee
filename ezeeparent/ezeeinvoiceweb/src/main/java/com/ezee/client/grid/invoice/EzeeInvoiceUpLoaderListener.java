@@ -6,5 +6,5 @@ package com.ezee.client.grid.invoice;
  *
  */
 public interface EzeeInvoiceUpLoaderListener {
-	void invoieUploaded(String filename);
+	void invoiceUploaded(String filename);
 }

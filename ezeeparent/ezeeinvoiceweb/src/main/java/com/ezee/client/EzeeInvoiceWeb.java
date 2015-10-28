@@ -15,7 +15,6 @@ import com.ezee.client.grid.invoice.EzeeInvoiceGrid;
 import com.ezee.client.grid.payee.EzeePayeeGrid;
 import com.ezee.client.grid.payer.EzeePayerGrid;
 import com.ezee.client.grid.payment.EzeePaymentGrid;
-import com.ezee.client.images.EzeeInvoiceImages;
 import com.ezee.client.main.EzeeInvoiceMain;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;

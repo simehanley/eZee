@@ -26,8 +26,8 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	private static final String INVOICES = "Invoices";
 
 	private static final String PAYMENT_TYPE_WIDTH = "150px";
-	private static final String DESCRIPTION_WIDTH = "400px";
-	private static final String INVOICES_WIDTH = "400px";
+	private static final String DESCRIPTION_WIDTH = "300px";
+	private static final String INVOICES_WIDTH = "300px";
 
 	@Override
 	protected Map<String, Column<EzeePayment, ?>> createColumns(final DataGrid<EzeePayment> grid) {

@@ -20,11 +20,11 @@ public abstract class EzeeFinancialEntityGridModel<T extends EzeeFinancialEntity
 	protected static final String POST_CODE = "Post Code";
 	protected static final String PHONE = "Phone";
 
-	protected static final String NAME_WIDTH = "300px";
-	protected static final String ADDRESS_LINE_1_WIDTH = "400px";
-	protected static final String ADDRESS_LINE_2_WIDTH = "400px";
-	protected static final String SUBURB_WIDTH = "250px";
-	protected static final String CITY_WIDTH = "250px";
+	protected static final String NAME_WIDTH = "250px";
+	protected static final String ADDRESS_LINE_1_WIDTH = "350px";
+	protected static final String ADDRESS_LINE_2_WIDTH = "350px";
+	protected static final String SUBURB_WIDTH = "200px";
+	protected static final String CITY_WIDTH = "200px";
 	protected static final String STATE_WIDTH = "100px";
 	protected static final String POST_CODE_WIDTH = "100px";
 	protected static final String PHONE_WIDTH = "200px";

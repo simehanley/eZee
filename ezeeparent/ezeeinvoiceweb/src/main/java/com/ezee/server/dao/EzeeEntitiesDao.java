@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.hibernate.collection.spi.PersistentCollection;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayment;
 
 public class EzeeEntitiesDao {
@@ -64,6 +65,8 @@ public class EzeeEntitiesDao {
 		public <T extends EzeeDatabaseEntity> void postProcessEntity(final T entity) {
 			if (entity instanceof EzeePayment) {
 				postProcessPayment((EzeePayment) entity);
+			} else if (entity instanceof EzeeInvoice) {
+				postProcessInvoice((EzeeInvoice) entity);
 			}
 		}
 
@@ -75,6 +78,14 @@ public class EzeeEntitiesDao {
 			if (!isEmpty(payment.getInvoices())) {
 				payment.setInvoices(new HashSet<>(payment.getInvoices()));
 			}
+		}
+
+		/**
+		 * Post process {@link EzeeInvoice} to remove potentially large binary
+		 * file object
+		 */
+		public void postProcessInvoice(EzeeInvoice invoice) {
+			invoice.setFile(null);
 		}
 	}
 }

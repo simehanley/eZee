@@ -9,9 +9,9 @@ import com.google.gwt.resources.client.ImageResource;
  * @author siborg
  *
  */
-public interface EzeeInvoiceImages extends ClientBundle {
+public interface EzeeInvoiceImageResources extends ClientBundle {
 
-	public static EzeeInvoiceImages INSTANCE = GWT.create(EzeeInvoiceImages.class);
+	public static EzeeInvoiceImageResources INSTANCE = GWT.create(EzeeInvoiceImageResources.class);
 
 	@Source("pdf.jpeg")
 	ImageResource pdf();

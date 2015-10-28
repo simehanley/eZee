@@ -73,7 +73,7 @@ public class EzeeUploadInvoiceForm extends DialogBox {
 					close();
 				} else {
 					Window.alert(FILE_UPLOAD_SUCCESS);
-					listener.invoieUploaded(uploader.getInputName());
+					listener.invoiceUploaded(uploader.getInputName());
 					close();
 				}
 			}

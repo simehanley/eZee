@@ -2,6 +2,9 @@ package com.ezee.client.grid;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.web.EzeeFromatUtils.getDateFormat;
+import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
+import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_LEFT;
+import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_RIGHT;
 
 import java.util.Date;
 import java.util.List;
@@ -25,7 +28,7 @@ import com.google.gwt.view.client.ListDataProvider;
 public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 
 	protected static final String DATE_FIELD_WIDTH = "75px";
-	protected static final String NUMERIC_FIELD_WIDTH = "160px";
+	protected static final String NUMERIC_FIELD_WIDTH = "120px";
 	protected static final String BOOLEAN_FIELD_WIDTH = "160px";
 
 	protected ListHandler<T> handler;
@@ -78,6 +81,7 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 				return resolveCellStyleNames(entity);
 			}
 		};
+		column.setHorizontalAlignment(ALIGN_LEFT);
 		createColumn(columns, grid, column, fieldName, width, sortable);
 	}
 
@@ -96,6 +100,7 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 				return resolveCellStyleNames(entity);
 			}
 		};
+		column.setHorizontalAlignment(ALIGN_CENTER);
 		createColumn(columns, grid, column, fieldName, width, sortable);
 	}
 
@@ -112,6 +117,7 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 				return resolveCellStyleNames(entity);
 			}
 		};
+		column.setHorizontalAlignment(ALIGN_RIGHT);
 		createColumn(columns, grid, column, fieldName, width, false);
 	}
 

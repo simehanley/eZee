@@ -81,7 +81,10 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	}
 
 	protected T getSelected() {
-		return grid.getVisibleItem(grid.getKeyboardSelectedRow());
+		if (model.getHandler().getList().size() > ZERO) {
+			return grid.getVisibleItem(grid.getKeyboardSelectedRow());
+		}
+		return null;
 	}
 
 	private void init() {

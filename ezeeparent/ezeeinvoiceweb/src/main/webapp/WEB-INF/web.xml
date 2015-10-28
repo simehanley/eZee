@@ -34,6 +34,16 @@
 		<url-pattern>*.gupld</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>downloadServlet</servlet-name>
+		<servlet-class>com.ezee.server.download.EzeeFileDownloadService</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>downloadServlet</servlet-name>
+		<url-pattern>/EzeeInvoiceWeb/downloadservice</url-pattern>
+	</servlet-mapping>
+
 	<welcome-file-list>
 		<welcome-file>EzeeInvoiceWeb.html</welcome-file>
 	</welcome-file-list>

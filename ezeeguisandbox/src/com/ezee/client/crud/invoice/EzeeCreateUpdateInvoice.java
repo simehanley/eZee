@@ -15,22 +15,51 @@ import com.google.gwt.user.client.ui.Button;
 public class EzeeCreateUpdateInvoice extends Composite {
 
 	private static EzeeCreateUpdateInvoiceUiBinder uiBinder = GWT.create(EzeeCreateUpdateInvoiceUiBinder.class);
-	@UiField TextBox txtInvoiceNumber;
-	@UiField ListBox lstPremises;
-	@UiField ListBox lstSupplier;
-	@UiField TextBox txtAmount;
-	@UiField TextBox txtTax;
-	@UiField TextBox txtTotal;
-	@UiField DateBox dtDue;
-	@UiField DateBox dtPaid;
-	@UiField ListBox lstDebtAge;
-	@UiField RichTextArea txtDescription;
-	@UiField CheckBox chkTaxable;
-	@UiField Button btnClose;
-	@UiField Button btnEdit;
-	@UiField Button btnDelete;
-	@UiField Button btnUpload;
-	@UiField ListBox lstClassification;
+
+	@UiField
+	TextBox txtInvoiceNumber;
+
+	@UiField
+	ListBox lstPremises;
+
+	@UiField
+	ListBox lstSupplier;
+
+	@UiField
+	TextBox txtAmount;
+
+	@UiField
+	TextBox txtTax;
+
+	@UiField
+	TextBox txtTotal;
+
+	@UiField
+	DateBox dtDue;
+
+	@UiField
+	DateBox dtPaid;
+
+	@UiField
+	ListBox lstDebtAge;
+
+	@UiField
+	RichTextArea txtDescription;
+
+	@UiField
+	CheckBox chkTaxable;
+
+	@UiField
+	Button btnClose;
+
+	@UiField
+	Button btnEdit;
+
+	@UiField
+	Button btnDelete;
+
+	@UiField
+	ListBox lstClassification;
 
 	interface EzeeCreateUpdateInvoiceUiBinder extends UiBinder<Widget, EzeeCreateUpdateInvoice> {
 	}

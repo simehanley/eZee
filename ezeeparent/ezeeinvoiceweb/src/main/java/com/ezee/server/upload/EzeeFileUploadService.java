@@ -48,20 +48,21 @@ public class EzeeFileUploadService extends UploadAction {
 					getInvoiceDao().save(invoice);
 					log.info("Successfully saved file '" + filename + "' against invoice '" + invoice.getInvoiceId()
 							+ "'.");
+
+					removeSessionFileItems(request);
 					return FILE_UPLOAD_SUCCESS;
 				} catch (Throwable t) {
 					log.error("Saving file '" + filename + "' against invoice '" + invoice.getInvoiceId() + "' failed.",
 							t);
-					return FILE_UPLOAD_FAIL;
 				}
 			} else {
 				log.error("Invalid session files object, cannot upload file.");
-				return FILE_UPLOAD_FAIL;
 			}
 		} else {
 			log.error("Failed to find invoice with id '" + invoiceId + ".");
-			return FILE_UPLOAD_FAIL;
 		}
+		removeSessionFileItems(request);
+		return FILE_UPLOAD_FAIL;
 	}
 
 	private EzeeInvoiceDao getInvoiceDao() {

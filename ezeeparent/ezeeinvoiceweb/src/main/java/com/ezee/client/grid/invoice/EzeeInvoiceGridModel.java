@@ -1,20 +1,31 @@
 package com.ezee.client.grid.invoice;
 
+import static com.ezee.client.EzeeInvoiceWebConstants.FILE_DOWNLOAD_SERVICE;
+import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_ID;
 import static com.ezee.client.css.EzeeInvoiceDefaultResources.INSTANCE;
+import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
+import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
 
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import com.ezee.client.grid.EzeeGridModel;
-import com.ezee.client.images.EzeeInvoiceImages;
-import com.ezee.common.string.EzeeStringUtils;
+import com.ezee.client.images.EzeeInvoiceImageResources;
 import com.ezee.model.entity.EzeeInvoice;
-import com.google.gwt.cell.client.ImageCell;
+import com.google.gwt.cell.client.Cell.Context;
+import com.google.gwt.cell.client.ImageResourceCell;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.client.Window;
 
 /**
  * 
@@ -22,6 +33,8 @@ import com.google.gwt.user.cellview.client.DataGrid;
  *
  */
 public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
+
+	private static final String CLICK = "click";
 
 	private static final String INVOICE_NUM = "Invoice Num";
 	private static final String SUPPLIER = "Supplier";
@@ -33,15 +46,13 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	private static final String CREATED_DATE = "Created";
 	private static final String DUE_DATE = "Due";
 	private static final String PAID_PATE = "Paid";
-
-	/* tmp */
 	private static final String FILE = "File";
-	private static final String FILE_WIDTH = "100px";
 
-	private static final String INVOICE_NUM_WIDTH = "200px";
-	private static final String SUPPLIER_WIDTH = "300px";
-	private static final String PREMISES_WIDTH = "300px";
-	private static final String DESCRIPTION_WIDTH = "400px";
+	private static final String INVOICE_NUM_WIDTH = "100px";
+	private static final String SUPPLIER_WIDTH = "250px";
+	private static final String PREMISES_WIDTH = "250px";
+	private static final String DESCRIPTION_WIDTH = "300px";
+	private static final String FILE_WIDTH = "40px";
 
 	@Override
 	protected Map<String, Column<EzeeInvoice, ?>> createColumns(final DataGrid<EzeeInvoice> grid) {
@@ -173,16 +184,42 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 
 	protected void createImageColumn(final Map<String, Column<EzeeInvoice, ?>> columns,
 			final DataGrid<EzeeInvoice> grid, final String fieldName, final String width) {
-		Column<EzeeInvoice, String> column = new Column<EzeeInvoice, String>(new ImageCell()) {
+
+		ImageResourceCell cell = new ImageResourceCell() {
+
+			public Set<String> getConsumedEvents() {
+				Set<String> events = new HashSet<String>();
+				events.add(CLICK);
+				return events;
+			}
+		};
+
+		Column<EzeeInvoice, ImageResource> column = new Column<EzeeInvoice, ImageResource>(cell) {
 			@Override
-			public String getValue(final EzeeInvoice invoice) {
-				if (EzeeStringUtils.hasLength(invoice.getFilename())) {
-					return EzeeInvoiceImages.INSTANCE.pdf().getSafeUri().asString();
+			public ImageResource getValue(final EzeeInvoice invoice) {
+				if (hasLength(invoice.getFilename())) {
+					return EzeeInvoiceImageResources.INSTANCE.pdf();
 				}
 				return null;
 			}
 
+			@Override
+			public void onBrowserEvent(final Context context, final Element elem, final EzeeInvoice invoice,
+					final NativeEvent event) {
+				if (CLICK.equals(event.getType())) {
+					if (hasLength(invoice.getFilename())) {
+						downloadInvoiceFile(invoice);
+					}
+				}
+			}
+
 		};
+		column.setHorizontalAlignment(ALIGN_CENTER);
 		createColumn(columns, grid, column, fieldName, width, false);
+	}
+
+	private void downloadInvoiceFile(final EzeeInvoice invoice) {
+		String downloadUrl = GWT.getModuleBaseURL() + FILE_DOWNLOAD_SERVICE + "?" + INVOICE_ID + "=" + invoice.getId();
+		Window.Location.replace(downloadUrl);
 	}
 }
