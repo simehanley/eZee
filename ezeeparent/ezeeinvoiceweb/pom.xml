@@ -13,6 +13,9 @@
 	<packaging>war</packaging>
 
 	<properties>
+		<gwtupload.version>1.0.3</gwtupload.version>
+		<gwtexporter.version>2.4.0-M1</gwtexporter.version>
+		<gwtincubator.version>20101117-r1766</gwtincubator.version>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
@@ -38,9 +41,9 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.3.1</version>
+			<groupId>com.googlecode.gwtupload</groupId>
+			<artifactId>gwtupload</artifactId>
+			<version>${gwtupload.version}</version>
 		</dependency>
 	</dependencies>
 

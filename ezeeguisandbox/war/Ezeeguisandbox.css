@@ -33,6 +33,7 @@ h1 {
 
 .gwt-Label-Big {
 	width: 200px;
+	height: 20px;
 	border: 1px solid black;
 	padding: 5px;
 	font-weight: bold;
@@ -76,14 +77,14 @@ h1 {
 .gwt-TextBox-Large {
 	width: 300px;
 	height: 20px;
-	padding: 3px;
 	margin: 3px;
+	padding: 3px;
 	border: 1px solid black;
 	font-weight: bold;
 }
 
 .gwt-ListBox-Small {
-	width: 110px;
+	width: 105px;
 	height: 30px;
 	padding: 3px;
 	margin: 3px;
@@ -143,5 +144,12 @@ h1 {
 	padding: 3px;
 	margin: 3px;
 	border: 1px solid black;
+	font-weight: bold;
+}
+.gwt-Panel-Upload {
+	width: 250px;
+	height: 20px;
+	border: 1px solid black;
+	padding: 5px;
 	font-weight: bold;
 }

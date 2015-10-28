@@ -9,7 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.ezee.client.grid.EzeeGridModel;
+import com.ezee.client.images.EzeeInvoiceImages;
+import com.ezee.common.string.EzeeStringUtils;
 import com.ezee.model.entity.EzeeInvoice;
+import com.google.gwt.cell.client.ImageCell;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 
@@ -31,6 +34,10 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	private static final String DUE_DATE = "Due";
 	private static final String PAID_PATE = "Paid";
 
+	/* tmp */
+	private static final String FILE = "File";
+	private static final String FILE_WIDTH = "100px";
+
 	private static final String INVOICE_NUM_WIDTH = "200px";
 	private static final String SUPPLIER_WIDTH = "300px";
 	private static final String PREMISES_WIDTH = "300px";
@@ -49,6 +56,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		createDateColumn(columns, grid, CREATED_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, DUE_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, PAID_PATE, DATE_FIELD_WIDTH, true);
+		createImageColumn(columns, grid, FILE, FILE_WIDTH);
 		return columns;
 	}
 
@@ -69,6 +77,8 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 			return getAmountFormat().format(invoice.getTax());
 		case TOTAL:
 			return getAmountFormat().format(invoice.getInvoiceAmount());
+		case FILE:
+			return invoice.getFilename();
 		}
 		return null;
 	}
@@ -159,5 +169,20 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 			return INSTANCE.css().greenforeground();
 		}
 		return INSTANCE.css().lightorangeforeground();
+	}
+
+	protected void createImageColumn(final Map<String, Column<EzeeInvoice, ?>> columns,
+			final DataGrid<EzeeInvoice> grid, final String fieldName, final String width) {
+		Column<EzeeInvoice, String> column = new Column<EzeeInvoice, String>(new ImageCell()) {
+			@Override
+			public String getValue(final EzeeInvoice invoice) {
+				if (EzeeStringUtils.hasLength(invoice.getFilename())) {
+					return EzeeInvoiceImages.INSTANCE.pdf().getSafeUri().asString();
+				}
+				return null;
+			}
+
+		};
+		createColumn(columns, grid, column, fieldName, width, false);
 	}
 }

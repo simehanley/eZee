@@ -23,11 +23,14 @@
 			<g:at top="170" left="10">
 				<g:Label text="State" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>
+			<g:at top="203" left="10">
+				<g:Label text="Post Code" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
 			<g:at top="235" left="10">
 				<g:Label text="Phone" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>
-			<g:at top="203" left="10">
-				<g:Label text="Post Code" styleName="{res.css.gwtLabelMedium}" />
+			<g:at top="267" left="10">
+				<g:Label text="EMail" styleName="{res.css.gwtLabelMedium}" />
 			</g:at>
 			<g:at top="10" left="174">
 				<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtName" />
@@ -47,14 +50,11 @@
 			<g:at top="203" left="174">
 				<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtPostCode" />
 			</g:at>
-			<g:at top="235" left="174">
-				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtPhone" />
-			</g:at>
 			<g:at top="170" left="174">
 				<g:ListBox styleName="{res.css.gwtListBoxSmall}" ui:field="lstState" />
 			</g:at>
-			<g:at top="267" left="10">
-				<g:Label text="EMail" styleName="{res.css.gwtLabelMedium}" />
+			<g:at top="235" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtPhone" />
 			</g:at>
 			<g:at top="267" left="174">
 				<g:TextBox styleName="{res.css.gwtTextBoxMediumEmail}" ui:field="txtEmail" />

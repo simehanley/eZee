@@ -1,125 +1,97 @@
 package com.ezee.client.crud.invoice;
 
-import static com.ezee.client.EzeeInvoiceWebConstants.FILE_UPLOAD_SERVICE;
-import static com.ezee.common.string.EzeeStringUtils.hasLength;
-import static com.google.gwt.user.client.ui.FormPanel.ENCODING_MULTIPART;
-import static com.google.gwt.user.client.ui.FormPanel.METHOD_POST;
+import static com.ezee.client.EzeeInvoiceWebConstants.FILE_UPLOAD_FAIL;
+import static com.ezee.client.EzeeInvoiceWebConstants.FILE_UPLOAD_SUCCESS;
+import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_ID;
+import static com.ezee.client.css.EzeeInvoiceDefaultResources.INSTANCE;
+import static gwtupload.client.IFileInput.FileInputType.CUSTOM;
 
+import com.ezee.client.grid.invoice.EzeeInvoiceUpLoaderListener;
+import com.ezee.model.entity.EzeeInvoice;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FileUpload;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class EzeeUploadInvoiceForm extends PopupPanel {
+import gwtupload.client.IUploader;
+import gwtupload.client.IUploader.OnFinishUploaderHandler;
+import gwtupload.client.ModalUploadStatus;
+import gwtupload.client.SingleUploader;
+
+public class EzeeUploadInvoiceForm extends DialogBox {
 
 	private static EzeeUploadInvoiceFormUiBinder uiBinder = GWT.create(EzeeUploadInvoiceFormUiBinder.class);
+
+	private static final String UPLOAD_INVOICE = "Upload Invoice File";
+
+	@UiField
+	HorizontalPanel uploadPanel;
+
+	private final EzeeInvoice invoice;
+
+	private final EzeeInvoiceUpLoaderListener listener;
 
 	interface EzeeUploadInvoiceFormUiBinder extends UiBinder<Widget, EzeeUploadInvoiceForm> {
 	}
 
-	// @UiField
-	FormPanel formPanel;
-
-	@UiField
-	Button btnUpload;
-
-	@UiField
-	Button btnCancel;
-
-	// @UiField
-	TextBox txtInvoiceNumber;
-
-	// @UiField
-	TextBox txtPremises;
-
-	// @UiField
-	TextBox txtSupplier;
-
-	// @UiField
-	FileUpload fileUpload;
-
-	@UiField
-	FormPanel docForm;
-
-	@UiField
-	FlowPanel inputPane;
-
-	@UiField
-	FileUpload DocPath;
-
-	private final String invoiceNumber;
-
-	private final String premises;
-
-	private final String supplier;
-
-	public EzeeUploadInvoiceForm(final String invoiceNumber, final String premises, final String supplier) {
+	public EzeeUploadInvoiceForm(final EzeeInvoice invoice, final EzeeInvoiceUpLoaderListener listener) {
+		this.invoice = invoice;
+		this.listener = listener;
 		setWidget(uiBinder.createAndBindUi(this));
-		this.invoiceNumber = invoiceNumber;
-		this.premises = premises;
-		this.supplier = supplier;
 	}
 
 	@Override
 	public void center() {
-		if (validate()) {
-			init();
-			super.center();
-		}
+		initForm();
+		super.center();
 	}
 
-	private void init() {
-		// formPanel = new FormPanel();
-		// formPanel.setAction(GWT.getModuleBaseURL() + FILE_UPLOAD_SERVICE);
-		// formPanel.setEncoding(ENCODING_MULTIPART);
-		// formPanel.setMethod(METHOD_POST);
-		// setText("Upload Invoice");
-		// txtInvoiceNumber.setText(invoiceNumber);
-		// txtInvoiceNumber.setEnabled(false);
-		// txtPremises.setText(premises);
-		// txtPremises.setEnabled(false);
-		// txtSupplier.setText(supplier);
-		// txtSupplier.setEnabled(false);
-
-		docForm.setAction(GWT.getModuleBaseURL() + FILE_UPLOAD_SERVICE);
-		docForm.setEncoding(ENCODING_MULTIPART);
-		docForm.setMethod(METHOD_POST);
+	private void initForm() {
+		setText(UPLOAD_INVOICE + " (" + invoice.getInvoiceId() + ")");
+		initUploader();
 	}
 
-	private boolean validate() {
-		if (!hasLength(invoiceNumber)) {
-			Window.alert("You must enter a valid invoice number.");
-			return false;
-		} else if (!hasLength(premises)) {
-			Window.alert("You must enter a valid premises.");
-			return false;
-		} else if (!hasLength(supplier)) {
-			Window.alert("You must enter a valid supplier.");
-			return false;
-		}
-		return true;
+	private void initUploader() {
+		Button choose = new Button("Choose File");
+		choose.setStyleName(INSTANCE.css().gwtButton());
+		final SingleUploader uploader = new SingleUploader(CUSTOM.with(choose), new ModalUploadStatus());
+		uploader.setServletPath(uploader.getServletPath() + "?" + INVOICE_ID + "=" + invoice.getId());
+		uploader.setAutoSubmit(true);
+		uploader.setValidExtensions("pdf");
+		uploader.addOnFinishUploadHandler(new OnFinishUploaderHandler() {
+			@Override
+			public void onFinish(IUploader iUploader) {
+				String result = uploader.getServerMessage().getMessage();
+				if (FILE_UPLOAD_FAIL.equals(result)) {
+					Window.alert(FILE_UPLOAD_FAIL);
+					close();
+				} else {
+					Window.alert(FILE_UPLOAD_SUCCESS);
+					listener.invoieUploaded(uploader.getInputName());
+					close();
+				}
+			}
+		});
+		uploadPanel.add(uploader);
+		Button cancel = new Button("Cancel");
+		cancel.setStyleName(INSTANCE.css().gwtButton());
+		cancel.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				close();
+			}
+		});
+		uploadPanel.add(cancel);
 	}
 
-	@UiHandler("btnCancel")
-	void onDeleteClick(ClickEvent event) {
+	private void close() {
 		this.hide(true);
-	}
-
-	@UiHandler("btnUpload")
-	void onUploadClick(ClickEvent event) {
-		String filename = DocPath.getFilename();
-		if (hasLength(filename)) {
-
-			docForm.submit();
-		}
 	}
 }

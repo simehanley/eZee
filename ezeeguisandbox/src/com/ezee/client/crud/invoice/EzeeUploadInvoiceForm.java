@@ -8,23 +8,12 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class EzeeUploadInvoiceForm extends Composite {
 
 	private static EzeeUploadInvoiceFormUiBinder uiBinder = GWT.create(EzeeUploadInvoiceFormUiBinder.class);
-	@UiField
-	Button btnUpload;
-	@UiField
-	Button btnCancel;
-	@UiField
-	TextBox txtInvoiceNumber;
-	@UiField
-	TextBox txtPremises;
-	@UiField
-	TextBox txtSupplier;
-	
-	@UiField
-	FileUpload fileUpload;
+	@UiField HorizontalPanel uploadPanel;
 
 	interface EzeeUploadInvoiceFormUiBinder extends UiBinder<Widget, EzeeUploadInvoiceForm> {
 	}

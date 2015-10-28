@@ -10,6 +10,7 @@ import java.util.Set;
 import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.invoice.EzeeCreateUpdateDeleteInvoice;
+import com.ezee.client.crud.invoice.EzeeUploadInvoiceForm;
 import com.ezee.client.grid.EzeeGrid;
 import com.ezee.client.grid.payment.EzeePaymentCreationListener;
 import com.ezee.model.entity.EzeeInvoice;
@@ -22,7 +23,8 @@ import com.google.gwt.view.client.MultiSelectionModel;
  * @author siborg
  *
  */
-public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice> implements EzeeInvoiceChangeListener {
+public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
+		implements EzeeInvoiceChangeListener, EzeeInvoiceUpLoaderListener {
 
 	private EzeePaymentCreationListener listener;
 
@@ -51,6 +53,13 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice> implements EzeeInvoic
 			@Override
 			public void execute() {
 				newPayment();
+				contextMenu.hide();
+			}
+		});
+		menu.addItem("Upload Invoice", new Command() {
+			@Override
+			public void execute() {
+				uploadInvoice();
 				contextMenu.hide();
 			}
 		});
@@ -84,7 +93,7 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice> implements EzeeInvoic
 	}
 
 	@SuppressWarnings("unchecked")
-	protected void newPayment() {
+	private void newPayment() {
 		if (listener != null) {
 			MultiSelectionModel<EzeeInvoice> model = (MultiSelectionModel<EzeeInvoice>) grid.getSelectionModel();
 			Set<EzeeInvoice> selected = model.getSelectedSet();
@@ -98,6 +107,11 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice> implements EzeeInvoic
 				listener.onCreatePayment(unpaid);
 			}
 		}
+	}
+
+	private void uploadInvoice() {
+		EzeeUploadInvoiceForm uploadInvoice = new EzeeUploadInvoiceForm(getSelected(), this);
+		uploadInvoice.center();
 	}
 
 	@Override
@@ -115,5 +129,12 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice> implements EzeeInvoic
 
 	public void setListener(final EzeePaymentCreationListener listener) {
 		this.listener = listener;
+	}
+
+	@Override
+	public void invoieUploaded(final String filename) {
+		EzeeInvoice selected = getSelected();
+		selected.setFilename(filename);
+		onSave(selected);
 	}
 }

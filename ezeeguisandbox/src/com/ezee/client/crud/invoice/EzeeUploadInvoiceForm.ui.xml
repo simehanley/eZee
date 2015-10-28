@@ -3,43 +3,15 @@
 	<ui:style>
 	
 	</ui:style>
+
 	<g:HTMLPanel>
-		<g:FormPanel height="241px" width="497px">
-			<g:AbsolutePanel width="498px" height="241px">
-				<g:at top="10" left="130">
-					<g:Label text="Upload Invoice" styleName="gwt-Label-Big-Centered" width="229px" height="18px"/>
-				</g:at>
-				<g:at top="46" left="10">
-					<g:Label text="Invoice Number" styleName="gwt-Label-Medium"/>
-				</g:at>
-				<g:at top="86" left="10">
-					<g:Label text="Premises" styleName="gwt-Label-Medium"/>
-				</g:at>
-				<g:at top="126" left="10">
-					<g:Label text="Supplier" styleName="gwt-Label-Medium"/>
-				</g:at>
-				<g:at top="46" left="180">
-					<g:TextBox styleName="gwt-TextBox-Large" ui:field="txtInvoiceNumber"/>
-				</g:at>
-				<g:at top="86" left="180">
-					<g:TextBox styleName="gwt-TextBox-Large" ui:field="txtPremises"/>
-				</g:at>
-				<g:at top="126" left="180">
-					<g:TextBox styleName="gwt-TextBox-Large" ui:field="txtSupplier"/>
-				</g:at>
-				<g:at top="166" left="10">
-					<g:Label text="File Location" styleName="gwt-Label-Medium"/>
-				</g:at>
-				<g:at top="166" left="180">
-					<g:FileUpload styleName="gwt-FileUpload-Large" ui:field="fileUpload"/>
-				</g:at>
-				<g:at top="202" left="398">
-					<g:Button ui:field="btnCancel" text="Cancel"/>
-				</g:at>
-				<g:at top="202" left="303">
-					<g:Button ui:field="btnUpload" text="Upload"/>
-				</g:at>
-			</g:AbsolutePanel>
-		</g:FormPanel>
+		<g:AbsolutePanel width="219px" height="60px">
+			<g:at top="7" left="6">
+				<g:HorizontalPanel width="185px" height="36px" styleName="gwt-Label-Small" ui:field="uploadPanel" >
+					<g:Button/>
+					<g:Button/>
+				</g:HorizontalPanel>
+			</g:at>
+		</g:AbsolutePanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

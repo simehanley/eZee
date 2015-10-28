@@ -132,7 +132,7 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 		createColumn(columns, grid, column, fieldName, width, true);
 	}
 
-	private void createColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
+	protected void createColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
 			final Column<T, ?> column, final String fieldName, final String width, boolean sortable) {
 		column.setSortable(sortable);
 		grid.addColumn(column, fieldName);

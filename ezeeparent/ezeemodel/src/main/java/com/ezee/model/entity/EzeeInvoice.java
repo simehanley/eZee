@@ -2,7 +2,6 @@ package com.ezee.model.entity;
 
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
-import java.beans.Transient;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,10 +11,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.ezee.model.entity.enums.EzeeInvoiceClassification;
 
@@ -74,6 +75,13 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CLASSIFICATION")
 	private EzeeInvoiceClassification classification;
+
+	@Column(name = "FILENAME")
+	private String filename;
+
+	@Lob
+	@Column(name = "FILE")
+	private byte[] file;
 
 	public EzeeInvoice() {
 		super();
@@ -204,6 +212,22 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 
 	public void setClassification(EzeeInvoiceClassification classification) {
 		this.classification = classification;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public byte[] getFile() {
+		return file;
+	}
+
+	public void setFile(byte[] file) {
+		this.file = file;
 	}
 
 	@Override

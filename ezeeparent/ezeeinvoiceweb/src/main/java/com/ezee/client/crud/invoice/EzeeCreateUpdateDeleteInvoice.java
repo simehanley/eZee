@@ -108,9 +108,6 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	@UiField
 	Button btnDelete;
 
-	@UiField
-	Button btnUpload;
-
 	private double taxRate;
 
 	public EzeeCreateUpdateDeleteInvoice(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache,
@@ -181,6 +178,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		dtDue.setValue(entity.getDateDue());
 		dtPaid.setValue(entity.getDatePaid());
 		txtDescription.setText(entity.getDescription());
+		lstClassification.setItemSelected(getItemIndex(entity.getClassification().name(), lstClassification), true);
 	}
 
 	private void initialiseNew() {
@@ -232,7 +230,6 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 			}
 		});
-		lstClassification.setItemSelected(getItemIndex(entity.getClassification().name(), lstClassification), true);
 		resolveDueDate();
 	}
 
@@ -307,13 +304,6 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 				close();
 			}
 		});
-	}
-
-	@UiHandler("btnUpload")
-	void onUploadClick(ClickEvent event) {
-		EzeeUploadInvoiceForm upload = new EzeeUploadInvoiceForm(txtInvoiceNumber.getText(),
-				lstPremises.getSelectedItemText(), lstSupplier.getSelectedItemText());
-		upload.center();
 	}
 
 	private final class NumericKeyPressHandler implements KeyPressHandler {

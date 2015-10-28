@@ -14,6 +14,8 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("invoiceservice")
 public interface EzeeInvoiceService extends RemoteService {
 
+	<T extends EzeeDatabaseEntity> T getEntity(String clazz, long id);
+
 	<T extends EzeeDatabaseEntity> List<T> getEntities(String clazz);
 
 	<T extends EzeeDatabaseEntity> T saveEntity(String clazz, T entity);

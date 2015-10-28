@@ -52,4 +52,15 @@ public class EzeeInvoiceServiceImpl extends AbstractRemoteService implements Eze
 		}
 		return null;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends EzeeDatabaseEntity> T getEntity(String clazz, long id) {
+		try {
+			return getSpringBean(EzeeEntitiesDao.class).getEntity((Class<T>) Class.forName(clazz), id);
+		} catch (ClassNotFoundException e) {
+			log.error("Unable to resolve class '" + clazz + "'.", e);
+		}
+		return null;
+	}
 }

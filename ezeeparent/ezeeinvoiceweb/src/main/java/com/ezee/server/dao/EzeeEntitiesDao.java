@@ -24,6 +24,14 @@ public class EzeeEntitiesDao {
 		}
 	}
 
+	public <T extends EzeeDatabaseEntity> T getEntity(final Class<T> clazz, final long id) {
+		T entity = getDao(clazz).getDao().get(id, clazz);
+		if (entity != null) {
+			postprocessor.postProcessEntity(entity);
+		}
+		return entity;
+	}
+
 	public <T extends EzeeDatabaseEntity> List<T> getEntities(final Class<T> clazz) {
 		List<T> entities = getDao(clazz).getDao().get(clazz);
 		if (!isEmpty(entities)) {

@@ -23,5 +23,9 @@ public interface EzeeInvoiceWebConstants {
 	String NEW_PAYMENT = "New Payment";
 	String DELETE_PAYMENT = "Delete Payment";
 
-	String FILE_UPLOAD_SERVICE = "fileuploadservice";
+	String INVOICE_ID = "invoiceId";
+
+	String FILE_UPLOAD_SUCCESS = "File Upload Succeeded";
+	String FILE_UPLOAD_FAIL = "File Upload Failed";
+	String FILE_UPLOAD_CANCELLED = "File Upload Cancelled";
 }

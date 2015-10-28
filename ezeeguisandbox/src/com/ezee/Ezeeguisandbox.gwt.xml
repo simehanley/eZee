@@ -4,6 +4,10 @@
 <module rename-to='ezeeguisandbox'>
 	<inherits name='com.google.gwt.user.User' />
 	<inherits name='com.google.gwt.user.theme.clean.Clean' />
+
+	<inherits name="gwtupload.GWTUpload" />
+
+
 	<entry-point class='com.ezee.client.Ezeeguisandbox' />
 	<source path='client' />
 	<source path='shared' />
