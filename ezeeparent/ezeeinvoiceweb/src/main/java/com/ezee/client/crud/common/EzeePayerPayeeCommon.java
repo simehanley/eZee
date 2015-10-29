@@ -1,11 +1,15 @@
 package com.ezee.client.crud.common;
 
 import static com.ezee.common.EzeeCommonConstants.ZERO;
+import static com.ezee.common.string.EzeeStringUtils.hasLength;
 
 import com.ezee.common.EzeeCommonConstants;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.DoubleClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -53,6 +57,7 @@ public class EzeePayerPayeeCommon extends Composite {
 	public EzeePayerPayeeCommon() {
 		initWidget(uiBinder.createAndBindUi(this));
 		initStates();
+		initEmail();
 	}
 
 	public final String getName() {
@@ -157,5 +162,16 @@ public class EzeePayerPayeeCommon extends Composite {
 		lstState.setEnabled(false);
 		txtPhone.setEnabled(false);
 		txtEmail.setEnabled(false);
+	}
+
+	private void initEmail() {
+		txtEmail.addDoubleClickHandler(new DoubleClickHandler() {
+			@Override
+			public void onDoubleClick(DoubleClickEvent event) {
+				if (hasLength(txtEmail.getText())) {
+					Window.Location.assign("mailto:" + txtEmail.getText());
+				}
+			}
+		});
 	}
 }

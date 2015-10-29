@@ -1,7 +1,6 @@
 package com.ezee.client.crud.invoice;
 
 import static com.ezee.client.EzeeInvoiceWebConstants.FILE_UPLOAD_FAIL;
-import static com.ezee.client.EzeeInvoiceWebConstants.FILE_UPLOAD_SUCCESS;
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_ID;
 import static com.ezee.client.css.EzeeInvoiceDefaultResources.INSTANCE;
 import static gwtupload.client.IFileInput.FileInputType.CUSTOM;
@@ -72,8 +71,7 @@ public class EzeeUploadInvoiceForm extends DialogBox {
 					Window.alert(FILE_UPLOAD_FAIL);
 					close();
 				} else {
-					Window.alert(FILE_UPLOAD_SUCCESS);
-					listener.invoiceUploaded(uploader.getInputName());
+					listener.invoiceUploaded(result);
 					close();
 				}
 			}

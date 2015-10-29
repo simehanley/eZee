@@ -34,8 +34,16 @@ public class EzeeInvoiceDaoImpl extends EzeeBaseDaoImpl<EzeeInvoice> implements 
 	public void save(final Set<EzeeInvoice> invoices) {
 		if (!isEmpty(invoices)) {
 			for (EzeeInvoice invoice : invoices) {
-				save(invoice);
+				preprocess(invoice);
+				merge(invoice);
 			}
+		}
+	}
+
+	private void preprocess(final EzeeInvoice invoice) {
+		EzeeInvoice persisted = get(invoice.getId(), EzeeInvoice.class);
+		if (persisted != null && persisted.getFile() != null) {
+			invoice.setFile(persisted.getFile());
 		}
 	}
 }

@@ -37,6 +37,8 @@ public interface EzeeInvoiceDefaultResources extends ClientBundle {
 
 		String footerLabel();
 
+		String footerLabelUnderline();
+
 		String navigation();
 
 		String navigationLink();
@@ -72,7 +74,7 @@ public interface EzeeInvoiceDefaultResources extends ClientBundle {
 		String gwtCheckBoxSmall();
 
 		String gwtFileUploadLarge();
-		
+
 		String gwtTextBoxMediumEmail();
 	}
 

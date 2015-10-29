@@ -5,15 +5,18 @@ import static com.ezee.common.string.EzeeStringUtils.hasLength;
 
 import java.util.Date;
 
+import com.ezee.client.bank.EzeeBankBalance;
 import com.ezee.client.grid.EzeeGridToolbar;
 import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeePayment;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -37,6 +40,9 @@ public class EzeePaymentGridToolBar extends EzeeGridToolbar<EzeePayment> {
 
 	@UiField
 	Button btnClear;
+
+	@UiField
+	Button btnBank;
 
 	interface EzeePaymentGridToolBarUiBinder extends UiBinder<Widget, EzeePaymentGridToolBar> {
 	}
@@ -84,5 +90,11 @@ public class EzeePaymentGridToolBar extends EzeeGridToolbar<EzeePayment> {
 	@Override
 	public EzeeEntityFilter<EzeePayment> resolveFilter() {
 		return new EzeePaymentFilter(getInvoiceNumber(), getFrom(), getTo());
+	}
+
+	@UiHandler("btnBank")
+	void onBankClick(ClickEvent event) {
+		EzeeBankBalance bank = new EzeeBankBalance();
+		bank.center();
 	}
 }

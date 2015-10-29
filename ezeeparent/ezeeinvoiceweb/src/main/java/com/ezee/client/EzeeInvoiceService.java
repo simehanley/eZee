@@ -21,4 +21,6 @@ public interface EzeeInvoiceService extends RemoteService {
 	<T extends EzeeDatabaseEntity> T saveEntity(String clazz, T entity);
 
 	<T extends EzeeDatabaseEntity> T deleteEntity(String clazz, T entity);
+
+	String getVersion();
 }

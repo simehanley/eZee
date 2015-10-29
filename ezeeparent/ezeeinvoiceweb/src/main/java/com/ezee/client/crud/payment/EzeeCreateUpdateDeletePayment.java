@@ -117,7 +117,7 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 	private void initGrid() {
 		grdInvoices = new DataGrid<EzeeInvoice>(100, INSTANCE);
 		grdInvoices.setMinimumTableWidth(600, Style.Unit.PX);
-		model = new EzeeInvoiceGridModel();
+		model = createModel();
 		model.bind(grdInvoices);
 	}
 
@@ -273,5 +273,16 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 				close();
 			}
 		});
+	}
+
+	private EzeeInvoiceGridModel createModel() {
+		Set<String> hidden = new HashSet<>();
+		hidden.add(EzeeInvoiceGridModel.AMOUNT);
+		hidden.add(EzeeInvoiceGridModel.TAX);
+		hidden.add(EzeeInvoiceGridModel.CREATED_DATE);
+		hidden.add(EzeeInvoiceGridModel.DUE_DATE);
+		hidden.add(EzeeInvoiceGridModel.PAID_PATE);
+		hidden.add(EzeeInvoiceGridModel.FILE);
+		return new EzeeInvoiceGridModel(hidden);
 	}
 }

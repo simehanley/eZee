@@ -11,5 +11,6 @@
 		<g:TextBox styleName="gwt-TextBox-Large" ui:field="txtInvoiceText" />
 		<g:Button text="Refresh" ui:field="btnRefresh" />
 		<g:Button text="Clear" ui:field="btnClear" />
+		<g:Button ui:field="btnBank" text="Bank"/>
 	</g:HorizontalPanel>
 </ui:UiBinder> 

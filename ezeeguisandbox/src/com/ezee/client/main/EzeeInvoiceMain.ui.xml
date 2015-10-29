@@ -16,13 +16,13 @@
 			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" title="footer" height="100%" width="100%"
 				styleName="{res.css.footer}">
 				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="25%" height="100%">
-					<g:HTML text="Provided by Haich + Gee Pty Ltd" styleName="{res.css.footerLabel}"></g:HTML>
+					<g:HTML text="Version" styleName="{res.css.footerLabel}"></g:HTML>
 				</g:cell>
 				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="50%" height="100%">
 					<g:HTML text="Provided by Haich + Gee Pty Ltd" styleName="{res.css.footerLabel}"></g:HTML>
 				</g:cell>
 				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="25%" height="100%">
-					<g:HTML text="Provided by Haich + Gee Pty Ltd" styleName="{res.css.footerLabel}"></g:HTML>
+					<g:HTML text="Support" styleName="{res.css.footerLabel}"></g:HTML>
 				</g:cell>
 			</g:HorizontalPanel>
 		</g:south>

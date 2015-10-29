@@ -19,4 +19,6 @@ public interface EzeeInvoiceServiceAsync {
 	<T extends EzeeDatabaseEntity> void deleteEntity(String clazz, T entity, AsyncCallback<T> result);
 
 	<T extends EzeeDatabaseEntity> void getEntities(String clazz, AsyncCallback<List<T>> entity);
+
+	void getVersion(AsyncCallback<String> version);
 }

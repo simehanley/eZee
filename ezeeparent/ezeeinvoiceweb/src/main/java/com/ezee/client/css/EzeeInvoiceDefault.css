@@ -50,6 +50,13 @@
 	color: white;
 }
 
+.footerLabelUnderline {
+	font-weight: bold;
+	font-size: 15px;
+	color: white;
+	text-decoration: underline;
+}
+
 .navigation {
 	background-color: #C8C8C8;
 	border: 1px solid #6f7277;
@@ -141,7 +148,7 @@
 }
 
 .gwtListBoxSmall {
-	width: 110px;
+	width: 105px;
 	height: 30px;
 	padding: 3px;
 	margin: 3px;

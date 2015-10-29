@@ -1,5 +1,8 @@
 package com.ezee.server;
 
+import static com.ezee.client.EzeeInvoiceWebConstants.EZEE_INVOICE_VERSION_PROPERTIES;
+import static com.ezee.client.EzeeInvoiceWebConstants.EZEE_INVOICE_WEB_VERSION;
+
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.ezee.client.EzeeInvoiceService;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.server.dao.EzeeEntitiesDao;
+import com.ezee.server.util.EzeeInvoicePropertyLoader;
 
 /**
  * 
@@ -16,9 +20,11 @@ import com.ezee.server.dao.EzeeEntitiesDao;
  */
 public class EzeeInvoiceServiceImpl extends AbstractRemoteService implements EzeeInvoiceService {
 
-	private static final long serialVersionUID = 1L;
-
 	private static final Logger log = LoggerFactory.getLogger(EzeeInvoiceServiceImpl.class);
+
+	private static final long serialVersionUID = -1330259669564042121L;
+
+	private final EzeeInvoicePropertyLoader properties = new EzeeInvoicePropertyLoader(EZEE_INVOICE_VERSION_PROPERTIES);
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -62,5 +68,10 @@ public class EzeeInvoiceServiceImpl extends AbstractRemoteService implements Eze
 			log.error("Unable to resolve class '" + clazz + "'.", e);
 		}
 		return null;
+	}
+
+	@Override
+	public String getVersion() {
+		return properties.getProperty(EZEE_INVOICE_WEB_VERSION);
 	}
 }

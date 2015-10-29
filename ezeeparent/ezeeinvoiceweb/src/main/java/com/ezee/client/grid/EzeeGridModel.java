@@ -1,6 +1,7 @@
 package com.ezee.client.grid;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
+import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.web.EzeeFromatUtils.getDateFormat;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_LEFT;
@@ -9,6 +10,7 @@ import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_RIGHT;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.cell.client.Cell.Context;
@@ -33,8 +35,22 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 
 	protected ListHandler<T> handler;
 
+	protected Set<String> hiddenColumns;
+
+	public EzeeGridModel() {
+		this(null);
+	}
+
+	public EzeeGridModel(Set<String> hiddenColumns) {
+		this.hiddenColumns = hiddenColumns;
+	}
+
 	public final ListHandler<T> getHandler() {
 		return handler;
+	}
+
+	protected boolean isHiddenColumn(final String columnName) {
+		return !isEmpty(hiddenColumns) && hiddenColumns.contains(columnName);
 	}
 
 	public void bind(final DataGrid<T> grid) {
@@ -70,72 +86,77 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 
 	protected void createTextColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
 			final String fieldName, final String width, boolean sortable) {
-		TextColumn<T> column = new TextColumn<T>() {
-			@Override
-			public String getValue(final T entity) {
-				return resolveTextFieldValue(fieldName, entity);
-			}
+		if (!isHiddenColumn(fieldName)) {
+			TextColumn<T> column = new TextColumn<T>() {
+				@Override
+				public String getValue(final T entity) {
+					return resolveTextFieldValue(fieldName, entity);
+				}
 
-			@Override
-			public String getCellStyleNames(final Context context, final T entity) {
-				return resolveCellStyleNames(entity);
-			}
-		};
-		column.setHorizontalAlignment(ALIGN_LEFT);
-		createColumn(columns, grid, column, fieldName, width, sortable);
+				@Override
+				public String getCellStyleNames(final Context context, final T entity) {
+					return resolveCellStyleNames(entity);
+				}
+			};
+			column.setHorizontalAlignment(ALIGN_LEFT);
+			createColumn(columns, grid, column, fieldName, width, sortable);
+		}
 	}
 
 	protected void createDateColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
 			final String fieldName, final String width, boolean sortable) {
+		if (!isHiddenColumn(fieldName)) {
+			Column<T, Date> column = new Column<T, Date>(new DateCell(getDateFormat())) {
+				@Override
+				public Date getValue(final T entity) {
+					return resolveDateFieldValue(fieldName, entity);
+				}
 
-		Column<T, Date> column = new Column<T, Date>(new DateCell(getDateFormat())) {
-
-			@Override
-			public Date getValue(final T entity) {
-				return resolveDateFieldValue(fieldName, entity);
-			}
-
-			@Override
-			public String getCellStyleNames(final Context context, final T entity) {
-				return resolveCellStyleNames(entity);
-			}
-		};
-		column.setHorizontalAlignment(ALIGN_CENTER);
-		createColumn(columns, grid, column, fieldName, width, sortable);
+				@Override
+				public String getCellStyleNames(final Context context, final T entity) {
+					return resolveCellStyleNames(entity);
+				}
+			};
+			column.setHorizontalAlignment(ALIGN_CENTER);
+			createColumn(columns, grid, column, fieldName, width, sortable);
+		}
 	}
 
 	protected void createNumericColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
 			final String fieldName, final String width) {
-		TextColumn<T> column = new TextColumn<T>() {
-			@Override
-			public String getValue(final T entity) {
-				return resolveTextFieldValue(fieldName, entity);
-			}
+		if (!isHiddenColumn(fieldName)) {
+			TextColumn<T> column = new TextColumn<T>() {
+				@Override
+				public String getValue(final T entity) {
+					return resolveTextFieldValue(fieldName, entity);
+				}
 
-			@Override
-			public String getCellStyleNames(final Context context, final T entity) {
-				return resolveCellStyleNames(entity);
-			}
-		};
-		column.setHorizontalAlignment(ALIGN_RIGHT);
-		createColumn(columns, grid, column, fieldName, width, false);
+				@Override
+				public String getCellStyleNames(final Context context, final T entity) {
+					return resolveCellStyleNames(entity);
+				}
+			};
+			column.setHorizontalAlignment(ALIGN_RIGHT);
+			createColumn(columns, grid, column, fieldName, width, false);
+		}
 	}
 
 	protected void createCheckBoxColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
 			final String fieldName, final String width) {
+		if (!isHiddenColumn(fieldName)) {
+			Column<T, Boolean> column = new Column<T, Boolean>(new CheckboxCell()) {
+				@Override
+				public Boolean getValue(T entity) {
+					return resolveBooleanFieldValue(fieldName, entity);
+				}
 
-		Column<T, Boolean> column = new Column<T, Boolean>(new CheckboxCell()) {
-			@Override
-			public Boolean getValue(T entity) {
-				return resolveBooleanFieldValue(fieldName, entity);
-			}
-
-			@Override
-			public String getCellStyleNames(final Context context, final T entity) {
-				return resolveCellStyleNames(entity);
-			}
-		};
-		createColumn(columns, grid, column, fieldName, width, true);
+				@Override
+				public String getCellStyleNames(final Context context, final T entity) {
+					return resolveCellStyleNames(entity);
+				}
+			};
+			createColumn(columns, grid, column, fieldName, width, true);
+		}
 	}
 
 	protected void createColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,

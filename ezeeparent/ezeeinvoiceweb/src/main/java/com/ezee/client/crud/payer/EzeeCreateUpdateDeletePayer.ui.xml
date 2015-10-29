@@ -5,7 +5,7 @@
 	<ui:with type="com.ezee.client.css.EzeeInvoiceDefaultResources" field="res" />
 
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="365px" width="511px" styleName="{res.css.gwtPanelBorder}">
+		<g:AbsolutePanel height="365px" width="511px">
 			<g:at top="10" left="10">
 				<p1:EzeePayerPayeeCommon ui:field="payer" />
 			</g:at>

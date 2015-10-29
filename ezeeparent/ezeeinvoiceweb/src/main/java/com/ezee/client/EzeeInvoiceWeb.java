@@ -54,7 +54,7 @@ public class EzeeInvoiceWeb implements EntryPoint {
 
 	private void initMain() {
 		log.log(Level.INFO, "Initialising application.");
-		EzeeInvoiceMain main = new EzeeInvoiceMain();
+		EzeeInvoiceMain main = new EzeeInvoiceMain(service);
 		EzeeInvoiceGrid invoice = createInvoiceGrid();
 		EzeePaymentGrid payment = createPaymentGrid();
 		invoice.setListener(payment);

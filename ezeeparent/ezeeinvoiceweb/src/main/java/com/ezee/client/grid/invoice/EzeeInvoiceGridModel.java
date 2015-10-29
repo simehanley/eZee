@@ -36,23 +36,31 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 
 	private static final String CLICK = "click";
 
-	private static final String INVOICE_NUM = "Invoice Num";
-	private static final String SUPPLIER = "Supplier";
-	private static final String PREMISES = "Premises";
-	private static final String AMOUNT = "Amount";
-	private static final String TAX = "Tax";
-	private static final String TOTAL = "Total";
-	private static final String DESCRIPTION = "Description";
-	private static final String CREATED_DATE = "Created";
-	private static final String DUE_DATE = "Due";
-	private static final String PAID_PATE = "Paid";
-	private static final String FILE = "File";
+	public static final String INVOICE_NUM = "Invoice Num";
+	public static final String SUPPLIER = "Supplier";
+	public static final String PREMISES = "Premises";
+	public static final String AMOUNT = "Amount";
+	public static final String TAX = "Tax";
+	public static final String TOTAL = "Total";
+	public static final String DESCRIPTION = "Description";
+	public static final String CREATED_DATE = "Created";
+	public static final String DUE_DATE = "Due";
+	public static final String PAID_PATE = "Paid";
+	public static final String FILE = "File";
 
 	private static final String INVOICE_NUM_WIDTH = "100px";
 	private static final String SUPPLIER_WIDTH = "250px";
 	private static final String PREMISES_WIDTH = "250px";
 	private static final String DESCRIPTION_WIDTH = "300px";
 	private static final String FILE_WIDTH = "40px";
+
+	public EzeeInvoiceGridModel() {
+		super();
+	}
+
+	public EzeeInvoiceGridModel(Set<String> hiddenColumns) {
+		super(hiddenColumns);
+	}
 
 	@Override
 	protected Map<String, Column<EzeeInvoice, ?>> createColumns(final DataGrid<EzeeInvoice> grid) {
@@ -185,37 +193,39 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	protected void createImageColumn(final Map<String, Column<EzeeInvoice, ?>> columns,
 			final DataGrid<EzeeInvoice> grid, final String fieldName, final String width) {
 
-		ImageResourceCell cell = new ImageResourceCell() {
+		if (!isHiddenColumn(fieldName)) {
+			ImageResourceCell cell = new ImageResourceCell() {
 
-			public Set<String> getConsumedEvents() {
-				Set<String> events = new HashSet<String>();
-				events.add(CLICK);
-				return events;
-			}
-		};
-
-		Column<EzeeInvoice, ImageResource> column = new Column<EzeeInvoice, ImageResource>(cell) {
-			@Override
-			public ImageResource getValue(final EzeeInvoice invoice) {
-				if (hasLength(invoice.getFilename())) {
-					return EzeeInvoiceImageResources.INSTANCE.pdf();
+				public Set<String> getConsumedEvents() {
+					Set<String> events = new HashSet<String>();
+					events.add(CLICK);
+					return events;
 				}
-				return null;
-			}
+			};
 
-			@Override
-			public void onBrowserEvent(final Context context, final Element elem, final EzeeInvoice invoice,
-					final NativeEvent event) {
-				if (CLICK.equals(event.getType())) {
+			Column<EzeeInvoice, ImageResource> column = new Column<EzeeInvoice, ImageResource>(cell) {
+				@Override
+				public ImageResource getValue(final EzeeInvoice invoice) {
 					if (hasLength(invoice.getFilename())) {
-						downloadInvoiceFile(invoice);
+						return EzeeInvoiceImageResources.INSTANCE.pdf();
+					}
+					return null;
+				}
+
+				@Override
+				public void onBrowserEvent(final Context context, final Element elem, final EzeeInvoice invoice,
+						final NativeEvent event) {
+					if (CLICK.equals(event.getType())) {
+						if (hasLength(invoice.getFilename())) {
+							downloadInvoiceFile(invoice);
+						}
 					}
 				}
-			}
 
-		};
-		column.setHorizontalAlignment(ALIGN_CENTER);
-		createColumn(columns, grid, column, fieldName, width, false);
+			};
+			column.setHorizontalAlignment(ALIGN_CENTER);
+			createColumn(columns, grid, column, fieldName, width, false);
+		}
 	}
 
 	private void downloadInvoiceFile(final EzeeInvoice invoice) {

@@ -47,11 +47,11 @@
 			<g:at top="138" left="174">
 				<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtCity" />
 			</g:at>
-			<g:at top="203" left="174">
-				<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtPostCode" />
-			</g:at>
 			<g:at top="170" left="174">
 				<g:ListBox styleName="{res.css.gwtListBoxSmall}" ui:field="lstState" />
+			</g:at>
+			<g:at top="203" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtPostCode" />
 			</g:at>
 			<g:at top="235" left="174">
 				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtPhone" />

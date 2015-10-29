@@ -6,6 +6,7 @@ public interface EzeeInvoiceWebConstants {
 	String PAYMENTS = "PAYMENTS";
 	String SUPPLIERS = "SUPPLIERS";
 	String PREMISES = "PREMISES";
+	String BANK = "Bank";
 
 	String EDIT_PREMISES = "Edit Premises";
 	String NEW_PREMISES = "New Premises";
@@ -30,4 +31,9 @@ public interface EzeeInvoiceWebConstants {
 	String FILE_UPLOAD_CANCELLED = "File Upload Cancelled";
 
 	String FILE_DOWNLOAD_SERVICE = "downloadservice";
+
+	String SUPPORT_EMAIL = "mailto:support@ezeeit.com";
+
+	String EZEE_INVOICE_VERSION_PROPERTIES = "ezeeinvoice.version.properties";
+	String EZEE_INVOICE_WEB_VERSION = "ezeeinvoice.web.version";
 }

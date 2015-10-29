@@ -4,7 +4,7 @@
 
 	<ui:with type="com.ezee.client.css.EzeeInvoiceDefaultResources" field="res" />
 
-	<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="500px"
+	<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="600px"
 		height="45px">
 		<g:Label text="From" styleName="{res.css.gwtLabelSmall}" />
 		<p1:DateBox ui:field="dtFrom" styleName="{res.css.gwtDateBoxSmall}" />
@@ -14,5 +14,6 @@
 		<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtInvoiceNumber" />
 		<g:Button text="Refresh" ui:field="btnRefresh" styleName="{res.css.gwtButton}" />
 		<g:Button text="Clear" ui:field="btnClear" styleName="{res.css.gwtButton}" />
+		<g:Button text="Bank" ui:field="btnBank" styleName="{res.css.gwtButton}" />
 	</g:HorizontalPanel>
 </ui:UiBinder> 

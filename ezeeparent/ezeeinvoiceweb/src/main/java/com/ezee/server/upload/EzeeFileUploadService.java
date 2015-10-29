@@ -1,7 +1,6 @@
 package com.ezee.server.upload;
 
 import static com.ezee.client.EzeeInvoiceWebConstants.FILE_UPLOAD_FAIL;
-import static com.ezee.client.EzeeInvoiceWebConstants.FILE_UPLOAD_SUCCESS;
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_ID;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
@@ -50,7 +49,7 @@ public class EzeeFileUploadService extends UploadAction {
 							+ "'.");
 
 					removeSessionFileItems(request);
-					return FILE_UPLOAD_SUCCESS;
+					return filename;
 				} catch (Throwable t) {
 					log.error("Saving file '" + filename + "' against invoice '" + invoice.getInvoiceId() + "' failed.",
 							t);

@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Button;
 
 public class EzeePaymentGridToolBar extends Composite {
 
@@ -14,6 +15,7 @@ public class EzeePaymentGridToolBar extends Composite {
 	@UiField DateBox dtFrom;
 	@UiField DateBox dtTo;
 	@UiField TextBox txtInvoiceText;
+	@UiField Button btnBank;
 
 	interface EzeePaymentGridToolBarUiBinder extends UiBinder<Widget, EzeePaymentGridToolBar> {
 	}
