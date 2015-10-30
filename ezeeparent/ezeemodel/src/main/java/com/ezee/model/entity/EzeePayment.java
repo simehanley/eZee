@@ -28,7 +28,9 @@ import com.ezee.model.entity.enums.EzeePaymentType;
  *
  */
 @NamedNativeQueries({
-		@NamedNativeQuery(name = "deleteInvoiceMappingsSql", query = "delete from EZEE_PAYMENT_TO_INVOICE_MAPPING where PAYMENT_ID = :id") })
+		@NamedNativeQuery(name = "deleteInvoiceMappingsSql", query = "delete from EZEE_PAYMENT_TO_INVOICE_MAPPING where PAYMENT_ID = :id"),
+		@NamedNativeQuery(name = "selectOutstandingChequesByPremisesSql", query = "select EZEE_PAYMENT.ID, EZEE_PAYMENT.PAYMENT_DATE, EZEE_PAYMENT.PAYMENT_TYPE, EZEE_PAYMENT.DESCRIPTION, EZEE_PAYMENT.CREATED, EZEE_PAYMENT.UPDATED, EZEE_PAYMENT.CHEQUE_NUMBER, EZEE_PAYMENT.CHEQUE_PRESENTED from EZEE_PAYMENT, EZEE_INVOICE, EZEE_PAYER, EZEE_PAYMENT_TO_INVOICE_MAPPING, EZEE_INVOICE_TO_PAYER_MAPPING where PAYMENT_TYPE = 'cheque' AND CHEQUE_PRESENTED = false AND EZEE_PAYMENT.ID = EZEE_PAYMENT_TO_INVOICE_MAPPING.PAYMENT_ID AND EZEE_INVOICE.ID = EZEE_PAYMENT_TO_INVOICE_MAPPING.INVOICE_ID AND EZEE_INVOICE.ID = EZEE_INVOICE_TO_PAYER_MAPPING.INVOICE_ID AND EZEE_PAYER.ID = EZEE_INVOICE_TO_PAYER_MAPPING.PAYER_ID AND EZEE_PAYER.ID = :payerId", resultClass = EzeePayment.class),
+		@NamedNativeQuery(name = "selectOutstandingChequesSql", query = "select * from EZEE_PAYMENT where PAYMENT_TYPE = 'cheque' AND CHEQUE_PRESENTED = false", resultClass = EzeePayment.class) })
 @Entity
 @Table(name = "EZEE_PAYMENT")
 public class EzeePayment extends EzeeDatabaseEntity {

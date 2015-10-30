@@ -1,5 +1,7 @@
 package com.ezee.dao;
 
+import java.util.List;
+
 import com.ezee.model.entity.EzeePayment;
 
 /**
@@ -8,4 +10,6 @@ import com.ezee.model.entity.EzeePayment;
  *
  */
 public interface EzeePaymentDao extends EzeeBaseDao<EzeePayment> {
+	
+	List<EzeePayment> getOutstandingCheques(Long premisesId);
 }

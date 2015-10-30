@@ -30,13 +30,13 @@
 				<g:Label text="Cheques" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
 			<g:at top="388" left="398">
-				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" enabled="false" />
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" enabled="false" ui:field="txtChequeBalance" />
 			</g:at>
 			<g:at top="388" left="610">
 				<g:Label text="Net" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
 			<g:at top="388" left="697">
-				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" enabled="false" />
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" enabled="false" ui:field="txtNetBalance" />
 			</g:at>
 			<g:at top="421" left="723">
 				<g:Button ui:field="btnRefresh" text="Refresh" styleName="{res.css.gwtButton}" />

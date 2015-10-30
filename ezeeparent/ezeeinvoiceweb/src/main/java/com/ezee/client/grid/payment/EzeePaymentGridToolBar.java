@@ -5,7 +5,9 @@ import static com.ezee.common.string.EzeeStringUtils.hasLength;
 
 import java.util.Date;
 
+import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.bank.EzeeBankBalance;
+import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.grid.EzeeGridToolbar;
 import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeePayment;
@@ -44,11 +46,18 @@ public class EzeePaymentGridToolBar extends EzeeGridToolbar<EzeePayment> {
 	@UiField
 	Button btnBank;
 
+	private final EzeeInvoiceServiceAsync service;
+
+	private final EzeeInvoiceEntityCache cache;
+
 	interface EzeePaymentGridToolBarUiBinder extends UiBinder<Widget, EzeePaymentGridToolBar> {
 	}
 
-	public EzeePaymentGridToolBar(final EzeePaymentGrid grid) {
+	public EzeePaymentGridToolBar(final EzeePaymentGrid grid, final EzeeInvoiceServiceAsync service,
+			final EzeeInvoiceEntityCache cache) {
 		super(grid);
+		this.service = service;
+		this.cache = cache;
 		initWidget(uiBinder.createAndBindUi(this));
 		init();
 	}
@@ -94,7 +103,7 @@ public class EzeePaymentGridToolBar extends EzeeGridToolbar<EzeePayment> {
 
 	@UiHandler("btnBank")
 	void onBankClick(ClickEvent event) {
-		EzeeBankBalance bank = new EzeeBankBalance();
+		EzeeBankBalance bank = new EzeeBankBalance(service, cache);
 		bank.center();
 	}
 }

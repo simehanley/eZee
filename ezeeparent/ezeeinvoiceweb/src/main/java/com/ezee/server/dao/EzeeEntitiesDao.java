@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.hibernate.collection.spi.PersistentCollection;
 
+import com.ezee.dao.EzeePaymentDao;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayment;
@@ -53,6 +54,17 @@ public class EzeeEntitiesDao {
 		getDao(clazz).getDao().delete(entity);
 		postprocessor.postProcessEntity(entity);
 		return entity;
+	}
+
+	public List<EzeePayment> getOutstandingCheques(final Long premisesId) {
+		EzeePaymentDao dao = (EzeePaymentDao) getDao(EzeePayment.class).getDao();
+		List<EzeePayment> payments = dao.getOutstandingCheques(premisesId);
+		if (!isEmpty(payments)) {
+			for (EzeePayment payment : payments) {
+				postprocessor.postProcessEntity(payment);
+			}
+		}
+		return payments;
 	}
 
 	@SuppressWarnings("unchecked")

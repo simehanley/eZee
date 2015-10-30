@@ -39,7 +39,7 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 	@Override
 	protected void initFilter() {
 		super.initFilter();
-		toolBar = new EzeePaymentGridToolBar(this);
+		toolBar = new EzeePaymentGridToolBar(this, service, cache);
 		filterpanel.add(toolBar);
 	}
 

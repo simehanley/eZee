@@ -28,6 +28,18 @@
 		</dependency>
 		<dependency>
 			<groupId>com.ezee</groupId>
+			<artifactId>ezeewebcommon</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ezee</groupId>
+			<artifactId>ezeewebcommon</artifactId>
+			<version>${project.version}</version>
+			<classifier>sources</classifier>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.ezee</groupId>
 			<artifactId>ezeemodel</artifactId>
 			<version>${project.version}</version>
 			<classifier>sources</classifier>

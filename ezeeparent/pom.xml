@@ -24,6 +24,7 @@
 		<module>ezeecommon</module>
 		<module>ezeemodel</module>
 		<module>ezeedao</module>
+		<module>ezeewebcommon</module>
 		<module>ezeeinvoiceweb</module>
 	</modules>
 
@@ -186,6 +187,11 @@
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>2.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt</artifactId>
+			<version>1.9.2</version>
 		</dependency>
 	</dependencies>
 

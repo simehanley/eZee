@@ -4,6 +4,7 @@ import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,18 @@ public class EzeePaymentDaoImpl extends EzeeBaseDaoImpl<EzeePayment> implements 
 				invoice.setUpdated(new Date());
 			}
 			invoiceDao.save(invoices);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EzeePayment> getOutstandingCheques(Long premisesId) {
+		if (premisesId == null) {
+			return (List<EzeePayment>) getHibernateTemplate().findByNamedQuery("selectOutstandingChequesSql",
+					new Object[] {});
+		} else {
+			return (List<EzeePayment>) getHibernateTemplate()
+					.findByNamedQueryAndNamedParam("selectOutstandingChequesByPremisesSql", "payerId", premisesId);
 		}
 	}
 }

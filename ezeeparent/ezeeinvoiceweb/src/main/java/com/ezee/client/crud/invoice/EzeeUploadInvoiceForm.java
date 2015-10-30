@@ -7,6 +7,7 @@ import static gwtupload.client.IFileInput.FileInputType.CUSTOM;
 
 import com.ezee.client.grid.invoice.EzeeInvoiceUpLoaderListener;
 import com.ezee.model.entity.EzeeInvoice;
+import com.ezee.web.common.ui.dialog.EzeeDialog;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -14,7 +15,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -23,7 +23,7 @@ import gwtupload.client.IUploader.OnFinishUploaderHandler;
 import gwtupload.client.ModalUploadStatus;
 import gwtupload.client.SingleUploader;
 
-public class EzeeUploadInvoiceForm extends DialogBox {
+public class EzeeUploadInvoiceForm extends EzeeDialog {
 
 	private static EzeeUploadInvoiceFormUiBinder uiBinder = GWT.create(EzeeUploadInvoiceFormUiBinder.class);
 
@@ -87,9 +87,5 @@ public class EzeeUploadInvoiceForm extends DialogBox {
 			}
 		});
 		uploadPanel.add(cancel);
-	}
-
-	private void close() {
-		this.hide(true);
 	}
 }

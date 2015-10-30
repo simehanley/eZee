@@ -48,9 +48,9 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	public static final String PAID_PATE = "Paid";
 	public static final String FILE = "File";
 
-	private static final String INVOICE_NUM_WIDTH = "100px";
 	private static final String SUPPLIER_WIDTH = "250px";
 	private static final String PREMISES_WIDTH = "250px";
+	private static final String INVOICE_NUM_WIDTH = "100px";
 	private static final String DESCRIPTION_WIDTH = "300px";
 	private static final String FILE_WIDTH = "40px";
 

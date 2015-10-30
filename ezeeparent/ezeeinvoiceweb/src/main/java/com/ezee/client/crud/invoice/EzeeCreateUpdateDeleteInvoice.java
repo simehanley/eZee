@@ -9,9 +9,7 @@ import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFromatUtils.getDateBoxFormat;
-import static com.google.gwt.event.dom.client.KeyCodes.KEY_BACKSPACE;
-import static com.google.gwt.event.dom.client.KeyCodes.KEY_DELETE;
-import static com.google.gwt.event.dom.client.KeyCodes.KEY_TAB;
+import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.getItemIndex;
 
 import java.util.Date;
 import java.util.logging.Level;
@@ -22,6 +20,7 @@ import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType;
+import com.ezee.client.ui.EzeeInvoiceUiUtils;
 import com.ezee.client.util.EzeeDueDateCalculator;
 import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeeDebtAgeRule;
@@ -30,14 +29,14 @@ import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayee;
 import com.ezee.model.entity.EzeePayer;
 import com.ezee.model.entity.enums.EzeeInvoiceClassification;
+import com.ezee.web.common.ui.utils.EzeeListBoxUtils;
+import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -215,7 +214,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		txtTax.setEnabled(false);
 		txtTotal.setEnabled(false);
 		taxRate = cache.getConfiguration().getInvoiceTaxRate();
-		txtAmount.addKeyPressHandler(new NumericKeyPressHandler());
+		txtAmount.addKeyPressHandler(new EzeeTextBoxUtils.NumericKeyPressHandler());
 		txtAmount.addBlurHandler(new NumericBlurHandler());
 		chkTaxable.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 			@Override
@@ -255,10 +254,10 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	}
 
 	private void loadEntities() {
-		loadEntities(EzeePayee.class, lstSupplier);
-		loadEntities(EzeePayer.class, lstPremises);
-		loadEntities(EzeeDebtAgeRule.class, lstDebtAge);
-		loadEnums(EzeeInvoiceClassification.values(), lstClassification);
+		EzeeInvoiceUiUtils.loadEntities(EzeePayee.class, lstSupplier, cache);
+		EzeeInvoiceUiUtils.loadEntities(EzeePayer.class, lstPremises, cache);
+		EzeeInvoiceUiUtils.loadEntities(EzeeDebtAgeRule.class, lstDebtAge, cache);
+		EzeeListBoxUtils.loadEnums(EzeeInvoiceClassification.values(), lstClassification);
 	}
 
 	@UiHandler("btnClose")
@@ -304,22 +303,6 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 				close();
 			}
 		});
-	}
-
-	private final class NumericKeyPressHandler implements KeyPressHandler {
-
-		@Override
-		public void onKeyPress(final KeyPressEvent event) {
-			if (!Character.isDigit(event.getCharCode()) && !isAllowableKeyPress(event)) {
-				((TextBox) event.getSource()).cancelKey();
-			}
-		}
-
-		private boolean isAllowableKeyPress(final KeyPressEvent event) {
-			int code = event.getNativeEvent().getKeyCode();
-			return (code == KEY_BACKSPACE || code == KEY_DELETE || code == KEY_TAB || event.getCharCode() == '.'
-					|| event.getCharCode() == '-');
-		}
 	}
 
 	private final class NumericBlurHandler implements BlurHandler {

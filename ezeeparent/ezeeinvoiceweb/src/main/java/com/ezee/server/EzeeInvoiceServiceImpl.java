@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ezee.client.EzeeInvoiceService;
 import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeePayment;
 import com.ezee.server.dao.EzeeEntitiesDao;
 import com.ezee.server.util.EzeeInvoicePropertyLoader;
 
@@ -68,6 +69,11 @@ public class EzeeInvoiceServiceImpl extends AbstractRemoteService implements Eze
 			log.error("Unable to resolve class '" + clazz + "'.", e);
 		}
 		return null;
+	}
+
+	@Override
+	public List<EzeePayment> getOutstandingCheques(final Long premisesId) {
+		return getSpringBean(EzeeEntitiesDao.class).getOutstandingCheques(premisesId);
 	}
 
 	@Override
