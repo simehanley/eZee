@@ -159,6 +159,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		chkTaxable.setEnabled(false);
 		lstDebtAge.setEnabled(false);
 		btnSave.setEnabled(false);
+		lstClassification.setEnabled(false);
 	}
 
 	@Override
