@@ -1,0 +1,216 @@
+.lightgray {
+	background-color: #F8F8F8;
+}
+
+.lightblue {
+	background-color: #00CCFF;
+}
+
+.mediumblue {
+	background-color: #0066FF;
+}
+
+.green {
+	background-color: #009933;
+}
+
+.greenforeground {
+	color: #009933;
+	font-weight: bold;
+}
+
+.lightorange {
+	background-color: #FFCC33;
+}
+
+.lightorangeforeground {
+	color: orange;
+	font-weight: bold;
+}
+
+.header {
+	background-color: #6699CC;
+	border: 1px solid #6f7277;
+}
+
+.headerLabel {
+	font-weight: bold;
+	font-size: 30px;
+	color: white;
+}
+
+.footer {
+	background-color: #6699CC;
+	border: 1px solid #6f7277;
+}
+
+.footerLabel {
+	font-weight: bold;
+	font-size: 15px;
+	color: white;
+}
+
+.footerLabelUnderline {
+	font-weight: bold;
+	font-size: 15px;
+	color: white;
+	text-decoration: underline;
+}
+
+.navigation {
+	background-color: #C8C8C8;
+	border: 1px solid #6f7277;
+}
+
+.navigationLink {
+	font-weight: bold;
+	color: white;
+	text-decoration: underline;
+}
+
+.toolbar {
+	padding: 3px;
+	background-color: #C8C8C8;
+	border: 2px solid #6f7277;
+}
+
+.error {
+	padding: 3px;
+	margin: 3px;
+	font-weight: bold;
+	color: white;
+}
+
+/** GWT Component Overrides **/
+.gwtLabelBigCentered {
+	width: 200px;
+	border: 1px solid black;
+	padding: 5px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.gwtLabelBig {
+	width: 200px;
+	border: 1px solid black;
+	padding: 3px;
+	margin: 3px;
+	font-weight: bold;
+}
+
+.gwtLabelMedium {
+	width: 150px;
+	height: 20px;
+	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwtLabelSmall {
+	width: 75px;
+	height: 20px;
+	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwtTextBoxSmall {
+	width: 100px;
+	height: 20px;
+	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwtTextBoxMedium {
+	width: 200px;
+	height: 20px;
+	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwtTextBoxMediumEmail {
+	width: 200px;
+	height: 20px;
+	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+	color: blue;
+	text-decoration: underline;
+}
+
+.gwtTextBoxLarge {
+	width: 300px;
+	height: 20px;
+	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwtListBoxSmall {
+	width: 105px;
+	height: 30px;
+	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwtPanelBorder {
+	margin: 3px;
+	border: 1px solid black;
+}
+
+.gwtButton {
+	width: 90px;
+	height: 30px;
+	margin: 3px;
+	font-weight: bold;
+}
+
+.gwtListBoxMedium {
+	width: 210px;
+	height: 30px;
+	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwtRichTextAreaMedium {
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwtDateBoxSmall {
+	height: 24px;
+	width: 100px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwtCheckBoxSmall {
+	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.gwtFileUploadLarge {
+	width: 300px;
+	height: 20px;
+	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+/** GWT Component Overrides **/
