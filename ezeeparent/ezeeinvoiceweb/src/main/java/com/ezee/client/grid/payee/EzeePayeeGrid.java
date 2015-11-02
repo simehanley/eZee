@@ -3,7 +3,6 @@ package com.ezee.client.grid.payee;
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.delete;
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.update;
 
-import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.payee.EzeeCreateUpdateDeletePayee;
 import com.ezee.client.grid.EzeeFinancialEntityGrid;
@@ -17,8 +16,8 @@ import com.ezee.model.entity.EzeePayee;
  */
 public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
 
-	public EzeePayeeGrid(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache) {
-		super(service, cache);
+	public EzeePayeeGrid(final EzeeInvoiceEntityCache cache) {
+		super(cache);
 	}
 
 	protected void initGrid() {
@@ -43,20 +42,20 @@ public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
 	protected void deleteEntity() {
 		EzeePayee entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayee(service, cache, this, entity, delete).center();
+			new EzeeCreateUpdateDeletePayee(cache, this, entity, delete).center();
 		}
 	}
 
 	@Override
 	protected void newEntity() {
-		new EzeeCreateUpdateDeletePayee(service, cache, this).center();
+		new EzeeCreateUpdateDeletePayee(cache, this).center();
 	}
 
 	@Override
 	protected void editEntity() {
 		EzeePayee entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayee(service, cache, this, entity, update).center();
+			new EzeeCreateUpdateDeletePayee(cache, this, entity, update).center();
 		}
 	}
 }

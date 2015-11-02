@@ -1,15 +1,22 @@
 package com.ezee.client.main;
 
+import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.client.EzeeInvoiceWebConstants.SUPPORT_EMAIL;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showPointerCursor;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.grid.EzeeHasGrid;
+import com.ezee.model.entity.EzeeUser;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -28,6 +35,12 @@ public class EzeeInvoiceMain extends Composite {
 	private static EzeeInvoiceMainUiBinder uiBinder = GWT.create(EzeeInvoiceMainUiBinder.class);
 
 	@UiField
+	HTML user;
+
+	@UiField
+	HTML logout;
+
+	@UiField
 	HTML version;
 
 	@UiField
@@ -36,14 +49,12 @@ public class EzeeInvoiceMain extends Composite {
 	@UiField
 	TabLayoutPanel tab;
 
-	private final EzeeInvoiceServiceAsync service;
-
 	interface EzeeInvoiceMainUiBinder extends UiBinder<Widget, EzeeInvoiceMain> {
 	}
 
-	public EzeeInvoiceMain(final EzeeInvoiceServiceAsync service) {
-		this.service = service;
+	public EzeeInvoiceMain(final EzeeUser user) {
 		initWidget(uiBinder.createAndBindUi(this));
+		initUser(user);
 		initMain();
 		addTabHandler();
 	}
@@ -62,8 +73,12 @@ public class EzeeInvoiceMain extends Composite {
 		});
 	}
 
+	private void initUser(final EzeeUser loggedInUser) {
+		user.setText("Logged in as : " + loggedInUser.getUsername());
+	}
+
 	private void initMain() {
-		service.getVersion(new AsyncCallback<String>() {
+		INVOICE_SERVICE.getVersion(new AsyncCallback<String>() {
 			@Override
 			public void onSuccess(final String result) {
 				version.setText("Version : " + result);
@@ -81,5 +96,35 @@ public class EzeeInvoiceMain extends Composite {
 				Window.Location.assign(SUPPORT_EMAIL);
 			}
 		});
+
+		logout.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.Location.assign(GWT.getHostPageBaseURL());
+			}
+		});
+
+		MouseOverHandler mouseOverHandler = new EzeeMainMouseOverHandler();
+		logout.addMouseOverHandler(mouseOverHandler);
+		email.addMouseOverHandler(mouseOverHandler);
+		MouseOutHandler mouseOutHandler = new EzeeMainMouseOutHandler();
+		logout.addMouseOutHandler(mouseOutHandler);
+		email.addMouseOutHandler(mouseOutHandler);
+	}
+
+	private class EzeeMainMouseOverHandler implements MouseOverHandler {
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			showPointerCursor();
+		}
+	}
+
+	private class EzeeMainMouseOutHandler implements MouseOutHandler {
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			showDefaultCursor();
+		}
 	}
 }

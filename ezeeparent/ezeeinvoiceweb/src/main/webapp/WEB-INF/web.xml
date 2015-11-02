@@ -25,6 +25,16 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>userservice</servlet-name>
+		<servlet-class>com.ezee.server.EzeeUserServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>userservice</servlet-name>
+		<url-pattern>/EzeeInvoiceWeb/userservice</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>uploadServlet</servlet-name>
 		<servlet-class>com.ezee.server.upload.EzeeFileUploadService</servlet-class>
 	</servlet>

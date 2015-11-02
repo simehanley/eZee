@@ -7,7 +7,6 @@ import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
 
 import java.util.Set;
 
-import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.payment.EzeeCreateUpdateDeletePayment;
 import com.ezee.client.grid.EzeeGrid;
@@ -26,8 +25,8 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 
 	private EzeeInvoiceChangeListener listener;
 
-	public EzeePaymentGrid(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache) {
-		super(service, cache);
+	public EzeePaymentGrid(final EzeeInvoiceEntityCache cache) {
+		super(cache);
 	}
 
 	protected void initGrid() {
@@ -39,7 +38,7 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 	@Override
 	protected void initFilter() {
 		super.initFilter();
-		toolBar = new EzeePaymentGridToolBar(this, service, cache);
+		toolBar = new EzeePaymentGridToolBar(this, cache);
 		filterpanel.add(toolBar);
 	}
 
@@ -72,7 +71,7 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 	protected void deleteEntity() {
 		EzeePayment entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayment(service, cache, this, entity, delete, null, cheque).center();
+			new EzeeCreateUpdateDeletePayment(cache, this, entity, delete, null, cheque).center();
 		}
 	}
 
@@ -85,14 +84,14 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 	protected void editEntity() {
 		EzeePayment entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayment(service, cache, this, entity, update, null, cheque).center();
+			new EzeeCreateUpdateDeletePayment(cache, this, entity, update, null, cheque).center();
 		}
 	}
 
 	@Override
 	public void onCreatePayment(final Set<EzeeInvoice> invoices) {
 		if (!isEmpty(invoices)) {
-			new EzeeCreateUpdateDeletePayment(service, cache, this, invoices).center();
+			new EzeeCreateUpdateDeletePayment(cache, this, invoices).center();
 		}
 	}
 

@@ -7,7 +7,6 @@ import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.invoice.EzeeCreateUpdateDeleteInvoice;
 import com.ezee.client.crud.invoice.EzeeUploadInvoiceForm;
@@ -28,8 +27,8 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 
 	private EzeePaymentCreationListener listener;
 
-	public EzeeInvoiceGrid(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache) {
-		super(service, cache);
+	public EzeeInvoiceGrid(final EzeeInvoiceEntityCache cache) {
+		super(cache);
 	}
 
 	protected void initGrid() {
@@ -75,20 +74,20 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	protected void deleteEntity() {
 		EzeeInvoice entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeleteInvoice(service, cache, this, entity, delete).center();
+			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, delete).center();
 		}
 	}
 
 	@Override
 	protected void newEntity() {
-		new EzeeCreateUpdateDeleteInvoice(service, cache, this).center();
+		new EzeeCreateUpdateDeleteInvoice(cache, this).center();
 	}
 
 	@Override
 	protected void editEntity() {
 		EzeeInvoice entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeleteInvoice(service, cache, this, entity, update).center();
+			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, update).center();
 		}
 	}
 

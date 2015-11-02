@@ -51,8 +51,8 @@ h1 {
 .gwt-Label-Small {
 	width: 75px;
 	height: 20px;
-	padding: 3px;
 	margin: 3px;
+	padding: 3px;
 	border: 1px solid black;
 	font-weight: bold;
 }
@@ -148,6 +148,13 @@ h1 {
 }
 .gwt-Panel-Upload {
 	width: 250px;
+	height: 20px;
+	border: 1px solid black;
+	padding: 5px;
+	font-weight: bold;
+}
+.gwt-Message-Label {
+	width: 200px;
 	height: 20px;
 	border: 1px solid black;
 	padding: 5px;

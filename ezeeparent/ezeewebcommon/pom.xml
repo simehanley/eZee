@@ -14,7 +14,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.ezee</groupId>
-			<artifactId>ezeecommon</artifactId>
+			<artifactId>ezeedao</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

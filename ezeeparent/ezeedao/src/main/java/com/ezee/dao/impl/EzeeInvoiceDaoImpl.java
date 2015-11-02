@@ -3,6 +3,7 @@ package com.ezee.dao.impl;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -45,5 +46,15 @@ public class EzeeInvoiceDaoImpl extends EzeeBaseDaoImpl<EzeeInvoice> implements 
 		if (persisted != null && persisted.getFile() != null) {
 			invoice.setFile(persisted.getFile());
 		}
+	}
+
+	@Override
+	public EzeeInvoice get(long id) {
+		return super.get(id, EzeeInvoice.class);
+	}
+
+	@Override
+	public List<EzeeInvoice> get() {
+		return super.get(EzeeInvoice.class);
 	}
 }

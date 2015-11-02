@@ -2,9 +2,9 @@ package com.ezee.client.grid.invoice;
 
 import static com.ezee.client.EzeeInvoiceWebConstants.FILE_DOWNLOAD_SERVICE;
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_ID;
-import static com.ezee.client.css.EzeeInvoiceDefaultResources.INSTANCE;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
+import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
 
 import java.util.Comparator;
@@ -15,8 +15,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.ezee.client.grid.EzeeGridModel;
-import com.ezee.client.images.EzeeInvoiceImageResources;
 import com.ezee.model.entity.EzeeInvoice;
+import com.ezee.web.common.ui.images.EzeeImageResources;
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.ImageResourceCell;
 import com.google.gwt.core.client.GWT;
@@ -207,7 +207,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 				@Override
 				public ImageResource getValue(final EzeeInvoice invoice) {
 					if (hasLength(invoice.getFilename())) {
-						return EzeeInvoiceImageResources.INSTANCE.pdf();
+						return EzeeImageResources.INSTANCE.pdf();
 					}
 					return null;
 				}
@@ -230,6 +230,6 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 
 	private void downloadInvoiceFile(final EzeeInvoice invoice) {
 		String downloadUrl = GWT.getModuleBaseURL() + FILE_DOWNLOAD_SERVICE + "?" + INVOICE_ID + "=" + invoice.getId();
-		Window.Location.replace(downloadUrl);
+		Window.Location.assign(downloadUrl);
 	}
 }

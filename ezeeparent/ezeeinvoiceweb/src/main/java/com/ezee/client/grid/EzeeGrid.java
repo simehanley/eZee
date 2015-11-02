@@ -1,5 +1,6 @@
 package com.ezee.client.grid;
 
+import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_ENTER;
 import static com.google.gwt.user.client.Event.ONCONTEXTMENU;
@@ -8,12 +9,11 @@ import static java.util.logging.Level.SEVERE;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
-import com.ezee.client.css.EzeeInvoiceGwtOverridesResources;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
+import com.ezee.web.common.ui.css.EzeeGwtOverridesResources;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
@@ -59,8 +59,6 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 
 	protected EzeeGridToolbar<T> toolBar;
 
-	protected EzeeInvoiceServiceAsync service;
-
 	protected EzeeInvoiceEntityCache cache;
 
 	protected PopupPanel contextMenu;
@@ -68,8 +66,7 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	interface EzeeGridUiBinder extends UiBinder<Widget, EzeeGrid<?>> {
 	}
 
-	public EzeeGrid(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache) {
-		this.service = service;
+	public EzeeGrid(final EzeeInvoiceEntityCache cache) {
 		this.cache = cache;
 		init();
 		initWidget(uiBinder.createAndBindUi(this));
@@ -95,7 +92,7 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	}
 
 	protected void initGrid() {
-		grid = new DataGrid<T>(DEFAULT_PAGE_SIZE, EzeeInvoiceGwtOverridesResources.INSTANCE);
+		grid = new DataGrid<T>(DEFAULT_PAGE_SIZE, EzeeGwtOverridesResources.INSTANCE);
 		grid.setMinimumTableWidth(DEFAULT_GRID_SIZE, Style.Unit.PX);
 		grid.addDomHandler(new EzeeGridDoubleClickHandler(), DoubleClickEvent.getType());
 		grid.addDomHandler(new EzeeGridKeyPressHandler(), KeyPressEvent.getType());
@@ -115,7 +112,7 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	}
 
 	protected void loadEntities() {
-		service.getEntities(getGridClass(), new AsyncCallback<List<T>>() {
+		INVOICE_SERVICE.getEntities(getGridClass(), new AsyncCallback<List<T>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {

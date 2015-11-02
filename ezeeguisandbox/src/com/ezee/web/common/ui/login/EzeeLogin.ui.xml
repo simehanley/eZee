@@ -1,0 +1,39 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	</ui:style>
+	<g:HTMLPanel>
+		<g:HorizontalPanel height="100%" width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+			<g:AbsolutePanel height="800px" width="1000px">
+				<g:at top="273" left="320">
+					<g:HTML wordWrap="false" width="376px" height="52px" ui:field="lblTitle" >TITLE</g:HTML>
+				</g:at>
+				<g:at top="329" left="316">
+					<g:Label text="Username" styleName="gwt-Label-Medium" />
+				</g:at>
+				<g:at top="363" left="316">
+					<g:Label text="Password" styleName="gwt-Label-Medium" />
+				</g:at>
+				<g:at top="329" left="482">
+					<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtUsername" />
+				</g:at>
+				<g:at top="363" left="482">
+					<g:PasswordTextBox styleName="gwt-TextBox-Medium" ui:field="txtPassword" />
+				</g:at>
+				<g:at top="401" left="320">
+					<g:CheckBox text="Remember Me" styleName="gwt-CheckBox-Small" ui:field="chkRememberMe" />
+				</g:at>
+				<g:at top="397" left="506">
+					<g:Button ui:field="btnRegister" text="Regsiter" />
+				</g:at>
+				<g:at top="397" left="600">
+					<g:Button text="Login" ui:field="btnLogin" />
+				</g:at>
+				<g:at top="434" left="320">
+					<g:Label width="376px" height="70px" ui:field="lblError"/>
+				</g:at>
+			</g:AbsolutePanel>
+		</g:HorizontalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder>

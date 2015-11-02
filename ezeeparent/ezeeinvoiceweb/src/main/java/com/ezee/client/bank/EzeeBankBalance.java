@@ -1,7 +1,7 @@
 package com.ezee.client.bank;
 
 import static com.ezee.client.EzeeInvoiceWebConstants.BANK;
-import static com.ezee.client.css.EzeeInvoiceGwtOverridesResources.INSTANCE;
+import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.client.grid.payment.EzeePaymentGridModel.CREATED_DATE;
 import static com.ezee.client.grid.payment.EzeePaymentGridModel.DESCRIPTION;
 import static com.ezee.client.grid.payment.EzeePaymentGridModel.PAYMENT_DATE;
@@ -9,6 +9,7 @@ import static com.ezee.client.grid.payment.EzeePaymentGridModel.PAYMENT_TYPE;
 import static com.ezee.client.ui.EzeeInvoiceUiUtils.loadEntities;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
+import static com.ezee.web.common.ui.css.EzeeGwtOverridesResources.INSTANCE;
 
 import java.util.HashSet;
 import java.util.List;
@@ -16,7 +17,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.grid.payment.EzeePaymentGridModel;
 import com.ezee.model.entity.EzeePayer;
@@ -71,16 +71,13 @@ public class EzeeBankBalance extends EzeeDialog {
 
 	private EzeePaymentGridModel model;
 
-	private final EzeeInvoiceServiceAsync service;
-
 	private final EzeeInvoiceEntityCache cache;
 
 	interface EzeeBankBalanceUiBinder extends UiBinder<Widget, EzeeBankBalance> {
 	}
 
-	public EzeeBankBalance(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache) {
+	public EzeeBankBalance(final EzeeInvoiceEntityCache cache) {
 		super(false, false);
-		this.service = service;
 		this.cache = cache;
 		setText(BANK);
 		initGrid();
@@ -139,7 +136,7 @@ public class EzeeBankBalance extends EzeeDialog {
 		String premisesName = lstPremises.getSelectedItemText();
 		EzeePayer premises = (EzeePayer) cache.getEntities(EzeePayer.class).get(premisesName);
 		Long id = (premises == null) ? null : premises.getId();
-		service.getOutstandingCheques(id, new AsyncCallback<List<EzeePayment>>() {
+		INVOICE_SERVICE.getOutstandingCheques(id, new AsyncCallback<List<EzeePayment>>() {
 
 			@Override
 			public void onSuccess(final List<EzeePayment> result) {

@@ -1,8 +1,40 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style>
-	
-	</ui:style>
+
+	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
+
 	<g:HTMLPanel>
+		<g:HorizontalPanel height="100%" width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER"
+			styleName="{res.css.header}">
+			<g:AbsolutePanel height="800px" width="1000px">
+				<g:at top="273" left="320">
+					<g:HTML text="" wordWrap="false" width="376px" height="52px" ui:field="lblTitle" styleName="{res.css.headerLabel}" />
+				</g:at>
+				<g:at top="329" left="316">
+					<g:Label text="Username" styleName="{res.css.gwtLabelMedium}" />
+				</g:at>
+				<g:at top="363" left="316">
+					<g:Label text="Password" styleName="{res.css.gwtLabelMedium}" />
+				</g:at>
+				<g:at top="329" left="482">
+					<g:TextBox ui:field="txtUsername" styleName="{res.css.gwtTextBoxMedium}" />
+				</g:at>
+				<g:at top="363" left="482">
+					<g:PasswordTextBox ui:field="txtPassword" styleName="{res.css.gwtTextBoxMedium}" />
+				</g:at>
+				<g:at top="401" left="316">
+					<g:CheckBox text="Remember Me" ui:field="chkRememberMe" styleName="{res.css.gwtCheckBoxSmall}" visible="false" />
+				</g:at>
+				<g:at top="397" left="506">
+					<g:Button ui:field="btnRegister" text="Regsiter" styleName="{res.css.gwtButton}" />
+				</g:at>
+				<g:at top="397" left="600">
+					<g:Button text="Login" ui:field="btnLogin" styleName="{res.css.gwtButton}" />
+				</g:at>
+				<g:at top="434" left="320">
+					<g:Label width="376px" height="70px" ui:field="lblError" styleName="{res.css.error}" />
+				</g:at>
+			</g:AbsolutePanel>
+		</g:HorizontalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

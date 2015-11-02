@@ -19,7 +19,8 @@ import com.ezee.model.entity.EzeeDatabaseEntity;
  * @author siborg
  *
  */
-public class EzeeBaseDaoImpl<T extends EzeeDatabaseEntity> extends HibernateDaoSupport implements EzeeBaseDao<T> {
+public abstract class EzeeBaseDaoImpl<T extends EzeeDatabaseEntity> extends HibernateDaoSupport
+		implements EzeeBaseDao<T> {
 
 	@Transactional(propagation = REQUIRED, readOnly = false)
 	public void merge(final T entity) {
@@ -65,4 +66,8 @@ public class EzeeBaseDaoImpl<T extends EzeeDatabaseEntity> extends HibernateDaoS
 		getSessionFactory().getCurrentSession().getNamedQuery(mappingQuery).setLong("id", entity.getId())
 				.executeUpdate();
 	}
+
+	public abstract T get(long id);
+
+	public abstract List<T> get();
 }

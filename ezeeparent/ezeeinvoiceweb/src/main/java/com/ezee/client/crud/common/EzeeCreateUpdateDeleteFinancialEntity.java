@@ -5,7 +5,6 @@ import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.create;
 import java.util.Collection;
 import java.util.Map;
 
-import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
@@ -21,15 +20,15 @@ import com.ezee.model.entity.EzeeHasName;
 public abstract class EzeeCreateUpdateDeleteFinancialEntity<T extends EzeeFinancialEntity>
 		extends EzeeCreateUpdateDeleteEntity<T> {
 
-	public EzeeCreateUpdateDeleteFinancialEntity(final EzeeInvoiceServiceAsync service,
-			final EzeeInvoiceEntityCache cache, final EzeeCreateUpdateDeleteEntityHandler<T> handler) {
-		this(service, cache, handler, null, create);
+	public EzeeCreateUpdateDeleteFinancialEntity(final EzeeInvoiceEntityCache cache,
+			final EzeeCreateUpdateDeleteEntityHandler<T> handler) {
+		this(cache, handler, null, create);
 	}
 
-	public EzeeCreateUpdateDeleteFinancialEntity(final EzeeInvoiceServiceAsync service,
-			final EzeeInvoiceEntityCache cache, EzeeCreateUpdateDeleteEntityHandler<T> handler, final T entity,
+	public EzeeCreateUpdateDeleteFinancialEntity(final EzeeInvoiceEntityCache cache,
+			EzeeCreateUpdateDeleteEntityHandler<T> handler, final T entity,
 			final EzeeCreateUpdateDeleteEntityType type) {
-		super(service, cache, handler, entity, type);
+		super(cache, handler, entity, type);
 	}
 
 	protected void updateCache(final T entity, final EzeeCreateUpdateDeleteEntityType type) {

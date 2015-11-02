@@ -2,6 +2,7 @@ package com.ezee.client.crud.invoice;
 
 import static com.ezee.client.EzeeInvoiceWebConstants.DELETE_INVOICE;
 import static com.ezee.client.EzeeInvoiceWebConstants.EDIT_INVOICE;
+import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.client.EzeeInvoiceWebConstants.NEW_INVOICE;
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.create;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
@@ -9,13 +10,14 @@ import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFromatUtils.getDateBoxFormat;
+import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
+import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
 import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.getItemIndex;
 
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
@@ -42,7 +44,6 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -109,15 +110,15 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 	private double taxRate;
 
-	public EzeeCreateUpdateDeleteInvoice(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache,
+	public EzeeCreateUpdateDeleteInvoice(final EzeeInvoiceEntityCache cache,
 			EzeeCreateUpdateDeleteEntityHandler<EzeeInvoice> handler) {
-		this(service, cache, handler, null, create);
+		this(cache, handler, null, create);
 	}
 
-	public EzeeCreateUpdateDeleteInvoice(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache,
+	public EzeeCreateUpdateDeleteInvoice(final EzeeInvoiceEntityCache cache,
 			EzeeCreateUpdateDeleteEntityHandler<EzeeInvoice> handler, final EzeeInvoice entity,
 			final EzeeCreateUpdateDeleteEntityType type) {
-		super(service, cache, handler, entity, type);
+		super(cache, handler, entity, type);
 		setWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -269,13 +270,12 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	@UiHandler("btnSave")
 	void onSaveClick(ClickEvent event) {
 		bind();
-
-		service.saveEntity(EzeeInvoice.class.getName(), entity, new AsyncCallback<EzeeInvoice>() {
+		INVOICE_SERVICE.saveEntity(EzeeInvoice.class.getName(), entity, new AsyncCallback<EzeeInvoice>() {
 
 			@Override
 			public void onFailure(final Throwable caught) {
 				log.log(Level.SEVERE, "Error persisting invoice '" + entity + "'.", caught);
-				Window.alert("Error persisting invoice '" + entity + "'.  Please see log for details.");
+				showNew(ERROR, "Error persisting invoice '" + entity + "'.  Please see log for details.");
 			}
 
 			@Override
@@ -289,12 +289,12 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 	@UiHandler("btnDelete")
 	void onDeleteClick(ClickEvent event) {
-		service.deleteEntity(EzeeInvoice.class.getName(), entity, new AsyncCallback<EzeeInvoice>() {
+		INVOICE_SERVICE.deleteEntity(EzeeInvoice.class.getName(), entity, new AsyncCallback<EzeeInvoice>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
 				log.log(Level.SEVERE, "Error deleting invoice '" + entity + "'.", caught);
-				Window.alert("Error deleting invoice '" + entity + "'.  Please see log for details.");
+				showNew(ERROR, "Error deleting invoice '" + entity + "'.  Please see log for details.");
 			}
 
 			@Override

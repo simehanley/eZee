@@ -1,5 +1,6 @@
 package com.ezee.client.cache;
 
+import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 
 import java.util.HashMap;
@@ -8,7 +9,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.model.entity.EzeeConfiguration;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.EzeeDebtAgeRule;
@@ -30,10 +30,7 @@ public class EzeeInvoiceEntityCache {
 
 	private EzeeConfiguration configuration;
 
-	private final EzeeInvoiceServiceAsync service;
-
-	public EzeeInvoiceEntityCache(final EzeeInvoiceServiceAsync service) {
-		this.service = service;
+	public EzeeInvoiceEntityCache() {
 		loadEntities();
 	}
 
@@ -46,7 +43,7 @@ public class EzeeInvoiceEntityCache {
 
 	private <T extends EzeeDatabaseEntity> void loadEntities(final Class<T> clazz) {
 
-		service.getEntities(clazz.getName(), new AsyncCallback<List<T>>() {
+		INVOICE_SERVICE.getEntities(clazz.getName(), new AsyncCallback<List<T>>() {
 
 			@Override
 			public void onFailure(final Throwable caught) {
@@ -67,7 +64,7 @@ public class EzeeInvoiceEntityCache {
 
 	private void loadConfiguration() {
 
-		service.getEntities(EzeeConfiguration.class.getName(), new AsyncCallback<List<EzeeConfiguration>>() {
+		INVOICE_SERVICE.getEntities(EzeeConfiguration.class.getName(), new AsyncCallback<List<EzeeConfiguration>>() {
 
 			@Override
 			public void onFailure(final Throwable caught) {

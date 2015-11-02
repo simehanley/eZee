@@ -1,0 +1,55 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	</ui:style>
+	<g:HTMLPanel>
+		<g:HorizontalPanel height="100%" width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+			<g:AbsolutePanel height="800px" width="1000px">
+				<g:at top="203" left="319">
+					<g:HTML wordWrap="false" width="376px" height="52px" />
+				</g:at>
+				<g:at top="260" left="316">
+					<g:Label text="Firstname" styleName="gwt-Label-Medium" />
+				</g:at>
+				<g:at top="294" left="316">
+					<g:Label text="Lastname" styleName="gwt-Label-Medium" />
+				</g:at>
+				<g:at top="329" left="316">
+					<g:Label text="Username" styleName="gwt-Label-Medium" />
+				</g:at>
+				<g:at top="363" left="316">
+					<g:Label text="Password" styleName="gwt-Label-Medium" />
+				</g:at>
+				<g:at top="397" left="316">
+					<g:Label text="eMail" styleName="gwt-Label-Medium" />
+				</g:at>
+				<g:at top="260" left="482">
+					<g:TextBox ui:field="txtFirstname" styleName="gwt-TextBox-Medium" />
+				</g:at>
+				<g:at top="294" left="482">
+					<g:TextBox ui:field="txtLastname" styleName="gwt-TextBox-Medium" />
+				</g:at>
+				<g:at top="329" left="482">
+					<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtUsername" />
+				</g:at>
+				<g:at top="363" left="482">
+					<g:PasswordTextBox styleName="gwt-TextBox-Medium" ui:field="txtPassword" />
+				</g:at>
+				<g:at top="397" left="482">
+					<g:TextBox ui:field="txtEmail" styleName="gwt-TextBox-Medium" />
+				</g:at>
+				<g:at top="431" left="507">
+					<g:Button text="Back" ui:field="btnBack" />
+				</g:at>
+				<g:at top="431" left="601">
+					<g:Button text="Register" ui:field="btnRegsiter" />
+				</g:at>
+				<g:at top="470" left="319">
+					<g:Label width="376px" height="70px" ui:field="lblError" />
+				</g:at>
+
+			</g:AbsolutePanel>
+		</g:HorizontalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

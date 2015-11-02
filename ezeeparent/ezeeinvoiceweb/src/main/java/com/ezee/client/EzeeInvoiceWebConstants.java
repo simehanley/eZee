@@ -1,5 +1,7 @@
 package com.ezee.client;
 
+import com.google.gwt.core.client.GWT;
+
 public interface EzeeInvoiceWebConstants {
 
 	String INVOICES = "INVOICES";
@@ -36,4 +38,9 @@ public interface EzeeInvoiceWebConstants {
 
 	String EZEE_INVOICE_VERSION_PROPERTIES = "ezeeinvoice.version.properties";
 	String EZEE_INVOICE_WEB_VERSION = "ezeeinvoice.web.version";
+
+	String LOGIN_USER = "eZee Invoices Login";
+	String REGISTER_USER = "eZee Invoices Register User";
+
+	EzeeInvoiceServiceAsync INVOICE_SERVICE = GWT.create(EzeeInvoiceService.class);
 }

@@ -1,0 +1,16 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	</ui:style>
+	<g:HTMLPanel>
+		<g:AbsolutePanel width="540px" height="114px" styleName="gwt-Panel-Border">
+			<g:at top="10" left="10">
+				<g:Label styleName="gwt-Label-Small" width="507px" height="47px" ui:field="lblMessage" />
+			</g:at>
+			<g:at top="72" left="435">
+				<g:Button ui:field="btnClose" />
+			</g:at>
+		</g:AbsolutePanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

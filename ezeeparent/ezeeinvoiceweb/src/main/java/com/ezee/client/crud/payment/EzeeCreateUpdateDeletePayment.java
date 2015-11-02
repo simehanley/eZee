@@ -2,13 +2,16 @@ package com.ezee.client.crud.payment;
 
 import static com.ezee.client.EzeeInvoiceWebConstants.DELETE_PAYMENT;
 import static com.ezee.client.EzeeInvoiceWebConstants.EDIT_PAYMENT;
+import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.client.EzeeInvoiceWebConstants.NEW_PAYMENT;
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.create;
-import static com.ezee.client.css.EzeeInvoiceGwtOverridesResources.INSTANCE;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
+import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
+import static com.ezee.web.common.ui.css.EzeeGwtOverridesResources.INSTANCE;
+import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
 import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.getItemIndex;
 import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.loadEnums;
 
@@ -18,7 +21,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
@@ -38,7 +40,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -100,16 +101,16 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 
 	private EzeePaymentType defaultType;
 
-	public EzeeCreateUpdateDeletePayment(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache,
+	public EzeeCreateUpdateDeletePayment(final EzeeInvoiceEntityCache cache,
 			final EzeeCreateUpdateDeleteEntityHandler<EzeePayment> handler, final Set<EzeeInvoice> invoices) {
-		this(service, cache, handler, null, create, invoices, cheque);
+		this(cache, handler, null, create, invoices, cheque);
 	}
 
-	public EzeeCreateUpdateDeletePayment(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache,
+	public EzeeCreateUpdateDeletePayment(final EzeeInvoiceEntityCache cache,
 			final EzeeCreateUpdateDeleteEntityHandler<EzeePayment> handler, final EzeePayment entity,
 			final EzeeCreateUpdateDeleteEntityType type, final Set<EzeeInvoice> invoices,
 			final EzeePaymentType defaultType) {
-		super(service, cache, handler, entity, type);
+		super(cache, handler, entity, type);
 		this.defaultType = defaultType;
 		initGrid();
 		this.invoices = (entity != null) ? entity.getInvoices() : invoices;
@@ -240,13 +241,12 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 	@UiHandler("btnSave")
 	void onSaveClick(ClickEvent event) {
 		bind();
-
-		service.saveEntity(EzeePayment.class.getName(), entity, new AsyncCallback<EzeePayment>() {
+		INVOICE_SERVICE.saveEntity(EzeePayment.class.getName(), entity, new AsyncCallback<EzeePayment>() {
 
 			@Override
 			public void onFailure(final Throwable caught) {
 				log.log(Level.SEVERE, "Error persisting payment '" + entity + "'.", caught);
-				Window.alert("Error persisting payment '" + entity + "'.  Please see log for details.");
+				showNew(ERROR, "Error persisting payment '" + entity + "'.  Please see log for details.");
 			}
 
 			@Override
@@ -260,12 +260,12 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 
 	@UiHandler("btnDelete")
 	void onDeleteClick(ClickEvent event) {
-		service.deleteEntity(EzeePayment.class.getName(), entity, new AsyncCallback<EzeePayment>() {
+		INVOICE_SERVICE.deleteEntity(EzeePayment.class.getName(), entity, new AsyncCallback<EzeePayment>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
 				log.log(Level.SEVERE, "Error deleting payment '" + entity + "'.", caught);
-				Window.alert("Error deleting invoice '" + entity + "'.  Please see log for details.");
+				showNew(ERROR, "Error deleting invoice '" + entity + "'.  Please see log for details.");
 			}
 
 			@Override

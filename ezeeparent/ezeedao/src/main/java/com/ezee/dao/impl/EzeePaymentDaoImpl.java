@@ -62,4 +62,14 @@ public class EzeePaymentDaoImpl extends EzeeBaseDaoImpl<EzeePayment> implements 
 					.findByNamedQueryAndNamedParam("selectOutstandingChequesByPremisesSql", "payerId", premisesId);
 		}
 	}
+
+	@Override
+	public EzeePayment get(long id) {
+		return super.get(id, EzeePayment.class);
+	}
+
+	@Override
+	public List<EzeePayment> get() {
+		return super.get(EzeePayment.class);
+	}
 }

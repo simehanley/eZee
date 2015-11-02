@@ -2,7 +2,9 @@ package com.ezee.client.crud.invoice;
 
 import static com.ezee.client.EzeeInvoiceWebConstants.FILE_UPLOAD_FAIL;
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_ID;
-import static com.ezee.client.css.EzeeInvoiceDefaultResources.INSTANCE;
+import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
+import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
+import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
 import static gwtupload.client.IFileInput.FileInputType.CUSTOM;
 
 import com.ezee.client.grid.invoice.EzeeInvoiceUpLoaderListener;
@@ -13,7 +15,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -68,7 +69,7 @@ public class EzeeUploadInvoiceForm extends EzeeDialog {
 			public void onFinish(IUploader iUploader) {
 				String result = uploader.getServerMessage().getMessage();
 				if (FILE_UPLOAD_FAIL.equals(result)) {
-					Window.alert(FILE_UPLOAD_FAIL);
+					showNew(ERROR, "File upload failed, please see log for details.");
 					close();
 				} else {
 					listener.invoiceUploaded(result);

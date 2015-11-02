@@ -1,9 +1,9 @@
 package com.ezee.client.grid.payment;
 
-import static com.ezee.client.css.EzeeInvoiceDefaultResources.INSTANCE;
 import static com.ezee.client.grid.payment.EzeePaymentUtils.getInvoiceNumbers;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
+import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
 
 import java.util.Comparator;
 import java.util.Date;

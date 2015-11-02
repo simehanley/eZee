@@ -23,11 +23,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.ezee</groupId>
-			<artifactId>ezeedao</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.ezee</groupId>
 			<artifactId>ezeewebcommon</artifactId>
 			<version>${project.version}</version>
 		</dependency>

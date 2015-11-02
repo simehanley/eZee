@@ -2,14 +2,16 @@ package com.ezee.client.crud.payee;
 
 import static com.ezee.client.EzeeInvoiceWebConstants.DELETE_SUPPLIER;
 import static com.ezee.client.EzeeInvoiceWebConstants.EDIT_SUPPLIER;
+import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.client.EzeeInvoiceWebConstants.NEW_SUPPLIER;
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.create;
+import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
+import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
 
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ezee.client.EzeeInvoiceServiceAsync;
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType;
@@ -22,7 +24,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
@@ -51,15 +52,15 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 	@UiField
 	Button btnDelete;
 
-	public EzeeCreateUpdateDeletePayee(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache,
+	public EzeeCreateUpdateDeletePayee(final EzeeInvoiceEntityCache cache,
 			final EzeeCreateUpdateDeleteEntityHandler<EzeePayee> handler) {
-		this(service, cache, handler, null, create);
+		this(cache, handler, null, create);
 	}
 
-	public EzeeCreateUpdateDeletePayee(final EzeeInvoiceServiceAsync service, final EzeeInvoiceEntityCache cache,
+	public EzeeCreateUpdateDeletePayee(final EzeeInvoiceEntityCache cache,
 			final EzeeCreateUpdateDeleteEntityHandler<EzeePayee> handler, final EzeePayee entity,
 			final EzeeCreateUpdateDeleteEntityType type) {
-		super(service, cache, handler, entity, type);
+		super(cache, handler, entity, type);
 		setWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -137,12 +138,12 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 	@UiHandler("btnSave")
 	void onSaveClick(ClickEvent event) {
 		bind();
-		service.saveEntity(EzeePayee.class.getName(), entity, new AsyncCallback<EzeePayee>() {
+		INVOICE_SERVICE.saveEntity(EzeePayee.class.getName(), entity, new AsyncCallback<EzeePayee>() {
 
 			@Override
 			public void onFailure(final Throwable caught) {
 				log.log(Level.SEVERE, "Error persisting supplier '" + entity + "'.", caught);
-				Window.alert("Error persisting supplier '" + entity + "'.  Please see log for details.");
+				showNew(ERROR, "Error persisting supplier '" + entity + "'.  Please see log for details.");
 			}
 
 			@Override
@@ -157,12 +158,12 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 
 	@UiHandler("btnDelete")
 	void onDeleteClick(ClickEvent event) {
-		service.deleteEntity(EzeePayee.class.getName(), entity, new AsyncCallback<EzeePayee>() {
+		INVOICE_SERVICE.deleteEntity(EzeePayee.class.getName(), entity, new AsyncCallback<EzeePayee>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
 				log.log(Level.SEVERE, "Error deleting supplier '" + entity + "'.", caught);
-				Window.alert("Error deleting supplier '" + entity + "'.  Please see log for details");
+				showNew(ERROR, "Error deleting supplier '" + entity + "'.  Please see log for details");
 			}
 
 			@Override

@@ -10,5 +10,5 @@
 
 	<entry-point class='com.ezee.client.Ezeeguisandbox' />
 	<source path='client' />
-	<source path='shared' />
+	<source path='web' />
 </module>
