@@ -66,8 +66,9 @@
 			<g:at top="214" left="722">
 				<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstDebtAge" />
 			</g:at>
-			<g:at top="11" left="855">
-				<g:CheckBox text="Taxable" styleName="gwt-CheckBox-Small" value="true" ui:field="chkTaxable" />
+			<g:at top="11" left="832">
+				<g:CheckBox text="Manual Tax" styleName="gwt-CheckBox-Small" value="true" ui:field="chkManualTax"
+					wordWrap="false" />
 			</g:at>
 			<g:at top="248" left="650">
 				<g:Button ui:field="btnDelete" text="Delete" />
@@ -79,10 +80,10 @@
 				<g:Button ui:field="btnClose" text="Close" />
 			</g:at>
 			<g:at top="248" left="10">
-				<g:Label text="Classification" styleName="gwt-Label-Medium"/>
+				<g:Label text="Classification" styleName="gwt-Label-Medium" />
 			</g:at>
 			<g:at top="247" left="174">
-				<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstClassification"/>
+				<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstClassification" />
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>

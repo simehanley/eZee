@@ -47,7 +47,7 @@ public class EzeeCreateUpdateInvoice extends Composite {
 	RichTextArea txtDescription;
 
 	@UiField
-	CheckBox chkTaxable;
+	CheckBox chkManualTax;
 
 	@UiField
 	Button btnClose;

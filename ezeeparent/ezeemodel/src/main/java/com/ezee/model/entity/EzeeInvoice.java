@@ -56,8 +56,8 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 	@Column(name = "DESCRIPTION")
 	private String description;
 
-	@Column(name = "TAXABLE")
-	private boolean taxable = Boolean.TRUE;
+	@Column(name = "MANUAL_TAX")
+	private boolean manualtax = Boolean.TRUE;
 
 	@Column(name = "PAID")
 	private boolean paid = Boolean.FALSE;
@@ -88,16 +88,16 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 	}
 
 	public EzeeInvoice(final String invoiceId, final EzeePayee payee, final EzeePayer payer, final double amount,
-			final double tax, final String description, final boolean taxable, final boolean paid, final Date dateDue,
+			final double tax, final String description, final boolean manualtax, final boolean paid, final Date dateDue,
 			final Date datePaid, final Date created, final Date updated,
 			final EzeeInvoiceClassification classification) {
-		this(NULL_ID, invoiceId, payee, payer, amount, tax, description, taxable, paid, dateDue, datePaid, created,
+		this(NULL_ID, invoiceId, payee, payer, amount, tax, description, manualtax, paid, dateDue, datePaid, created,
 				updated, classification);
 	}
 
 	public EzeeInvoice(final Long id, final String invoiceId, final EzeePayee payee, final EzeePayer payer,
-			final double amount, final double tax, final String description, final boolean taxable, final boolean paid,
-			final Date dateDue, final Date datePaid, final Date created, final Date updated,
+			final double amount, final double tax, final String description, final boolean manualtax,
+			final boolean paid, final Date dateDue, final Date datePaid, final Date created, final Date updated,
 			final EzeeInvoiceClassification classification) {
 		super(id, created, updated);
 		this.invoiceId = invoiceId;
@@ -106,7 +106,7 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 		this.amount = amount;
 		this.tax = tax;
 		this.description = description;
-		this.taxable = taxable;
+		this.manualtax = manualtax;
 		this.paid = paid;
 		this.dateDue = dateDue;
 		this.datePaid = datePaid;
@@ -142,8 +142,8 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 		return description;
 	}
 
-	public final boolean isTaxable() {
-		return taxable;
+	public final boolean isManualTax() {
+		return manualtax;
 	}
 
 	public final boolean isPaid() {
@@ -182,8 +182,8 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 		this.description = description;
 	}
 
-	public void setTaxable(boolean taxable) {
-		this.taxable = taxable;
+	public void setManualTax(boolean manualtax) {
+		this.manualtax = manualtax;
 	}
 
 	public void setPaid(boolean paid) {
