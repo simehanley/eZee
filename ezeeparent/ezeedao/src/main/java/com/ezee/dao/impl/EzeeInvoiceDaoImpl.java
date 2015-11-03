@@ -1,6 +1,7 @@
 package com.ezee.dao.impl;
 
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
+import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
 import java.util.List;
@@ -32,11 +33,21 @@ public class EzeeInvoiceDaoImpl extends EzeeBaseDaoImpl<EzeeInvoice> implements 
 
 	@Override
 	@Transactional(propagation = REQUIRED, readOnly = false)
+	public void save(final EzeeInvoice invoice) {
+		if (invoice.getId() != NULL_ID) {
+			preprocess(invoice);
+			merge(invoice);
+		} else {
+			super.save(invoice);
+		}
+	}
+
+	@Override
+	@Transactional(propagation = REQUIRED, readOnly = false)
 	public void save(final Set<EzeeInvoice> invoices) {
 		if (!isEmpty(invoices)) {
 			for (EzeeInvoice invoice : invoices) {
-				preprocess(invoice);
-				merge(invoice);
+				this.save(invoice);
 			}
 		}
 	}
