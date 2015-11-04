@@ -24,9 +24,9 @@ public class EzeePaymentDaoTest extends AbstractEzeeDaoTest {
 		EzeePayee payee = new EzeePayee("TEST-PAYEE", null, null, null, null, null, null, null, null, new Date(),
 				new Date());
 		EzeeInvoice one = new EzeeInvoice("1234567", payee, payer, 200., 20., "Invoice to payee.", true, false,
-				new Date(2015, 6, 25), null, new Date(), new Date(), expense);
+				new Date(2015, 6, 25), new Date(), new Date(), new Date(), new Date(), expense);
 		EzeeInvoice two = new EzeeInvoice("1234567", payee, payer, 200., 20., "Invoice to payee.", true, false,
-				new Date(2015, 6, 25), null, new Date(), new Date(), expense);
+				new Date(2015, 6, 25), new Date(), new Date(), new Date(), new Date(), expense);
 		getCtx().getBean(EzeePayerDao.class).save(payer);
 		getCtx().getBean(EzeePayeeDao.class).save(payee);
 		getCtx().getBean(EzeeInvoiceDao.class).save(one);

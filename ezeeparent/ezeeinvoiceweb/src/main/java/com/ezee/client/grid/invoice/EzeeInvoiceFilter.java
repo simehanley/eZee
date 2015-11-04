@@ -4,11 +4,12 @@ import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.ezee.client.grid.EzeeInvoiceNumberFilter;
+import com.ezee.client.grid.EzeeInvoiceNumberAndDateFilter;
 import com.ezee.model.entity.EzeeInvoice;
 import com.google.gwt.regexp.shared.RegExp;
 
@@ -17,7 +18,7 @@ import com.google.gwt.regexp.shared.RegExp;
  * @author siborg
  *
  */
-public class EzeeInvoiceFilter extends EzeeInvoiceNumberFilter<EzeeInvoice> {
+public class EzeeInvoiceFilter extends EzeeInvoiceNumberAndDateFilter<EzeeInvoice> {
 
 	private final RegExp supplierRegExp;
 
@@ -25,9 +26,9 @@ public class EzeeInvoiceFilter extends EzeeInvoiceNumberFilter<EzeeInvoice> {
 
 	private final boolean showPaid;
 
-	public EzeeInvoiceFilter(final String invoiceText, final String supplierText, final String premisesText,
-			final boolean showPaid) {
-		super(invoiceText);
+	public EzeeInvoiceFilter(final Date from, final Date to, final String invoiceText, final String supplierText,
+			final String premisesText, final boolean showPaid) {
+		super(from, to, invoiceText);
 		supplierRegExp = (hasLength(supplierText)) ? RegExp.compile(supplierText, "i") : null;
 		premisesRegExp = (hasLength(premisesText)) ? RegExp.compile(premisesText, "i") : null;
 		this.showPaid = showPaid;
@@ -42,6 +43,7 @@ public class EzeeInvoiceFilter extends EzeeInvoiceNumberFilter<EzeeInvoice> {
 					filtered.add(invoice);
 				}
 			} else {
+				checkDates(invoice, filtered);
 				checkInvoice(invoice, filtered);
 				checkSupplier(invoice, filtered);
 				checkPremises(invoice, filtered);
@@ -52,7 +54,8 @@ public class EzeeInvoiceFilter extends EzeeInvoiceNumberFilter<EzeeInvoice> {
 
 	@Override
 	public boolean empty() {
-		return (invoiceRegExp == null && supplierRegExp == null && premisesRegExp == null);
+		return (from == null && to == null && invoiceRegExp == null && supplierRegExp == null
+				&& premisesRegExp == null);
 	}
 
 	private void checkInvoice(final EzeeInvoice invoice, final Set<EzeeInvoice> filtered) {

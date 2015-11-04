@@ -1,7 +1,11 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.google.gwt.user.datepicker.client">
 	<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="1055px"
 		styleName="gwt-Panel-Border" height="45px">
+		<g:Label text="From" styleName="gwt-Label-Small"/>
+		<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtFrom"/>
+		<g:Label text="To" styleName="gwt-Label-Small"/>
+		<p1:DateBox ui:field="dtTo" styleName="gwt-DateBox-Small"/>
 		<g:Label text="Invoice Number(s)" styleName="gwt-Label-Medium"/>
 		<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtInvoiceNumber"/>
 		<g:Label text="Supplier" styleName="gwt-Label-Medium" />
@@ -10,6 +14,6 @@
 		<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtPremises" />
 		<g:Button text="Refresh" ui:field="btnRefresh" />
 		<g:Button text="Clear" ui:field="btnClear" />
-		<g:CheckBox text="Show Paid" width="91px" styleName="gwt-CheckBox-Small" ui:field="chkShowPaid" />
+		<g:CheckBox text="Show Paid" width="91px" styleName="gwt-CheckBox-Small" ui:field="chkShowPaid" wordWrap="false" />
 	</g:HorizontalPanel>
 </ui:UiBinder> 

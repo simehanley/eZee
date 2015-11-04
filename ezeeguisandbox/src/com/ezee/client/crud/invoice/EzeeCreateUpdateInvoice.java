@@ -60,6 +60,7 @@ public class EzeeCreateUpdateInvoice extends Composite {
 
 	@UiField
 	ListBox lstClassification;
+	@UiField DateBox dtInvoice;
 
 	interface EzeeCreateUpdateInvoiceUiBinder extends UiBinder<Widget, EzeeCreateUpdateInvoice> {
 	}

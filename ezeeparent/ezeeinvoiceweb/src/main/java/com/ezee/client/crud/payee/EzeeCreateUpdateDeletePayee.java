@@ -7,6 +7,8 @@ import static com.ezee.client.EzeeInvoiceWebConstants.NEW_SUPPLIER;
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.create;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 
 import java.util.Date;
 import java.util.logging.Level;
@@ -137,11 +139,15 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 
 	@UiHandler("btnSave")
 	void onSaveClick(ClickEvent event) {
+		btnSave.setEnabled(false);
+		showWaitCursor();
 		bind();
 		INVOICE_SERVICE.saveEntity(EzeePayee.class.getName(), entity, new AsyncCallback<EzeePayee>() {
 
 			@Override
 			public void onFailure(final Throwable caught) {
+				btnSave.setEnabled(true);
+				showDefaultCursor();
 				log.log(Level.SEVERE, "Error persisting supplier '" + entity + "'.", caught);
 				showNew(ERROR, "Error persisting supplier '" + entity + "'.  Please see log for details.");
 			}
@@ -151,6 +157,8 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 				log.log(Level.INFO, "Saved supplier '" + entity + "' successfully");
 				handler.onSave(result);
 				updateCache(result, type);
+				btnSave.setEnabled(true);
+				showDefaultCursor();
 				close();
 			}
 		});
@@ -158,10 +166,14 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 
 	@UiHandler("btnDelete")
 	void onDeleteClick(ClickEvent event) {
+		btnDelete.setEnabled(false);
+		showWaitCursor();
 		INVOICE_SERVICE.deleteEntity(EzeePayee.class.getName(), entity, new AsyncCallback<EzeePayee>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
+				btnDelete.setEnabled(true);
+				showDefaultCursor();
 				log.log(Level.SEVERE, "Error deleting supplier '" + entity + "'.", caught);
 				showNew(ERROR, "Error deleting supplier '" + entity + "'.  Please see log for details");
 			}
@@ -171,6 +183,8 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 				log.log(Level.INFO, "Supplier '" + entity + "' deleted successfully");
 				handler.onDelete(result);
 				updateCache(result, type);
+				btnDelete.setEnabled(true);
+				showDefaultCursor();
 				close();
 			}
 		});

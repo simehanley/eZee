@@ -1,6 +1,7 @@
 package com.ezee.web.common.ui.utils;
 
 import static com.ezee.common.EzeeCommonConstants.ZERO;
+import static com.ezee.common.string.EzeeStringUtils.hasLength;
 
 import com.google.gwt.user.client.ui.ListBox;
 
@@ -23,7 +24,7 @@ public final class EzeeListBoxUtils {
 	}
 
 	public static int getItemIndex(final String value, final ListBox listBox) {
-		if (value != null) {
+		if (hasLength(value)) {
 			for (int i = ZERO; i < listBox.getItemCount(); i++) {
 				if (value.equals(listBox.getItemText(i))) {
 					return i;
@@ -31,5 +32,14 @@ public final class EzeeListBoxUtils {
 			}
 		}
 		return ZERO;
+	}
+
+	public static void setValue(final String value, final ListBox listBox) {
+		if (hasLength(value)) {
+			int index = getItemIndex(value, listBox);
+			if (index >= ZERO) {
+				listBox.setSelectedIndex(index);
+			}
+		}
 	}
 }

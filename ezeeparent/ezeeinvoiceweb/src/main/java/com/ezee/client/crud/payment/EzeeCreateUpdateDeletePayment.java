@@ -12,6 +12,8 @@ import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
 import static com.ezee.web.common.ui.css.EzeeGwtOverridesResources.INSTANCE;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.getItemIndex;
 import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.loadEnums;
 
@@ -240,11 +242,15 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 
 	@UiHandler("btnSave")
 	void onSaveClick(ClickEvent event) {
+		btnSave.setEnabled(false);
+		showWaitCursor();
 		bind();
 		INVOICE_SERVICE.saveEntity(EzeePayment.class.getName(), entity, new AsyncCallback<EzeePayment>() {
 
 			@Override
 			public void onFailure(final Throwable caught) {
+				btnSave.setEnabled(true);
+				showDefaultCursor();
 				log.log(Level.SEVERE, "Error persisting payment '" + entity + "'.", caught);
 				showNew(ERROR, "Error persisting payment '" + entity + "'.  Please see log for details.");
 			}
@@ -253,6 +259,8 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 			public void onSuccess(final EzeePayment result) {
 				log.log(Level.INFO, "Saved payment '" + entity + "' successfully");
 				handler.onSave(result);
+				btnSave.setEnabled(true);
+				showDefaultCursor();
 				close();
 			}
 		});
@@ -260,10 +268,14 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 
 	@UiHandler("btnDelete")
 	void onDeleteClick(ClickEvent event) {
+		btnDelete.setEnabled(false);
+		showWaitCursor();
 		INVOICE_SERVICE.deleteEntity(EzeePayment.class.getName(), entity, new AsyncCallback<EzeePayment>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
+				btnDelete.setEnabled(true);
+				showDefaultCursor();
 				log.log(Level.SEVERE, "Error deleting payment '" + entity + "'.", caught);
 				showNew(ERROR, "Error deleting invoice '" + entity + "'.  Please see log for details.");
 			}
@@ -272,6 +284,8 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 			public void onSuccess(EzeePayment result) {
 				log.log(Level.INFO, "Payment '" + entity + "' deleted successfully");
 				handler.onDelete(result);
+				btnDelete.setEnabled(true);
+				showDefaultCursor();
 				close();
 			}
 		});
@@ -281,7 +295,7 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 		Set<String> hidden = new HashSet<>();
 		hidden.add(EzeeInvoiceGridModel.AMOUNT);
 		hidden.add(EzeeInvoiceGridModel.TAX);
-		hidden.add(EzeeInvoiceGridModel.CREATED_DATE);
+		hidden.add(EzeeInvoiceGridModel.INVOICE_DATE);
 		hidden.add(EzeeInvoiceGridModel.DUE_DATE);
 		hidden.add(EzeeInvoiceGridModel.PAID_PATE);
 		hidden.add(EzeeInvoiceGridModel.FILE);

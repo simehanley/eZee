@@ -13,7 +13,10 @@ import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFromatUtils.getDateBoxFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.getItemIndex;
+import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.setValue;
 
 import java.util.Date;
 import java.util.logging.Level;
@@ -26,6 +29,7 @@ import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.client.ui.EzeeInvoiceUiUtils;
 import com.ezee.client.util.EzeeDueDateCalculator;
 import com.ezee.common.web.EzeeFromatUtils;
+import com.ezee.model.entity.EzeeConfiguration;
 import com.ezee.model.entity.EzeeDebtAgeRule;
 import com.ezee.model.entity.EzeeHasName;
 import com.ezee.model.entity.EzeeInvoice;
@@ -82,6 +86,9 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 	@UiField
 	TextBox txtTotal;
+
+	@UiField
+	DateBox dtInvoice;
 
 	@UiField
 	DateBox dtDue;
@@ -179,6 +186,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		txtTax.setValue(getAmountFormat().format(entity.getTax()));
 		txtTax.setEnabled(entity.isManualTax());
 		txtTotal.setValue(getAmountFormat().format(entity.getInvoiceAmount()));
+		dtInvoice.setValue(entity.getInvoiceDate());
 		dtDue.setValue(entity.getDateDue());
 		dtPaid.setValue(entity.getDatePaid());
 		chkManualTax.setValue(entity.isManualTax());
@@ -190,7 +198,15 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		txtAmount.setValue(EzeeFromatUtils.getAmountFormat().format(ZERO_DBL));
 		txtTax.setValue(EzeeFromatUtils.getAmountFormat().format(ZERO_DBL));
 		txtTotal.setValue(EzeeFromatUtils.getAmountFormat().format(ZERO_DBL));
-		chkManualTax.setValue(true);
+		initialiseDefaults();
+	}
+
+	private void initialiseDefaults() {
+		EzeeConfiguration configuration = cache.getConfiguration();
+		chkManualTax.setValue(configuration.getDefaultManualTax());
+		txtTax.setEnabled(chkManualTax.getValue());
+		setValue(configuration.getDefaultDebtAgeRule(), lstDebtAge);
+		setValue(configuration.getDefaultInvoiceSupplier(), lstSupplier);
 	}
 
 	@Override
@@ -205,6 +221,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		entity.setAgeRule(getAgeRule());
 		entity.setAmount(getAmountFormat().parse(txtAmount.getText()));
 		entity.setTax(getAmountFormat().parse(txtTax.getText()));
+		entity.setInvoiceDate(dtInvoice.getValue());
 		entity.setDateDue(dtDue.getValue());
 		entity.setDatePaid(dtPaid.getValue());
 		entity.setManualTax(chkManualTax.getValue());
@@ -215,6 +232,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	}
 
 	private void initForm() {
+		dtInvoice.setFormat(getDateBoxFormat());
 		dtDue.setFormat(getDateBoxFormat());
 		dtPaid.setFormat(getDateBoxFormat());
 		dtPaid.setEnabled(false);
@@ -278,11 +296,15 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 	@UiHandler("btnSave")
 	void onSaveClick(ClickEvent event) {
+		btnSave.setEnabled(false);
+		showWaitCursor();
 		bind();
 		INVOICE_SERVICE.saveEntity(EzeeInvoice.class.getName(), entity, new AsyncCallback<EzeeInvoice>() {
 
 			@Override
 			public void onFailure(final Throwable caught) {
+				btnSave.setEnabled(true);
+				showDefaultCursor();
 				log.log(Level.SEVERE, "Error persisting invoice '" + entity + "'.", caught);
 				showNew(ERROR, "Error persisting invoice '" + entity + "'.  Please see log for details.");
 			}
@@ -291,6 +313,8 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 			public void onSuccess(final EzeeInvoice result) {
 				log.log(Level.INFO, "Saved invoice '" + entity + "' successfully");
 				handler.onSave(result);
+				btnSave.setEnabled(true);
+				showDefaultCursor();
 				close();
 			}
 		});
@@ -298,10 +322,14 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 	@UiHandler("btnDelete")
 	void onDeleteClick(ClickEvent event) {
+		btnDelete.setEnabled(false);
+		showWaitCursor();
 		INVOICE_SERVICE.deleteEntity(EzeeInvoice.class.getName(), entity, new AsyncCallback<EzeeInvoice>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
+				btnDelete.setEnabled(true);
+				showDefaultCursor();
 				log.log(Level.SEVERE, "Error deleting invoice '" + entity + "'.", caught);
 				showNew(ERROR, "Error deleting invoice '" + entity + "'.  Please see log for details.");
 			}
@@ -310,6 +338,8 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 			public void onSuccess(EzeeInvoice result) {
 				log.log(Level.INFO, "Invoice '" + entity + "' deleted successfully");
 				handler.onDelete(result);
+				btnDelete.setEnabled(true);
+				showDefaultCursor();
 				close();
 			}
 		});

@@ -8,28 +8,33 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 public class EzeeInvoiceGridToolBar extends Composite {
 
 	private static EzeeInvoiceGridToolBarUiBinder uiBinder = GWT.create(EzeeInvoiceGridToolBarUiBinder.class);
-	
+
 	@UiField
 	TextBox txtInvoiceNumber;
-	
+
 	@UiField
 	TextBox txtSupplier;
-	
+
 	@UiField
 	TextBox txtPremises;
-	
+
 	@UiField
 	Button btnRefresh;
-	
+
 	@UiField
 	Button btnClear;
-	
+
 	@UiField
 	CheckBox chkShowPaid;
+
+	@UiField
+	DateBox dtFrom;
+	@UiField DateBox dtTo;
 
 	interface EzeeInvoiceGridToolBarUiBinder extends UiBinder<Widget, EzeeInvoiceGridToolBar> {
 	}

@@ -43,7 +43,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	public static final String TAX = "Tax";
 	public static final String TOTAL = "Total";
 	public static final String DESCRIPTION = "Description";
-	public static final String CREATED_DATE = "Created";
+	public static final String INVOICE_DATE = "Invoice";
 	public static final String DUE_DATE = "Due";
 	public static final String PAID_PATE = "Paid";
 	public static final String FILE = "File";
@@ -72,7 +72,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		createNumericColumn(columns, grid, TAX, NUMERIC_FIELD_WIDTH);
 		createNumericColumn(columns, grid, TOTAL, NUMERIC_FIELD_WIDTH);
 		createTextColumn(columns, grid, DESCRIPTION, DESCRIPTION_WIDTH, false);
-		createDateColumn(columns, grid, CREATED_DATE, DATE_FIELD_WIDTH, true);
+		createDateColumn(columns, grid, INVOICE_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, DUE_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, PAID_PATE, DATE_FIELD_WIDTH, true);
 		createImageColumn(columns, grid, FILE, FILE_WIDTH);
@@ -105,8 +105,8 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	@Override
 	protected Date resolveDateFieldValue(final String fieldName, final EzeeInvoice invoice) {
 		switch (fieldName) {
-		case CREATED_DATE:
-			return invoice.getCreated();
+		case INVOICE_DATE:
+			return invoice.getInvoiceDate();
 		case DUE_DATE:
 			return invoice.getDateDue();
 		case PAID_PATE:
@@ -147,11 +147,11 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 			}
 		});
 
-		handler.setComparator(columns.get(CREATED_DATE), new Comparator<EzeeInvoice>() {
+		handler.setComparator(columns.get(INVOICE_DATE), new Comparator<EzeeInvoice>() {
 
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
-				return one.getCreated().compareTo(two.getCreated());
+				return one.getInvoiceDate().compareTo(two.getInvoiceDate());
 			}
 		});
 
@@ -177,7 +177,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		grid.getColumnSortList().push(columns.get(INVOICE_NUM));
 		grid.getColumnSortList().push(columns.get(SUPPLIER));
 		grid.getColumnSortList().push(columns.get(PREMISES));
-		grid.getColumnSortList().push(columns.get(CREATED_DATE));
+		grid.getColumnSortList().push(columns.get(INVOICE_DATE));
 		grid.getColumnSortList().push(columns.get(DUE_DATE));
 		grid.getColumnSortList().push(columns.get(PAID_PATE));
 	}

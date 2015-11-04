@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.ezee.client.grid.EzeeInvoiceNumberFilter;
+import com.ezee.client.grid.EzeeInvoiceNumberAndDateFilter;
 import com.ezee.model.entity.EzeePayment;
 import com.google.gwt.regexp.shared.RegExp;
 
@@ -18,16 +18,10 @@ import com.google.gwt.regexp.shared.RegExp;
  * @author siborg
  *
  */
-public class EzeePaymentFilter extends EzeeInvoiceNumberFilter<EzeePayment> {
-
-	private final Date from;
-
-	private final Date to;
+public class EzeePaymentFilter extends EzeeInvoiceNumberAndDateFilter<EzeePayment> {
 
 	public EzeePaymentFilter(final String invoiceText, final Date from, final Date to) {
-		super(invoiceText);
-		this.from = from;
-		this.to = to;
+		super(from, to, invoiceText);
 	}
 
 	@Override
@@ -38,8 +32,7 @@ public class EzeePaymentFilter extends EzeeInvoiceNumberFilter<EzeePayment> {
 				filtered.add(payment);
 			} else {
 				checkInvoices(payment, filtered);
-				checkFrom(payment, filtered);
-				checkTo(payment, filtered);
+				checkDates(payment, filtered);
 			}
 		}
 		return new ArrayList<>(filtered);
@@ -57,22 +50,6 @@ public class EzeePaymentFilter extends EzeeInvoiceNumberFilter<EzeePayment> {
 					filtered.add(payment);
 					return;
 				}
-			}
-		}
-	}
-
-	private void checkTo(final EzeePayment payment, final Set<EzeePayment> filtered) {
-		if (from != null) {
-			if (payment.getCreated().after(from) || payment.getCreated().equals(from)) {
-				filtered.add(payment);
-			}
-		}
-	}
-
-	private void checkFrom(final EzeePayment payment, final Set<EzeePayment> filtered) {
-		if (to != null) {
-			if (payment.getCreated().before(to) || payment.getCreated().equals(to)) {
-				filtered.add(payment);
 			}
 		}
 	}

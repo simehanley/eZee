@@ -5,7 +5,7 @@
 	
 	</ui:style>
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="284px" width="940px">
+		<g:AbsolutePanel height="284px" width="853px">
 			<g:at top="10" left="10">
 				<g:Label text="Invoice Number" styleName="gwt-Label-Medium" />
 			</g:at>
@@ -42,48 +42,54 @@
 			<g:at top="180" left="174">
 				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtTotal" />
 			</g:at>
+			<g:at top="214" left="10">
+				<g:Label text="Invoice Date" styleName="gwt-Label-Medium" wordWrap="false" />
+			</g:at>
+			<g:at top="214" left="174">
+				<p1:DateBox ui:field="dtInvoice" styleName="gwt-DateBox-Small" />
+			</g:at>
+			<g:at top="214" left="284">
+				<g:Label text="Due Date" styleName="gwt-Label-Medium" />
+			</g:at>
+			<g:at top="214" left="448">
+				<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtDue" />
+			</g:at>
+			<g:at top="214" left="558">
+				<g:Label text="Paid Date" styleName="gwt-Label-Medium" />
+			</g:at>
+			<g:at top="214" left="722">
+				<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtPaid" />
+			</g:at>
+			<g:at top="248" left="10">
+				<g:Label text="Debt Age Rule" styleName="gwt-Label-Medium" />
+			</g:at>
+			<g:at top="248" left="174">
+				<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstDebtAge" />
+			</g:at>
+			<g:at top="249" left="285">
+				<g:Label text="Classification" styleName="gwt-Label-Medium" />
+			</g:at>
+			<g:at top="248" left="449">
+				<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstClassification" />
+			</g:at>
+			<g:at top="14" left="739">
+				<g:CheckBox text="Manual Tax" styleName="gwt-CheckBox-Small" value="true" ui:field="chkManualTax"
+					wordWrap="false" />
+			</g:at>
+			<g:at top="248" left="562">
+				<g:Button ui:field="btnDelete" text="Delete" />
+			</g:at>
+			<g:at top="248" left="658">
+				<g:Button ui:field="btnEdit" text="Edit" />
+			</g:at>
+			<g:at top="248" left="754">
+				<g:Button ui:field="btnClose" text="Close" />
+			</g:at>
 			<g:at top="10" left="388">
 				<g:Label text="Description" styleName="gwt-Label-Medium" />
 			</g:at>
 			<g:at top="44" left="390">
-				<g:RichTextArea width="540px" height="162px" styleName="gwt-RichTextArea-Medium" ui:field="txtDescription" />
-			</g:at>
-			<g:at top="214" left="174">
-				<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtDue" />
-			</g:at>
-			<g:at top="214" left="10">
-				<g:Label text="Due Date" styleName="gwt-Label-Medium" />
-			</g:at>
-			<g:at top="214" left="284">
-				<g:Label text="Paid Date" styleName="gwt-Label-Medium" />
-			</g:at>
-			<g:at top="214" left="448">
-				<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtPaid" />
-			</g:at>
-			<g:at top="214" left="558">
-				<g:Label text="Debt Age Rule" styleName="gwt-Label-Medium" />
-			</g:at>
-			<g:at top="214" left="722">
-				<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstDebtAge" />
-			</g:at>
-			<g:at top="11" left="832">
-				<g:CheckBox text="Manual Tax" styleName="gwt-CheckBox-Small" value="true" ui:field="chkManualTax"
-					wordWrap="false" />
-			</g:at>
-			<g:at top="248" left="650">
-				<g:Button ui:field="btnDelete" text="Delete" />
-			</g:at>
-			<g:at top="248" left="746">
-				<g:Button ui:field="btnEdit" text="Edit" />
-			</g:at>
-			<g:at top="248" left="842">
-				<g:Button ui:field="btnClose" text="Close" />
-			</g:at>
-			<g:at top="248" left="10">
-				<g:Label text="Classification" styleName="gwt-Label-Medium" />
-			</g:at>
-			<g:at top="247" left="174">
-				<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstClassification" />
+				<g:RichTextArea width="448px" height="162px" styleName="gwt-RichTextArea-Medium" ui:field="txtDescription" />
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>

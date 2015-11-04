@@ -3,7 +3,10 @@ package com.ezee.client.grid.invoice;
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 
+import java.util.Date;
+
 import com.ezee.client.grid.EzeeGridToolbar;
+import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.google.gwt.core.client.GWT;
@@ -16,10 +19,17 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 public class EzeeInvoiceGridToolBar extends EzeeGridToolbar<EzeeInvoice> {
 
 	private static EzeeInvoiceGridToolBarUiBinder uiBinder = GWT.create(EzeeInvoiceGridToolBarUiBinder.class);
+
+	@UiField
+	DateBox dtFrom;
+
+	@UiField
+	DateBox dtTo;
 
 	@UiField
 	TextBox txtInvoiceNumber;
@@ -51,6 +61,8 @@ public class EzeeInvoiceGridToolBar extends EzeeGridToolbar<EzeeInvoice> {
 	@Override
 	public void init() {
 		KeyPressHandler filterHandler = new EzeeToolbarKeyPressHandler();
+		dtFrom.setFormat(EzeeFromatUtils.getDateBoxFormat());
+		dtTo.setFormat(EzeeFromatUtils.getDateBoxFormat());
 		txtInvoiceNumber.addKeyPressHandler(filterHandler);
 		txtSupplier.addKeyPressHandler(filterHandler);
 		txtPremises.addKeyPressHandler(filterHandler);
@@ -64,9 +76,19 @@ public class EzeeInvoiceGridToolBar extends EzeeGridToolbar<EzeeInvoice> {
 
 	@Override
 	public void clearToolbar() {
+		dtFrom.setValue(null);
+		dtTo.setValue(null);
 		txtInvoiceNumber.setText(EMPTY_STRING);
 		txtSupplier.setText(EMPTY_STRING);
 		txtPremises.setText(EMPTY_STRING);
+	}
+
+	public Date getFrom() {
+		return dtFrom.getValue();
+	}
+
+	public Date getTo() {
+		return dtTo.getValue();
 	}
 
 	public String getInvoiceNumber() {
@@ -96,6 +118,7 @@ public class EzeeInvoiceGridToolBar extends EzeeGridToolbar<EzeeInvoice> {
 
 	@Override
 	public EzeeEntityFilter<EzeeInvoice> resolveFilter() {
-		return new EzeeInvoiceFilter(getInvoiceNumber(), getSupplier(), getPremises(), getShowPaid());
+		return new EzeeInvoiceFilter(getFrom(), getTo(), getInvoiceNumber(), getSupplier(), getPremises(),
+				getShowPaid());
 	}
 }

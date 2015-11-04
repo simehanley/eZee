@@ -59,6 +59,9 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 	@Column(name = "MANUAL_TAX")
 	private boolean manualtax = Boolean.TRUE;
 
+	@Column(name = "INVOICE_DATE")
+	private Date invoiceDate;
+
 	@Column(name = "PAID")
 	private boolean paid = Boolean.FALSE;
 
@@ -88,17 +91,17 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 	}
 
 	public EzeeInvoice(final String invoiceId, final EzeePayee payee, final EzeePayer payer, final double amount,
-			final double tax, final String description, final boolean manualtax, final boolean paid, final Date dateDue,
-			final Date datePaid, final Date created, final Date updated,
+			final double tax, final String description, final boolean manualtax, final boolean paid,
+			final Date invoiceDate, final Date dateDue, final Date datePaid, final Date created, final Date updated,
 			final EzeeInvoiceClassification classification) {
-		this(NULL_ID, invoiceId, payee, payer, amount, tax, description, manualtax, paid, dateDue, datePaid, created,
-				updated, classification);
+		this(NULL_ID, invoiceId, payee, payer, amount, tax, description, manualtax, paid, invoiceDate, dateDue,
+				datePaid, created, updated, classification);
 	}
 
 	public EzeeInvoice(final Long id, final String invoiceId, final EzeePayee payee, final EzeePayer payer,
 			final double amount, final double tax, final String description, final boolean manualtax,
-			final boolean paid, final Date dateDue, final Date datePaid, final Date created, final Date updated,
-			final EzeeInvoiceClassification classification) {
+			final boolean paid, final Date invoiceDate, final Date dateDue, final Date datePaid, final Date created,
+			final Date updated, final EzeeInvoiceClassification classification) {
 		super(id, created, updated);
 		this.invoiceId = invoiceId;
 		this.payee = payee;
@@ -108,6 +111,7 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 		this.description = description;
 		this.manualtax = manualtax;
 		this.paid = paid;
+		this.invoiceDate = invoiceDate;
 		this.dateDue = dateDue;
 		this.datePaid = datePaid;
 		this.classification = classification;
@@ -230,8 +234,21 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 		this.file = file;
 	}
 
+	public final Date getInvoiceDate() {
+		return invoiceDate;
+	}
+
+	public void setInvoiceDate(Date invoiceDate) {
+		this.invoiceDate = invoiceDate;
+	}
+
 	@Override
 	public String toString() {
 		return "EzeeInvoice [invoiceId=" + invoiceId + "]";
+	}
+
+	@Override
+	public Date filterDate() {
+		return getInvoiceDate();
 	}
 }
