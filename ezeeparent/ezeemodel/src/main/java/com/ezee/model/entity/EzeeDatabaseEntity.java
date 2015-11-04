@@ -68,6 +68,10 @@ public abstract class EzeeDatabaseEntity implements Serializable {
 		this.updated = updated;
 	}
 
+	public Date filterDate() {
+		return getCreated();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
