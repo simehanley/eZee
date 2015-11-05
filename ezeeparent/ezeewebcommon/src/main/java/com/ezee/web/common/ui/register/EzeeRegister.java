@@ -6,9 +6,11 @@ import static com.ezee.web.common.EzeeWebCommonConstants.USER_SERVICE;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.ezee.common.web.EzeeClientDateUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -84,7 +86,8 @@ public class EzeeRegister extends Composite {
 		if (validRegistration()) {
 			showWaitCursor();
 			USER_SERVICE.register(txtFirstname.getText(), txtLastname.getText(), txtUsername.getText(),
-					txtPassword.getText(), txtEmail.getText(), new AsyncCallback<EzeeRegisterResult>() {
+					txtPassword.getText(), txtEmail.getText(), EzeeClientDateUtils.toString(new Date()),
+					new AsyncCallback<EzeeRegisterResult>() {
 
 						@Override
 						public void onSuccess(final EzeeRegisterResult result) {

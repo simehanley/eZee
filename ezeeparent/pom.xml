@@ -133,11 +133,11 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.34</version>
 		</dependency>
-		<!--dependency>
+		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>${joda.version}</version>
-		</dependency-->
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>

@@ -8,6 +8,8 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ezee.model.entity.EzeeDatabaseEntity;
+
 /**
  * 
  * @author siborg
@@ -16,7 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:ezeedao-test-context.xml")
 @DirtiesContext(classMode = ClassMode.AFTER_CLASS)
-public abstract class AbstractEzeeDaoTest {
+public abstract class AbstractEzeeDaoTest<T extends EzeeDatabaseEntity> {
 
 	@Autowired
 	private ApplicationContext ctx;
@@ -24,4 +26,10 @@ public abstract class AbstractEzeeDaoTest {
 	public ApplicationContext getCtx() {
 		return ctx;
 	}
+
+	public abstract void canPersist();
+
+	public abstract void canEdit();
+
+	public abstract void canDelete();
 }

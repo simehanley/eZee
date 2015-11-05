@@ -9,6 +9,7 @@ import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.common.web.EzeeClientDateUtils.fromString;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFromatUtils.getDateBoxFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
@@ -27,7 +28,7 @@ import com.ezee.client.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.client.ui.EzeeInvoiceUiUtils;
-import com.ezee.client.util.EzeeDueDateCalculator;
+import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeeConfiguration;
 import com.ezee.model.entity.EzeeDebtAgeRule;
@@ -186,9 +187,9 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		txtTax.setValue(getAmountFormat().format(entity.getTax()));
 		txtTax.setEnabled(entity.isManualTax());
 		txtTotal.setValue(getAmountFormat().format(entity.getInvoiceAmount()));
-		dtInvoice.setValue(entity.getInvoiceDate());
-		dtDue.setValue(entity.getDateDue());
-		dtPaid.setValue(entity.getDatePaid());
+		dtInvoice.setValue(fromString(entity.getInvoiceDate()));
+		dtDue.setValue(fromString(entity.getDateDue()));
+		dtPaid.setValue(fromString(entity.getDatePaid()));
 		chkManualTax.setValue(entity.isManualTax());
 		txtDescription.setText(entity.getDescription());
 		lstClassification.setItemSelected(getItemIndex(entity.getClassification().name(), lstClassification), true);
@@ -207,13 +208,16 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		txtTax.setEnabled(chkManualTax.getValue());
 		setValue(configuration.getDefaultDebtAgeRule(), lstDebtAge);
 		setValue(configuration.getDefaultInvoiceSupplier(), lstSupplier);
+		setValue(configuration.getDefaultInvoicePremises(), lstPremises);
 	}
 
 	@Override
 	protected void bind() {
 		if (entity == null) {
 			entity = new EzeeInvoice();
-			entity.setCreated(new Date());
+			entity.setCreated(EzeeClientDateUtils.toString(new Date()));
+		} else {
+			entity.setUpdated(EzeeClientDateUtils.toString(new Date()));
 		}
 		entity.setInvoiceId(txtInvoiceNumber.getText());
 		entity.setPayer(getPremises());
@@ -221,13 +225,11 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		entity.setAgeRule(getAgeRule());
 		entity.setAmount(getAmountFormat().parse(txtAmount.getText()));
 		entity.setTax(getAmountFormat().parse(txtTax.getText()));
-		entity.setInvoiceDate(dtInvoice.getValue());
-		entity.setDateDue(dtDue.getValue());
-		entity.setDatePaid(dtPaid.getValue());
+		entity.setInvoiceDate(EzeeClientDateUtils.toString(dtInvoice.getValue()));
+		entity.setDateDue(EzeeClientDateUtils.toString(dtDue.getValue()));
+		entity.setDatePaid(EzeeClientDateUtils.toString(dtPaid.getValue()));
 		entity.setManualTax(chkManualTax.getValue());
-		entity.setPaid(dtPaid.getValue() != null);
 		entity.setDescription(txtDescription.getText());
-		entity.setUpdated(new Date());
 		entity.setClassification(EzeeInvoiceClassification.valueOf(lstClassification.getSelectedItemText()));
 	}
 
@@ -371,8 +373,23 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	}
 
 	private void resolveDueDate() {
+		showWaitCursor();
 		EzeeDebtAgeRule rule = (EzeeDebtAgeRule) cache.getEntities(EzeeDebtAgeRule.class)
 				.get(lstDebtAge.getSelectedItemText());
-		dtDue.setValue(EzeeDueDateCalculator.calculate(rule));
+		String today = EzeeClientDateUtils.toString(new Date());
+		INVOICE_SERVICE.calculateDueDate(rule, today, new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				log.log(Level.SEVERE, "Unable to calculate due date.", caught);
+				showDefaultCursor();
+			}
+
+			@Override
+			public void onSuccess(final String result) {
+				dtDue.setValue(fromString(result));
+				showDefaultCursor();
+			}
+		});
 	}
 }

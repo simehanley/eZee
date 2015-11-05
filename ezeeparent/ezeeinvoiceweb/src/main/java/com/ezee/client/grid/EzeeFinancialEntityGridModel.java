@@ -74,12 +74,6 @@ public abstract class EzeeFinancialEntityGridModel<T extends EzeeFinancialEntity
 	}
 
 	@Override
-	protected boolean resolveBooleanFieldValue(final String fieldName, final T entity) {
-		/* do nothing */
-		return false;
-	}
-
-	@Override
 	protected void addComparators(final Map<String, Column<T, ?>> columns) {
 
 		handler.setComparator(columns.get(NAME), new Comparator<T>() {

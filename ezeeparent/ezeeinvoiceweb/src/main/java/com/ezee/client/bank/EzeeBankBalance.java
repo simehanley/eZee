@@ -2,7 +2,6 @@ package com.ezee.client.bank;
 
 import static com.ezee.client.EzeeInvoiceWebConstants.BANK;
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
-import static com.ezee.client.grid.payment.EzeePaymentGridModel.CREATED_DATE;
 import static com.ezee.client.grid.payment.EzeePaymentGridModel.DESCRIPTION;
 import static com.ezee.client.grid.payment.EzeePaymentGridModel.PAYMENT_DATE;
 import static com.ezee.client.grid.payment.EzeePaymentGridModel.PAYMENT_TYPE;
@@ -125,7 +124,6 @@ public class EzeeBankBalance extends EzeeDialog {
 
 	private EzeePaymentGridModel resolveModel() {
 		Set<String> hiddenColumns = new HashSet<>();
-		hiddenColumns.add(CREATED_DATE);
 		hiddenColumns.add(PAYMENT_DATE);
 		hiddenColumns.add(PAYMENT_TYPE);
 		hiddenColumns.add(DESCRIPTION);

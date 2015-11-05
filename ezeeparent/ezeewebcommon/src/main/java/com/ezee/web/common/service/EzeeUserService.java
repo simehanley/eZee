@@ -13,7 +13,8 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("userservice")
 public interface EzeeUserService extends RemoteService {
 
-	EzeeRegisterResult register(String firstname, String lastname, String username, String password, String email);
+	EzeeRegisterResult register(String firstname, String lastname, String username, String password, String email,
+			String createDate);
 
 	EzeeLoginResult authenticate(String username, String password);
 }

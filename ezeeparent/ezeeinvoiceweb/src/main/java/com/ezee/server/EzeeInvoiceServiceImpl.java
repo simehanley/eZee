@@ -10,8 +10,10 @@ import org.slf4j.LoggerFactory;
 
 import com.ezee.client.EzeeInvoiceService;
 import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeDebtAgeRule;
 import com.ezee.model.entity.EzeePayment;
 import com.ezee.server.dao.EzeeEntitiesDao;
+import com.ezee.server.util.EzeeDueDateCalculator;
 import com.ezee.server.util.EzeeInvoicePropertyLoader;
 
 /**
@@ -79,5 +81,10 @@ public class EzeeInvoiceServiceImpl extends AbstractRemoteService implements Eze
 	@Override
 	public String getVersion() {
 		return properties.getProperty(EZEE_INVOICE_WEB_VERSION);
+	}
+
+	@Override
+	public String calculateDueDate(final EzeeDebtAgeRule rule, final String today) {
+		return getSpringBean(EzeeDueDateCalculator.class).calculate(rule, today);
 	}
 }

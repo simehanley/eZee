@@ -2,15 +2,15 @@ package com.ezee.model.entity;
 
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 @Entity
 @Table(name = "EZEE_USER")
-public class EzeeUser extends EzeeDatabaseEntity implements EzeeHasName {
+public class EzeeUser extends EzeeDatabaseEntity implements EzeeHasName, IsSerializable {
 
 	private static final long serialVersionUID = -6217125456081902517L;
 
@@ -34,12 +34,12 @@ public class EzeeUser extends EzeeDatabaseEntity implements EzeeHasName {
 	}
 
 	public EzeeUser(final String firstname, final String lastname, final String username, final String password,
-			final String email, final Date created, final Date updated) {
+			final String email, final String created, final String updated) {
 		this(NULL_ID, firstname, lastname, username, password, email, created, updated);
 	}
 
 	public EzeeUser(final Long id, final String firstname, final String lastname, final String username,
-			final String password, final String email, final Date created, final Date updated) {
+			final String password, final String email, final String created, final String updated) {
 		super(id, created, updated);
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -75,6 +75,22 @@ public class EzeeUser extends EzeeDatabaseEntity implements EzeeHasName {
 
 	public final String getEmail() {
 		return email;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override

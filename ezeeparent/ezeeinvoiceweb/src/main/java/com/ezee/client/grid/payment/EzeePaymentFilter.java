@@ -53,4 +53,9 @@ public class EzeePaymentFilter extends EzeeInvoiceNumberAndDateFilter<EzeePaymen
 			}
 		}
 	}
+
+	@Override
+	protected boolean showPaid(final EzeePayment entity) {
+		return true;
+	}
 }

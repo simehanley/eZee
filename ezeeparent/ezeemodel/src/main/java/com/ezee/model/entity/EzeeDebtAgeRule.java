@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 import com.ezee.model.entity.enums.EzeeDebtAgeRuleIntervalType;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * 
@@ -15,7 +16,7 @@ import com.ezee.model.entity.enums.EzeeDebtAgeRuleIntervalType;
  */
 @Entity
 @Table(name = "EZEE_DEBT_AGE_RULE")
-public class EzeeDebtAgeRule extends EzeeDatabaseEntity implements EzeeHasName {
+public class EzeeDebtAgeRule extends EzeeDatabaseEntity implements EzeeHasName, IsSerializable {
 
 	private static final long serialVersionUID = 1967457003204614100L;
 

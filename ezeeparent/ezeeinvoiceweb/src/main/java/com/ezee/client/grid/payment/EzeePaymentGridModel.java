@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.ezee.client.grid.EzeeGridModel;
+import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.model.entity.EzeePayment;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
@@ -19,7 +20,6 @@ import com.google.gwt.user.cellview.client.DataGrid;
 public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 
 	public static final String PAYMENT_DATE = "Paid";
-	public static final String CREATED_DATE = "Created";
 	public static final String PAYMENT_TYPE = "Type";
 	public static final String PAYMENT_AMOUNT = "Amount";
 	public static final String DESCRIPTION = "Description";
@@ -41,7 +41,6 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	protected Map<String, Column<EzeePayment, ?>> createColumns(final DataGrid<EzeePayment> grid) {
 		Map<String, Column<EzeePayment, ?>> columns = new HashMap<>();
 		createDateColumn(columns, grid, PAYMENT_DATE, DATE_FIELD_WIDTH, true);
-		createDateColumn(columns, grid, CREATED_DATE, DATE_FIELD_WIDTH, true);
 		createTextColumn(columns, grid, PAYMENT_TYPE, PAYMENT_TYPE_WIDTH, true);
 		createNumericColumn(columns, grid, PAYMENT_AMOUNT, NUMERIC_FIELD_WIDTH);
 		createTextColumn(columns, grid, DESCRIPTION, DESCRIPTION_WIDTH, false);
@@ -68,17 +67,9 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	protected Date resolveDateFieldValue(final String fieldName, final EzeePayment payment) {
 		switch (fieldName) {
 		case PAYMENT_DATE:
-			return payment.getPaymentDate();
-		case CREATED_DATE:
-			return payment.getCreated();
+			return EzeeClientDateUtils.fromString(payment.getPaymentDate());
 		}
 		return null;
-	}
-
-	@Override
-	protected boolean resolveBooleanFieldValue(final String fieldName, final EzeePayment entity) {
-		/* do nothing */
-		return false;
 	}
 
 	@Override
@@ -88,14 +79,6 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 			@Override
 			public int compare(final EzeePayment one, final EzeePayment two) {
 				return one.getPaymentDate().compareTo(two.getPaymentDate());
-			}
-		});
-
-		handler.setComparator(columns.get(CREATED_DATE), new Comparator<EzeePayment>() {
-
-			@Override
-			public int compare(final EzeePayment one, final EzeePayment two) {
-				return one.getCreated().compareTo(two.getCreated());
 			}
 		});
 
@@ -111,7 +94,6 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	@Override
 	protected void addSortColumns(final DataGrid<EzeePayment> grid, final Map<String, Column<EzeePayment, ?>> columns) {
 		grid.getColumnSortList().push(columns.get(PAYMENT_DATE));
-		grid.getColumnSortList().push(columns.get(CREATED_DATE));
 		grid.getColumnSortList().push(columns.get(PAYMENT_TYPE));
 	}
 

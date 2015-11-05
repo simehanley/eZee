@@ -1,14 +1,14 @@
 package com.ezee.model.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 @Entity
 @Table(name = "EZEE_CONFIGURATION")
-public class EzeeConfiguration extends EzeeDatabaseEntity {
+public class EzeeConfiguration extends EzeeDatabaseEntity implements IsSerializable {
 
 	private static final long serialVersionUID = -4938729762631503373L;
 
@@ -24,6 +24,9 @@ public class EzeeConfiguration extends EzeeDatabaseEntity {
 	@Column(name = "DEFAULT_INVOICE_SUPPLIER")
 	private String defaultInvoiceSupplier;
 
+	@Column(name = "DEFAULT_INVOICE_PREMISES")
+	private String defaultInvoicePremises;
+
 	@Column(name = "DEFAULT_MANUAL_TAX")
 	private boolean defaultManualTax;
 
@@ -31,11 +34,11 @@ public class EzeeConfiguration extends EzeeDatabaseEntity {
 		super();
 	}
 
-	public EzeeConfiguration(Date created, Date updated) {
+	public EzeeConfiguration(final String created, final String updated) {
 		super(created, updated);
 	}
 
-	public EzeeConfiguration(Long id, Date created, Date updated) {
+	public EzeeConfiguration(final Long id, final String created, final String updated) {
 		super(id, created, updated);
 	}
 
@@ -59,7 +62,7 @@ public class EzeeConfiguration extends EzeeDatabaseEntity {
 		return defaultDebtAgeRule;
 	}
 
-	public final void setDefaultDebtAgeRule(String defaultDebtAgeRule) {
+	public void setDefaultDebtAgeRule(String defaultDebtAgeRule) {
 		this.defaultDebtAgeRule = defaultDebtAgeRule;
 	}
 
@@ -67,7 +70,7 @@ public class EzeeConfiguration extends EzeeDatabaseEntity {
 		return defaultInvoiceSupplier;
 	}
 
-	public final void setDefaultInvoiceSupplier(String defaultInvoiceSupplier) {
+	public void setDefaultInvoiceSupplier(String defaultInvoiceSupplier) {
 		this.defaultInvoiceSupplier = defaultInvoiceSupplier;
 	}
 
@@ -75,7 +78,15 @@ public class EzeeConfiguration extends EzeeDatabaseEntity {
 		return defaultManualTax;
 	}
 
-	public final void setDefaultManualTax(boolean defaultManualTax) {
+	public void setDefaultManualTax(boolean defaultManualTax) {
 		this.defaultManualTax = defaultManualTax;
+	}
+
+	public final String getDefaultInvoicePremises() {
+		return defaultInvoicePremises;
+	}
+
+	public void setDefaultInvoicePremises(String defaultInvoicePremises) {
+		this.defaultInvoicePremises = defaultInvoicePremises;
 	}
 }

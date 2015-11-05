@@ -2,9 +2,9 @@ package com.ezee.model.entity;
 
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
+import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
 import java.beans.Transient;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.ezee.model.entity.enums.EzeePaymentType;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * 
@@ -29,16 +30,16 @@ import com.ezee.model.entity.enums.EzeePaymentType;
  */
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "deleteInvoiceMappingsSql", query = "delete from EZEE_PAYMENT_TO_INVOICE_MAPPING where PAYMENT_ID = :id"),
-		@NamedNativeQuery(name = "selectOutstandingChequesByPremisesSql", query = "select EZEE_PAYMENT.ID, EZEE_PAYMENT.PAYMENT_DATE, EZEE_PAYMENT.PAYMENT_TYPE, EZEE_PAYMENT.DESCRIPTION, EZEE_PAYMENT.CREATED, EZEE_PAYMENT.UPDATED, EZEE_PAYMENT.CHEQUE_NUMBER, EZEE_PAYMENT.CHEQUE_PRESENTED from EZEE_PAYMENT, EZEE_INVOICE, EZEE_PAYER, EZEE_PAYMENT_TO_INVOICE_MAPPING, EZEE_INVOICE_TO_PAYER_MAPPING where PAYMENT_TYPE = 'cheque' AND CHEQUE_PRESENTED = false AND EZEE_PAYMENT.ID = EZEE_PAYMENT_TO_INVOICE_MAPPING.PAYMENT_ID AND EZEE_INVOICE.ID = EZEE_PAYMENT_TO_INVOICE_MAPPING.INVOICE_ID AND EZEE_INVOICE.ID = EZEE_INVOICE_TO_PAYER_MAPPING.INVOICE_ID AND EZEE_PAYER.ID = EZEE_INVOICE_TO_PAYER_MAPPING.PAYER_ID AND EZEE_PAYER.ID = :payerId", resultClass = EzeePayment.class),
+		@NamedNativeQuery(name = "selectOutstandingChequesByPremisesSql", query = "select DISTINCT EZEE_PAYMENT.ID, EZEE_PAYMENT.PAYMENT_DATE, EZEE_PAYMENT.PAYMENT_TYPE, EZEE_PAYMENT.DESCRIPTION, EZEE_PAYMENT.CREATED, EZEE_PAYMENT.UPDATED, EZEE_PAYMENT.CHEQUE_NUMBER, EZEE_PAYMENT.CHEQUE_PRESENTED from EZEE_PAYMENT, EZEE_INVOICE, EZEE_PAYER, EZEE_PAYMENT_TO_INVOICE_MAPPING, EZEE_INVOICE_TO_PAYER_MAPPING where PAYMENT_TYPE = 'cheque' AND CHEQUE_PRESENTED = false AND EZEE_PAYMENT.ID = EZEE_PAYMENT_TO_INVOICE_MAPPING.PAYMENT_ID AND EZEE_INVOICE.ID = EZEE_PAYMENT_TO_INVOICE_MAPPING.INVOICE_ID AND EZEE_INVOICE.ID = EZEE_INVOICE_TO_PAYER_MAPPING.INVOICE_ID AND EZEE_PAYER.ID = EZEE_INVOICE_TO_PAYER_MAPPING.PAYER_ID AND EZEE_PAYER.ID = :payerId", resultClass = EzeePayment.class),
 		@NamedNativeQuery(name = "selectOutstandingChequesSql", query = "select * from EZEE_PAYMENT where PAYMENT_TYPE = 'cheque' AND CHEQUE_PRESENTED = false", resultClass = EzeePayment.class) })
 @Entity
 @Table(name = "EZEE_PAYMENT")
-public class EzeePayment extends EzeeDatabaseEntity {
+public class EzeePayment extends EzeeDatabaseEntity implements IsSerializable {
 
 	private static final long serialVersionUID = 607584929798342009L;
 
 	@Column(name = "PAYMENT_DATE")
-	private Date paymentDate;
+	private String paymentDate;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "PAYMENT_TYPE")
@@ -61,11 +62,11 @@ public class EzeePayment extends EzeeDatabaseEntity {
 		super();
 	}
 
-	public EzeePayment(final Date created, final Date updated) {
-		super(created, updated);
+	public EzeePayment(final String created, final String updated) {
+		this(NULL_ID, created, updated);
 	}
 
-	public EzeePayment(final Long id, final Date created, final Date updated) {
+	public EzeePayment(final Long id, final String created, final String updated) {
 		super(id, created, updated);
 	}
 
@@ -80,7 +81,7 @@ public class EzeePayment extends EzeeDatabaseEntity {
 		return payment;
 	}
 
-	public final Date getPaymentDate() {
+	public final String getPaymentDate() {
 		return paymentDate;
 	}
 
@@ -113,7 +114,7 @@ public class EzeePayment extends EzeeDatabaseEntity {
 		}
 	}
 
-	public void setPaymentDate(Date paymentDate) {
+	public void setPaymentDate(String paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 

@@ -2,10 +2,10 @@ package com.ezee.model.entity;
 
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * 
@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass;
  *
  */
 @MappedSuperclass
-public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity implements EzeeHasName {
+public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity implements EzeeHasName, IsSerializable {
 
 	private static final long serialVersionUID = -6079993940796041714L;
 
@@ -41,6 +41,9 @@ public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity implements 
 	@Column(name = "PHONE")
 	private String phone;
 
+	@Column(name = "FAX")
+	private String fax;
+
 	@Column(name = "EMAIL")
 	private String email;
 
@@ -50,14 +53,15 @@ public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity implements 
 
 	public EzeeFinancialEntity(final String name, final String addressLineOne, final String addressLineTwo,
 			final String suburb, final String city, final String state, final String postcode, final String phone,
-			final String email, final Date created, final Date updated) {
-		this(NULL_ID, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, email, created,
+			final String fax, final String email, final String created, final String updated) {
+		this(NULL_ID, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, fax, email, created,
 				updated);
 	}
 
 	public EzeeFinancialEntity(final Long id, final String name, final String addressLineOne,
 			final String addressLineTwo, final String suburb, final String city, final String state,
-			final String postcode, final String phone, final String email, final Date created, final Date updated) {
+			final String postcode, final String phone, final String fax, final String email, final String created,
+			final String updated) {
 		super(id, created, updated);
 		this.name = name;
 		this.addressLineOne = addressLineOne;
@@ -67,6 +71,8 @@ public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity implements 
 		this.state = state;
 		this.postcode = postcode;
 		this.phone = phone;
+		this.fax = fax;
+		this.email = email;
 	}
 
 	@Override

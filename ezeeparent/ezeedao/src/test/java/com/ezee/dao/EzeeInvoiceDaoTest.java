@@ -2,8 +2,6 @@ package com.ezee.dao;
 
 import static com.ezee.model.entity.enums.EzeeInvoiceClassification.expense;
 
-import java.util.Date;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,7 +16,7 @@ import junit.framework.TestCase;
  * @author siborg
  *
  */
-public class EzeeInvoiceDaoTest extends AbstractEzeeDaoTest {
+public class EzeeInvoiceDaoTest extends AbstractEzeeDaoTest<EzeeInvoice> {
 
 	@Autowired
 	private EzeePayeeDao payeeDao;
@@ -26,19 +24,54 @@ public class EzeeInvoiceDaoTest extends AbstractEzeeDaoTest {
 	@Autowired
 	private EzeePayerDao payerDao;
 
+	@Autowired
+	private EzeeInvoiceDao invoiceDao;
+
+	private final EzeePayer payer = new EzeePayer();
+	private final EzeePayee payee = new EzeePayee();
+
+	@Override
 	@Test
-	public void canPersistAnEzeeInvoice() {
-		EzeePayee payee = new EzeePayee();
-		EzeePayer payer = new EzeePayer();
-		payeeDao.save(payee);
-		payerDao.save(payer);
-		Date date = new Date();
-		EzeeInvoice invoice = new EzeeInvoice("123456", payee, payer, 100., 10., "First invoice test.", true, false,
-				date, date, date, date, null, expense);
+	public void canPersist() {
+		init();
+		EzeeInvoice invoice = new EzeeInvoice("1", payee, payer, 100., 10., "TEST", true, "5/11/2015", "31/12/2015",
+				null, "5/11/2015", null, expense);
 		TestCase.assertNull(invoice.getId());
-		getCtx().getBean(EzeeInvoiceDao.class).save(invoice);
+		invoiceDao.save(invoice);
 		TestCase.assertNotNull(invoice.getId());
-		TestCase.assertNotNull(invoice.getPayee().getId());
-		TestCase.assertNotNull(invoice.getPayer().getId());
+	}
+
+	@Override
+	@Test
+	public void canEdit() {
+		init();
+		EzeeInvoice invoice = new EzeeInvoice("1", payee, payer, 100., 10., "TEST", true, "5/11/2015", "31/12/2015",
+				null, "5/11/2015", null, expense);
+		invoiceDao.save(invoice);
+		TestCase.assertNull(invoice.getDatePaid());
+		invoice.setDatePaid("30/11/2015");
+		invoiceDao.save(invoice);
+		EzeeInvoice persisted = invoiceDao.get(invoice.getId(), EzeeInvoice.class);
+		TestCase.assertNotNull(persisted.getDatePaid());
+		TestCase.assertEquals("30/11/2015", persisted.getDatePaid());
+	}
+
+	@Override
+	@Test
+	public void canDelete() {
+		init();
+		EzeeInvoice invoice = new EzeeInvoice("1", payee, payer, 100., 10., "TEST", true, "5/11/2015", "31/12/2015",
+				null, "5/11/2015", null, expense);
+		invoiceDao.save(invoice);
+		EzeeInvoice persisted = invoiceDao.get(invoice.getId(), EzeeInvoice.class);
+		TestCase.assertNotNull(persisted);
+		invoiceDao.delete(persisted);
+		persisted = invoiceDao.get(invoice.getId(), EzeeInvoice.class);
+		TestCase.assertNull(persisted);
+	}
+
+	private void init() {
+		payerDao.save(payer);
+		payeeDao.save(payee);
 	}
 }

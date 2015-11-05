@@ -2,8 +2,6 @@ package com.ezee.model.entity;
 
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.ezee.model.entity.enums.EzeeInvoiceClassification;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * 
@@ -32,7 +31,7 @@ import com.ezee.model.entity.enums.EzeeInvoiceClassification;
 		@NamedNativeQuery(name = "deleteAgeDebtMappingsSql", query = "delete from EZEE_INVOICE_TO_DEBT_AGE_MAPPING where INVOICE_ID = :id") })
 @Entity
 @Table(name = "EZEE_INVOICE")
-public class EzeeInvoice extends EzeeDatabaseEntity {
+public class EzeeInvoice extends EzeeDatabaseEntity implements IsSerializable {
 
 	private static final long serialVersionUID = -588454316909349202L;
 
@@ -60,16 +59,13 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 	private boolean manualtax = Boolean.TRUE;
 
 	@Column(name = "INVOICE_DATE")
-	private Date invoiceDate;
-
-	@Column(name = "PAID")
-	private boolean paid = Boolean.FALSE;
+	private String invoiceDate;
 
 	@Column(name = "DUE_DATE")
-	private Date dateDue;
+	private String dateDue;
 
 	@Column(name = "PAYMENT_DATE")
-	private Date datePaid;
+	private String datePaid;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "EZEE_INVOICE_TO_DEBT_AGE_MAPPING", joinColumns = @JoinColumn(name = "INVOICE_ID") , inverseJoinColumns = @JoinColumn(name = "DEBT_AGE_RULE_ID") )
@@ -91,17 +87,17 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 	}
 
 	public EzeeInvoice(final String invoiceId, final EzeePayee payee, final EzeePayer payer, final double amount,
-			final double tax, final String description, final boolean manualtax, final boolean paid,
-			final Date invoiceDate, final Date dateDue, final Date datePaid, final Date created, final Date updated,
+			final double tax, final String description, final boolean manualtax, final String invoiceDate,
+			final String dateDue, final String datePaid, final String created, final String updated,
 			final EzeeInvoiceClassification classification) {
-		this(NULL_ID, invoiceId, payee, payer, amount, tax, description, manualtax, paid, invoiceDate, dateDue,
-				datePaid, created, updated, classification);
+		this(NULL_ID, invoiceId, payee, payer, amount, tax, description, manualtax, invoiceDate, dateDue, datePaid,
+				created, updated, classification);
 	}
 
 	public EzeeInvoice(final Long id, final String invoiceId, final EzeePayee payee, final EzeePayer payer,
 			final double amount, final double tax, final String description, final boolean manualtax,
-			final boolean paid, final Date invoiceDate, final Date dateDue, final Date datePaid, final Date created,
-			final Date updated, final EzeeInvoiceClassification classification) {
+			final String invoiceDate, final String dateDue, final String datePaid, final String created,
+			final String updated, final EzeeInvoiceClassification classification) {
 		super(id, created, updated);
 		this.invoiceId = invoiceId;
 		this.payee = payee;
@@ -110,7 +106,6 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 		this.tax = tax;
 		this.description = description;
 		this.manualtax = manualtax;
-		this.paid = paid;
 		this.invoiceDate = invoiceDate;
 		this.dateDue = dateDue;
 		this.datePaid = datePaid;
@@ -150,15 +145,11 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 		return manualtax;
 	}
 
-	public final boolean isPaid() {
-		return paid;
-	}
-
-	public final Date getDateDue() {
+	public final String getDateDue() {
 		return dateDue;
 	}
 
-	public final Date getDatePaid() {
+	public final String getDatePaid() {
 		return datePaid;
 	}
 
@@ -190,15 +181,11 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 		this.manualtax = manualtax;
 	}
 
-	public void setPaid(boolean paid) {
-		this.paid = paid;
-	}
-
-	public void setDateDue(Date dateDue) {
+	public void setDateDue(String dateDue) {
 		this.dateDue = dateDue;
 	}
 
-	public void setDatePaid(Date datePaid) {
+	public void setDatePaid(String datePaid) {
 		this.datePaid = datePaid;
 	}
 
@@ -234,11 +221,11 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 		this.file = file;
 	}
 
-	public final Date getInvoiceDate() {
+	public final String getInvoiceDate() {
 		return invoiceDate;
 	}
 
-	public void setInvoiceDate(Date invoiceDate) {
+	public void setInvoiceDate(String invoiceDate) {
 		this.invoiceDate = invoiceDate;
 	}
 
@@ -248,7 +235,7 @@ public class EzeeInvoice extends EzeeDatabaseEntity {
 	}
 
 	@Override
-	public Date filterDate() {
+	public String filterDate() {
 		return getInvoiceDate();
 	}
 }

@@ -3,12 +3,13 @@ package com.ezee.model.entity;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * 
@@ -16,7 +17,7 @@ import javax.persistence.MappedSuperclass;
  *
  */
 @MappedSuperclass
-public abstract class EzeeDatabaseEntity implements Serializable {
+public abstract class EzeeDatabaseEntity implements Serializable, IsSerializable {
 
 	private static final long serialVersionUID = -1523917928877244252L;
 
@@ -28,21 +29,21 @@ public abstract class EzeeDatabaseEntity implements Serializable {
 
 	/** date entity was created **/
 	@Column(name = "CREATED")
-	private Date created;
+	private String created;
 
 	/** date entity was updated **/
 	@Column(name = "UPDATED")
-	private Date updated;
+	private String updated;
 
 	public EzeeDatabaseEntity() {
-		this(new Date(), null);
+		this(null, null);
 	}
 
-	public EzeeDatabaseEntity(final Date created, final Date updated) {
+	public EzeeDatabaseEntity(final String created, final String updated) {
 		this(NULL_ID, created, updated);
 	}
 
-	public EzeeDatabaseEntity(final Long id, final Date created, final Date updated) {
+	public EzeeDatabaseEntity(final Long id, final String created, final String updated) {
 		this.id = id;
 		this.created = created;
 		this.updated = updated;
@@ -52,23 +53,23 @@ public abstract class EzeeDatabaseEntity implements Serializable {
 		return id;
 	}
 
-	public final Date getCreated() {
+	public final String getCreated() {
 		return created;
 	}
 
-	public final Date getUpdated() {
+	public final String getUpdated() {
 		return updated;
 	}
 
-	public void setCreated(Date created) {
+	public void setCreated(String created) {
 		this.created = created;
 	}
 
-	public void setUpdated(Date updated) {
+	public void setUpdated(String updated) {
 		this.updated = updated;
 	}
 
-	public Date filterDate() {
+	public String filterDate() {
 		return getCreated();
 	}
 

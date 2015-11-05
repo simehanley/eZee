@@ -85,8 +85,10 @@ public class EzeeInvoiceFilter extends EzeeInvoiceNumberAndDateFilter<EzeeInvoic
 		}
 	}
 
-	private boolean showPaid(final EzeeInvoice invoice) {
-		if (!invoice.isPaid() || (showPaid && invoice.isPaid())) {
+	@Override
+	protected boolean showPaid(final EzeeInvoice invoice) {
+		boolean paid = (invoice.getDatePaid() != null);
+		if (!paid || (showPaid && paid)) {
 			return true;
 		}
 		return false;

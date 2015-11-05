@@ -29,6 +29,7 @@ import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.client.grid.invoice.EzeeInvoiceGridModel;
 import com.ezee.common.numeric.EzeeNumericUtils;
+import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayment;
@@ -218,21 +219,42 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 
 	@Override
 	protected void bind() {
+		String date = EzeeClientDateUtils.toString(new Date());
 		if (entity == null) {
 			entity = new EzeePayment();
-			entity.setCreated(new Date());
+			entity.setCreated(date);
+			entity.setPaymentDate(date);
+			entity.setInvoices(new HashSet<>(model.getHandler().getList()));
+			bindinvoices(entity.getInvoices(), date);
+		} else {
+			entity.setUpdated(date);
 		}
-		entity.setPaymentDate(new Date());
 		entity.setType(EzeePaymentType.valueOf(lstPaymentType.getSelectedItemText()));
 		entity.setPaymentDescription(txtDescription.getText());
-		entity.setInvoices(new HashSet<>(model.getHandler().getList()));
-		entity.setUpdated(new Date());
 		if (hasLength(txtChequeNumber.getText())) {
 			entity.setChequeNumber(txtChequeNumber.getText());
 		} else {
 			entity.setChequeNumber(null);
 		}
 		entity.setChequePresented(chkPresented.getValue());
+	}
+
+	private void bindinvoices(final Set<EzeeInvoice> invoices, final String paymentDate) {
+		if (!isEmpty(invoices)) {
+			for (EzeeInvoice invoice : invoices) {
+				invoice.setDatePaid(paymentDate);
+				invoice.setUpdated(paymentDate);
+			}
+		}
+	}
+
+	private void unbindinvoices(final Set<EzeeInvoice> invoices, final String updateDate) {
+		if (!isEmpty(invoices)) {
+			for (EzeeInvoice invoice : invoices) {
+				invoice.setDatePaid(null);
+				invoice.setUpdated(updateDate);
+			}
+		}
 	}
 
 	@UiHandler("btnClose")
@@ -270,6 +292,7 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 	void onDeleteClick(ClickEvent event) {
 		btnDelete.setEnabled(false);
 		showWaitCursor();
+		unbindinvoices(entity.getInvoices(), EzeeClientDateUtils.toString(new Date()));
 		INVOICE_SERVICE.deleteEntity(EzeePayment.class.getName(), entity, new AsyncCallback<EzeePayment>() {
 
 			@Override

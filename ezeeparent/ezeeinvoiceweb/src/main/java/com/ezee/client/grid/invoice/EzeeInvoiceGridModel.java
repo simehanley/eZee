@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.ezee.client.grid.EzeeGridModel;
+import com.ezee.client.util.EzeeDateComparator;
+import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.web.common.ui.images.EzeeImageResources;
 import com.google.gwt.cell.client.Cell.Context;
@@ -53,6 +55,8 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	private static final String INVOICE_NUM_WIDTH = "100px";
 	private static final String DESCRIPTION_WIDTH = "300px";
 	private static final String FILE_WIDTH = "40px";
+
+	private final EzeeDateComparator dateComparator = new EzeeDateComparator();
 
 	public EzeeInvoiceGridModel() {
 		super();
@@ -106,18 +110,13 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	protected Date resolveDateFieldValue(final String fieldName, final EzeeInvoice invoice) {
 		switch (fieldName) {
 		case INVOICE_DATE:
-			return invoice.getInvoiceDate();
+			return EzeeClientDateUtils.fromString(invoice.getInvoiceDate());
 		case DUE_DATE:
-			return invoice.getDateDue();
+			return EzeeClientDateUtils.fromString(invoice.getDateDue());
 		case PAID_PATE:
-			return invoice.getDatePaid();
+			return EzeeClientDateUtils.fromString(invoice.getDatePaid());
 		}
 		return null;
-	}
-
-	@Override
-	protected boolean resolveBooleanFieldValue(final String fieldName, final EzeeInvoice invoice) {
-		return invoice.isPaid();
 	}
 
 	@Override
@@ -151,7 +150,8 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
-				return one.getInvoiceDate().compareTo(two.getInvoiceDate());
+				return dateComparator.compare(EzeeClientDateUtils.fromString(one.getInvoiceDate()),
+						EzeeClientDateUtils.fromString(two.getInvoiceDate()));
 			}
 		});
 
@@ -159,15 +159,18 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
-				return one.getDateDue().compareTo(two.getDateDue());
+				return dateComparator.compare(EzeeClientDateUtils.fromString(one.getDateDue()),
+						EzeeClientDateUtils.fromString(two.getDateDue()));
 			}
+
 		});
 
 		handler.setComparator(columns.get(PAID_PATE), new Comparator<EzeeInvoice>() {
 
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
-				return one.getDatePaid().compareTo(two.getDatePaid());
+				return dateComparator.compare(EzeeClientDateUtils.fromString(one.getDatePaid()),
+						EzeeClientDateUtils.fromString(two.getDatePaid()));
 			}
 		});
 	}
@@ -184,7 +187,8 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 
 	@Override
 	protected String resolveCellStyleNames(final EzeeInvoice invoice) {
-		if (invoice.isPaid()) {
+		boolean paid = (invoice.getDatePaid() != null);
+		if (paid) {
 			return INSTANCE.css().greenforeground();
 		}
 		return INSTANCE.css().lightorangeforeground();

@@ -20,6 +20,7 @@ import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.client.crud.common.EzeeCreateUpdateDeleteFinancialEntity;
 import com.ezee.client.crud.common.EzeePayeeBank;
 import com.ezee.client.crud.common.EzeePayerPayeeCommon;
+import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.model.entity.EzeePayee;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -108,7 +109,10 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 	protected void bind() {
 		if (entity == null) {
 			entity = new EzeePayee();
-			entity.setCreated(new Date());
+			entity.setCreated(EzeeClientDateUtils.toString(new Date()));
+			entity.setUpdated(null);
+		} else {
+			entity.setUpdated(EzeeClientDateUtils.toString(new Date()));
 		}
 		entity.setName(payee.getName());
 		entity.setAddressLineOne(payee.getAddressLine1());
@@ -123,7 +127,6 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 		entity.setAccountName(payeebank.getAccountName());
 		entity.setAccountNumber(payeebank.getAccountNumber());
 		entity.setAccountBsb(payeebank.getAccountBsb());
-		entity.setUpdated(new Date());
 	}
 
 	private void disable() {

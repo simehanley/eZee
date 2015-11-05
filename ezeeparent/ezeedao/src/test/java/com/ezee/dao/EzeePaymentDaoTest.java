@@ -1,11 +1,10 @@
 package com.ezee.dao;
 
 import static com.ezee.model.entity.enums.EzeeInvoiceClassification.expense;
-
-import java.util.Date;
-import java.util.List;
+import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayee;
@@ -14,30 +13,77 @@ import com.ezee.model.entity.EzeePayment;
 
 import junit.framework.TestCase;
 
-public class EzeePaymentDaoTest extends AbstractEzeeDaoTest {
+public class EzeePaymentDaoTest extends AbstractEzeeDaoTest<EzeePayment> {
 
-	@SuppressWarnings("deprecation")
+	@Autowired
+	private EzeePayeeDao payeeDao;
+
+	@Autowired
+	private EzeePayerDao payerDao;
+
+	@Autowired
+	private EzeeInvoiceDao invoiceDao;
+
+	@Autowired
+	private EzeePaymentDao paymentDao;
+
+	private final EzeePayer payer = new EzeePayer();
+	private final EzeePayee payee = new EzeePayee();
+
+	private final EzeeInvoice one = new EzeeInvoice("1", payee, payer, 100., 10., "TEST 1", true, "5/11/2015",
+			"30/11/2015", null, "5/11/2015", null, expense);
+	private final EzeeInvoice two = new EzeeInvoice("2", payee, payer, 200., 20., "TEST 2", true, "5/11/2015",
+			"30/11/2015", null, "5/11/2015", null, expense);
+
+	@Override
 	@Test
-	public void canPersistAnEzeePayment() {
-		EzeePayer payer = new EzeePayer("TEST-PAYER", null, null, null, null, null, null, null, null, new Date(),
-				new Date());
-		EzeePayee payee = new EzeePayee("TEST-PAYEE", null, null, null, null, null, null, null, null, new Date(),
-				new Date());
-		EzeeInvoice one = new EzeeInvoice("1234567", payee, payer, 200., 20., "Invoice to payee.", true, false,
-				new Date(2015, 6, 25), new Date(), new Date(), new Date(), new Date(), expense);
-		EzeeInvoice two = new EzeeInvoice("1234567", payee, payer, 200., 20., "Invoice to payee.", true, false,
-				new Date(2015, 6, 25), new Date(), new Date(), new Date(), new Date(), expense);
-		getCtx().getBean(EzeePayerDao.class).save(payer);
-		getCtx().getBean(EzeePayeeDao.class).save(payee);
-		getCtx().getBean(EzeeInvoiceDao.class).save(one);
-		getCtx().getBean(EzeeInvoiceDao.class).save(two);
-		EzeePayment payment = new EzeePayment(new Date(), null);
+	public void canPersist() {
+		init();
+		EzeePayment payment = new EzeePayment("5/11/2015", null);
 		payment.addInvoice(one);
 		payment.addInvoice(two);
+		payment.setPaymentDate("30/11/2015");
 		TestCase.assertNull(payment.getId());
-		getCtx().getBean(EzeePaymentDao.class).save(payment);
+		paymentDao.save(payment);
 		TestCase.assertNotNull(payment.getId());
-		List<EzeePayment> pmt = getCtx().getBean(EzeePaymentDao.class).get(EzeePayment.class);
-		TestCase.assertTrue(pmt.size() == 1);
+	}
+
+	@Override
+	@Test
+	public void canEdit() {
+		init();
+		EzeePayment payment = new EzeePayment("5/11/2015", null);
+		payment.addInvoice(one);
+		payment.addInvoice(two);
+		payment.setPaymentDate("30/11/2015");
+		paymentDao.save(payment);
+		TestCase.assertNull(payment.getType());
+		payment.setType(cheque);
+		paymentDao.save(payment);
+		EzeePayment persisted = paymentDao.get(payment.getId(), EzeePayment.class);
+		TestCase.assertNotNull(persisted.getType());
+	}
+
+	@Override
+	@Test
+	public void canDelete() {
+		init();
+		EzeePayment payment = new EzeePayment("5/11/2015", null);
+		payment.addInvoice(one);
+		payment.addInvoice(two);
+		payment.setPaymentDate("30/11/2015");
+		paymentDao.save(payment);
+		EzeePayment persisted = paymentDao.get(payment.getId(), EzeePayment.class);
+		TestCase.assertNotNull(persisted);
+		paymentDao.delete(persisted);
+		persisted = paymentDao.get(payment.getId(), EzeePayment.class);
+		TestCase.assertNull(persisted);
+	}
+
+	private void init() {
+		payerDao.save(payer);
+		payeeDao.save(payee);
+		invoiceDao.save(one);
+		invoiceDao.save(two);
 	}
 }

@@ -11,7 +11,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface EzeeUserServiceAsync {
 
-	void register(String firstname, String lastname, String username, String password, String email,
+	void register(String firstname, String lastname, String username, String password, String email, String createDate,
 			AsyncCallback<EzeeRegisterResult> result);
 
 	void authenticate(String username, String password, AsyncCallback<EzeeLoginResult> result);

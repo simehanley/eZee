@@ -14,7 +14,6 @@ import java.util.Set;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.cell.client.Cell.Context;
-import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
@@ -78,8 +77,6 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 
 	protected abstract Date resolveDateFieldValue(String fieldName, T entity);
 
-	protected abstract boolean resolveBooleanFieldValue(String fieldName, T entity);
-
 	protected abstract void addComparators(final Map<String, Column<T, ?>> columns);
 
 	protected abstract void addSortColumns(DataGrid<T> grid, Map<String, Column<T, ?>> columns);
@@ -138,24 +135,6 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 			};
 			column.setHorizontalAlignment(ALIGN_RIGHT);
 			createColumn(columns, grid, column, fieldName, width, false);
-		}
-	}
-
-	protected void createCheckBoxColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
-			final String fieldName, final String width) {
-		if (!isHiddenColumn(fieldName)) {
-			Column<T, Boolean> column = new Column<T, Boolean>(new CheckboxCell()) {
-				@Override
-				public Boolean getValue(T entity) {
-					return resolveBooleanFieldValue(fieldName, entity);
-				}
-
-				@Override
-				public String getCellStyleNames(final Context context, final T entity) {
-					return resolveCellStyleNames(entity);
-				}
-			};
-			createColumn(columns, grid, column, fieldName, width, true);
 		}
 	}
 

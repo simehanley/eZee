@@ -2,8 +2,6 @@ package com.ezee.server;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 
-import java.util.Date;
-
 import org.jasypt.util.password.PasswordEncryptor;
 
 import com.ezee.dao.EzeeUserDao;
@@ -23,13 +21,13 @@ public class EzeeUserServiceImpl extends AbstractRemoteService implements EzeeUs
 
 	@Override
 	public EzeeRegisterResult register(final String firstname, final String lastname, final String username,
-			final String password, final String email) {
+			final String password, final String email, final String createDate) {
 		EzeeUserDao dao = getDao();
 		if (dao.get(username, email) != null) {
 			return new EzeeRegisterResult(null,
 					"User with username = '" + username + "' and/or email = '" + email + "' already exists.");
 		}
-		EzeeUser user = new EzeeUser(firstname, lastname, username, password, email, new Date(), new Date());
+		EzeeUser user = new EzeeUser(firstname, lastname, username, password, email, createDate, null);
 		dao.save(user);
 		return new EzeeRegisterResult(user, EMPTY_STRING);
 	}

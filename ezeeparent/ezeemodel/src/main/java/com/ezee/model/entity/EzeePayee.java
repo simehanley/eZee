@@ -1,10 +1,12 @@
 package com.ezee.model.entity;
 
-import java.util.Date;
+import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * 
@@ -13,7 +15,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "EZEE_PAYEE")
-public class EzeePayee extends EzeeFinancialEntity {
+public class EzeePayee extends EzeeFinancialEntity implements IsSerializable {
 
 	private static final long serialVersionUID = -7361680029940311470L;
 
@@ -33,16 +35,18 @@ public class EzeePayee extends EzeeFinancialEntity {
 		super();
 	}
 
-	public EzeePayee(final Long id, final String name, final String addressLineOne, final String addressLineTwo,
-			final String suburb, final String city, final String state, final String postcode, final String phone,
-			final String email, final Date created, final Date updated) {
-		super(id, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, email, created, updated);
+	public EzeePayee(final String name, final String addressLineOne, final String addressLineTwo, final String suburb,
+			final String city, final String state, final String postcode, final String phone, final String fax,
+			final String email, final String created, final String updated) {
+		this(NULL_ID, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, fax, email, created,
+				updated);
 	}
 
-	public EzeePayee(final String name, final String addressLineOne, final String addressLineTwo, final String suburb,
-			final String city, final String state, final String postcode, final String phone, final String email,
-			final Date created, final Date updated) {
-		super(name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, email, created, updated);
+	public EzeePayee(final Long id, final String name, final String addressLineOne, final String addressLineTwo,
+			final String suburb, final String city, final String state, final String postcode, final String phone,
+			final String fax, final String email, final String created, final String updated) {
+		super(id, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, fax, email, created,
+				updated);
 	}
 
 	public final String getBank() {
