@@ -193,6 +193,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		chkManualTax.setValue(entity.isManualTax());
 		txtDescription.setText(entity.getDescription());
 		lstClassification.setItemSelected(getItemIndex(entity.getClassification().name(), lstClassification), true);
+		resolveDueDate();
 	}
 
 	private void initialiseNew() {
@@ -200,6 +201,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		txtTax.setValue(EzeeFromatUtils.getAmountFormat().format(ZERO_DBL));
 		txtTotal.setValue(EzeeFromatUtils.getAmountFormat().format(ZERO_DBL));
 		initialiseDefaults();
+		resolveDueDate();
 	}
 
 	private void initialiseDefaults() {
@@ -260,7 +262,6 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 			}
 		});
-		resolveDueDate();
 	}
 
 	private EzeeDebtAgeRule getAgeRule() {
