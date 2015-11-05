@@ -56,4 +56,16 @@ public class EzeeUserDaoImpl extends EzeeBaseDaoImpl<EzeeUser> implements EzeeUs
 		}
 		return null;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public EzeeUser get(final String username) {
+		DetachedCriteria criteria = DetachedCriteria.forClass(EzeeUser.class);
+		criteria.add(Restrictions.eq("username", username));
+		List<EzeeUser> users = (List<EzeeUser>) getHibernateTemplate().findByCriteria(criteria);
+		if (!isEmpty(users)) {
+			return users.get(ZERO);
+		}
+		return null;
+	}
 }

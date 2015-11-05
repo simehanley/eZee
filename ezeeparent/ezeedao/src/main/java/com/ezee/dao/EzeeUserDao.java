@@ -14,4 +14,6 @@ public interface EzeeUserDao extends EzeeBaseDao<EzeeUser> {
 	PasswordEncryptor geEncryptor();
 
 	EzeeUser get(String username, String email);
+
+	EzeeUser get(String username);
 }

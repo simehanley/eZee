@@ -35,7 +35,7 @@ public class EzeeUserServiceImpl extends AbstractRemoteService implements EzeeUs
 	@Override
 	public EzeeLoginResult authenticate(final String username, final String password) {
 		EzeeUserDao dao = getDao();
-		EzeeUser user = dao.get(username, EMPTY_STRING);
+		EzeeUser user = dao.get(username);
 		if (user != null) {
 			PasswordEncryptor encryptor = dao.geEncryptor();
 			if (encryptor.checkPassword(password, user.getPassword())) {
