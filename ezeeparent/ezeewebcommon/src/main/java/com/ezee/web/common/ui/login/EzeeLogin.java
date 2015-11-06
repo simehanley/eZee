@@ -2,9 +2,11 @@ package com.ezee.web.common.ui.login;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.web.common.EzeeWebCommonConstants.AUTO_LOGIN_HELPER;
 import static com.ezee.web.common.EzeeWebCommonConstants.USER_SERVICE;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
+import static com.google.gwt.event.dom.client.KeyCodes.KEY_ENTER;
 import static java.util.logging.Level.SEVERE;
 
 import java.util.logging.Logger;
@@ -12,6 +14,10 @@ import java.util.logging.Logger;
 import com.ezee.web.common.ui.register.EzeeRegisterListener;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -70,37 +76,45 @@ public class EzeeLogin extends Composite {
 		this.registerListener = registerListener;
 		initWidget(uiBinder.createAndBindUi(this));
 		lblTitle.setText(text);
+		init();
+	}
+
+	private void init() {
+		if (AUTO_LOGIN_HELPER.isSupported()) {
+			chkRememberMe.setVisible(true);
+		} else {
+			chkRememberMe.setVisible(false);
+		}
+		initForm();
+	}
+
+	private void initForm() {
+		chkRememberMe.setValue(AUTO_LOGIN_HELPER.isRememberMeSet());
+		txtPassword.addKeyPressHandler(new KeyPressHandler() {
+			@Override
+			public void onKeyPress(final KeyPressEvent event) {
+				if (event.getNativeEvent().getKeyCode() == KEY_ENTER) {
+					login();
+				}
+			}
+		});
+		chkRememberMe.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+			@Override
+			public void onValueChange(final ValueChangeEvent<Boolean> event) {
+				if (AUTO_LOGIN_HELPER.isSupported()) {
+					if (event.getValue()) {
+						AUTO_LOGIN_HELPER.setRememberMe();
+					} else {
+						AUTO_LOGIN_HELPER.clearAutoLogin();
+					}
+				}
+			}
+		});
 	}
 
 	@UiHandler("btnLogin")
 	void onLoginClick(ClickEvent event) {
-		clearError();
-		if (validLogin()) {
-			showWaitCursor();
-			USER_SERVICE.authenticate(txtUsername.getText(), txtPassword.getText(),
-					new AsyncCallback<EzeeLoginResult>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							String msg = "Unknwon error authenticating user with username '" + txtUsername.getText()
-									+ "'.";
-							log.log(SEVERE, msg, caught);
-							showDefaultCursor();
-							setError(msg);
-						}
-
-						@Override
-						public void onSuccess(final EzeeLoginResult result) {
-							if (result.getUser() != null) {
-								clear();
-								loginListener.loginSuccessful(result.getUser());
-							} else {
-								showDefaultCursor();
-								setError(result.getError());
-							}
-						}
-					});
-		}
+		login();
 	}
 
 	@UiHandler("btnRegister")
@@ -125,6 +139,38 @@ public class EzeeLogin extends Composite {
 			return false;
 		}
 		return true;
+	}
+
+	private void login() {
+		clearError();
+		if (validLogin()) {
+			showWaitCursor();
+			USER_SERVICE.authenticate(txtUsername.getText(), txtPassword.getText(),
+					new AsyncCallback<EzeeLoginResult>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							String msg = "Unknwon error authenticating user with username '" + txtUsername.getText()
+									+ "'.";
+							log.log(SEVERE, msg, caught);
+							setError(msg);
+							showDefaultCursor();
+						}
+
+						@Override
+						public void onSuccess(final EzeeLoginResult result) {
+							if (result.getUser() != null) {
+								clear();
+								if (AUTO_LOGIN_HELPER.isRememberMeSet()) {
+									AUTO_LOGIN_HELPER.setRememberMeUser(result.getUser().getUsername());
+								}
+								loginListener.loginSuccessful(result.getUser());
+							} else {
+								setError(result.getError());
+								showDefaultCursor();
+							}
+						}
+					});
+		}
 	}
 
 	private void setError(String text) {

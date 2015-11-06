@@ -6,7 +6,9 @@ import static com.ezee.client.EzeeInvoiceWebConstants.PAYMENTS;
 import static com.ezee.client.EzeeInvoiceWebConstants.PREMISES;
 import static com.ezee.client.EzeeInvoiceWebConstants.REGISTER_USER;
 import static com.ezee.client.EzeeInvoiceWebConstants.SUPPLIERS;
+import static com.ezee.web.common.EzeeWebCommonConstants.AUTO_LOGIN_HELPER;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +52,15 @@ public class EzeeInvoiceWeb implements EntryPoint, EzeeLoginListener, EzeeRegist
 
 	private void init() {
 		initResources();
-		initLogin();
+		if (AUTO_LOGIN_HELPER.doAutoLogin()) {
+			showWaitCursor();
+			user = AUTO_LOGIN_HELPER.getAutoLoginUser();
+			initApplication();
+			showDefaultCursor();
+		} else {
+			initLogin();
+		}
+
 	}
 
 	private void initLogin() {

@@ -146,4 +146,9 @@ public class EzeePayment extends EzeeDatabaseEntity implements IsSerializable {
 	public String toString() {
 		return "EzeePayment [paymentDate=" + paymentDate + ", type=" + type + "]";
 	}
+
+	@Override
+	public String filterDate() {
+		return getPaymentDate();
+	}
 }

@@ -23,7 +23,7 @@
 					<g:PasswordTextBox ui:field="txtPassword" styleName="{res.css.gwtTextBoxMedium}" />
 				</g:at>
 				<g:at top="401" left="316">
-					<g:CheckBox text="Remember Me" ui:field="chkRememberMe" styleName="{res.css.gwtCheckBoxSmall}" visible="false" />
+					<g:CheckBox text="Remember Me" ui:field="chkRememberMe" styleName="{res.css.gwtCheckBoxSmall}" />
 				</g:at>
 				<g:at top="397" left="506">
 					<g:Button ui:field="btnRegister" text="Regsiter" styleName="{res.css.gwtButton}" />

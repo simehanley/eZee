@@ -9,6 +9,8 @@ import static com.ezee.client.ui.EzeeInvoiceUiUtils.loadEntities;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 import static com.ezee.web.common.ui.css.EzeeGwtOverridesResources.INSTANCE;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 
 import java.util.HashSet;
 import java.util.List;
@@ -134,6 +136,7 @@ public class EzeeBankBalance extends EzeeDialog {
 		String premisesName = lstPremises.getSelectedItemText();
 		EzeePayer premises = (EzeePayer) cache.getEntities(EzeePayer.class).get(premisesName);
 		Long id = (premises == null) ? null : premises.getId();
+		showWaitCursor();
 		INVOICE_SERVICE.getOutstandingCheques(id, new AsyncCallback<List<EzeePayment>>() {
 
 			@Override
@@ -142,11 +145,13 @@ public class EzeeBankBalance extends EzeeDialog {
 				model.getHandler().getList().addAll(result);
 				updateTotals();
 				grdCheques.redraw();
+				showDefaultCursor();
 			}
 
 			@Override
 			public void onFailure(Throwable caught) {
 				log.log(Level.SEVERE, "Failed to load outstanding cheques.", caught);
+				showDefaultCursor();
 			}
 		});
 	}

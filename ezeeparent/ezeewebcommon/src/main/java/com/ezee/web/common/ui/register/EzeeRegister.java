@@ -95,8 +95,8 @@ public class EzeeRegister extends Composite {
 								clear();
 								listener.registrationSuccess(result.getUser());
 							} else {
-								showDefaultCursor();
 								setError(result.getError());
+								showDefaultCursor();
 							}
 						}
 
@@ -105,8 +105,8 @@ public class EzeeRegister extends Composite {
 							String msg = "Unknwon error registering user with username '" + txtUsername.getText()
 									+ "'.";
 							log.log(Level.SEVERE, msg, caught);
-							showDefaultCursor();
 							setError(msg);
+							showDefaultCursor();
 						}
 					});
 		}
@@ -128,6 +128,10 @@ public class EzeeRegister extends Composite {
 		}
 		if (!hasLength(txtPassword.getText())) {
 			setError("Regsitration password cannot be empty.");
+			return false;
+		}
+		if (!hasLength(txtEmail.getText())) {
+			setError("Regsitration email cannot be empty.");
 			return false;
 		}
 		return true;

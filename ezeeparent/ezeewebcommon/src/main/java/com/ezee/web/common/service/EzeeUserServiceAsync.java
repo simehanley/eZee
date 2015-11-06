@@ -15,4 +15,6 @@ public interface EzeeUserServiceAsync {
 			AsyncCallback<EzeeRegisterResult> result);
 
 	void authenticate(String username, String password, AsyncCallback<EzeeLoginResult> result);
+
+	void retrieve(String username, AsyncCallback<EzeeLoginResult> result);
 }

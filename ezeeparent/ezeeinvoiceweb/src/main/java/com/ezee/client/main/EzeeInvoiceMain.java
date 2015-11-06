@@ -2,6 +2,7 @@ package com.ezee.client.main;
 
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.client.EzeeInvoiceWebConstants.SUPPORT_EMAIL;
+import static com.ezee.web.common.EzeeWebCommonConstants.AUTO_LOGIN_HELPER;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showPointerCursor;
 
@@ -96,14 +97,13 @@ public class EzeeInvoiceMain extends Composite {
 				Window.Location.assign(SUPPORT_EMAIL);
 			}
 		});
-
 		logout.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				AUTO_LOGIN_HELPER.unsetRememberMeUser();
 				Window.Location.assign(GWT.getHostPageBaseURL());
 			}
 		});
-
 		MouseOverHandler mouseOverHandler = new EzeeMainMouseOverHandler();
 		logout.addMouseOverHandler(mouseOverHandler);
 		email.addMouseOverHandler(mouseOverHandler);

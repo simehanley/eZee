@@ -35,34 +35,44 @@
 				</g:cell>
 			</g:HorizontalPanel>
 		</g:south>
+		<g:west size="10">
+			<g:StackPanel height="100%" width="100%" unit="EM">
+			
+				<g:stack>
+					<g:customHeader size='3'>
+						<g:Label>Supplier</g:Label>
+					</g:customHeader>
+					<g:Label>New</g:Label>
+					<g:Label>Old</g:Label>
+				</g:stack>
+				<g:stack>
+					<g:customHeader size='3'>
+						<g:Label>Premises</g:Label>
+					</g:customHeader>
+					<g:Label>New</g:Label>
+				</g:stack>
+				<g:stack>
+					<g:customHeader size='3'>
+						<g:Label>Invoice</g:Label>
+					</g:customHeader>
+					<g:Label>New</g:Label>
+				</g:stack>
+
+			</g:StackPanel>
+		</g:west>
 		<g:center>
-			<g:SplitLayoutPanel>
-				<g:west size="150">
-					<g:VerticalPanel height="100%" width="100%" styleName="{res.css.navigation}">
-						<g:AbsolutePanel height="100%">
-							<g:at top="10" left="10">
-								<g:Label text="Link 1 - TODO" width="130px" height="18px" styleName="{res.css.navigationLink}" ui:field="label" />
-							</g:at>
-							<g:at top="34" left="10">
-								<g:Label text="Link 2 - TODO" width="130px" height="18px" styleName="{res.css.navigationLink}" />
-							</g:at>
-							<g:at top="58" left="10">
-								<g:Label text="Link 3 - TODO" />
-							</g:at>
-							<g:at top="82" left="10">
-								<g:Label text="Link 4 - TODO" />
-							</g:at>
-						</g:AbsolutePanel>
-					</g:VerticalPanel>
-				</g:west>
+			<g:DockLayoutPanel unit="EM">
 				<g:center>
-					<g:DockLayoutPanel unit="EM">
-						<g:center>
-							<g:TabLayoutPanel barHeight="20" height="100%" width="100%" ui:field="tab" />
-						</g:center>
-					</g:DockLayoutPanel>
+					<g:TabLayoutPanel barHeight="20" height="100%" width="100%" ui:field="tab" />
 				</g:center>
-			</g:SplitLayoutPanel>
+			</g:DockLayoutPanel>
+			<!--g:SplitLayoutPanel> <g:west size="150"> <g:VerticalPanel height="100%" width="100%" styleName="{res.css.navigation}"> 
+				<g:AbsolutePanel height="100%"> <g:at top="10" left="10"> <g:Label text="Link 1 - TODO" width="130px" height="18px" styleName="{res.css.navigationLink}" 
+				ui:field="label" /> </g:at> <g:at top="34" left="10"> <g:Label text="Link 2 - TODO" width="130px" height="18px" styleName="{res.css.navigationLink}" 
+				/> </g:at> <g:at top="58" left="10"> <g:Label text="Link 3 - TODO" /> </g:at> <g:at top="82" left="10"> <g:Label text="Link 
+				4 - TODO" /> </g:at> </g:AbsolutePanel> </g:VerticalPanel> </g:west> <g:center> <g:DockLayoutPanel unit="EM"> <g:center> 
+				<g:TabLayoutPanel barHeight="20" height="100%" width="100%" ui:field="tab" /> </g:center> </g:DockLayoutPanel> </g:center> 
+				</g:SplitLayoutPanel -->
 		</g:center>
 	</g:DockLayoutPanel>
 

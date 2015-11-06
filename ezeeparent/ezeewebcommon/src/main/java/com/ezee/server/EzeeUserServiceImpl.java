@@ -47,6 +47,16 @@ public class EzeeUserServiceImpl extends AbstractRemoteService implements EzeeUs
 		return new EzeeLoginResult(null, "Unable to find user with username '" + username + "'.");
 	}
 
+	@Override
+	public EzeeLoginResult retrieve(final String username) {
+		EzeeUserDao dao = getDao();
+		EzeeUser user = dao.get(username);
+		if (user != null) {
+			return new EzeeLoginResult(user, EMPTY_STRING);
+		}
+		return new EzeeLoginResult(null, "Unable to find user with username '" + username + "'.");
+	}
+
 	private EzeeUserDao getDao() {
 		return getSpringBean(EzeeUserDao.class);
 	}

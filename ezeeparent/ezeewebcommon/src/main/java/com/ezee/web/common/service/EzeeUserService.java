@@ -17,4 +17,6 @@ public interface EzeeUserService extends RemoteService {
 			String createDate);
 
 	EzeeLoginResult authenticate(String username, String password);
+
+	EzeeLoginResult retrieve(String username);
 }

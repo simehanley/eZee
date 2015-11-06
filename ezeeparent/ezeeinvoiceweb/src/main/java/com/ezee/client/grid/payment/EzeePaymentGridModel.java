@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.ezee.client.grid.EzeeGridModel;
+import com.ezee.client.util.EzeeDateComparator;
 import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.model.entity.EzeePayment;
 import com.google.gwt.user.cellview.client.Column;
@@ -28,6 +29,8 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	private static final String PAYMENT_TYPE_WIDTH = "150px";
 	private static final String DESCRIPTION_WIDTH = "300px";
 	private static final String INVOICES_WIDTH = "300px";
+
+	private final EzeeDateComparator dateComparator = new EzeeDateComparator();
 
 	public EzeePaymentGridModel() {
 		super();
@@ -78,7 +81,8 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 
 			@Override
 			public int compare(final EzeePayment one, final EzeePayment two) {
-				return one.getPaymentDate().compareTo(two.getPaymentDate());
+				return dateComparator.compare(EzeeClientDateUtils.fromString(one.getPaymentDate()),
+						EzeeClientDateUtils.fromString(two.getPaymentDate()));
 			}
 		});
 
