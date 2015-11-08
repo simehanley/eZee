@@ -78,7 +78,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<runTarget>EzeeInvoiceWeb.html</runTarget>
+					<runTarget>EzeeInvoiceWeb.jsp</runTarget>
 					<modules>
 						<module>com.ezee.EzeeInvoiceWeb</module>
 					</modules>

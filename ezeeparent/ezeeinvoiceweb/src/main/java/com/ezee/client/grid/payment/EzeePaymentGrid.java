@@ -68,7 +68,7 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 	}
 
 	@Override
-	protected void deleteEntity() {
+	public void deleteEntity() {
 		EzeePayment entity = getSelected();
 		if (entity != null) {
 			new EzeeCreateUpdateDeletePayment(cache, this, entity, delete, null, cheque).center();
@@ -76,12 +76,12 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 	}
 
 	@Override
-	protected void newEntity() {
+	public void newEntity() {
 		/* not implemented */
 	}
 
 	@Override
-	protected void editEntity() {
+	public void editEntity() {
 		EzeePayment entity = getSelected();
 		if (entity != null) {
 			new EzeeCreateUpdateDeletePayment(cache, this, entity, update, null, cheque).center();

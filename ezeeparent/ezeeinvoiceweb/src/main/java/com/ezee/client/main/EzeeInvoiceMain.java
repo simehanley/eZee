@@ -3,21 +3,19 @@ package com.ezee.client.main;
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.client.EzeeInvoiceWebConstants.SUPPORT_EMAIL;
 import static com.ezee.web.common.EzeeWebCommonConstants.AUTO_LOGIN_HELPER;
-import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
-import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showPointerCursor;
+import static com.ezee.web.common.ui.utils.EzeeTabLayoutPanelUtils.getFirstInstanceOf;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ezee.client.grid.EzeeHasGrid;
+import com.ezee.client.grid.invoice.EzeeInvoiceGrid;
+import com.ezee.client.grid.payee.EzeePayeeGrid;
+import com.ezee.client.grid.payer.EzeePayerGrid;
 import com.ezee.model.entity.EzeeUser;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -49,6 +47,39 @@ public class EzeeInvoiceMain extends Composite {
 
 	@UiField
 	TabLayoutPanel tab;
+
+	@UiField
+	HTML newInvoice;
+
+	@UiField
+	HTML editInvoice;
+
+	@UiField
+	HTML deleteInvoice;
+
+	@UiField
+	HTML makePayment;
+
+	@UiField
+	HTML newSupplier;
+
+	@UiField
+	HTML editSupplier;
+
+	@UiField
+	HTML deleteSupplier;
+
+	@UiField
+	HTML newPremises;
+
+	@UiField
+	HTML editPremises;
+
+	@UiField
+	HTML deletePremises;
+
+	// @UiField
+	// HTML editUser;
 
 	interface EzeeInvoiceMainUiBinder extends UiBinder<Widget, EzeeInvoiceMain> {
 	}
@@ -104,27 +135,45 @@ public class EzeeInvoiceMain extends Composite {
 				Window.Location.assign(GWT.getHostPageBaseURL());
 			}
 		});
-		MouseOverHandler mouseOverHandler = new EzeeMainMouseOverHandler();
-		logout.addMouseOverHandler(mouseOverHandler);
-		email.addMouseOverHandler(mouseOverHandler);
-		MouseOutHandler mouseOutHandler = new EzeeMainMouseOutHandler();
-		logout.addMouseOutHandler(mouseOutHandler);
-		email.addMouseOutHandler(mouseOutHandler);
+
+		ClickHandler mainClickHandler = new EzeeInvoiceMainStackPanelClickHandler();
+		newInvoice.addClickHandler(mainClickHandler);
+		editInvoice.addClickHandler(mainClickHandler);
+		deleteInvoice.addClickHandler(mainClickHandler);
+		makePayment.addClickHandler(mainClickHandler);
+		newSupplier.addClickHandler(mainClickHandler);
+		editSupplier.addClickHandler(mainClickHandler);
+		deleteSupplier.addClickHandler(mainClickHandler);
+		newPremises.addClickHandler(mainClickHandler);
+		editPremises.addClickHandler(mainClickHandler);
+		deletePremises.addClickHandler(mainClickHandler);
 	}
 
-	private class EzeeMainMouseOverHandler implements MouseOverHandler {
+	private class EzeeInvoiceMainStackPanelClickHandler implements ClickHandler {
 
 		@Override
-		public void onMouseOver(MouseOverEvent event) {
-			showPointerCursor();
-		}
-	}
-
-	private class EzeeMainMouseOutHandler implements MouseOutHandler {
-
-		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			showDefaultCursor();
+		public void onClick(ClickEvent event) {
+			if (event.getSource().equals(newInvoice)) {
+				getFirstInstanceOf(EzeeInvoiceGrid.class, tab).newEntity();
+			} else if (event.getSource().equals(editInvoice)) {
+				getFirstInstanceOf(EzeeInvoiceGrid.class, tab).editEntity();
+			} else if (event.getSource().equals(deleteInvoice)) {
+				getFirstInstanceOf(EzeeInvoiceGrid.class, tab).deleteEntity();
+			} else if (event.getSource().equals(makePayment)) {
+				getFirstInstanceOf(EzeeInvoiceGrid.class, tab).newPayment();
+			} else if (event.getSource().equals(newSupplier)) {
+				getFirstInstanceOf(EzeePayeeGrid.class, tab).newEntity();
+			} else if (event.getSource().equals(editSupplier)) {
+				getFirstInstanceOf(EzeePayeeGrid.class, tab).editEntity();
+			} else if (event.getSource().equals(deleteSupplier)) {
+				getFirstInstanceOf(EzeePayeeGrid.class, tab).deleteEntity();
+			} else if (event.getSource().equals(newPremises)) {
+				getFirstInstanceOf(EzeePayerGrid.class, tab).newEntity();
+			} else if (event.getSource().equals(editPremises)) {
+				getFirstInstanceOf(EzeePayerGrid.class, tab).editEntity();
+			} else if (event.getSource().equals(deletePremises)) {
+				getFirstInstanceOf(EzeePayerGrid.class, tab).deleteEntity();
+			}
 		}
 	}
 }

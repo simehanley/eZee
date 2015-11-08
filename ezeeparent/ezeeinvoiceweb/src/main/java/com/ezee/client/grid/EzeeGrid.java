@@ -223,11 +223,11 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		}
 	}
 
-	protected abstract void deleteEntity();
+	public abstract void deleteEntity();
 
-	protected abstract void newEntity();
+	public abstract void newEntity();
 
-	protected abstract void editEntity();
+	public abstract void editEntity();
 
 	public abstract String getGridClass();
 }

@@ -16,7 +16,7 @@
 				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="10%" height="100%">
 					<g:VerticalPanel width="100%" height="100%">
 						<g:HTML ui:field="user" styleName="{res.css.footerLabel}" height="50%" width="100%" wordWrap="false" />
-						<g:HTML text="Logout" ui:field="logout" styleName="{res.css.footerLabelUnderline}" height="50%" width="100%" />
+						<g:HTML text="Logout" ui:field="logout" styleName="{res.css.gwtLink}" height="50%" width="100%" />
 					</g:VerticalPanel>
 				</g:cell>
 			</g:HorizontalPanel>
@@ -31,20 +31,41 @@
 					<g:HTML text="Provided by Haich + Gee Pty Ltd" styleName="{res.css.footerLabel}" />
 				</g:cell>
 				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="25%" height="100%">
-					<g:HTML text="EMail Support" styleName="{res.css.footerLabelUnderline}" ui:field="email" />
+					<g:HTML text="EMail Support" styleName="{res.css.gwtLink}" ui:field="email" />
 				</g:cell>
 			</g:HorizontalPanel>
 		</g:south>
-		<!-- TODO -->
-		<!--g:west size="10"> <g:StackPanel width="100%" height="100%"> <g:VerticalPanel g:StackPanel-text="INVOICES" styleName="{res.css.footer}" 
-			height="100%" width="100%"> <g:VerticalPanel height="100%" width="100%"> <g:HTML text="New Invoice" styleName="{res.css.footerLabelUnderline}" 
-			/> </g:VerticalPanel> </g:VerticalPanel> <g:VerticalPanel g:StackPanel-text="SUPPLIERS" styleName="{res.css.footer}" height="100%" 
-			width="100%"> <g:VerticalPanel height="100%" width="100%"> <g:HTML text="New Supplier" styleName="{res.css.footerLabelUnderline}" 
-			/> </g:VerticalPanel> </g:VerticalPanel> <g:VerticalPanel g:StackPanel-text="PREMISES" styleName="{res.css.footer}" height="100%" 
-			width="100%"> <g:VerticalPanel height="100%" width="100%"> <g:HTML text="New Premises" styleName="{res.css.footerLabelUnderline}" 
-			/> </g:VerticalPanel> </g:VerticalPanel> <g:VerticalPanel g:StackPanel-text="USER" styleName="{res.css.footer}" height="100%" 
-			width="100%"> <g:VerticalPanel height="100%" width="100%"> <g:HTML text="Edit User" styleName="{res.css.footerLabelUnderline}" 
-			/> </g:VerticalPanel> </g:VerticalPanel> </g:StackPanel> </g:west -->
+		<g:west size="10">
+			<g:StackPanel width="100%" height="100%">
+				<g:VerticalPanel g:StackPanel-text="INVOICES" height="10%" width="100%">
+					<g:VerticalPanel height="100%" width="100%">
+						<g:HTML text="New Invoice" styleName="{res.css.gwtStackPanelLink}" ui:field="newInvoice" />
+						<g:HTML text="Edit Invoice" styleName="{res.css.gwtStackPanelLink}" ui:field="editInvoice" />
+						<g:HTML text="Delete Invoice" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteInvoice" />
+						<g:HTML text="Make Payment" styleName="{res.css.gwtStackPanelLink}" ui:field="makePayment" />
+					</g:VerticalPanel>
+				</g:VerticalPanel>
+				<g:VerticalPanel g:StackPanel-text="SUPPLIERS" height="10%" width="100%">
+					<g:VerticalPanel height="100%" width="100%">
+						<g:HTML text="New Supplier" styleName="{res.css.gwtStackPanelLink}" ui:field="newSupplier" />
+						<g:HTML text="Edit Supplier" styleName="{res.css.gwtStackPanelLink}" ui:field="editSupplier" />
+						<g:HTML text="Delete Supplier" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteSupplier" />
+					</g:VerticalPanel>
+				</g:VerticalPanel>
+				<g:VerticalPanel g:StackPanel-text="PREMISES" height="10%" width="100%">
+					<g:VerticalPanel height="100%" width="100%">
+						<g:HTML text="New Premises" styleName="{res.css.gwtStackPanelLink}" ui:field="newPremises" />
+						<g:HTML text="Edit Premises" styleName="{res.css.gwtStackPanelLink}" ui:field="editPremises" />
+						<g:HTML text="Delete Premises" styleName="{res.css.gwtStackPanelLink}" ui:field="deletePremises" />
+					</g:VerticalPanel>
+				</g:VerticalPanel>
+				<!--g:VerticalPanel g:StackPanel-text="USER" height="100%" width="100%">
+					<g:VerticalPanel height="100%" width="100%">
+						<g:HTML text="Edit User" styleName="{res.css.gwtStackPanelLink}" ui:field="editUser" />
+					</g:VerticalPanel>
+				</g:VerticalPanel-->
+			</g:StackPanel>
+		</g:west>
 		<g:center>
 			<g:DockLayoutPanel unit="EM">
 				<g:center>

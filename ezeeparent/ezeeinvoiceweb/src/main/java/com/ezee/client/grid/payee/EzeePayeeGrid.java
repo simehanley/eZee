@@ -25,7 +25,7 @@ public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
 		model = new EzeePayeeGridModel();
 		model.bind(grid);
 	}
-	
+
 	@Override
 	protected void initFilter() {
 		super.initFilter();
@@ -39,7 +39,7 @@ public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
 	}
 
 	@Override
-	protected void deleteEntity() {
+	public void deleteEntity() {
 		EzeePayee entity = getSelected();
 		if (entity != null) {
 			new EzeeCreateUpdateDeletePayee(cache, this, entity, delete).center();
@@ -47,12 +47,12 @@ public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
 	}
 
 	@Override
-	protected void newEntity() {
+	public void newEntity() {
 		new EzeeCreateUpdateDeletePayee(cache, this).center();
 	}
 
 	@Override
-	protected void editEntity() {
+	public void editEntity() {
 		EzeePayee entity = getSelected();
 		if (entity != null) {
 			new EzeeCreateUpdateDeletePayee(cache, this, entity, update).center();

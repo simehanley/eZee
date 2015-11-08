@@ -218,4 +218,23 @@
 	border: 1px solid black;
 	font-weight: bold;
 }
+
+.gwtStackPanelLink {
+	font-weight: bold;
+	color: white;
+	text-decoration: underline;
+	padding: 3px;
+	margin: 3px;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.gwtLink {
+	font-weight: bold;
+	font-size: 15px;
+	color: white;
+	text-decoration: underline;
+	cursor: pointer;
+	cursor: hand;
+}
 /** GWT Component Overrides **/

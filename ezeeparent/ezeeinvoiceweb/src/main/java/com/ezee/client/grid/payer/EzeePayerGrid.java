@@ -34,7 +34,7 @@ public class EzeePayerGrid extends EzeeFinancialEntityGrid<EzeePayer> {
 	}
 
 	@Override
-	protected void deleteEntity() {
+	public void deleteEntity() {
 		EzeePayer entity = getSelected();
 		if (entity != null) {
 			new EzeeCreateUpdateDeletePayer(cache, this, entity, delete).center();
@@ -42,12 +42,12 @@ public class EzeePayerGrid extends EzeeFinancialEntityGrid<EzeePayer> {
 	}
 
 	@Override
-	protected void newEntity() {
+	public void newEntity() {
 		new EzeeCreateUpdateDeletePayer(cache, this).center();
 	}
 
 	@Override
-	protected void editEntity() {
+	public void editEntity() {
 		EzeePayer entity = getSelected();
 		if (entity != null) {
 			new EzeeCreateUpdateDeletePayer(cache, this, entity, update).center();

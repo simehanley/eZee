@@ -71,7 +71,7 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	}
 
 	@Override
-	protected void deleteEntity() {
+	public void deleteEntity() {
 		EzeeInvoice entity = getSelected();
 		if (entity != null) {
 			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, delete).center();
@@ -79,12 +79,12 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	}
 
 	@Override
-	protected void newEntity() {
+	public void newEntity() {
 		new EzeeCreateUpdateDeleteInvoice(cache, this).center();
 	}
 
 	@Override
-	protected void editEntity() {
+	public void editEntity() {
 		EzeeInvoice entity = getSelected();
 		if (entity != null) {
 			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, update).center();
@@ -92,7 +92,7 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	}
 
 	@SuppressWarnings("unchecked")
-	private void newPayment() {
+	public void newPayment() {
 		if (listener != null) {
 			MultiSelectionModel<EzeeInvoice> model = (MultiSelectionModel<EzeeInvoice>) grid.getSelectionModel();
 			Set<EzeeInvoice> selected = model.getSelectedSet();

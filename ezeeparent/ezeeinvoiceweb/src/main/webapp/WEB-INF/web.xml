@@ -54,18 +54,18 @@
 		<url-pattern>/EzeeInvoiceWeb/downloadservice</url-pattern>
 	</servlet-mapping>
 
-	<filter>
+	<!--filter>
 		<filter-name>gwtCacheControlFilter</filter-name>
-		<filter-class>com.ezee.server.filter.EzeeGwtCacheControlFilter</filter-class>
+		<filter-class>com.ezee.server.filter.EzeeGwtCacheControlFilterNew</filter-class>
 	</filter>
 
 	<filter-mapping>
 		<filter-name>gwtCacheControlFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping-->
 
 	<welcome-file-list>
-		<welcome-file>EzeeInvoiceWeb.html</welcome-file>
+		<welcome-file>EzeeInvoiceWeb.jsp</welcome-file>
 	</welcome-file-list>
 
 </web-app>

@@ -80,6 +80,10 @@ public interface EzeeDefaultResources extends ClientBundle {
 		String gwtTextBoxMediumEmail();
 
 		String error();
+
+		String gwtStackPanelLink();
+
+		String gwtLink();
 	}
 
 	@Source("EzeeDefault.css")
