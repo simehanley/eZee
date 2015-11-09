@@ -14,6 +14,7 @@
 		<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtPremises" />
 		<g:Button text="Refresh" ui:field="btnRefresh" />
 		<g:Button text="Clear" ui:field="btnClear" />
+		<g:Button ui:field="btnReport" text="Report"/>
 		<g:CheckBox text="Show Paid" width="91px" styleName="gwt-CheckBox-Small" ui:field="chkShowPaid" wordWrap="false" />
 	</g:HorizontalPanel>
 </ui:UiBinder> 

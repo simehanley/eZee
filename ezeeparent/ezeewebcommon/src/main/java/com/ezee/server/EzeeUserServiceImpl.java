@@ -7,8 +7,7 @@ import org.jasypt.util.password.PasswordEncryptor;
 import com.ezee.dao.EzeeUserDao;
 import com.ezee.model.entity.EzeeUser;
 import com.ezee.web.common.service.EzeeUserService;
-import com.ezee.web.common.ui.login.EzeeLoginResult;
-import com.ezee.web.common.ui.register.EzeeRegisterResult;
+import com.ezee.web.common.ui.EzeeUserResult;
 
 /**
  * 
@@ -20,41 +19,51 @@ public class EzeeUserServiceImpl extends AbstractRemoteService implements EzeeUs
 	private static final long serialVersionUID = -3642962271823671064L;
 
 	@Override
-	public EzeeRegisterResult register(final String firstname, final String lastname, final String username,
-			final String password, final String email, final String createDate) {
+	public EzeeUserResult register(final EzeeUser created) {
 		EzeeUserDao dao = getDao();
-		if (dao.get(username, email) != null) {
-			return new EzeeRegisterResult(null,
-					"User with username = '" + username + "' and/or email = '" + email + "' already exists.");
+		if (dao.get(created.getUsername(), created.getEmail()) != null) {
+			return new EzeeUserResult(null, "User with username = '" + created.getUsername() + "' and/or email = '"
+					+ created.getEmail() + "' already exists.");
 		}
-		EzeeUser user = new EzeeUser(firstname, lastname, username, password, email, createDate, null);
-		dao.save(user);
-		return new EzeeRegisterResult(user, EMPTY_STRING);
+		dao.save(created);
+		return new EzeeUserResult(created, EMPTY_STRING);
 	}
 
 	@Override
-	public EzeeLoginResult authenticate(final String username, final String password) {
+	public EzeeUserResult authenticate(final String username, final String password) {
 		EzeeUserDao dao = getDao();
 		EzeeUser user = dao.get(username);
 		if (user != null) {
 			PasswordEncryptor encryptor = dao.geEncryptor();
 			if (encryptor.checkPassword(password, user.getPassword())) {
-				return new EzeeLoginResult(user, EMPTY_STRING);
+				return new EzeeUserResult(user, EMPTY_STRING);
 			} else {
-				return new EzeeLoginResult(null, "Password is incorrect for user '" + username + "'.");
+				return new EzeeUserResult(null, "Password is incorrect for user '" + username + "'.");
 			}
 		}
-		return new EzeeLoginResult(null, "Unable to find user with username '" + username + "'.");
+		return new EzeeUserResult(null, "Unable to find user with username '" + username + "'.");
 	}
 
 	@Override
-	public EzeeLoginResult retrieve(final String username) {
+	public EzeeUserResult retrieve(final String username) {
 		EzeeUserDao dao = getDao();
 		EzeeUser user = dao.get(username);
 		if (user != null) {
-			return new EzeeLoginResult(user, EMPTY_STRING);
+			return new EzeeUserResult(user, EMPTY_STRING);
 		}
-		return new EzeeLoginResult(null, "Unable to find user with username '" + username + "'.");
+		return new EzeeUserResult(null, "Unable to find user with username '" + username + "'.");
+	}
+
+	@Override
+	public EzeeUserResult edit(final EzeeUser existing, final EzeeUser edited, final String passwordCheck) {
+		EzeeUserDao dao = getDao();
+		PasswordEncryptor encryptor = dao.geEncryptor();
+		if (encryptor.checkPassword(passwordCheck, existing.getPassword())) {
+			dao.save(edited);
+			return new EzeeUserResult(edited, EMPTY_STRING);
+		} else {
+			return new EzeeUserResult(null, "Existing user password is incorrect.");
+		}
 	}
 
 	private EzeeUserDao getDao() {

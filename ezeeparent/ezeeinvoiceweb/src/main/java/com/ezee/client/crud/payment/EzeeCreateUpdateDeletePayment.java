@@ -316,8 +316,6 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 
 	private EzeeInvoiceGridModel createModel() {
 		Set<String> hidden = new HashSet<>();
-		hidden.add(EzeeInvoiceGridModel.AMOUNT);
-		hidden.add(EzeeInvoiceGridModel.TAX);
 		hidden.add(EzeeInvoiceGridModel.INVOICE_DATE);
 		hidden.add(EzeeInvoiceGridModel.DUE_DATE);
 		hidden.add(EzeeInvoiceGridModel.PAID_PATE);

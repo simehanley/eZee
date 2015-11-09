@@ -16,4 +16,8 @@ public class AbstractRemoteService extends RemoteServiceServlet {
 	protected <T> T getSpringBean(final Class<T> clazz) {
 		return getWebApplicationContext(getServletContext()).getBean(clazz);
 	}
+
+	protected Object getSpringBean(final String beanName) {
+		return getWebApplicationContext(getServletContext()).getBean(beanName);
+	}
 }

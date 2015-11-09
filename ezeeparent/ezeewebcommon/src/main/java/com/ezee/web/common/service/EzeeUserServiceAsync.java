@@ -1,7 +1,7 @@
 package com.ezee.web.common.service;
 
-import com.ezee.web.common.ui.login.EzeeLoginResult;
-import com.ezee.web.common.ui.register.EzeeRegisterResult;
+import com.ezee.model.entity.EzeeUser;
+import com.ezee.web.common.ui.EzeeUserResult;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
@@ -11,10 +11,11 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface EzeeUserServiceAsync {
 
-	void register(String firstname, String lastname, String username, String password, String email, String createDate,
-			AsyncCallback<EzeeRegisterResult> result);
+	void register(EzeeUser created, AsyncCallback<EzeeUserResult> result);
 
-	void authenticate(String username, String password, AsyncCallback<EzeeLoginResult> result);
+	void authenticate(String username, String password, AsyncCallback<EzeeUserResult> result);
 
-	void retrieve(String username, AsyncCallback<EzeeLoginResult> result);
+	void retrieve(String username, AsyncCallback<EzeeUserResult> result);
+
+	void edit(EzeeUser existing, EzeeUser edited, String passwordCheck, AsyncCallback<EzeeUserResult> result);
 }

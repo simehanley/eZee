@@ -59,11 +59,11 @@
 						<g:HTML text="Delete Premises" styleName="{res.css.gwtStackPanelLink}" ui:field="deletePremises" />
 					</g:VerticalPanel>
 				</g:VerticalPanel>
-				<!--g:VerticalPanel g:StackPanel-text="USER" height="100%" width="100%">
+				<g:VerticalPanel g:StackPanel-text="USER" height="100%" width="100%">
 					<g:VerticalPanel height="100%" width="100%">
 						<g:HTML text="Edit User" styleName="{res.css.gwtStackPanelLink}" ui:field="editUser" />
 					</g:VerticalPanel>
-				</g:VerticalPanel-->
+				</g:VerticalPanel>
 			</g:StackPanel>
 		</g:west>
 		<g:center>

@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ezee.common.web.EzeeClientDateUtils;
+import com.ezee.model.entity.EzeeUser;
+import com.ezee.web.common.ui.EzeeUserResult;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -85,30 +87,29 @@ public class EzeeRegister extends Composite {
 		clearError();
 		if (validRegistration()) {
 			showWaitCursor();
-			USER_SERVICE.register(txtFirstname.getText(), txtLastname.getText(), txtUsername.getText(),
-					txtPassword.getText(), txtEmail.getText(), EzeeClientDateUtils.toString(new Date()),
-					new AsyncCallback<EzeeRegisterResult>() {
+			EzeeUser created = new EzeeUser(txtFirstname.getText(), txtLastname.getText(), txtUsername.getText(),
+					txtPassword.getText(), txtEmail.getText(), EzeeClientDateUtils.toString(new Date()), null);
+			USER_SERVICE.register(created, new AsyncCallback<EzeeUserResult>() {
 
-						@Override
-						public void onSuccess(final EzeeRegisterResult result) {
-							if (result.getUser() != null) {
-								clear();
-								listener.registrationSuccess(result.getUser());
-							} else {
-								setError(result.getError());
-								showDefaultCursor();
-							}
-						}
+				@Override
+				public void onSuccess(final EzeeUserResult result) {
+					if (result.getUser() != null) {
+						clear();
+						listener.registrationSuccess(result.getUser());
+					} else {
+						setError(result.getError());
+						showDefaultCursor();
+					}
+				}
 
-						@Override
-						public void onFailure(Throwable caught) {
-							String msg = "Unknwon error registering user with username '" + txtUsername.getText()
-									+ "'.";
-							log.log(Level.SEVERE, msg, caught);
-							setError(msg);
-							showDefaultCursor();
-						}
-					});
+				@Override
+				public void onFailure(Throwable caught) {
+					String msg = "Unknwon error registering user with username '" + txtUsername.getText() + "'.";
+					log.log(Level.SEVERE, msg, caught);
+					setError(msg);
+					showDefaultCursor();
+				}
+			});
 		}
 	}
 

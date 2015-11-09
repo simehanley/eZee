@@ -2,6 +2,9 @@ package com.ezee.client.grid.invoice;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.web.common.EzeeWebCommonConstants.REPORT_SERVICE;
+import static com.ezee.web.common.EzeeWebCommonConstants.REPORT_TYPE;
+import static com.ezee.web.common.enums.EzeeReportType.detailed_payee_invoice_excel;
 
 import java.util.Date;
 
@@ -10,11 +13,14 @@ import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -45,6 +51,9 @@ public class EzeeInvoiceGridToolBar extends EzeeGridToolbar<EzeeInvoice> {
 
 	@UiField
 	Button btnClear;
+
+	@UiField
+	Button btnReport;
 
 	@UiField
 	CheckBox chkShowPaid;
@@ -120,5 +129,12 @@ public class EzeeInvoiceGridToolBar extends EzeeGridToolbar<EzeeInvoice> {
 	public EzeeEntityFilter<EzeeInvoice> resolveFilter() {
 		return new EzeeInvoiceFilter(getFrom(), getTo(), getInvoiceNumber(), getSupplier(), getPremises(),
 				getShowPaid());
+	}
+
+	@UiHandler("btnReport")
+	void onReportClick(ClickEvent event) {
+		String reportServiceUrl = GWT.getModuleBaseURL() + REPORT_SERVICE + "?" + REPORT_TYPE + "="
+				+ detailed_payee_invoice_excel;
+		Window.Location.replace(reportServiceUrl);
 	}
 }

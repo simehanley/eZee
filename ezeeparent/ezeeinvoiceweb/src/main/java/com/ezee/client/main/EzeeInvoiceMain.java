@@ -13,6 +13,7 @@ import com.ezee.client.grid.invoice.EzeeInvoiceGrid;
 import com.ezee.client.grid.payee.EzeePayeeGrid;
 import com.ezee.client.grid.payer.EzeePayerGrid;
 import com.ezee.model.entity.EzeeUser;
+import com.ezee.web.common.ui.edit.EzeeEditUser;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -78,15 +79,18 @@ public class EzeeInvoiceMain extends Composite {
 	@UiField
 	HTML deletePremises;
 
-	// @UiField
-	// HTML editUser;
+	@UiField
+	HTML editUser;
+
+	private final EzeeUser ezeeUser;
 
 	interface EzeeInvoiceMainUiBinder extends UiBinder<Widget, EzeeInvoiceMain> {
 	}
 
 	public EzeeInvoiceMain(final EzeeUser user) {
+		this.ezeeUser = user;
 		initWidget(uiBinder.createAndBindUi(this));
-		initUser(user);
+		initUser();
 		initMain();
 		addTabHandler();
 	}
@@ -105,8 +109,8 @@ public class EzeeInvoiceMain extends Composite {
 		});
 	}
 
-	private void initUser(final EzeeUser loggedInUser) {
-		user.setText("Logged in as : " + loggedInUser.getUsername());
+	private void initUser() {
+		user.setText("Logged in as : " + ezeeUser.getUsername());
 	}
 
 	private void initMain() {
@@ -147,6 +151,7 @@ public class EzeeInvoiceMain extends Composite {
 		newPremises.addClickHandler(mainClickHandler);
 		editPremises.addClickHandler(mainClickHandler);
 		deletePremises.addClickHandler(mainClickHandler);
+		editUser.addClickHandler(mainClickHandler);
 	}
 
 	private class EzeeInvoiceMainStackPanelClickHandler implements ClickHandler {
@@ -173,7 +178,13 @@ public class EzeeInvoiceMain extends Composite {
 				getFirstInstanceOf(EzeePayerGrid.class, tab).editEntity();
 			} else if (event.getSource().equals(deletePremises)) {
 				getFirstInstanceOf(EzeePayerGrid.class, tab).deleteEntity();
+			} else if (event.getSource().equals(editUser)) {
+				editUser();
 			}
 		}
+	}
+
+	private void editUser() {
+		new EzeeEditUser(ezeeUser.getUsername()).center();
 	}
 }

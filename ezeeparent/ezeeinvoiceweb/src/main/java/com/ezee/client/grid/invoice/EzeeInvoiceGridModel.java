@@ -41,20 +41,11 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	public static final String INVOICE_NUM = "Invoice Num";
 	public static final String SUPPLIER = "Supplier";
 	public static final String PREMISES = "Premises";
-	public static final String AMOUNT = "Amount";
-	public static final String TAX = "Tax";
 	public static final String TOTAL = "Total";
-	public static final String DESCRIPTION = "Description";
 	public static final String INVOICE_DATE = "Invoice";
 	public static final String DUE_DATE = "Due";
 	public static final String PAID_PATE = "Paid";
 	public static final String FILE = "File";
-
-	private static final String SUPPLIER_WIDTH = "250px";
-	private static final String PREMISES_WIDTH = "250px";
-	private static final String INVOICE_NUM_WIDTH = "100px";
-	private static final String DESCRIPTION_WIDTH = "300px";
-	private static final String FILE_WIDTH = "40px";
 
 	private final EzeeDateComparator dateComparator = new EzeeDateComparator();
 
@@ -69,17 +60,14 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	@Override
 	protected Map<String, Column<EzeeInvoice, ?>> createColumns(final DataGrid<EzeeInvoice> grid) {
 		Map<String, Column<EzeeInvoice, ?>> columns = new HashMap<>();
-		createTextColumn(columns, grid, INVOICE_NUM, INVOICE_NUM_WIDTH, true);
-		createTextColumn(columns, grid, SUPPLIER, SUPPLIER_WIDTH, true);
-		createTextColumn(columns, grid, PREMISES, PREMISES_WIDTH, true);
-		createNumericColumn(columns, grid, AMOUNT, NUMERIC_FIELD_WIDTH);
-		createNumericColumn(columns, grid, TAX, NUMERIC_FIELD_WIDTH);
-		createNumericColumn(columns, grid, TOTAL, NUMERIC_FIELD_WIDTH);
-		createTextColumn(columns, grid, DESCRIPTION, DESCRIPTION_WIDTH, false);
-		createDateColumn(columns, grid, INVOICE_DATE, DATE_FIELD_WIDTH, true);
-		createDateColumn(columns, grid, DUE_DATE, DATE_FIELD_WIDTH, true);
-		createDateColumn(columns, grid, PAID_PATE, DATE_FIELD_WIDTH, true);
-		createImageColumn(columns, grid, FILE, FILE_WIDTH);
+		createTextColumn(columns, grid, INVOICE_NUM, true);
+		createTextColumn(columns, grid, SUPPLIER, true);
+		createTextColumn(columns, grid, PREMISES, true);
+		createNumericColumn(columns, grid, TOTAL);
+		createDateColumn(columns, grid, INVOICE_DATE, true);
+		createDateColumn(columns, grid, DUE_DATE, true);
+		createDateColumn(columns, grid, PAID_PATE, true);
+		createImageColumn(columns, grid, FILE);
 		return columns;
 	}
 
@@ -92,12 +80,6 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 			return invoice.getPayee().getName();
 		case PREMISES:
 			return invoice.getPayer().getName();
-		case DESCRIPTION:
-			return invoice.getDescription();
-		case AMOUNT:
-			return getAmountFormat().format(invoice.getAmount());
-		case TAX:
-			return getAmountFormat().format(invoice.getTax());
 		case TOTAL:
 			return getAmountFormat().format(invoice.getInvoiceAmount());
 		case FILE:
@@ -195,7 +177,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	}
 
 	protected void createImageColumn(final Map<String, Column<EzeeInvoice, ?>> columns,
-			final DataGrid<EzeeInvoice> grid, final String fieldName, final String width) {
+			final DataGrid<EzeeInvoice> grid, final String fieldName) {
 
 		if (!isHiddenColumn(fieldName)) {
 			ImageResourceCell cell = new ImageResourceCell() {
@@ -228,7 +210,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 
 			};
 			column.setHorizontalAlignment(ALIGN_CENTER);
-			createColumn(columns, grid, column, fieldName, width, false);
+			createColumn(columns, grid, column, fieldName, false);
 		}
 	}
 

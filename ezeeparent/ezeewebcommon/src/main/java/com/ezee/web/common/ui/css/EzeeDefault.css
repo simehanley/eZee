@@ -33,6 +33,11 @@
 	font-weight: bold;
 }
 
+.black {
+	color: black;
+	font-weight: bold;
+}
+
 .header {
 	background-color: #6699CC;
 	border: 1px solid #6f7277;

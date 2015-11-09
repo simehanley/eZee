@@ -5,13 +5,14 @@ import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import java.io.Serializable;
 
 import com.ezee.model.entity.EzeeUser;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * 
  * @author siborg
  *
  */
-public abstract class AbstractUserResult implements Serializable {
+public class EzeeUserResult implements Serializable, IsSerializable {
 
 	private static final long serialVersionUID = 6044626147702683694L;
 
@@ -19,11 +20,11 @@ public abstract class AbstractUserResult implements Serializable {
 
 	protected String error;
 
-	public AbstractUserResult() {
+	public EzeeUserResult() {
 		this(null, EMPTY_STRING);
 	}
 
-	public AbstractUserResult(final EzeeUser user, final String error) {
+	public EzeeUserResult(final EzeeUser user, final String error) {
 		this.user = user;
 		this.error = error;
 	}

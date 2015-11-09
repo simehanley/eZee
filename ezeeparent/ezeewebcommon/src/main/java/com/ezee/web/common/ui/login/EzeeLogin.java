@@ -11,6 +11,7 @@ import static java.util.logging.Level.SEVERE;
 
 import java.util.logging.Logger;
 
+import com.ezee.web.common.ui.EzeeUserResult;
 import com.ezee.web.common.ui.register.EzeeRegisterListener;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -146,7 +147,7 @@ public class EzeeLogin extends Composite {
 		if (validLogin()) {
 			showWaitCursor();
 			USER_SERVICE.authenticate(txtUsername.getText(), txtPassword.getText(),
-					new AsyncCallback<EzeeLoginResult>() {
+					new AsyncCallback<EzeeUserResult>() {
 						@Override
 						public void onFailure(Throwable caught) {
 							String msg = "Unknwon error authenticating user with username '" + txtUsername.getText()
@@ -157,7 +158,7 @@ public class EzeeLogin extends Composite {
 						}
 
 						@Override
-						public void onSuccess(final EzeeLoginResult result) {
+						public void onSuccess(final EzeeUserResult result) {
 							if (result.getUser() != null) {
 								clear();
 								if (AUTO_LOGIN_HELPER.isRememberMeSet()) {

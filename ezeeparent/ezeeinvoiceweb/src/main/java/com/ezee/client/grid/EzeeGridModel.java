@@ -28,10 +28,6 @@ import com.google.gwt.view.client.ListDataProvider;
  */
 public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 
-	protected static final String DATE_FIELD_WIDTH = "75px";
-	protected static final String NUMERIC_FIELD_WIDTH = "120px";
-	protected static final String BOOLEAN_FIELD_WIDTH = "160px";
-
 	protected ListHandler<T> handler;
 
 	protected Set<String> hiddenColumns;
@@ -82,7 +78,7 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 	protected abstract void addSortColumns(DataGrid<T> grid, Map<String, Column<T, ?>> columns);
 
 	protected void createTextColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
-			final String fieldName, final String width, boolean sortable) {
+			final String fieldName, boolean sortable) {
 		if (!isHiddenColumn(fieldName)) {
 			TextColumn<T> column = new TextColumn<T>() {
 				@Override
@@ -96,12 +92,12 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 				}
 			};
 			column.setHorizontalAlignment(ALIGN_LEFT);
-			createColumn(columns, grid, column, fieldName, width, sortable);
+			createColumn(columns, grid, column, fieldName, sortable);
 		}
 	}
 
 	protected void createDateColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
-			final String fieldName, final String width, boolean sortable) {
+			final String fieldName, boolean sortable) {
 		if (!isHiddenColumn(fieldName)) {
 			Column<T, Date> column = new Column<T, Date>(new DateCell(getDateFormat())) {
 				@Override
@@ -115,12 +111,12 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 				}
 			};
 			column.setHorizontalAlignment(ALIGN_CENTER);
-			createColumn(columns, grid, column, fieldName, width, sortable);
+			createColumn(columns, grid, column, fieldName, sortable);
 		}
 	}
 
 	protected void createNumericColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
-			final String fieldName, final String width) {
+			final String fieldName) {
 		if (!isHiddenColumn(fieldName)) {
 			TextColumn<T> column = new TextColumn<T>() {
 				@Override
@@ -134,15 +130,14 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 				}
 			};
 			column.setHorizontalAlignment(ALIGN_RIGHT);
-			createColumn(columns, grid, column, fieldName, width, false);
+			createColumn(columns, grid, column, fieldName, false);
 		}
 	}
 
 	protected void createColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
-			final Column<T, ?> column, final String fieldName, final String width, boolean sortable) {
+			final Column<T, ?> column, final String fieldName, boolean sortable) {
 		column.setSortable(sortable);
 		grid.addColumn(column, fieldName);
-		grid.setColumnWidth(column, width);
 		columns.put(fieldName, column);
 	}
 

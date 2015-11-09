@@ -23,12 +23,7 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	public static final String PAYMENT_DATE = "Paid";
 	public static final String PAYMENT_TYPE = "Type";
 	public static final String PAYMENT_AMOUNT = "Amount";
-	public static final String DESCRIPTION = "Description";
 	public static final String INVOICES = "Invoices";
-
-	private static final String PAYMENT_TYPE_WIDTH = "150px";
-	private static final String DESCRIPTION_WIDTH = "300px";
-	private static final String INVOICES_WIDTH = "300px";
 
 	private final EzeeDateComparator dateComparator = new EzeeDateComparator();
 
@@ -43,11 +38,10 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	@Override
 	protected Map<String, Column<EzeePayment, ?>> createColumns(final DataGrid<EzeePayment> grid) {
 		Map<String, Column<EzeePayment, ?>> columns = new HashMap<>();
-		createDateColumn(columns, grid, PAYMENT_DATE, DATE_FIELD_WIDTH, true);
-		createTextColumn(columns, grid, PAYMENT_TYPE, PAYMENT_TYPE_WIDTH, true);
-		createNumericColumn(columns, grid, PAYMENT_AMOUNT, NUMERIC_FIELD_WIDTH);
-		createTextColumn(columns, grid, DESCRIPTION, DESCRIPTION_WIDTH, false);
-		createTextColumn(columns, grid, INVOICES, INVOICES_WIDTH, false);
+		createDateColumn(columns, grid, PAYMENT_DATE, true);
+		createTextColumn(columns, grid, PAYMENT_TYPE, true);
+		createNumericColumn(columns, grid, PAYMENT_AMOUNT);
+		createTextColumn(columns, grid, INVOICES, false);
 		return columns;
 	}
 
@@ -56,8 +50,6 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 		switch (fieldName) {
 		case PAYMENT_TYPE:
 			return payment.getType().toString();
-		case DESCRIPTION:
-			return payment.getPaymentDescription();
 		case PAYMENT_AMOUNT:
 			return getAmountFormat().format(payment.getPaymentAmount());
 		case INVOICES:

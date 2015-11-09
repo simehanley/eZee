@@ -35,6 +35,7 @@ public class EzeeInvoiceGridToolBar extends Composite {
 	@UiField
 	DateBox dtFrom;
 	@UiField DateBox dtTo;
+	@UiField Button btnReport;
 
 	interface EzeeInvoiceGridToolBarUiBinder extends UiBinder<Widget, EzeeInvoiceGridToolBar> {
 	}

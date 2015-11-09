@@ -18,6 +18,7 @@
 		<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtPremises" />
 		<g:Button text="Refresh" ui:field="btnRefresh" styleName="{res.css.gwtButton}" />
 		<g:Button text="Clear" ui:field="btnClear" styleName="{res.css.gwtButton}" />
+		<g:Button ui:field="btnReport" text="Report" styleName="{res.css.gwtButton}" />
 		<g:CheckBox text="Show Paid" width="91px" styleName="{res.css.gwtCheckBoxSmall}" ui:field="chkShowPaid"
 			wordWrap="false" />
 	</g:HorizontalPanel>
