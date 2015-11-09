@@ -7,9 +7,6 @@
 
 	<!--inherits name="gwtupload.GWTUpload" / -->
 
-	<inherits name="org.gwtbootstrap3.GwtBootstrap3" />
-	<!-- inherits name="org.gwtbootstrap3.extras.animate.Animate" / -->
-
 	<entry-point class='com.ezee.client.Ezeeguisandbox' />
 	<source path='client' />
 	<source path='web' />

@@ -1,0 +1,52 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	</ui:style>
+	<g:HTMLPanel>
+		<g:AbsolutePanel height="239px" width="398px">
+			<g:at top="10" left="10">
+				<g:Label text="Firstname" styleName="gwt-Label-Medium" />
+			</g:at>
+			<g:at top="42" left="10">
+				<g:Label text="Lastname" styleName="gwt-Label-Medium" />
+			</g:at>
+			<g:at top="74" left="10">
+				<g:Label text="Username" styleName="gwt-Label-Medium" />
+			</g:at>
+			<g:at top="106" left="10">
+				<g:Label text="Old Password" styleName="gwt-Label-Medium" />
+			</g:at>
+			<g:at top="138" left="10">
+				<g:Label text="New Password" styleName="gwt-Label-Medium" />
+			</g:at>
+			<g:at top="170" left="10">
+				<g:Label text="eMail" styleName="gwt-Label-Medium" />
+			</g:at>
+			<g:at top="10" left="174">
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtFirstname" />
+			</g:at>
+			<g:at top="42" left="174">
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtLastname" />
+			</g:at>
+			<g:at top="74" left="174">
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtUsername" />
+			</g:at>
+			<g:at top="106" left="174">
+				<g:PasswordTextBox styleName="gwt-TextBox-Medium" ui:field="txtOldPassword" />
+			</g:at>
+			<g:at top="138" left="174">
+				<g:PasswordTextBox styleName="gwt-TextBox-Medium" ui:field="txtNewPassword" />
+			</g:at>
+			<g:at top="170" left="174">
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtEmail" />
+			</g:at>
+			<g:at top="201" left="197">
+				<g:Button ui:field="btnSave" text="Save"/>
+			</g:at>
+			<g:at top="201" left="293">
+				<g:Button ui:field="btnCancel" text="Cancel"/>
+			</g:at>
+		</g:AbsolutePanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
