@@ -1,0 +1,52 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
+
+	<g:HTMLPanel>
+		<g:AbsolutePanel height="239px" width="398px">
+			<g:at top="10" left="10">
+				<g:Label text="Firstname" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="42" left="10">
+				<g:Label text="Lastname" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="74" left="10">
+				<g:Label text="Username" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="106" left="10">
+				<g:Label text="Existing Password" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="138" left="10">
+				<g:Label text="New Password" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="170" left="10">
+				<g:Label text="eMail" styleName="{res.css.gwtLabelMedium}" />
+			</g:at>
+			<g:at top="10" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtFirstname" />
+			</g:at>
+			<g:at top="42" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtLastname" />
+			</g:at>
+			<g:at top="74" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtUsername" enabled="false" />
+			</g:at>
+			<g:at top="106" left="174">
+				<g:PasswordTextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtOldPassword" />
+			</g:at>
+			<g:at top="138" left="174">
+				<g:PasswordTextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtNewPassword" />
+			</g:at>
+			<g:at top="170" left="174">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtEmail" />
+			</g:at>
+			<g:at top="201" left="197">
+				<g:Button ui:field="btnSave" text="Save" styleName="{res.css.gwtButton}" />
+			</g:at>
+			<g:at top="201" left="293">
+				<g:Button ui:field="btnCancel" text="Cancel" styleName="{res.css.gwtButton}" />
+			</g:at>
+		</g:AbsolutePanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
