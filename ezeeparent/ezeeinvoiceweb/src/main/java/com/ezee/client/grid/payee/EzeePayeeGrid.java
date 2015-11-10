@@ -42,20 +42,20 @@ public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
 	public void deleteEntity() {
 		EzeePayee entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayee(cache, this, entity, delete).center();
+			new EzeeCreateUpdateDeletePayee(cache, this, entity, delete).show();
 		}
 	}
 
 	@Override
 	public void newEntity() {
-		new EzeeCreateUpdateDeletePayee(cache, this).center();
+		new EzeeCreateUpdateDeletePayee(cache, this).show();
 	}
 
 	@Override
 	public void editEntity() {
 		EzeePayee entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayee(cache, this, entity, update).center();
+			new EzeeCreateUpdateDeletePayee(cache, this, entity, update).show();
 		}
 	}
 }

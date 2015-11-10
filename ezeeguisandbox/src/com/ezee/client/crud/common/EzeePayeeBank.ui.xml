@@ -4,30 +4,30 @@
 	
 	</ui:style>
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="143px" styleName="gwt-Panel-Border" width="392px">
+		<g:AbsolutePanel height="143px" width="327px">
 			<g:at top="10" left="10">
-				<g:Label text="Bank" styleName="gwt-Label-Medium"/>
+				<g:Label text="Bank" styleName="gwt-Label-Small" />
 			</g:at>
 			<g:at top="42" left="10">
-				<g:Label text="Account Name" styleName="gwt-Label-Medium"/>
+				<g:Label text="Acc. Name" styleName="gwt-Label-Small" />
 			</g:at>
 			<g:at top="74" left="10">
-				<g:Label text="Account Number" styleName="gwt-Label-Medium"/>
+				<g:Label text="Acc. Num." styleName="gwt-Label-Small" />
 			</g:at>
 			<g:at top="106" left="10">
-				<g:Label text="Bsb" styleName="gwt-Label-Medium"/>
+				<g:Label text="Bsb" styleName="gwt-Label-Small" />
 			</g:at>
-			<g:at top="10" left="174">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtBank"/>
+			<g:at top="10" left="102">
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtBank" />
 			</g:at>
-			<g:at top="42" left="174">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtAccountName"/>
+			<g:at top="42" left="102">
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtAccountName" />
 			</g:at>
-			<g:at top="74" left="174">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtAccountNumber"/>
+			<g:at top="74" left="102">
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtAccountNumber" />
 			</g:at>
-			<g:at top="106" left="174">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtBsb"/>
+			<g:at top="106" left="102">
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtBsb" />
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>

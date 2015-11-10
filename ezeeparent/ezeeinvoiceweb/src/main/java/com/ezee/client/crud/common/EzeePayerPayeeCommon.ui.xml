@@ -4,60 +4,60 @@
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
 
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="305px" width="490px">
+		<g:AbsolutePanel height="308px" width="327px">
 			<g:at top="10" left="10">
-				<g:Label text="Name" styleName="{res.css.gwtLabelMedium}" />
+				<g:Label text="Name" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
 			<g:at top="42" left="10">
-				<g:Label text="Address Line One" styleName="{res.css.gwtLabelMedium}" />
+				<g:Label text="Address 1" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
 			<g:at top="74" left="10">
-				<g:Label text="Address Line Two" styleName="{res.css.gwtLabelMedium}" />
+				<g:Label text="Address 2" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
 			<g:at top="106" left="10">
-				<g:Label text="Suburb" styleName="{res.css.gwtLabelMedium}" />
+				<g:Label text="Suburb" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
 			<g:at top="138" left="10">
-				<g:Label text="City" styleName="{res.css.gwtLabelMedium}" />
+				<g:Label text="City" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
 			<g:at top="170" left="10">
-				<g:Label text="State" styleName="{res.css.gwtLabelMedium}" />
+				<g:Label text="State" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
 			<g:at top="203" left="10">
-				<g:Label text="Post Code" styleName="{res.css.gwtLabelMedium}" />
+				<g:Label text="Post Code" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
 			<g:at top="235" left="10">
-				<g:Label text="Phone" styleName="{res.css.gwtLabelMedium}" />
+				<g:Label text="Phone" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
-			<g:at top="267" left="10">
-				<g:Label text="EMail" styleName="{res.css.gwtLabelMedium}" />
+			<g:at top="10" left="102">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtName" />
 			</g:at>
-			<g:at top="10" left="174">
-				<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtName" />
+			<g:at top="42" left="102">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtAddressLine1" />
 			</g:at>
-			<g:at top="42" left="174">
-				<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtAddressLine1" />
+			<g:at top="74" left="102">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtAddressLine2" />
 			</g:at>
-			<g:at top="74" left="174">
-				<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtAddressLine2" />
+			<g:at top="106" left="102">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtSuburb" />
 			</g:at>
-			<g:at top="106" left="174">
-				<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtSuburb" />
+			<g:at top="138" left="102">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtCity" />
 			</g:at>
-			<g:at top="138" left="174">
-				<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtCity" />
-			</g:at>
-			<g:at top="170" left="174">
+			<g:at top="170" left="102">
 				<g:ListBox styleName="{res.css.gwtListBoxSmall}" ui:field="lstState" />
 			</g:at>
-			<g:at top="203" left="174">
+			<g:at top="203" left="102">
 				<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtPostCode" />
 			</g:at>
-			<g:at top="235" left="174">
+			<g:at top="235" left="102">
 				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtPhone" />
 			</g:at>
-			<g:at top="267" left="174">
-				<g:TextBox styleName="{res.css.gwtTextBoxMediumEmail}" ui:field="txtEmail" />
+			<g:at top="267" left="10">
+				<g:Label text="EMail" styleName="{res.css.gwtLabelSmall}" />
+			</g:at>
+			<g:at top="267" left="102">
+				<g:TextBox ui:field="txtEmail" styleName="{res.css.gwtTextBoxMedium}" />
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>

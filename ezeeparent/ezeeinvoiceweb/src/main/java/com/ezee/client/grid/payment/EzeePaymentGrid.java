@@ -71,7 +71,7 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 	public void deleteEntity() {
 		EzeePayment entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayment(cache, this, entity, delete, null, cheque).center();
+			new EzeeCreateUpdateDeletePayment(cache, this, entity, delete, null, cheque).show();
 		}
 	}
 
@@ -84,14 +84,14 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 	public void editEntity() {
 		EzeePayment entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayment(cache, this, entity, update, null, cheque).center();
+			new EzeeCreateUpdateDeletePayment(cache, this, entity, update, null, cheque).show();
 		}
 	}
 
 	@Override
 	public void onCreatePayment(final Set<EzeeInvoice> invoices) {
 		if (!isEmpty(invoices)) {
-			new EzeeCreateUpdateDeletePayment(cache, this, invoices).center();
+			new EzeeCreateUpdateDeletePayment(cache, this, invoices).show();
 		}
 	}
 

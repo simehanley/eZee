@@ -68,7 +68,7 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 	}
 
 	@Override
-	public void center() {
+	public void show() {
 		switch (type) {
 		case create:
 			setText(NEW_SUPPLIER);
@@ -85,7 +85,7 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 			disable();
 			break;
 		}
-		super.center();
+		super.show();
 	}
 
 	@Override

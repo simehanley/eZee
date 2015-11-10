@@ -5,65 +5,49 @@
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
 
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="478px" width="1313px">
-			<g:at top="10" left="10">
-				<g:Label text="Type" styleName="{res.css.gwtLabelMedium}" />
+		<g:AbsolutePanel height="386px" width="710px">
+			<g:at top="7" left="7">
+				<g:HorizontalPanel width="555px" height="36px" verticalAlignment="ALIGN_MIDDLE">
+					<g:Label text="Type" styleName="{res.css.gwtLabelSmall}" />
+					<g:ListBox styleName="{res.css.gwtListBoxSmall}" ui:field="lstPaymentType" width="135px" height="30px" />
+					<g:Label text="Chq. No." styleName="{res.css.gwtLabelSmall}" ui:field="lblChequeNumber" />
+					<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtChequeNumber" width="130px" height="20px" />
+					<g:CheckBox text="Presented" styleName="{res.css.gwtCheckBoxSmall}" ui:field="chkPresented" wordWrap="false" />
+				</g:HorizontalPanel>
 			</g:at>
-			<g:at top="9" left="174">
-				<g:ListBox styleName="{res.css.gwtListBoxMedium}" ui:field="lstPaymentType" />
+			<g:at top="43" left="7">
+				<g:Label text="Description" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
-			<g:at top="10" left="391">
-				<g:Label text="Cheque Number" styleName="{res.css.gwtLabelMedium}" ui:field="lblChequeNumber" />
+			<g:at top="75" left="7">
+				<g:RichTextArea width="690px" height="39px" ui:field="txtDescription" styleName="{res.css.gwtRichTextAreaMedium}" />
 			</g:at>
-			<g:at top="10" left="554">
-				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtChequeNumber" />
+			<g:at top="120" left="7">
+				<g:Label text="Invoices" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
-			<g:at top="10" left="767">
-				<g:CheckBox text="Presented" styleName="{res.css.gwtCheckBoxSmall}" ui:field="chkPresented" wordWrap="false" />
-			</g:at>
-			<g:at top="44" left="10">
-				<g:Label text="Description" styleName="{res.css.gwtLabelMedium}" />
-			</g:at>
-			<g:at top="78" left="10">
-				<g:RichTextArea width="1292px" height="76px" ui:field="txtDescription" styleName="{res.css.gwtRichTextAreaMedium}" />
-			</g:at>
-			<g:at top="162" left="10">
-				<g:Label text="Invoices" styleName="{res.css.gwtLabelMedium}" />
-			</g:at>
-			<g:at top="196" left="10">
-				<g:ResizeLayoutPanel width="1294px" height="207px" styleName="{res.css.gwtPanelBorder}">
+			<g:at top="155" left="7">
+				<g:ResizeLayoutPanel width="690px" height="156px" styleName="{res.css.gwtPanelBorder}">
 					<p1:DataGrid width="100%" height="100%" ui:field="grdInvoices" />
 				</g:ResizeLayoutPanel>
 			</g:at>
-			<g:at top="409" left="10">
-				<g:Label text="Totals" styleName="{res.css.gwtLabelMedium}" />
+			<g:at top="316" left="7">
+				<g:HorizontalPanel width="680px" height="34px" verticalAlignment="ALIGN_MIDDLE">
+					<g:Label text="Totals" styleName="{res.css.gwtLabelSmall}" />
+					<g:Label text="Amount" styleName="{res.css.gwtLabelSmall}" />
+					<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtAmount" />
+					<g:Label text="Tax" styleName="{res.css.gwtLabelSmall}" />
+					<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtTax" />
+					<g:Label text="Total" styleName="{res.css.gwtLabelSmall}" />
+					<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtTotal" />
+				</g:HorizontalPanel>
 			</g:at>
-			<g:at top="409" left="174">
-				<g:Label text="Amount" styleName="{res.css.gwtLabelMedium}" />
+			<g:at top="348" left="427">
+				<g:Button ui:field="btnDelete" text="Delete" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="409" left="338">
-				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtAmount" />
+			<g:at top="348" left="516">
+				<g:Button ui:field="btnSave" text="Save" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="409" left="554">
-				<g:Label text="Tax" styleName="{res.css.gwtLabelMedium}" />
-			</g:at>
-			<g:at top="409" left="718">
-				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtTax" />
-			</g:at>
-			<g:at top="409" left="932">
-				<g:Label text="Total" styleName="{res.css.gwtLabelMedium}" />
-			</g:at>
-			<g:at top="409" left="1096">
-				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtTotal" />
-			</g:at>
-			<g:at top="443" left="1023">
-				<g:Button text="Delete" ui:field="btnDelete" styleName="{res.css.gwtButton}" />
-			</g:at>
-			<g:at top="443" left="1118">
-				<g:Button text="Save" ui:field="btnSave" styleName="{res.css.gwtButton}" />
-			</g:at>
-			<g:at top="443" left="1214">
-				<g:Button text="Close" ui:field="btnClose" styleName="{res.css.gwtButton}" />
+			<g:at top="348" left="609">
+				<g:Button ui:field="btnClose" text="Close" styleName="{res.css.gwtButton}" />
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>

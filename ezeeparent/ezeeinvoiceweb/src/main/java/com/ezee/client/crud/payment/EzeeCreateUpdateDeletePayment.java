@@ -128,7 +128,7 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 	}
 
 	@Override
-	public void center() {
+	public void show() {
 		loadTypes();
 		loadInvoices();
 		updateTotals();
@@ -149,7 +149,7 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 			disable();
 			break;
 		}
-		super.center();
+		super.show();
 	}
 
 	private void disable() {

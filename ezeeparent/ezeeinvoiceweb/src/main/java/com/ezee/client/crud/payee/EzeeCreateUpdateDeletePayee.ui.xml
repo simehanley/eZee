@@ -5,20 +5,20 @@
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
 
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="325px" width="911px">
-			<g:at top="10" left="10">
+		<g:AbsolutePanel height="479px" width="338px">
+			<g:at top="10" left="5">
 				<p1:EzeePayerPayeeCommon ui:field="payee" />
 			</g:at>
-			<g:at top="10" left="508">
+			<g:at top="300" left="4">
 				<p1:EzeePayeeBank ui:field="payeebank" />
 			</g:at>
-			<g:at top="285" left="622">
+			<g:at top="438" left="33">
 				<g:Button ui:field="btnDelete" text="Delete" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="285" left="717">
+			<g:at top="438" left="128">
 				<g:Button ui:field="btnSave" text="Save" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="285" left="812">
+			<g:at top="438" left="223">
 				<g:Button ui:field="btnClose" text="Close" styleName="{res.css.gwtButton}" />
 			</g:at>
 		</g:AbsolutePanel>

@@ -5,17 +5,17 @@
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
 
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="365px" width="511px">
-			<g:at top="10" left="10">
-				<p1:EzeePayerPayeeCommon ui:field="payer" />
+		<g:AbsolutePanel height="365px" width="335px">
+			<g:at top="10" left="6">
+				<p1:EzeePayerPayeeCommon ui:field="payer" width="329px" height="337px" />
 			</g:at>
-			<g:at top="325" left="222">
+			<g:at top="311" left="34">
 				<g:Button ui:field="btnDelete" text="Delete" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="325" left="318">
+			<g:at top="311" left="130">
 				<g:Button text="Save" ui:field="btnSave" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="325" left="414">
+			<g:at top="311" left="226">
 				<g:Button text="Close" ui:field="btnClose" styleName="{res.css.gwtButton}" />
 			</g:at>
 		</g:AbsolutePanel>

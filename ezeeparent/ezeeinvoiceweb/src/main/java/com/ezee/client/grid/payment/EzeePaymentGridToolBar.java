@@ -99,6 +99,6 @@ public class EzeePaymentGridToolBar extends EzeeGridToolbar<EzeePayment> {
 	@UiHandler("btnBank")
 	void onBankClick(ClickEvent event) {
 		EzeeBankBalance bank = new EzeeBankBalance(cache);
-		bank.center();
+		bank.show();
 	}
 }

@@ -12,6 +12,7 @@ import com.ezee.client.grid.EzeeHasGrid;
 import com.ezee.client.grid.invoice.EzeeInvoiceGrid;
 import com.ezee.client.grid.payee.EzeePayeeGrid;
 import com.ezee.client.grid.payer.EzeePayerGrid;
+import com.ezee.client.grid.payment.EzeePaymentGrid;
 import com.ezee.model.entity.EzeeUser;
 import com.ezee.web.common.ui.edit.EzeeEditUser;
 import com.google.gwt.core.client.GWT;
@@ -57,6 +58,12 @@ public class EzeeInvoiceMain extends Composite {
 
 	@UiField
 	HTML deleteInvoice;
+
+	@UiField
+	HTML editPayment;
+
+	@UiField
+	HTML deletePayment;
 
 	@UiField
 	HTML makePayment;
@@ -148,6 +155,8 @@ public class EzeeInvoiceMain extends Composite {
 		newSupplier.addClickHandler(mainClickHandler);
 		editSupplier.addClickHandler(mainClickHandler);
 		deleteSupplier.addClickHandler(mainClickHandler);
+		editPayment.addClickHandler(mainClickHandler);
+		deletePayment.addClickHandler(mainClickHandler);
 		newPremises.addClickHandler(mainClickHandler);
 		editPremises.addClickHandler(mainClickHandler);
 		deletePremises.addClickHandler(mainClickHandler);
@@ -180,11 +189,15 @@ public class EzeeInvoiceMain extends Composite {
 				getFirstInstanceOf(EzeePayerGrid.class, tab).deleteEntity();
 			} else if (event.getSource().equals(editUser)) {
 				editUser();
+			} else if (event.getSource().equals(editPayment)) {
+				getFirstInstanceOf(EzeePaymentGrid.class, tab).editEntity();
+			} else if (event.getSource().equals(deletePayment)) {
+				getFirstInstanceOf(EzeePaymentGrid.class, tab).deleteEntity();
 			}
 		}
 	}
 
 	private void editUser() {
-		new EzeeEditUser(ezeeUser.getUsername()).center();
+		new EzeeEditUser(ezeeUser.getUsername()).show();
 	}
 }

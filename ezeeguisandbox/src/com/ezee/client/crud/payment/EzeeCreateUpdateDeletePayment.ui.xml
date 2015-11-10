@@ -5,63 +5,47 @@
 	
 	</ui:style>
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="478px" width="1313px">
-			<g:at top="10" left="10">
-				<g:Label text="Type" styleName="gwt-Label-Medium" />
+		<g:AbsolutePanel height="386px" width="700px">
+			<g:at top="7" left="10">
+				<g:HorizontalPanel width="563px" height="36px" verticalAlignment="ALIGN_MIDDLE">
+					<g:Label text="Type" styleName="gwt-Label-Small" />
+					<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstPaymentType" width="135px" height="30px" />
+					<g:Label text="Chq. No." styleName="gwt-Label-Small" ui:field="lblChequeNumber" />
+					<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtChequeNumber" width="130px" height="20px" />
+					<g:CheckBox text="Presented" styleName="gwt-CheckBox-Small" ui:field="chkPresented" wordWrap="false" />
+				</g:HorizontalPanel>
 			</g:at>
-			<g:at top="9" left="174">
-				<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstPaymentType" />
+			<g:at top="43" left="10">
+				<g:Label text="Description" styleName="gwt-Label-Small" />
 			</g:at>
-			<g:at top="10" left="391">
-				<g:Label text="Cheque Number" styleName="gwt-Label-Medium" ui:field="lblChequeNumber" />
+			<g:at top="75" left="10">
+				<g:RichTextArea width="672px" height="39px" ui:field="txtDescription" styleName="gwt-RichTextArea-Medium" />
 			</g:at>
-			<g:at top="10" left="554">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtChequeNumber" />
+			<g:at top="120" left="9">
+				<g:Label text="Invoices" styleName="gwt-Label-Small" />
 			</g:at>
-			<g:at top="13" left="770">
-				<g:CheckBox text="Presented" styleName="gwt-CheckBox-Small" ui:field="chkPresented" />
+			<g:at top="155" left="10">
+				<p1:DataGrid width="680px" height="156px" ui:field="grdInvoices" />
 			</g:at>
-			<g:at top="44" left="10">
-				<g:Label text="Description" styleName="gwt-Label-Medium" />
+			<g:at top="348" left="409">
+				<g:Button ui:field="btnDelete" text="Delete" />
 			</g:at>
-			<g:at top="78" left="10">
-				<g:RichTextArea width="1292px" height="76px" ui:field="txtDescription" styleName="gwt-RichTextArea-Medium" />
+			<g:at top="348" left="503">
+				<g:Button ui:field="btnSave" text="Save" />
 			</g:at>
-			<g:at top="162" left="10">
-				<g:Label text="Invoices" styleName="gwt-Label-Medium" />
+			<g:at top="348" left="596">
+				<g:Button ui:field="btnClose" text="Close" />
 			</g:at>
-			<g:at top="196" left="10">
-				<p1:DataGrid width="1294px" height="207px" ui:field="grdInvoices" />
-			</g:at>
-			<g:at top="409" left="10">
-				<g:Label text="Totals" styleName="gwt-Label-Medium" />
-			</g:at>
-			<g:at top="409" left="174">
-				<g:Label text="Amount" styleName="gwt-Label-Medium" />
-			</g:at>
-			<g:at top="409" left="338">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtAmount" />
-			</g:at>
-			<g:at top="409" left="554">
-				<g:Label text="Tax" styleName="gwt-Label-Medium" />
-			</g:at>
-			<g:at top="409" left="718">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtTax" />
-			</g:at>
-			<g:at top="409" left="932">
-				<g:Label text="Total" styleName="gwt-Label-Medium" />
-			</g:at>
-			<g:at top="409" left="1096">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtTotal" />
-			</g:at>
-			<g:at top="443" left="1023">
-				<g:Button ui:field="btnDelete" />
-			</g:at>
-			<g:at top="443" left="1118">
-				<g:Button ui:field="btnSave" />
-			</g:at>
-			<g:at top="443" left="1214">
-				<g:Button ui:field="btnClose" />
+			<g:at top="314" left="10">
+				<g:HorizontalPanel width="680px" height="34px" verticalAlignment="ALIGN_MIDDLE">
+					<g:Label text="Totals" styleName="gwt-Label-Small" />
+					<g:Label text="Amount" styleName="gwt-Label-Small" />
+					<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtAmount" />
+					<g:Label text="Tax" styleName="gwt-Label-Small" />
+					<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtTax" />
+					<g:Label text="Total" styleName="gwt-Label-Small" />
+					<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtTotal" />
+				</g:HorizontalPanel>
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>

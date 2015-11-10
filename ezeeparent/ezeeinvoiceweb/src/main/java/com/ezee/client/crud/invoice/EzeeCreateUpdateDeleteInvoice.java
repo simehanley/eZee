@@ -133,7 +133,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	}
 
 	@Override
-	public void center() {
+	public void show() {
 		loadEntities();
 		initForm();
 		switch (type) {
@@ -156,7 +156,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 			disable();
 			break;
 		}
-		super.center();
+		super.show();
 	}
 
 	private void disable() {

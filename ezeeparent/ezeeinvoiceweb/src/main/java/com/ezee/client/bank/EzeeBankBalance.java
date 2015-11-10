@@ -88,7 +88,7 @@ public class EzeeBankBalance extends EzeeDialog {
 	private void initGrid() {
 		grdCheques = new DataGrid<>();
 		grdCheques = new DataGrid<EzeePayment>(100, INSTANCE);
-		grdCheques.setMinimumTableWidth(600, Style.Unit.PX);
+		grdCheques.setMinimumTableWidth(500, Style.Unit.PX);
 		model = resolveModel();
 		model.bind(grdCheques);
 	}

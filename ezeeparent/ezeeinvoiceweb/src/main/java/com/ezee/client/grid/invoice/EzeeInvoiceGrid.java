@@ -74,20 +74,20 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	public void deleteEntity() {
 		EzeeInvoice entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, delete).center();
+			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, delete).show();
 		}
 	}
 
 	@Override
 	public void newEntity() {
-		new EzeeCreateUpdateDeleteInvoice(cache, this).center();
+		new EzeeCreateUpdateDeleteInvoice(cache, this).show();
 	}
 
 	@Override
 	public void editEntity() {
 		EzeeInvoice entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, update).center();
+			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, update).show();
 		}
 	}
 

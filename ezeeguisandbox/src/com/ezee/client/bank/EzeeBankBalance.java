@@ -18,6 +18,8 @@ public class EzeeBankBalance extends Composite {
 	@UiField Button btnRefresh;
 	@UiField AbsolutePanel gridCheques;
 	@UiField ListBox lstPremises;
+	@UiField TextBox txtCheques;
+	@UiField TextBox txtNet;
 
 	interface EzeeBankBalanceUiBinder extends UiBinder<Widget, EzeeBankBalance> {
 	}

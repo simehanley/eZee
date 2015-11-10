@@ -45,6 +45,12 @@
 						<g:HTML text="Make Payment" styleName="{res.css.gwtStackPanelLink}" ui:field="makePayment" />
 					</g:VerticalPanel>
 				</g:VerticalPanel>
+				<g:VerticalPanel g:StackPanel-text="PAYMENTS" height="5%" width="100%">
+					<g:VerticalPanel height="100%" width="100%">
+						<g:HTML text="Edit Payment" styleName="{res.css.gwtStackPanelLink}" ui:field="editPayment" />
+						<g:HTML text="Delete Payment" styleName="{res.css.gwtStackPanelLink}" ui:field="deletePayment" />
+					</g:VerticalPanel>
+				</g:VerticalPanel>
 				<g:VerticalPanel g:StackPanel-text="SUPPLIERS" height="10%" width="100%">
 					<g:VerticalPanel height="100%" width="100%">
 						<g:HTML text="New Supplier" styleName="{res.css.gwtStackPanelLink}" ui:field="newSupplier" />
