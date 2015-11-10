@@ -80,7 +80,7 @@
 				<g:Button ui:field="btnDelete" text="Delete" styleName="{res.css.gwtButton}" />
 			</g:at>
 			<g:at top="215" left="409">
-				<g:Button ui:field="btnSave" text="Edit" styleName="{res.css.gwtButton}" />
+				<g:Button ui:field="btnSave" text="Save" styleName="{res.css.gwtButton}" />
 			</g:at>
 			<g:at top="215" left="504">
 				<g:Button ui:field="btnClose" text="Close" styleName="{res.css.gwtButton}" />

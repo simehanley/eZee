@@ -43,7 +43,7 @@
 			<g:at top="348" left="427">
 				<g:Button ui:field="btnDelete" text="Delete" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="348" left="516">
+			<g:at top="348" left="518">
 				<g:Button ui:field="btnSave" text="Save" styleName="{res.css.gwtButton}" />
 			</g:at>
 			<g:at top="348" left="609">
