@@ -16,7 +16,6 @@ import java.util.Set;
 
 import com.ezee.client.grid.EzeeGridModel;
 import com.ezee.client.util.EzeeDateComparator;
-import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.web.common.ui.images.EzeeImageResources;
 import com.google.gwt.cell.client.Cell.Context;
@@ -92,11 +91,11 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 	protected Date resolveDateFieldValue(final String fieldName, final EzeeInvoice invoice) {
 		switch (fieldName) {
 		case INVOICE_DATE:
-			return EzeeClientDateUtils.fromString(invoice.getInvoiceDate());
+			return dateUtilities.fromString(invoice.getInvoiceDate());
 		case DUE_DATE:
-			return EzeeClientDateUtils.fromString(invoice.getDateDue());
+			return dateUtilities.fromString(invoice.getDateDue());
 		case PAID_PATE:
-			return EzeeClientDateUtils.fromString(invoice.getDatePaid());
+			return dateUtilities.fromString(invoice.getDatePaid());
 		}
 		return null;
 	}
@@ -132,8 +131,8 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
-				return dateComparator.compare(EzeeClientDateUtils.fromString(one.getInvoiceDate()),
-						EzeeClientDateUtils.fromString(two.getInvoiceDate()));
+				return dateComparator.compare(dateUtilities.fromString(one.getInvoiceDate()),
+						dateUtilities.fromString(two.getInvoiceDate()));
 			}
 		});
 
@@ -141,8 +140,8 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
-				return dateComparator.compare(EzeeClientDateUtils.fromString(one.getDateDue()),
-						EzeeClientDateUtils.fromString(two.getDateDue()));
+				return dateComparator.compare(dateUtilities.fromString(one.getDateDue()),
+						dateUtilities.fromString(two.getDateDue()));
 			}
 
 		});
@@ -151,8 +150,8 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
-				return dateComparator.compare(EzeeClientDateUtils.fromString(one.getDatePaid()),
-						EzeeClientDateUtils.fromString(two.getDatePaid()));
+				return dateComparator.compare(dateUtilities.fromString(one.getDatePaid()),
+						dateUtilities.fromString(two.getDatePaid()));
 			}
 		});
 	}

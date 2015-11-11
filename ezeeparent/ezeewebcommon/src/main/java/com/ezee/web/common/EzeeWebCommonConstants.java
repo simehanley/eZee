@@ -1,5 +1,7 @@
 package com.ezee.web.common;
 
+import com.ezee.common.EzeeDateUtilities;
+import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.web.common.service.EzeeUserService;
 import com.ezee.web.common.service.EzeeUserServiceAsync;
 import com.ezee.web.common.ui.utils.EzeeAutoLogin;
@@ -26,6 +28,8 @@ public interface EzeeWebCommonConstants {
 	String REPORT_GENERATORS = "Report_Generators";
 
 	String REPORT_SERVICE = "reportservice";
+
+	EzeeDateUtilities DATE_UTILS = new EzeeClientDateUtils();
 
 	EzeeAutoLogin AUTO_LOGIN_HELPER = new EzeeAutoLogin();
 	EzeeUserServiceAsync USER_SERVICE = GWT.create(EzeeUserService.class);

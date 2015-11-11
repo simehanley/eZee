@@ -1,6 +1,7 @@
 package com.ezee.web.common.ui.edit;
 
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.EDIT_ERROR;
 import static com.ezee.web.common.EzeeWebCommonConstants.EDIT_USER;
 import static com.ezee.web.common.EzeeWebCommonConstants.USER_SERVICE;
@@ -10,7 +11,6 @@ import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 
 import java.util.Date;
 
-import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.model.entity.EzeeUser;
 import com.ezee.web.common.ui.EzeeUserResult;
 import com.ezee.web.common.ui.dialog.EzeeDialog;
@@ -105,7 +105,7 @@ public class EzeeEditUser extends EzeeDialog {
 				showWaitCursor();
 				EzeeUser edited = new EzeeUser(existing.getId(), txtFirstname.getText(), txtLastname.getText(),
 						username, txtNewPassword.getText(), txtEmail.getText(), existing.getCreated(),
-						EzeeClientDateUtils.toString(new Date()));
+						DATE_UTILS.toString(new Date()));
 
 				USER_SERVICE.edit(existing, edited, txtOldPassword.getText(), new AsyncCallback<EzeeUserResult>() {
 
@@ -147,5 +147,11 @@ public class EzeeEditUser extends EzeeDialog {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public void show() {
+		setFocus(txtFirstname);
+		super.show();
 	}
 }

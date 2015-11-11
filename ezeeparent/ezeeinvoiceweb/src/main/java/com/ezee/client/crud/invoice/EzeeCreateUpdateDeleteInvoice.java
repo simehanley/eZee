@@ -9,9 +9,9 @@ import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
-import static com.ezee.common.web.EzeeClientDateUtils.fromString;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFromatUtils.getDateBoxFormat;
+import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
@@ -28,7 +28,6 @@ import com.ezee.client.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.client.ui.EzeeInvoiceUiUtils;
-import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeeConfiguration;
 import com.ezee.model.entity.EzeeDebtAgeRule;
@@ -120,16 +119,19 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 	private double taxRate;
 
+	private String supplierName;
+
 	public EzeeCreateUpdateDeleteInvoice(final EzeeInvoiceEntityCache cache,
-			EzeeCreateUpdateDeleteEntityHandler<EzeeInvoice> handler) {
-		this(cache, handler, null, create);
+			final EzeeCreateUpdateDeleteEntityHandler<EzeeInvoice> handler, final String supplierName) {
+		this(cache, handler, null, create, supplierName);
 	}
 
 	public EzeeCreateUpdateDeleteInvoice(final EzeeInvoiceEntityCache cache,
 			EzeeCreateUpdateDeleteEntityHandler<EzeeInvoice> handler, final EzeeInvoice entity,
-			final EzeeCreateUpdateDeleteEntityType type) {
+			final EzeeCreateUpdateDeleteEntityType type, final String supplierName) {
 		super(cache, handler, entity, type);
 		setWidget(uiBinder.createAndBindUi(this));
+		this.supplierName = supplierName;
 	}
 
 	@Override
@@ -141,10 +143,12 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 			setText(NEW_INVOICE);
 			initialiseNew();
 			btnDelete.setEnabled(false);
+			setFocus(txtInvoiceNumber);
 			break;
 		case update:
 			setText(EDIT_INVOICE);
 			initialise();
+			setFocus(txtInvoiceNumber);
 			btnDelete.setEnabled(false);
 			if (entity.getDatePaid() != null) {
 				disable();
@@ -187,9 +191,9 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		txtTax.setValue(getAmountFormat().format(entity.getTax()));
 		txtTax.setEnabled(entity.isManualTax());
 		txtTotal.setValue(getAmountFormat().format(entity.getInvoiceAmount()));
-		dtInvoice.setValue(fromString(entity.getInvoiceDate()));
-		dtDue.setValue(fromString(entity.getDateDue()));
-		dtPaid.setValue(fromString(entity.getDatePaid()));
+		dtInvoice.setValue(DATE_UTILS.fromString(entity.getInvoiceDate()));
+		dtDue.setValue(DATE_UTILS.fromString(entity.getDateDue()));
+		dtPaid.setValue(DATE_UTILS.fromString(entity.getDatePaid()));
 		chkManualTax.setValue(entity.isManualTax());
 		txtDescription.setText(entity.getDescription());
 		lstClassification.setItemSelected(getItemIndex(entity.getClassification().name(), lstClassification), true);
@@ -209,7 +213,8 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		chkManualTax.setValue(configuration.getDefaultManualTax());
 		txtTax.setEnabled(chkManualTax.getValue());
 		setValue(configuration.getDefaultDebtAgeRule(), lstDebtAge);
-		setValue(configuration.getDefaultInvoiceSupplier(), lstSupplier);
+		String supplier = hasLength(supplierName) ? supplierName : configuration.getDefaultInvoiceSupplier();
+		setValue(supplier, lstSupplier);
 		setValue(configuration.getDefaultInvoicePremises(), lstPremises);
 	}
 
@@ -217,9 +222,9 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	protected void bind() {
 		if (entity == null) {
 			entity = new EzeeInvoice();
-			entity.setCreated(EzeeClientDateUtils.toString(new Date()));
+			entity.setCreated(DATE_UTILS.toString(new Date()));
 		} else {
-			entity.setUpdated(EzeeClientDateUtils.toString(new Date()));
+			entity.setUpdated(DATE_UTILS.toString(new Date()));
 		}
 		entity.setInvoiceId(txtInvoiceNumber.getText());
 		entity.setPayer(getPremises());
@@ -227,9 +232,9 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		entity.setAgeRule(getAgeRule());
 		entity.setAmount(getAmountFormat().parse(txtAmount.getText()));
 		entity.setTax(getAmountFormat().parse(txtTax.getText()));
-		entity.setInvoiceDate(EzeeClientDateUtils.toString(dtInvoice.getValue()));
-		entity.setDateDue(EzeeClientDateUtils.toString(dtDue.getValue()));
-		entity.setDatePaid(EzeeClientDateUtils.toString(dtPaid.getValue()));
+		entity.setInvoiceDate(DATE_UTILS.toString(dtInvoice.getValue()));
+		entity.setDateDue(DATE_UTILS.toString(dtDue.getValue()));
+		entity.setDatePaid(DATE_UTILS.toString(dtPaid.getValue()));
 		entity.setManualTax(chkManualTax.getValue());
 		entity.setDescription(txtDescription.getText());
 		entity.setClassification(EzeeInvoiceClassification.valueOf(lstClassification.getSelectedItemText()));
@@ -377,7 +382,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		showWaitCursor();
 		EzeeDebtAgeRule rule = (EzeeDebtAgeRule) cache.getEntities(EzeeDebtAgeRule.class)
 				.get(lstDebtAge.getSelectedItemText());
-		String today = EzeeClientDateUtils.toString(new Date());
+		String today = DATE_UTILS.toString(new Date());
 		INVOICE_SERVICE.calculateDueDate(rule, today, new AsyncCallback<String>() {
 
 			@Override
@@ -388,7 +393,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 			@Override
 			public void onSuccess(final String result) {
-				dtDue.setValue(fromString(result));
+				dtDue.setValue(DATE_UTILS.fromString(result));
 				showDefaultCursor();
 			}
 		});

@@ -1,6 +1,9 @@
 package com.ezee.web.common.ui.dialog;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FocusWidget;
 
 /**
  * 
@@ -31,5 +34,14 @@ public class EzeeDialog extends DialogBox {
 
 	public void close() {
 		this.hide(true);
+	}
+
+	public void setFocus(final FocusWidget widget) {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+			@Override
+			public void execute() {
+				widget.setFocus(true);
+			}
+		});
 	}
 }

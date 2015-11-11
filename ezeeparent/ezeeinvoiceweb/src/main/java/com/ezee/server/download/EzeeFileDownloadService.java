@@ -1,6 +1,7 @@
 package com.ezee.server.download;
 
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_ID;
+import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static org.springframework.web.context.support.WebApplicationContextUtils.getWebApplicationContext;
 
@@ -35,7 +36,7 @@ public class EzeeFileDownloadService extends HttpServlet {
 		long invoiceId = Long.parseLong(req.getParameter(INVOICE_ID));
 		EzeeInvoice invoice = getInvoiceDao().get(invoiceId, EzeeInvoice.class);
 		try {
-			if (invoice != null && hasLength(invoice.getFilename()) && invoice.getFile() != null) {
+			if (invoice != null && hasLength(invoice.getFilename())) {
 				log.info("Attempting to download '" + invoice.getFilename() + "' for invoice '" + invoice.getInvoiceId()
 						+ "'.");
 				generateInvoiceFile(invoice, resp);
@@ -55,7 +56,11 @@ public class EzeeFileDownloadService extends HttpServlet {
 		String filename = invoice.getFilename();
 		OutputStream stream = createFilenameResponseHeader(resp, filename);
 		byte[] file = invoice.getFile();
-		resp.setContentLength(file.length);
+		if (file != null) {
+			resp.setContentLength(file.length);
+		} else {
+			resp.setContentLength(ZERO);
+		}
 		stream.write(file);
 		stream.close();
 	}

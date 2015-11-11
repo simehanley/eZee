@@ -5,6 +5,7 @@ import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
+import com.ezee.model.entity.filter.EzeeStringFilterable;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
@@ -13,7 +14,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  *
  */
 @MappedSuperclass
-public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity implements EzeeHasName, IsSerializable {
+public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity
+		implements EzeeHasName, IsSerializable, EzeeStringFilterable {
 
 	private static final long serialVersionUID = -6079993940796041714L;
 
@@ -47,21 +49,24 @@ public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity implements 
 	@Column(name = "EMAIL")
 	private String email;
 
+	@Column(name = "CONTACT")
+	private String contact;
+
 	public EzeeFinancialEntity() {
 		super();
 	}
 
 	public EzeeFinancialEntity(final String name, final String addressLineOne, final String addressLineTwo,
 			final String suburb, final String city, final String state, final String postcode, final String phone,
-			final String fax, final String email, final String created, final String updated) {
-		this(NULL_ID, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, fax, email, created,
-				updated);
+			final String fax, final String email, final String contact, final String created, final String updated) {
+		this(NULL_ID, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, fax, email, contact,
+				created, updated);
 	}
 
 	public EzeeFinancialEntity(final Long id, final String name, final String addressLineOne,
 			final String addressLineTwo, final String suburb, final String city, final String state,
-			final String postcode, final String phone, final String fax, final String email, final String created,
-			final String updated) {
+			final String postcode, final String phone, final String fax, final String email, final String contact,
+			final String created, final String updated) {
 		super(id, created, updated);
 		this.name = name;
 		this.addressLineOne = addressLineOne;
@@ -73,6 +78,7 @@ public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity implements 
 		this.phone = phone;
 		this.fax = fax;
 		this.email = email;
+		this.contact = contact;
 	}
 
 	@Override
@@ -148,8 +154,29 @@ public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity implements 
 		this.email = email;
 	}
 
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
 	@Override
 	public String toString() {
 		return "EzeeFinancialEntity [name=" + name + "]";
+	}
+
+	@Override
+	public String filterString() {
+		return getName();
 	}
 }

@@ -90,14 +90,14 @@ public class EzeeInvoiceWeb implements EntryPoint, EzeeLoginListener, EzeeRegist
 		payment.setListener(invoice);
 		main.getTab().add(invoice, INVOICES);
 		main.getTab().add(payment, PAYMENTS);
-		main.getTab().add(createPayeeGrid(), SUPPLIERS);
+		main.getTab().add(createPayeeGrid(invoice), SUPPLIERS);
 		main.getTab().add(createPayerGrid(), PREMISES);
 		RootLayoutPanel.get().add(main);
 		log.log(Level.INFO, "Application initialised.");
 	}
 
-	private EzeePayeeGrid createPayeeGrid() {
-		return new EzeePayeeGrid(cache);
+	private EzeePayeeGrid createPayeeGrid(final EzeeInvoiceGrid invoice) {
+		return new EzeePayeeGrid(cache, invoice);
 	}
 
 	private EzeePayerGrid createPayerGrid() {

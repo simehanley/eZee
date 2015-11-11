@@ -78,6 +78,9 @@ public class EzeeInvoiceMain extends Composite {
 	HTML deleteSupplier;
 
 	@UiField
+	HTML raiseSupplierInvoice;
+
+	@UiField
 	HTML newPremises;
 
 	@UiField
@@ -155,6 +158,7 @@ public class EzeeInvoiceMain extends Composite {
 		newSupplier.addClickHandler(mainClickHandler);
 		editSupplier.addClickHandler(mainClickHandler);
 		deleteSupplier.addClickHandler(mainClickHandler);
+		raiseSupplierInvoice.addClickHandler(mainClickHandler);
 		editPayment.addClickHandler(mainClickHandler);
 		deletePayment.addClickHandler(mainClickHandler);
 		newPremises.addClickHandler(mainClickHandler);
@@ -181,6 +185,8 @@ public class EzeeInvoiceMain extends Composite {
 				getFirstInstanceOf(EzeePayeeGrid.class, tab).editEntity();
 			} else if (event.getSource().equals(deleteSupplier)) {
 				getFirstInstanceOf(EzeePayeeGrid.class, tab).deleteEntity();
+			} else if (event.getSource().equals(raiseSupplierInvoice)) {
+				getFirstInstanceOf(EzeePayeeGrid.class, tab).newSupplierInvoice();
 			} else if (event.getSource().equals(newPremises)) {
 				getFirstInstanceOf(EzeePayerGrid.class, tab).newEntity();
 			} else if (event.getSource().equals(editPremises)) {

@@ -1,11 +1,19 @@
 package com.ezee.client.grid.invoice;
 
+import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.delete;
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.update;
+import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
+import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.invoice.EzeeCreateUpdateDeleteInvoice;
@@ -14,6 +22,7 @@ import com.ezee.client.grid.EzeeGrid;
 import com.ezee.client.grid.payment.EzeePaymentCreationListener;
 import com.ezee.model.entity.EzeeInvoice;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.view.client.MultiSelectionModel;
 
@@ -24,6 +33,8 @@ import com.google.gwt.view.client.MultiSelectionModel;
  */
 public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 		implements EzeeInvoiceChangeListener, EzeeInvoiceUpLoaderListener {
+
+	private static final Logger log = Logger.getLogger("EzeeInvoiceGrid");
 
 	private EzeePaymentCreationListener listener;
 
@@ -48,17 +59,26 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 
 	protected MenuBar createContextMenu() {
 		MenuBar menu = super.createContextMenu();
-		menu.addItem("Payment", new Command() {
+		menu.addSeparator();
+		menu.addItem("Make Payment", new Command() {
 			@Override
 			public void execute() {
 				newPayment();
 				contextMenu.hide();
 			}
 		});
-		menu.addItem("Upload Invoice", new Command() {
+		menu.addSeparator();
+		menu.addItem("Upload Invoice File", new Command() {
 			@Override
 			public void execute() {
-				uploadInvoice();
+				uploadInvoiceFile();
+				contextMenu.hide();
+			}
+		});
+		menu.addItem("Delete Invoice File", new Command() {
+			@Override
+			public void execute() {
+				deleteInvoiceFile();
 				contextMenu.hide();
 			}
 		});
@@ -74,21 +94,25 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	public void deleteEntity() {
 		EzeeInvoice entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, delete).show();
+			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, delete, EMPTY_STRING).show();
 		}
 	}
 
 	@Override
 	public void newEntity() {
-		new EzeeCreateUpdateDeleteInvoice(cache, this).show();
+		new EzeeCreateUpdateDeleteInvoice(cache, this, EMPTY_STRING).show();
 	}
 
 	@Override
 	public void editEntity() {
 		EzeeInvoice entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, update).show();
+			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, update, EMPTY_STRING).show();
 		}
+	}
+
+	public void newSupplierInvoice(final String supplierName) {
+		new EzeeCreateUpdateDeleteInvoice(cache, this, supplierName).show();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -108,11 +132,36 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 		}
 	}
 
-	private void uploadInvoice() {
+	private void uploadInvoiceFile() {
 		EzeeInvoice entity = getSelected();
 		if (entity != null) {
 			EzeeUploadInvoiceForm uploadInvoice = new EzeeUploadInvoiceForm(getSelected(), this);
 			uploadInvoice.center();
+		}
+	}
+
+	private void deleteInvoiceFile() {
+		final EzeeInvoice entity = getSelected();
+		if (entity != null && hasLength(entity.getFilename())) {
+			showWaitCursor();
+			final String invoiceName = entity.getFilename();
+			entity.setFilename(null);
+			INVOICE_SERVICE.saveEntity(EzeeInvoice.class.getName(), entity, new AsyncCallback<EzeeInvoice>() {
+				@Override
+				public void onFailure(Throwable caught) {
+					showDefaultCursor();
+					String message = "Failed to delete invoice " + invoiceName + " for invoice '" + entity
+							+ "'.  See log for details.";
+					log.log(Level.SEVERE, message, caught);
+					showNew("Error", message);
+				}
+
+				@Override
+				public void onSuccess(final EzeeInvoice result) {
+					showDefaultCursor();
+					onSave(result);
+				}
+			});
 		}
 	}
 

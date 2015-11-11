@@ -107,7 +107,11 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	private void setEntities(final List<T> entities) {
 		model.getHandler().getList().clear();
 		EzeeEntityFilter<T> filter = resolveFilter();
-		model.getHandler().getList().addAll(filter.apply(entities));
+		for (T entity : entities) {
+			if (filter.include(entity)) {
+				model.getHandler().getList().add(entity);
+			}
+		}
 		grid.redraw();
 	}
 

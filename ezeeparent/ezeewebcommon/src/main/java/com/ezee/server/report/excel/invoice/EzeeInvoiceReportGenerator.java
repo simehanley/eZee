@@ -1,6 +1,7 @@
 package com.ezee.server.report.excel.invoice;
 
 import static com.ezee.common.EzeeCommonConstants.ONE;
+import static com.ezee.common.EzeeCommonConstants.TWO;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
@@ -92,21 +93,22 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 
 	private void generateEzeeInvoiceReportContent(final Workbook book, final Sheet sheet,
 			final Map<String, List<EzeeInvoice>> supplierInvoices) {
-		int row = ONE;
+		int currentRow = ONE;
 		for (String key : supplierInvoices.keySet()) {
-			row += generateEzeeInvoiceReportContent(book, sheet, supplierInvoices.get(key), row);
+			currentRow += generateEzeeInvoiceReportContent(book, sheet, supplierInvoices.get(key), currentRow);
 		}
 	}
 
 	private int generateEzeeInvoiceReportContent(final Workbook book, final Sheet sheet,
-			final List<EzeeInvoice> invoices, int row) {
+			final List<EzeeInvoice> invoices, int currentRow) {
 		double amount = ZERO_DBL, tax = ZERO_DBL, total = ZERO_DBL;
 		CellStyle currencyStyle = currencyStyle(book, false);
 		CellStyle boldCurrencyStyle = currencyStyle(book, true);
 		CellStyle boldStyle = boldStyle(book, false);
+		int rowsAdded = ZERO;
 		String supplierName = invoices.get(EzeeCommonConstants.ZERO).getPayee().getName();
 		for (EzeeInvoice invoice : invoices) {
-			Row newrow = sheet.createRow(row);
+			Row newrow = sheet.createRow(currentRow);
 			Cell invoiceNum = newrow.createCell(INVOICE_ID_INDEX, CELL_TYPE_STRING);
 			invoiceNum.setCellValue(invoice.getInvoiceId());
 			Cell supplier = newrow.createCell(SUPPLIER_INDEX, CELL_TYPE_STRING);
@@ -133,10 +135,12 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 			amount += invoice.getAmount();
 			tax += invoice.getTax();
 			total += invoice.getInvoiceAmount();
-			row += ONE;
+			++currentRow;
+			++rowsAdded;
 		}
-		row += ONE;
-		Row totalrow = sheet.createRow(row);
+		++currentRow;
+		++rowsAdded;
+		Row totalrow = sheet.createRow(currentRow);
 		Cell totalSummary = totalrow.createCell(INVOICE_ID_INDEX, CELL_TYPE_STRING);
 		totalSummary.setCellStyle(boldStyle);
 		totalSummary.setCellValue("Totals for '" + supplierName + " :");
@@ -149,8 +153,8 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 		Cell grandTotal = totalrow.createCell(TOTAL_INDEX, CELL_TYPE_NUMERIC);
 		grandTotal.setCellStyle(boldCurrencyStyle);
 		grandTotal.setCellValue(total);
-		row += ONE;
-		return row;
+		rowsAdded += TWO;
+		return rowsAdded;
 	}
 
 	private void generateEzeeInvoiceReportHeader(final Workbook book, final Sheet sheet) {

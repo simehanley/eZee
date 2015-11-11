@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.ezee.common.EzeeDateUtilities;
+import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.DateCell;
@@ -27,6 +29,8 @@ import com.google.gwt.view.client.ListDataProvider;
  *
  */
 public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
+
+	protected final EzeeDateUtilities dateUtilities = new EzeeClientDateUtils();
 
 	protected ListHandler<T> handler;
 

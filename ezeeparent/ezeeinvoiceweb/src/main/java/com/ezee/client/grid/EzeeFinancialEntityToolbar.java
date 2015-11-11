@@ -5,6 +5,7 @@ import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import com.ezee.common.string.EzeeStringUtils;
 import com.ezee.model.entity.EzeeFinancialEntity;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
+import com.ezee.model.entity.filter.EzeeStringFilter;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyPressHandler;
@@ -60,6 +61,6 @@ public class EzeeFinancialEntityToolbar<T extends EzeeFinancialEntity> extends E
 
 	@Override
 	public EzeeEntityFilter<T> resolveFilter() {
-		return new EzeeFinancialEntityFilter<>(getName());
+		return new EzeeStringFilter<T>(getName());
 	}
 }

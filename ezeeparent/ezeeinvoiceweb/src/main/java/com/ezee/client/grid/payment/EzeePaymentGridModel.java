@@ -3,6 +3,7 @@ package com.ezee.client.grid.payment;
 import static com.ezee.client.grid.payment.EzeePaymentUtils.getInvoiceNumbers;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
+import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
 
 import java.util.Comparator;
@@ -13,7 +14,6 @@ import java.util.Set;
 
 import com.ezee.client.grid.EzeeGridModel;
 import com.ezee.client.util.EzeeDateComparator;
-import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.model.entity.EzeePayment;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
@@ -62,7 +62,7 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	protected Date resolveDateFieldValue(final String fieldName, final EzeePayment payment) {
 		switch (fieldName) {
 		case PAYMENT_DATE:
-			return EzeeClientDateUtils.fromString(payment.getPaymentDate());
+			return DATE_UTILS.fromString(payment.getPaymentDate());
 		}
 		return null;
 	}
@@ -73,8 +73,8 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 
 			@Override
 			public int compare(final EzeePayment one, final EzeePayment two) {
-				return dateComparator.compare(EzeeClientDateUtils.fromString(one.getPaymentDate()),
-						EzeeClientDateUtils.fromString(two.getPaymentDate()));
+				return dateComparator.compare(DATE_UTILS.fromString(one.getPaymentDate()),
+						DATE_UTILS.fromString(two.getPaymentDate()));
 			}
 		});
 

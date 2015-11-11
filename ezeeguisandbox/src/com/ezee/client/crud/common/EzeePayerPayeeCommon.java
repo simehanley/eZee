@@ -43,6 +43,15 @@ public class EzeePayerPayeeCommon extends Composite {
 
 	@UiField
 	TextBox txtPhone;
+	
+	@UiField
+	TextBox txtEmail;
+	
+	@UiField
+	TextBox txtFax;
+	
+	@UiField
+	TextBox txtContact;
 
 	public EzeePayerPayeeCommon() {
 		initWidget(uiBinder.createAndBindUi(this));

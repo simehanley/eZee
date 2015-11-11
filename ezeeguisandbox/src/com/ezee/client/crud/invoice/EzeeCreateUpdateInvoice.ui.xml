@@ -51,7 +51,7 @@
 			<g:at top="145" left="210">
 				<g:Label text="Due Date" styleName="gwt-Label-Small" />
 			</g:at>
-			<g:at top="145" left="298">
+			<g:at top="221" left="80">
 				<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtDue" />
 			</g:at>
 			<g:at top="179" left="210">

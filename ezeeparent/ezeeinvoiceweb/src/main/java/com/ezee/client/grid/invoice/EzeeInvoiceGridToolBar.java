@@ -2,6 +2,7 @@ package com.ezee.client.grid.invoice;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.REPORT_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.REPORT_TYPE;
 import static com.ezee.web.common.enums.EzeeReportType.detailed_payee_invoice_excel;
@@ -12,9 +13,11 @@ import com.ezee.client.grid.EzeeGridToolbar;
 import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
+import com.ezee.model.entity.filter.invoice.EzeeInvoiceFilter;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -72,6 +75,8 @@ public class EzeeInvoiceGridToolBar extends EzeeGridToolbar<EzeeInvoice> {
 		KeyPressHandler filterHandler = new EzeeToolbarKeyPressHandler();
 		dtFrom.setFormat(EzeeFromatUtils.getDateBoxFormat());
 		dtTo.setFormat(EzeeFromatUtils.getDateBoxFormat());
+		dtFrom.addDomHandler(filterHandler, KeyPressEvent.getType());
+		dtTo.addDomHandler(filterHandler, KeyPressEvent.getType());
 		txtInvoiceNumber.addKeyPressHandler(filterHandler);
 		txtSupplier.addKeyPressHandler(filterHandler);
 		txtPremises.addKeyPressHandler(filterHandler);
@@ -127,7 +132,7 @@ public class EzeeInvoiceGridToolBar extends EzeeGridToolbar<EzeeInvoice> {
 
 	@Override
 	public EzeeEntityFilter<EzeeInvoice> resolveFilter() {
-		return new EzeeInvoiceFilter(getFrom(), getTo(), getInvoiceNumber(), getSupplier(), getPremises(),
+		return new EzeeInvoiceFilter(getSupplier(), getPremises(), getInvoiceNumber(), getFrom(), getTo(), DATE_UTILS,
 				getShowPaid());
 	}
 

@@ -56,6 +56,7 @@
 						<g:HTML text="New Supplier" styleName="{res.css.gwtStackPanelLink}" ui:field="newSupplier" />
 						<g:HTML text="Edit Supplier" styleName="{res.css.gwtStackPanelLink}" ui:field="editSupplier" />
 						<g:HTML text="Delete Supplier" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteSupplier" />
+						<g:HTML text="Raise Invoice" styleName="{res.css.gwtStackPanelLink}" ui:field="raiseSupplierInvoice" />
 					</g:VerticalPanel>
 				</g:VerticalPanel>
 				<g:VerticalPanel g:StackPanel-text="PREMISES" height="10%" width="100%">

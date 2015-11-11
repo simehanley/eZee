@@ -5,17 +5,17 @@
 	
 	</ui:style>
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="365px" width="335px">
-			<g:at top="10" left="6">
-				<p1:EzeePayerPayeeCommon ui:field="payer" width="329px" height="337px" />
+		<g:AbsolutePanel height="414px" width="335px">
+			<g:at top="1" left="6">
+				<p1:EzeePayerPayeeCommon ui:field="payer" width="329px" height="404px" />
 			</g:at>
-			<g:at top="311" left="34">
+			<g:at top="365" left="37">
 				<g:Button ui:field="btnDelete" text="Delete" />
 			</g:at>
-			<g:at top="311" left="226">
+			<g:at top="365" left="229">
 				<g:Button text="Close" ui:field="btnClose" />
 			</g:at>
-			<g:at top="311" left="130">
+			<g:at top="365" left="133">
 				<g:Button text="Save" ui:field="btnSave" />
 			</g:at>
 		</g:AbsolutePanel>

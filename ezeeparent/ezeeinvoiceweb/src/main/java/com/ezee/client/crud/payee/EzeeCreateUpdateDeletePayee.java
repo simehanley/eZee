@@ -5,6 +5,7 @@ import static com.ezee.client.EzeeInvoiceWebConstants.EDIT_SUPPLIER;
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.client.EzeeInvoiceWebConstants.NEW_SUPPLIER;
 import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.create;
+import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
@@ -20,7 +21,6 @@ import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.client.crud.common.EzeeCreateUpdateDeleteFinancialEntity;
 import com.ezee.client.crud.common.EzeePayeeBank;
 import com.ezee.client.crud.common.EzeePayerPayeeCommon;
-import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.model.entity.EzeePayee;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -72,10 +72,12 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 		switch (type) {
 		case create:
 			setText(NEW_SUPPLIER);
+			setFocus(payee.getTxtName());
 			btnDelete.setEnabled(false);
 			break;
 		case update:
 			setText(EDIT_SUPPLIER);
+			setFocus(payee.getTxtName());
 			initialise();
 			btnDelete.setEnabled(false);
 			break;
@@ -91,6 +93,7 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 	@Override
 	protected void initialise() {
 		payee.setName(entity.getName());
+		payee.setContact(entity.getContact());
 		payee.setAddressLine1(entity.getAddressLineOne());
 		payee.setAddressLine2(entity.getAddressLineTwo());
 		payee.setSuburb(entity.getSuburb());
@@ -98,6 +101,7 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 		payee.setState(entity.getState());
 		payee.setPostCode(entity.getPostcode());
 		payee.setPhone(entity.getPhone());
+		payee.setFax(entity.getFax());
 		payee.setEmail(entity.getEmail());
 		payeebank.setBank(entity.getBank());
 		payeebank.setAccountName(entity.getAccountName());
@@ -109,12 +113,13 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 	protected void bind() {
 		if (entity == null) {
 			entity = new EzeePayee();
-			entity.setCreated(EzeeClientDateUtils.toString(new Date()));
+			entity.setCreated(DATE_UTILS.toString(new Date()));
 			entity.setUpdated(null);
 		} else {
-			entity.setUpdated(EzeeClientDateUtils.toString(new Date()));
+			entity.setUpdated(DATE_UTILS.toString(new Date()));
 		}
 		entity.setName(payee.getName());
+		entity.setContact(payee.getContact());
 		entity.setAddressLineOne(payee.getAddressLine1());
 		entity.setAddressLineTwo(payee.getAddressLine2());
 		entity.setSuburb(payee.getSuburb());
@@ -122,6 +127,7 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 		entity.setState(payee.getState());
 		entity.setPostcode(payee.getPostCode());
 		entity.setPhone(payee.getPhone());
+		entity.setFax(payee.getFax());
 		entity.setEmail(payee.getEmail());
 		entity.setBank(payeebank.getBank());
 		entity.setAccountName(payeebank.getAccountName());

@@ -37,16 +37,16 @@ public class EzeePayee extends EzeeFinancialEntity implements IsSerializable {
 
 	public EzeePayee(final String name, final String addressLineOne, final String addressLineTwo, final String suburb,
 			final String city, final String state, final String postcode, final String phone, final String fax,
-			final String email, final String created, final String updated) {
-		this(NULL_ID, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, fax, email, created,
-				updated);
+			final String email, final String contact, final String created, final String updated) {
+		this(NULL_ID, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, fax, email, contact,
+				created, updated);
 	}
 
 	public EzeePayee(final Long id, final String name, final String addressLineOne, final String addressLineTwo,
 			final String suburb, final String city, final String state, final String postcode, final String phone,
-			final String fax, final String email, final String created, final String updated) {
-		super(id, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, fax, email, created,
-				updated);
+			final String fax, final String email, final String contact, final String created, final String updated) {
+		super(id, name, addressLineOne, addressLineTwo, suburb, city, state, postcode, phone, fax, email, contact,
+				created, updated);
 	}
 
 	public final String getBank() {

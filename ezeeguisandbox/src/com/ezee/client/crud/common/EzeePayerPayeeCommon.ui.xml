@@ -4,60 +4,72 @@
 	
 	</ui:style>
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="308px" width="327px">
+		<g:AbsolutePanel height="370px" width="327px">
 			<g:at top="10" left="10">
 				<g:Label text="Name" styleName="gwt-Label-Small" />
 			</g:at>
 			<g:at top="42" left="10">
-				<g:Label text="Address 1" styleName="gwt-Label-Small" />
+				<g:Label text="Contact" styleName="gwt-Label-Small" />
 			</g:at>
 			<g:at top="74" left="10">
-				<g:Label text="Address 2" styleName="gwt-Label-Small" />
+				<g:Label text="Address 1" styleName="gwt-Label-Small" />
 			</g:at>
 			<g:at top="106" left="10">
-				<g:Label text="Suburb" styleName="gwt-Label-Small" />
+				<g:Label text="Address 2" styleName="gwt-Label-Small" />
 			</g:at>
 			<g:at top="138" left="10">
-				<g:Label text="City" styleName="gwt-Label-Small" />
+				<g:Label text="Suburb" styleName="gwt-Label-Small" />
 			</g:at>
 			<g:at top="170" left="10">
+				<g:Label text="City" styleName="gwt-Label-Small" />
+			</g:at>
+			<g:at top="202" left="10">
 				<g:Label text="State" styleName="gwt-Label-Small" />
 			</g:at>
 			<g:at top="235" left="10">
+				<g:Label text="Post Code" styleName="gwt-Label-Small" />
+			</g:at>
+			<g:at top="267" left="10">
 				<g:Label text="Phone" styleName="gwt-Label-Small" />
 			</g:at>
-			<g:at top="203" left="10">
-				<g:Label text="Post Code" styleName="gwt-Label-Small" />
+			<g:at top="299" left="10">
+				<g:Label text="Fax" styleName="gwt-Label-Small" />
+			</g:at>
+			<g:at top="331" left="10">
+				<g:Label text="EMail" styleName="gwt-Label-Small" />
 			</g:at>
 			<g:at top="10" left="102">
 				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtName" />
 			</g:at>
 			<g:at top="42" left="102">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtAddressLine1" />
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtContact" />
 			</g:at>
 			<g:at top="74" left="102">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtAddressLine2" />
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtAddressLine1" />
 			</g:at>
 			<g:at top="106" left="102">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtSuburb" />
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtAddressLine2" />
 			</g:at>
 			<g:at top="138" left="102">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtCity" />
-			</g:at>
-			<g:at top="206" left="105">
-				<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtPostCode" />
-			</g:at>
-			<g:at top="235" left="102">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtPhone" />
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtSuburb" />
 			</g:at>
 			<g:at top="170" left="102">
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtCity" />
+			</g:at>
+			<g:at top="202" left="102">
 				<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstState" />
 			</g:at>
-			<g:at top="267" left="10">
-				<g:Label text="EMail" styleName="gwt-Label-Small" />
+			<g:at top="238" left="105">
+				<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtPostCode" />
 			</g:at>
 			<g:at top="267" left="102">
-				<g:Hyperlink text="New Hyperlink" targetHistoryToken="newHistoryToken" styleName="gwt-TextBox-Medium" />
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtPhone" />
+			</g:at>
+			<g:at top="299" left="102">
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtFax" />
+			</g:at>
+			<g:at top="331" left="102">
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtEmail"/>
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>

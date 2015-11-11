@@ -2,6 +2,7 @@ package com.ezee.client.grid.payment;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 
 import java.util.Date;
 
@@ -11,9 +12,12 @@ import com.ezee.client.grid.EzeeGridToolbar;
 import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeePayment;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
+import com.ezee.model.entity.filter.payment.EzeePaymentFilter;
+import com.ezee.web.common.EzeeWebCommonConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -61,6 +65,8 @@ public class EzeePaymentGridToolBar extends EzeeGridToolbar<EzeePayment> {
 	public void init() {
 		KeyPressHandler filterHandler = new EzeeToolbarKeyPressHandler();
 		txtInvoiceNumber.addKeyPressHandler(filterHandler);
+		dtFrom.addDomHandler(filterHandler, KeyPressEvent.getType());
+		dtTo.addDomHandler(filterHandler, KeyPressEvent.getType());
 		ClickHandler refreshHandler = new EzeeToolbarRefreshHandler();
 		btnRefresh.addClickHandler(refreshHandler);
 		ClickHandler clearHandler = new EzeeToolbarClearHandler();
@@ -93,7 +99,7 @@ public class EzeePaymentGridToolBar extends EzeeGridToolbar<EzeePayment> {
 
 	@Override
 	public EzeeEntityFilter<EzeePayment> resolveFilter() {
-		return new EzeePaymentFilter(getInvoiceNumber(), getFrom(), getTo());
+		return new EzeePaymentFilter(getInvoiceNumber(), getFrom(), getTo(), DATE_UTILS);
 	}
 
 	@UiHandler("btnBank")

@@ -21,6 +21,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.ezee.model.entity.enums.EzeePaymentType;
+import com.ezee.model.entity.filter.EzeeDateFilterable;
+import com.ezee.model.entity.filter.EzeeStringFilterable;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
@@ -34,7 +36,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 		@NamedNativeQuery(name = "selectOutstandingChequesSql", query = "select * from EZEE_PAYMENT where PAYMENT_TYPE = 'cheque' AND CHEQUE_PRESENTED = false", resultClass = EzeePayment.class) })
 @Entity
 @Table(name = "EZEE_PAYMENT")
-public class EzeePayment extends EzeeDatabaseEntity implements IsSerializable {
+public class EzeePayment extends EzeeDatabaseEntity
+		implements IsSerializable, EzeeStringFilterable, EzeeDateFilterable {
 
 	private static final long serialVersionUID = 607584929798342009L;
 
@@ -150,5 +153,13 @@ public class EzeePayment extends EzeeDatabaseEntity implements IsSerializable {
 	@Override
 	public String filterDate() {
 		return getPaymentDate();
+	}
+
+	@Override
+	public String filterString() {
+		if (!isEmpty(invoices)) {
+			return invoices.toString();
+		}
+		return null;
 	}
 }

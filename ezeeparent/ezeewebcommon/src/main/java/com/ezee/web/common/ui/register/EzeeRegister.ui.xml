@@ -38,7 +38,7 @@
 					<g:PasswordTextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtPassword" />
 				</g:at>
 				<g:at top="397" left="482">
-					<g:TextBox ui:field="txtEmail" styleName="{res.css.gwtTextBoxMedium}" />
+					<g:TextBox ui:field="txtEmail" styleName="{res.css.gwtTextBoxMediumEmail}" />
 				</g:at>
 				<g:at top="431" left="507">
 					<g:Button text="Back" ui:field="btnBack" styleName="{res.css.gwtButton}" />

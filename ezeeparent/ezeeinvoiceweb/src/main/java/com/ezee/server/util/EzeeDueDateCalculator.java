@@ -1,19 +1,20 @@
 package com.ezee.server.util;
 
-import static com.ezee.server.EzeeServerDateUtils.fromString;
-
 import org.joda.time.LocalDate;
 
+import com.ezee.common.EzeeDateUtilities;
 import com.ezee.model.entity.EzeeDebtAgeRule;
 import com.ezee.server.EzeeServerDateUtils;
 
 public class EzeeDueDateCalculator {
 
+	private final EzeeDateUtilities dateUtilities = new EzeeServerDateUtils();
+
 	public String calculate(final EzeeDebtAgeRule rule, final String today) {
 		if (rule == null) {
 			return null;
 		}
-		LocalDate date = new LocalDate(fromString(today));
+		LocalDate date = new LocalDate(dateUtilities.fromString(today));
 		if (rule.isEom()) {
 			date = date.dayOfMonth().withMaximumValue();
 		}
@@ -31,6 +32,6 @@ public class EzeeDueDateCalculator {
 		if (rule.isEom()) {
 			date = date.dayOfMonth().withMaximumValue();
 		}
-		return EzeeServerDateUtils.toString(date.toDate());
+		return dateUtilities.toString(date.toDate());
 	}
 }

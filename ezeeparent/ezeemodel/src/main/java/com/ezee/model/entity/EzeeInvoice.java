@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.ezee.model.entity.enums.EzeeInvoiceClassification;
+import com.ezee.model.entity.filter.EzeeDateFilterable;
+import com.ezee.model.entity.filter.EzeeStringFilterable;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
@@ -31,7 +33,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 		@NamedNativeQuery(name = "deleteAgeDebtMappingsSql", query = "delete from EZEE_INVOICE_TO_DEBT_AGE_MAPPING where INVOICE_ID = :id") })
 @Entity
 @Table(name = "EZEE_INVOICE")
-public class EzeeInvoice extends EzeeDatabaseEntity implements IsSerializable {
+public class EzeeInvoice extends EzeeDatabaseEntity
+		implements IsSerializable, EzeeStringFilterable, EzeeDateFilterable {
 
 	private static final long serialVersionUID = -588454316909349202L;
 
@@ -237,5 +240,10 @@ public class EzeeInvoice extends EzeeDatabaseEntity implements IsSerializable {
 	@Override
 	public String filterDate() {
 		return getInvoiceDate();
+	}
+
+	@Override
+	public String filterString() {
+		return invoiceId;
 	}
 }

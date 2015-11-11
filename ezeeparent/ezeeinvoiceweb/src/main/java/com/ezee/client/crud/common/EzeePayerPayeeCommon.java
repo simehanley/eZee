@@ -31,6 +31,9 @@ public class EzeePayerPayeeCommon extends Composite {
 	TextBox txtName;
 
 	@UiField
+	TextBox txtContact;
+
+	@UiField
 	TextBox txtAddressLine1;
 
 	@UiField
@@ -52,6 +55,9 @@ public class EzeePayerPayeeCommon extends Composite {
 	TextBox txtPhone;
 
 	@UiField
+	TextBox txtFax;
+
+	@UiField
 	TextBox txtEmail;
 
 	public EzeePayerPayeeCommon() {
@@ -60,8 +66,16 @@ public class EzeePayerPayeeCommon extends Composite {
 		initEmail();
 	}
 
+	public TextBox getTxtName() {
+		return txtName;
+	}
+
 	public final String getName() {
 		return txtName.getText();
+	}
+
+	public final String getContact() {
+		return txtContact.getText();
 	}
 
 	public final String getAddressLine1() {
@@ -92,6 +106,10 @@ public class EzeePayerPayeeCommon extends Composite {
 		return txtPhone.getText();
 	}
 
+	public final String getFax() {
+		return txtFax.getText();
+	}
+
 	private void initStates() {
 		lstState.addItem("NSW");
 		lstState.addItem("VIC");
@@ -105,6 +123,10 @@ public class EzeePayerPayeeCommon extends Composite {
 
 	public void setName(final String name) {
 		txtName.setText(name);
+	}
+
+	public void setContact(final String contact) {
+		txtContact.setText(contact);
 	}
 
 	public void setAddressLine1(final String addressLine1) {
@@ -135,6 +157,10 @@ public class EzeePayerPayeeCommon extends Composite {
 		txtPhone.setText(phone);
 	}
 
+	public void setFax(final String fax) {
+		txtFax.setText(fax);
+	}
+
 	private int getStateIndex(final String state) {
 		for (int i = ZERO; i < lstState.getItemCount(); i++) {
 			if (state.equals(lstState.getItemText(i))) {
@@ -154,6 +180,7 @@ public class EzeePayerPayeeCommon extends Composite {
 
 	public void disable() {
 		txtName.setEnabled(false);
+		txtContact.setEnabled(false);
 		txtAddressLine1.setEnabled(false);
 		txtAddressLine2.setEnabled(false);
 		txtSuburb.setEnabled(false);
@@ -161,6 +188,7 @@ public class EzeePayerPayeeCommon extends Composite {
 		txtPostCode.setEnabled(false);
 		lstState.setEnabled(false);
 		txtPhone.setEnabled(false);
+		txtFax.setEnabled(false);
 		txtEmail.setEnabled(false);
 	}
 

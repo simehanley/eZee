@@ -7,7 +7,10 @@ import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.payee.EzeeCreateUpdateDeletePayee;
 import com.ezee.client.grid.EzeeFinancialEntityGrid;
 import com.ezee.client.grid.EzeeFinancialEntityToolbar;
+import com.ezee.client.grid.invoice.EzeeInvoiceGrid;
 import com.ezee.model.entity.EzeePayee;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.ui.MenuBar;
 
 /**
  * 
@@ -16,8 +19,11 @@ import com.ezee.model.entity.EzeePayee;
  */
 public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
 
-	public EzeePayeeGrid(final EzeeInvoiceEntityCache cache) {
+	private final EzeeInvoiceGrid invoiceGrid;
+
+	public EzeePayeeGrid(final EzeeInvoiceEntityCache cache, final EzeeInvoiceGrid invoiceGrid) {
 		super(cache);
+		this.invoiceGrid = invoiceGrid;
 	}
 
 	protected void initGrid() {
@@ -57,5 +63,25 @@ public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
 		if (entity != null) {
 			new EzeeCreateUpdateDeletePayee(cache, this, entity, update).show();
 		}
+	}
+
+	public void newSupplierInvoice() {
+		EzeePayee entity = getSelected();
+		if (entity != null && invoiceGrid != null) {
+			invoiceGrid.newSupplierInvoice(entity.getName());
+		}
+	}
+
+	protected MenuBar createContextMenu() {
+		MenuBar menu = super.createContextMenu();
+		menu.addSeparator();
+		menu.addItem("Raise Invoice", new Command() {
+			@Override
+			public void execute() {
+				newSupplierInvoice();
+				contextMenu.hide();
+			}
+		});
+		return menu;
 	}
 }
