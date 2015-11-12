@@ -81,7 +81,7 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 		if (centered) {
 			style.setAlignment(ALIGN_CENTER);
 		}
-		style.setWrapText(true);
+		style.setWrapText(false);
 		return style;
 	}
 

@@ -29,6 +29,13 @@ public interface EzeeWebCommonConstants {
 
 	String REPORT_SERVICE = "reportservice";
 
+	String EXCEL_INVOICE_SUPPLIER_FILTER = "Supplier";
+	String EXCEL_INVOICE_PREMISES_FILTER = "Premises";
+	String EXCEL_INVOICE_INVOICES_FILTER = "Invoices";
+	String EXCEL_INVOICE_DATE_FROM_FILTER = "DateFrom";
+	String EXCEL_INVOICE_DATE_TO_FILTER = "DateTo";
+	String EXCEL_INVOICE_INCLUDE_PAID_FILTER = "IncludePaid";
+
 	EzeeDateUtilities DATE_UTILS = new EzeeClientDateUtils();
 
 	EzeeAutoLogin AUTO_LOGIN_HELPER = new EzeeAutoLogin();

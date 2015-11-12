@@ -76,11 +76,7 @@ public class EzeeInvoiceDaoImpl extends EzeeBaseDaoImpl<EzeeInvoice> implements 
 	}
 
 	@Override
-	public List<EzeeInvoice> get(final String supplier, final String premises, final String invoiceIds,
-			final String dateFrom, final String dateTo, final boolean includePaid) {
-		EzeeInvoiceFilter filter = new EzeeInvoiceFilter(supplier, premises, invoiceIds,
-				SERVER_DATE_UTILS.fromString(dateFrom), SERVER_DATE_UTILS.fromString(dateTo), SERVER_DATE_UTILS,
-				includePaid);
+	public List<EzeeInvoice> get(final EzeeInvoiceFilter filter) {
 		List<EzeeInvoice> unfiltered = get();
 		List<EzeeInvoice> filtered = new ArrayList<>();
 		for (EzeeInvoice invoice : unfiltered) {

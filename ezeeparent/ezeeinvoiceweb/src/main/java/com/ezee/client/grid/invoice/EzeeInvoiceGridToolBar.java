@@ -3,6 +3,12 @@ package com.ezee.client.grid.invoice;
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
+import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_INVOICE_DATE_FROM_FILTER;
+import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_INVOICE_DATE_TO_FILTER;
+import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_INVOICE_INCLUDE_PAID_FILTER;
+import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_INVOICE_INVOICES_FILTER;
+import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_INVOICE_PREMISES_FILTER;
+import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_INVOICE_SUPPLIER_FILTER;
 import static com.ezee.web.common.EzeeWebCommonConstants.REPORT_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.REPORT_TYPE;
 import static com.ezee.web.common.enums.EzeeReportType.detailed_payee_invoice_excel;
@@ -120,6 +126,7 @@ public class EzeeInvoiceGridToolBar extends EzeeGridToolbar<EzeeInvoice> {
 	}
 
 	public String getPremises() {
+
 		if (hasLength(txtPremises.getText())) {
 			return txtPremises.getText();
 		}
@@ -138,8 +145,23 @@ public class EzeeInvoiceGridToolBar extends EzeeGridToolbar<EzeeInvoice> {
 
 	@UiHandler("btnReport")
 	void onReportClick(ClickEvent event) {
-		String reportServiceUrl = GWT.getModuleBaseURL() + REPORT_SERVICE + "?" + REPORT_TYPE + "="
-				+ detailed_payee_invoice_excel;
-		Window.Location.replace(reportServiceUrl);
+		String reportServiceUrl = GWT.getModuleBaseURL() + resolveReportParamString();
+		Window.Location.assign(reportServiceUrl);
+	}
+
+	private String resolveReportParamString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(REPORT_SERVICE + "?" + REPORT_TYPE + "=" + detailed_payee_invoice_excel);
+		builder.append("&" + EXCEL_INVOICE_SUPPLIER_FILTER + "=" + getSupplier());
+		builder.append("&" + EXCEL_INVOICE_PREMISES_FILTER + "=" + getPremises());
+		builder.append("&" + EXCEL_INVOICE_INVOICES_FILTER + "=" + getInvoiceNumber());
+		if (getFrom() != null) {
+			builder.append("&" + EXCEL_INVOICE_DATE_FROM_FILTER + "=" + DATE_UTILS.toString(getFrom()));
+		}
+		if (getTo() != null) {
+			builder.append("&" + EXCEL_INVOICE_DATE_TO_FILTER + "=" + DATE_UTILS.toString(getTo()));
+		}
+		builder.append("&" + EXCEL_INVOICE_INCLUDE_PAID_FILTER + "=" + Boolean.toString(getShowPaid()));
+		return builder.toString();
 	}
 }

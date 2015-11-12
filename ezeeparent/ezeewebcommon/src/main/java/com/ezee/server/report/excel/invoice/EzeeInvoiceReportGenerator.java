@@ -5,6 +5,13 @@ import static com.ezee.common.EzeeCommonConstants.TWO;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
+import static com.ezee.server.EzeeServerDateUtils.SERVER_DATE_UTILS;
+import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_INVOICE_DATE_FROM_FILTER;
+import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_INVOICE_DATE_TO_FILTER;
+import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_INVOICE_INCLUDE_PAID_FILTER;
+import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_INVOICE_INVOICES_FILTER;
+import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_INVOICE_PREMISES_FILTER;
+import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_INVOICE_SUPPLIER_FILTER;
 import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_NUMERIC;
 import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING;
 
@@ -33,6 +40,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ezee.common.EzeeCommonConstants;
 import com.ezee.dao.EzeeInvoiceDao;
 import com.ezee.model.entity.EzeeInvoice;
+import com.ezee.model.entity.filter.invoice.EzeeInvoiceFilter;
 import com.ezee.server.report.EzeeReportGenerator;
 import com.ezee.server.report.excel.AbstractExcelReportGenerator;
 
@@ -59,7 +67,7 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 
 	private void generateEzeeInvoiceReport(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		List<EzeeInvoice> invoices = dao.get(EzeeInvoice.class);
+		List<EzeeInvoice> invoices = getInvoices(request);
 		if (!isEmpty(invoices)) {
 			Map<String, List<EzeeInvoice>> supplierInvoices = resolveInvoicesBySupplier(invoices);
 			generateEzeeInvoiceReport(supplierInvoices, response);
@@ -81,14 +89,10 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 		Sheet sheet = book.createSheet("invoices");
 		generateEzeeInvoiceReportHeader(book, sheet);
 		generateEzeeInvoiceReportContent(book, sheet, supplierInvoices);
-		formatReport(sheet);
 		ByteArrayOutputStream result = new ByteArrayOutputStream();
 		book.write(result);
 		result.close();
 		return result.toByteArray();
-	}
-
-	private void formatReport(final Sheet sheet) {
 	}
 
 	private void generateEzeeInvoiceReportContent(final Workbook book, final Sheet sheet,
@@ -179,5 +183,20 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 			supplierInvoices.get(key).add(invoice);
 		}
 		return supplierInvoices;
+	}
+
+	private List<EzeeInvoice> getInvoices(final HttpServletRequest request) {
+		return dao.get(resolveFilter(request));
+	}
+
+	private EzeeInvoiceFilter resolveFilter(final HttpServletRequest request) {
+		String supplier = request.getParameter(EXCEL_INVOICE_SUPPLIER_FILTER);
+		String premises = request.getParameter(EXCEL_INVOICE_PREMISES_FILTER);
+		String invoiceIds = request.getParameter(EXCEL_INVOICE_INVOICES_FILTER);
+		String from = request.getParameter(EXCEL_INVOICE_DATE_FROM_FILTER);
+		String to = request.getParameter(EXCEL_INVOICE_DATE_TO_FILTER);
+		boolean includePaid = Boolean.getBoolean(request.getParameter(EXCEL_INVOICE_INCLUDE_PAID_FILTER));
+		return new EzeeInvoiceFilter(supplier, premises, invoiceIds, SERVER_DATE_UTILS.fromString(from),
+				SERVER_DATE_UTILS.fromString(to), SERVER_DATE_UTILS, includePaid);
 	}
 }
