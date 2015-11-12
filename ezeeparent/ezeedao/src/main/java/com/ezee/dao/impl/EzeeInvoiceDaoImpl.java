@@ -3,7 +3,6 @@ package com.ezee.dao.impl;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
-import static com.ezee.server.EzeeServerDateUtils.SERVER_DATE_UTILS;
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
 import java.util.ArrayList;
