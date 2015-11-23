@@ -4,8 +4,7 @@
 
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
 
-	<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="600px"
-		height="45px">
+	<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE">
 		<g:Label text="From" styleName="{res.css.gwtLabelSmall}" />
 		<p1:DateBox ui:field="dtFrom" styleName="{res.css.gwtDateBoxSmall}" />
 		<g:Label text="To" styleName="{res.css.gwtLabelSmall}" />

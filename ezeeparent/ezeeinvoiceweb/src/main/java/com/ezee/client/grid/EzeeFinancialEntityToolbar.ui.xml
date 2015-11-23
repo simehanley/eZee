@@ -3,8 +3,7 @@
 
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
 
-	<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="300px"
-		height="45px">
+	<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE">
 		<g:Label text="Name" styleName="{res.css.gwtLabelSmall}" />
 		<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtName" />
 		<g:Button text="Refresh" ui:field="btnRefresh" styleName="{res.css.gwtButton}" />

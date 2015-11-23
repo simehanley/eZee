@@ -7,7 +7,7 @@
 	<g:HTMLPanel>
 		<g:AbsolutePanel height="386px" width="710px">
 			<g:at top="7" left="7">
-				<g:HorizontalPanel width="555px" height="36px" verticalAlignment="ALIGN_MIDDLE">
+				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
 					<g:Label text="Type" styleName="{res.css.gwtLabelSmall}" />
 					<g:ListBox styleName="{res.css.gwtListBoxSmall}" ui:field="lstPaymentType" width="135px" height="30px" />
 					<g:Label text="Chq. No." styleName="{res.css.gwtLabelSmall}" ui:field="lblChequeNumber" />
@@ -30,7 +30,7 @@
 				</g:ResizeLayoutPanel>
 			</g:at>
 			<g:at top="316" left="7">
-				<g:HorizontalPanel width="680px" height="34px" verticalAlignment="ALIGN_MIDDLE">
+				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
 					<g:Label text="Totals" styleName="{res.css.gwtLabelSmall}" />
 					<g:Label text="Amount" styleName="{res.css.gwtLabelSmall}" />
 					<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtAmount" />
