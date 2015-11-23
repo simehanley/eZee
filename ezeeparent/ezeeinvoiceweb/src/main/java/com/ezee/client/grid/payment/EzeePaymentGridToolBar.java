@@ -13,7 +13,6 @@ import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeePayment;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.ezee.model.entity.filter.payment.EzeePaymentFilter;
-import com.ezee.web.common.EzeeWebCommonConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

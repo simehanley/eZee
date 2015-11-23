@@ -14,6 +14,7 @@ import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.ezee.web.common.ui.css.EzeeGwtOverridesResources;
+import com.ezee.web.common.ui.utils.EzeeCursorUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
@@ -116,16 +117,19 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	}
 
 	protected void loadEntities() {
+		EzeeCursorUtils.showWaitCursor();
 		INVOICE_SERVICE.getEntities(getGridClass(), new AsyncCallback<List<T>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
 				log.log(SEVERE, "Error loading entities of type '" + getGridClass() + "'", caught);
+				EzeeCursorUtils.showDefaultCursor();
 			}
 
 			@Override
 			public void onSuccess(List<T> entities) {
 				setEntities(entities);
+				EzeeCursorUtils.showDefaultCursor();
 			}
 		});
 	}

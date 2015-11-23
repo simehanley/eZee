@@ -26,6 +26,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.StackPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -92,6 +93,9 @@ public class EzeeInvoiceMain extends Composite {
 	@UiField
 	HTML editUser;
 
+	@UiField
+	StackPanel menu;
+
 	private final EzeeUser ezeeUser;
 
 	interface EzeeInvoiceMainUiBinder extends UiBinder<Widget, EzeeInvoiceMain> {
@@ -113,6 +117,7 @@ public class EzeeInvoiceMain extends Composite {
 		tab.addSelectionHandler(new SelectionHandler<Integer>() {
 			public void onSelection(SelectionEvent<Integer> event) {
 				int tabId = event.getSelectedItem();
+				menu.showStack(tabId);
 				EzeeHasGrid<?> grid = (EzeeHasGrid<?>) tab.getWidget(tabId);
 				grid.getGrid().redraw();
 			}
@@ -149,7 +154,6 @@ public class EzeeInvoiceMain extends Composite {
 				Window.Location.assign(GWT.getHostPageBaseURL());
 			}
 		});
-
 		ClickHandler mainClickHandler = new EzeeInvoiceMainStackPanelClickHandler();
 		newInvoice.addClickHandler(mainClickHandler);
 		editInvoice.addClickHandler(mainClickHandler);
@@ -165,6 +169,7 @@ public class EzeeInvoiceMain extends Composite {
 		editPremises.addClickHandler(mainClickHandler);
 		deletePremises.addClickHandler(mainClickHandler);
 		editUser.addClickHandler(mainClickHandler);
+		tab.addDomHandler(mainClickHandler, ClickEvent.getType());
 	}
 
 	private class EzeeInvoiceMainStackPanelClickHandler implements ClickHandler {
@@ -199,6 +204,9 @@ public class EzeeInvoiceMain extends Composite {
 				getFirstInstanceOf(EzeePaymentGrid.class, tab).editEntity();
 			} else if (event.getSource().equals(deletePayment)) {
 				getFirstInstanceOf(EzeePaymentGrid.class, tab).deleteEntity();
+			} else if (event.getSource().equals(tab)) {
+				int tabId = tab.getSelectedIndex();
+				menu.showStack(tabId);
 			}
 		}
 	}
