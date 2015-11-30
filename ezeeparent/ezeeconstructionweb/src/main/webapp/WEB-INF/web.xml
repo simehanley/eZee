@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/ezeeconstructionweb-context.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>userservice</servlet-name>
+		<servlet-class>com.ezee.server.EzeeUserServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>userservice</servlet-name>
+		<url-pattern>/EzeeConstructionWeb/userservice</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>utilityservice</servlet-name>
+		<servlet-class>com.ezee.server.EzeeUtilityServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>utilityservice</servlet-name>
+		<url-pattern>/EzeeConstructionWeb/utilityservice</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>EzeeConstructionWeb.jsp</welcome-file>
+	</welcome-file-list>
+
+</web-app>

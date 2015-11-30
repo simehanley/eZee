@@ -1,0 +1,8 @@
+/* gwt overrides */
+.gwt-StackPanel .gwt-StackPanelContent {
+	background: #6699CC !important;
+}
+
+.gwt-StackPanel .gwt-StackPanelItem {
+	font-size: 1.0em !important;
+}

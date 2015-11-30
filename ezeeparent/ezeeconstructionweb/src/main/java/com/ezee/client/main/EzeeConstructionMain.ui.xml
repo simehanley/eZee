@@ -1,0 +1,47 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
+
+	<g:DockLayoutPanel unit="EM">
+		<g:north size="5">
+			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" title="header" height="100%" width="100%"
+				styleName="{res.css.header}">
+				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="10%" height="100%">
+					<g:HTML styleName="{res.css.headerLabel}" />
+				</g:cell>
+				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="80%" height="100%">
+					<g:HTML text="eZee Construction" styleName="{res.css.headerLabel}" />
+				</g:cell>
+				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="10%" height="100%">
+					<g:VerticalPanel height="100%">
+						<g:HTML ui:field="user" styleName="{res.css.footerLabel}" wordWrap="false" />
+						<g:HTML text="Logout" ui:field="logout" styleName="{res.css.gwtLink}" />
+					</g:VerticalPanel>
+				</g:cell>
+			</g:HorizontalPanel>
+		</g:north>
+		<g:south size="3">
+			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" title="footer"
+				height="100%" width="100%" styleName="{res.css.footer}">
+				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="25%" height="100%">
+					<g:HTML styleName="{res.css.footerLabel}" ui:field="version" />
+				</g:cell>
+				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="50%" height="100%">
+					<g:HTML text="Provided by Haich + Gee Pty Ltd" styleName="{res.css.footerLabel}" />
+				</g:cell>
+				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="25%" height="100%">
+					<g:HTML text="EMail Support" styleName="{res.css.gwtLink}" ui:field="email" />
+				</g:cell>
+			</g:HorizontalPanel>
+		</g:south>
+		<g:center>
+			<g:DockLayoutPanel unit="EM">
+				<g:center>
+					<g:TabLayoutPanel barHeight="20" height="100%" width="100%" ui:field="tab" />
+				</g:center>
+			</g:DockLayoutPanel>
+		</g:center>
+	</g:DockLayoutPanel>
+
+</ui:UiBinder> 
