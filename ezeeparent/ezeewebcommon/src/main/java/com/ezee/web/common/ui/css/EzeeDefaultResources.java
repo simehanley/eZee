@@ -71,6 +71,8 @@ public interface EzeeDefaultResources extends ClientBundle {
 
 		String gwtButton();
 
+		String gwtPushButton();
+
 		String gwtRichTextAreaMedium();
 
 		String gwtDateBoxSmall();

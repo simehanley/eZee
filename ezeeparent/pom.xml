@@ -26,6 +26,7 @@
 		<module>ezeedao</module>
 		<module>ezeewebcommon</module>
 		<module>ezeeinvoiceweb</module>
+		<module>ezeeconstructionweb</module>
 	</modules>
 
 	<dependencyManagement>

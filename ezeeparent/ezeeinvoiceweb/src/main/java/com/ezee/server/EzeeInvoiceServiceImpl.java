@@ -1,8 +1,5 @@
 package com.ezee.server;
 
-import static com.ezee.client.EzeeInvoiceWebConstants.EZEE_INVOICE_VERSION_PROPERTIES;
-import static com.ezee.client.EzeeInvoiceWebConstants.EZEE_INVOICE_WEB_VERSION;
-
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,7 +11,6 @@ import com.ezee.model.entity.EzeeDebtAgeRule;
 import com.ezee.model.entity.EzeePayment;
 import com.ezee.server.dao.EzeeEntitiesDao;
 import com.ezee.server.util.EzeeDueDateCalculator;
-import com.ezee.server.util.EzeeInvoicePropertyLoader;
 
 /**
  * 
@@ -26,8 +22,6 @@ public class EzeeInvoiceServiceImpl extends AbstractRemoteService implements Eze
 	private static final Logger log = LoggerFactory.getLogger(EzeeInvoiceServiceImpl.class);
 
 	private static final long serialVersionUID = -1330259669564042121L;
-
-	private final EzeeInvoicePropertyLoader properties = new EzeeInvoicePropertyLoader(EZEE_INVOICE_VERSION_PROPERTIES);
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -76,11 +70,6 @@ public class EzeeInvoiceServiceImpl extends AbstractRemoteService implements Eze
 	@Override
 	public List<EzeePayment> getOutstandingCheques(final Long premisesId) {
 		return getSpringBean(EzeeEntitiesDao.class).getOutstandingCheques(premisesId);
-	}
-
-	@Override
-	public String getVersion() {
-		return properties.getProperty(EZEE_INVOICE_WEB_VERSION);
 	}
 
 	@Override

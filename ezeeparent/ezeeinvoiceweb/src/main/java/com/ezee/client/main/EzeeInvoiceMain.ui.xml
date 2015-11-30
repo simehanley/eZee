@@ -14,16 +14,16 @@
 					<g:HTML text="eZee Invoices" styleName="{res.css.headerLabel}" />
 				</g:cell>
 				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="10%" height="100%">
-					<g:VerticalPanel width="100%" height="100%">
-						<g:HTML ui:field="user" styleName="{res.css.footerLabel}" height="50%" width="100%" wordWrap="false" />
-						<g:HTML text="Logout" ui:field="logout" styleName="{res.css.gwtLink}" height="50%" width="100%" />
+					<g:VerticalPanel height="100%">
+						<g:HTML ui:field="user" styleName="{res.css.footerLabel}" wordWrap="false" />
+						<g:HTML text="Logout" ui:field="logout" styleName="{res.css.gwtLink}" />
 					</g:VerticalPanel>
 				</g:cell>
 			</g:HorizontalPanel>
 		</g:north>
 		<g:south size="3">
-			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" title="footer" height="100%" width="100%"
-				styleName="{res.css.footer}">
+			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" title="footer"
+				height="100%" width="100%" styleName="{res.css.footer}">
 				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="25%" height="100%">
 					<g:HTML styleName="{res.css.footerLabel}" ui:field="version" />
 				</g:cell>
@@ -37,37 +37,37 @@
 		</g:south>
 		<g:west size="10">
 			<g:StackPanel width="100%" height="100%" ui:field="menu">
-				<g:VerticalPanel g:StackPanel-text="INVOICES" height="10%" width="100%">
-					<g:VerticalPanel height="100%" width="100%">
+				<g:VerticalPanel g:StackPanel-text="INVOICES">
+					<g:VerticalPanel>
 						<g:HTML text="New Invoice" styleName="{res.css.gwtStackPanelLink}" ui:field="newInvoice" />
 						<g:HTML text="Edit Invoice" styleName="{res.css.gwtStackPanelLink}" ui:field="editInvoice" />
 						<g:HTML text="Delete Invoice" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteInvoice" />
 						<g:HTML text="Make Payment" styleName="{res.css.gwtStackPanelLink}" ui:field="makePayment" />
 					</g:VerticalPanel>
 				</g:VerticalPanel>
-				<g:VerticalPanel g:StackPanel-text="PAYMENTS" height="5%" width="100%">
-					<g:VerticalPanel height="100%" width="100%">
+				<g:VerticalPanel g:StackPanel-text="PAYMENTS">
+					<g:VerticalPanel>
 						<g:HTML text="Edit Payment" styleName="{res.css.gwtStackPanelLink}" ui:field="editPayment" />
 						<g:HTML text="Delete Payment" styleName="{res.css.gwtStackPanelLink}" ui:field="deletePayment" />
 					</g:VerticalPanel>
 				</g:VerticalPanel>
-				<g:VerticalPanel g:StackPanel-text="SUPPLIERS" height="10%" width="100%">
-					<g:VerticalPanel height="100%" width="100%">
+				<g:VerticalPanel g:StackPanel-text="SUPPLIERS">
+					<g:VerticalPanel>
 						<g:HTML text="New Supplier" styleName="{res.css.gwtStackPanelLink}" ui:field="newSupplier" />
 						<g:HTML text="Edit Supplier" styleName="{res.css.gwtStackPanelLink}" ui:field="editSupplier" />
 						<g:HTML text="Delete Supplier" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteSupplier" />
 						<g:HTML text="Raise Invoice" styleName="{res.css.gwtStackPanelLink}" ui:field="raiseSupplierInvoice" />
 					</g:VerticalPanel>
 				</g:VerticalPanel>
-				<g:VerticalPanel g:StackPanel-text="PREMISES" height="10%" width="100%">
-					<g:VerticalPanel height="100%" width="100%">
+				<g:VerticalPanel g:StackPanel-text="PREMISES">
+					<g:VerticalPanel>
 						<g:HTML text="New Premises" styleName="{res.css.gwtStackPanelLink}" ui:field="newPremises" />
 						<g:HTML text="Edit Premises" styleName="{res.css.gwtStackPanelLink}" ui:field="editPremises" />
 						<g:HTML text="Delete Premises" styleName="{res.css.gwtStackPanelLink}" ui:field="deletePremises" />
 					</g:VerticalPanel>
 				</g:VerticalPanel>
-				<g:VerticalPanel g:StackPanel-text="USER" height="100%" width="100%">
-					<g:VerticalPanel height="100%" width="100%">
+				<g:VerticalPanel g:StackPanel-text="USER">
+					<g:VerticalPanel>
 						<g:HTML text="Edit User" styleName="{res.css.gwtStackPanelLink}" ui:field="editUser" />
 					</g:VerticalPanel>
 				</g:VerticalPanel>

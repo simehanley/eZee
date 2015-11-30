@@ -7,20 +7,18 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ezee.server.EzeeInvoiceServiceImpl;
-
 /**
  * 
  * @author siborg
  *
  */
-public class EzeeInvoicePropertyLoader {
+public class EzeePropertyLoader {
 
-	private static final Logger log = LoggerFactory.getLogger(EzeeInvoiceServiceImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(EzeePropertyLoader.class);
 
 	private Properties properties = new Properties();
 
-	public EzeeInvoicePropertyLoader(final String filename) {
+	public EzeePropertyLoader(final String filename) {
 		InputStream stream = this.getClass().getResourceAsStream("/" + filename);
 		if (stream != null) {
 			try {

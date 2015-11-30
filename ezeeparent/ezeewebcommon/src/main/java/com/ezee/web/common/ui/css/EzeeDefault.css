@@ -185,6 +185,17 @@
 	font-weight: bold;
 }
 
+.gwtPushButton {
+	width: 30px;
+	height: 30px;
+	margin: 3px;
+	font-weight: bold;
+	border: 1px solid black;
+	text-align: center;
+	vertical-align: middle;
+	display: table-cell;
+}
+
 .gwtListBoxMedium {
 	width: 210px;
 	height: 30px;

@@ -4,6 +4,8 @@ import com.ezee.common.EzeeDateUtilities;
 import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.web.common.service.EzeeUserService;
 import com.ezee.web.common.service.EzeeUserServiceAsync;
+import com.ezee.web.common.service.EzeeUtilityService;
+import com.ezee.web.common.service.EzeeUtilityServiceAsync;
 import com.ezee.web.common.ui.utils.EzeeAutoLogin;
 import com.google.gwt.core.client.GWT;
 
@@ -36,8 +38,14 @@ public interface EzeeWebCommonConstants {
 	String EXCEL_INVOICE_DATE_TO_FILTER = "DateTo";
 	String EXCEL_INVOICE_INCLUDE_PAID_FILTER = "IncludePaid";
 
+	String SUPPORT_EMAIL = "mailto:support@ezeeit.com";
+
+	String EZEE_VERSION_PROPERTIES = "ezee.version.properties";
+	String EZEE_WEB_VERSION = "ezee.web.version";
+
 	EzeeDateUtilities DATE_UTILS = new EzeeClientDateUtils();
 
 	EzeeAutoLogin AUTO_LOGIN_HELPER = new EzeeAutoLogin();
 	EzeeUserServiceAsync USER_SERVICE = GWT.create(EzeeUserService.class);
+	EzeeUtilityServiceAsync UTILITY_SERVICE = GWT.create(EzeeUtilityService.class);
 }

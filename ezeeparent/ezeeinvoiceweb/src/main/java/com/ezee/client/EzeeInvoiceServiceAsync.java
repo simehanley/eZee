@@ -24,7 +24,5 @@ public interface EzeeInvoiceServiceAsync {
 
 	void getOutstandingCheques(Long premisesId, AsyncCallback<List<EzeePayment>> payments);
 
-	void getVersion(AsyncCallback<String> version);
-
 	void calculateDueDate(EzeeDebtAgeRule rule, String today, AsyncCallback<String> duedate);
 }

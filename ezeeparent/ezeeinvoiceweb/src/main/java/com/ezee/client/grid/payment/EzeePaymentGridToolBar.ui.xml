@@ -9,8 +9,8 @@
 		<p1:DateBox ui:field="dtFrom" styleName="{res.css.gwtDateBoxSmall}" />
 		<g:Label text="To" styleName="{res.css.gwtLabelSmall}" />
 		<p1:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtTo" />
-		<g:Label text="Invoice(s)" styleName="{res.css.gwtLabelMedium}" />
-		<g:TextBox styleName="{res.css.gwtTextBoxLarge}" ui:field="txtInvoiceNumber" />
+		<g:Label text="Invoice(s)" styleName="{res.css.gwtLabelSmall}" />
+		<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtInvoiceNumber" />
 		<g:Button text="Refresh" ui:field="btnRefresh" styleName="{res.css.gwtButton}" />
 		<g:Button text="Clear" ui:field="btnClear" styleName="{res.css.gwtButton}" />
 		<g:Button text="Bank" ui:field="btnBank" styleName="{res.css.gwtButton}" />

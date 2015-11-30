@@ -26,7 +26,5 @@ public interface EzeeInvoiceService extends RemoteService {
 
 	List<EzeePayment> getOutstandingCheques(Long premisesId);
 
-	String getVersion();
-
 	String calculateDueDate(EzeeDebtAgeRule rule, String today);
 }

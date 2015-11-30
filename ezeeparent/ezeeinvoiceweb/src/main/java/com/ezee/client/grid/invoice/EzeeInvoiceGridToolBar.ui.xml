@@ -9,12 +9,12 @@
 		<p1:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtFrom" />
 		<g:Label text="To" styleName="{res.css.gwtLabelSmall}" />
 		<p1:DateBox ui:field="dtTo" styleName="{res.css.gwtDateBoxSmall}" />
-		<g:Label text="Invoice Number(s)" styleName="{res.css.gwtLabelMedium}" />
-		<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtInvoiceNumber" />
-		<g:Label text="Supplier" styleName="{res.css.gwtLabelMedium}" />
-		<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtSupplier" />
-		<g:Label text="Premises" styleName="{res.css.gwtLabelMedium}" />
-		<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtPremises" />
+		<g:Label text="Invoice(s)" styleName="{res.css.gwtLabelSmall}" />
+		<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtInvoiceNumber" />
+		<g:Label text="Supplier" styleName="{res.css.gwtLabelSmall}" />
+		<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtSupplier" />
+		<g:Label text="Premises" styleName="{res.css.gwtLabelSmall}" />
+		<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtPremises" />
 		<g:Button text="Refresh" ui:field="btnRefresh" styleName="{res.css.gwtButton}" />
 		<g:Button text="Clear" ui:field="btnClear" styleName="{res.css.gwtButton}" />
 		<g:Button ui:field="btnReport" text="Report" styleName="{res.css.gwtButton}" />

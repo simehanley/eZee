@@ -34,11 +34,6 @@ public interface EzeeInvoiceWebConstants {
 
 	String FILE_DOWNLOAD_SERVICE = "downloadservice";
 
-	String SUPPORT_EMAIL = "mailto:support@ezeeit.com";
-
-	String EZEE_INVOICE_VERSION_PROPERTIES = "ezeeinvoice.version.properties";
-	String EZEE_INVOICE_WEB_VERSION = "ezeeinvoice.web.version";
-
 	String LOGIN_USER = "eZee Invoices Login";
 	String REGISTER_USER = "eZee Invoices Register User";
 
