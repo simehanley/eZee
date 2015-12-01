@@ -8,9 +8,9 @@
 
 	<context:component-scan base-package="com.ezee" />
 
-	<import resource="ezeeinvoiceweb-util-context.xml" />
-	<import resource="ezeeinvoiceweb-db-context.xml" />
+	<import resource="classpath:ezeeweb-db-context.xml" />
 	<import resource="classpath:ezeedao-context.xml" />
+	<import resource="ezeeinvoiceweb-util-context.xml" />
 	<import resource="ezeeinvoiceweb-dao-context.xml" />
 	<import resource="ezeeinvoiceweb-report-context.xml" />
 
@@ -19,6 +19,7 @@
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 		<property name="locations">
 			<list>
+				<value>classpath:ezee-web-default.properties</value>
 				<value>classpath:ezeeinvoice-web-default.properties</value>
 				<!-- add production properties file here when configured -->
 			</list>

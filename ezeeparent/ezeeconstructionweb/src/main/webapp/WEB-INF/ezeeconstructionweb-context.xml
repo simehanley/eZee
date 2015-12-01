@@ -8,7 +8,7 @@
 
 	<context:component-scan base-package="com.ezee" />
 
-	<import resource="ezeeconstructionweb-db-context.xml" />
+	<import resource="classpath:ezeeweb-db-context.xml" />
 	<import resource="classpath:ezeedao-context.xml" />
 
 	<bean id="ezeeinvoice-web-properties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -16,6 +16,7 @@
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 		<property name="locations">
 			<list>
+				<value>classpath:ezee-web-default.properties</value>
 				<value>classpath:ezeeconstruction-web-default.properties</value>
 				<!-- add production properties file here when configured -->
 			</list>

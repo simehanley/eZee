@@ -40,6 +40,8 @@
 
 	<bean id="userDao" class="com.ezee.dao.impl.EzeeUserDaoImpl" parent="baseDao" />
 
+	<bean id="projectDao" class="com.ezee.dao.impl.EzeeProjectDaoImpl" parent="baseDao" />
+
 	<bean id="passwordEncrypter" class="org.jasypt.util.password.StrongPasswordEncryptor" />
 
 </beans>

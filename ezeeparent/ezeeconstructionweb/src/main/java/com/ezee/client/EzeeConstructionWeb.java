@@ -6,6 +6,7 @@ import static com.ezee.client.EzeeConstructionWebConstants.REGISTER_USER;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.ezee.client.main.BasicGrid;
 import com.ezee.client.main.EzeeConstructionMain;
 import com.ezee.web.common.ui.entrypoint.EzeeWebEntryPoint;
 import com.ezee.web.common.ui.main.EzeeWebMain;
@@ -26,6 +27,7 @@ public class EzeeConstructionWeb extends EzeeWebEntryPoint {
 	private void initMain() {
 		log.log(Level.INFO, "Initialising application.");
 		EzeeWebMain main = new EzeeConstructionMain(user);
+		main.getTab().add(new BasicGrid(), "GRID");
 		RootLayoutPanel.get().add(main);
 		log.log(Level.INFO, "Application initialised.");
 	}
