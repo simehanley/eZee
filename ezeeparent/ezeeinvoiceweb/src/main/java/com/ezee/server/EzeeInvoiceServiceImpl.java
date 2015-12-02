@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezee.client.EzeeInvoiceService;
+import com.ezee.common.exception.EzeeException;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.EzeeDebtAgeRule;
 import com.ezee.model.entity.EzeePayment;
@@ -30,8 +31,11 @@ public class EzeeInvoiceServiceImpl extends AbstractRemoteService implements Eze
 			return getSpringBean(EzeeEntitiesDao.class).getEntities((Class<T>) Class.forName(clazz));
 		} catch (ClassNotFoundException e) {
 			log.error("Unable to resolve class '" + clazz + "'.", e);
+			throw new EzeeException("Unable to resolve class '" + clazz + "'.", e);
+		} catch (Throwable t) {
+			log.error("Error retireving entities.", t);
+			throw new EzeeException("Error retireving entities.", t);
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -41,8 +45,11 @@ public class EzeeInvoiceServiceImpl extends AbstractRemoteService implements Eze
 			return getSpringBean(EzeeEntitiesDao.class).saveEntity((Class<T>) Class.forName(clazz), entity);
 		} catch (ClassNotFoundException e) {
 			log.error("Unable to resolve class '" + clazz + "'.", e);
+			throw new EzeeException("Unable to resolve class '" + clazz + "'.", e);
+		} catch (Throwable t) {
+			log.error("Error saving entity " + entity + ".", t);
+			throw new EzeeException("Error saving entity " + entity + ".", t);
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -52,8 +59,11 @@ public class EzeeInvoiceServiceImpl extends AbstractRemoteService implements Eze
 			return getSpringBean(EzeeEntitiesDao.class).deleteEntity((Class<T>) Class.forName(clazz), entity);
 		} catch (ClassNotFoundException e) {
 			log.error("Unable to resolve class '" + clazz + "'.", e);
+			throw new EzeeException("Unable to resolve class '" + clazz + "'.", e);
+		} catch (Throwable t) {
+			log.error("Error deleting entity " + entity + ".", t);
+			throw new EzeeException("Error deleting entity " + entity + ".", t);
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -63,8 +73,11 @@ public class EzeeInvoiceServiceImpl extends AbstractRemoteService implements Eze
 			return getSpringBean(EzeeEntitiesDao.class).getEntity((Class<T>) Class.forName(clazz), id);
 		} catch (ClassNotFoundException e) {
 			log.error("Unable to resolve class '" + clazz + "'.", e);
+			throw new EzeeException("Unable to resolve class '" + clazz + "'.", e);
+		} catch (Throwable t) {
+			log.error("Error getting entity for id " + id + ".", t);
+			throw new EzeeException("Error getting entity for id " + id + ".", t);
 		}
-		return null;
 	}
 
 	@Override
