@@ -28,7 +28,6 @@ public class EzeeUserDaoTest extends AbstractEzeeDaoTest<EzeeUser> {
 		TestCase.assertNotNull(user.getId());
 		TestCase.assertNotSame("password", user.getPassword());
 		TestCase.assertTrue(userDao.geEncryptor().checkPassword("password", user.getPassword()));
-
 	}
 
 	@Override

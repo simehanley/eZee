@@ -34,11 +34,11 @@ public class EzeeProjectItem extends EzeeDatabaseEntity {
 	@Column(name = "ITEM_NAME")
 	private String name;
 
-	@OneToMany(cascade = ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "ITEM_ID")
 	private Set<EzeeProjectItemDetail> details;
 
-	@OneToMany(cascade = ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "ITEM_ID")
 	private Set<EzeeProjectPayment> payments;
 

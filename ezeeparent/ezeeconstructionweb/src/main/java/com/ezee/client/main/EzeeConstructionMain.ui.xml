@@ -11,7 +11,7 @@
 					<g:HTML styleName="{res.css.headerLabel}" />
 				</g:cell>
 				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="80%" height="100%">
-					<g:HTML text="eZee Construction" styleName="{res.css.headerLabel}" />
+					<g:HTML text="eZee Project" styleName="{res.css.headerLabel}" />
 				</g:cell>
 				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="10%" height="100%">
 					<g:VerticalPanel height="100%">

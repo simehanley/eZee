@@ -126,4 +126,22 @@ public class EzeeProjectDaoTest extends AbstractEzeeDaoTest<EzeeProject> {
 		TestCase.assertTrue(persistedItem.getDetails().size() == 2);
 		TestCase.assertTrue(persistedItem.getPayments().size() == 1);
 	}
+
+	@Test
+	public void canDeleteProjectWithUnderlyingItemDetailAndPayments() {
+		payeeDao.save(payee);
+		EzeeProject project = new EzeeProject();
+		project.setName("COMPLEX PROJECT");
+		projectDao.save(project);
+		EzeeProjectItem item = new EzeeProjectItem("BUILD WORKS", null, null);
+		item.addDetail(new EzeeProjectItemDetail("Demolition/EathWorks", expense, payee, 100., 10., null, null));
+		item.addDetail(new EzeeProjectItemDetail("Concrete", expense, payee, 250., 10., null, null));
+		item.addPayment(
+				new EzeeProjectPayment("1/12/2015", cash, "Partial payment for concrete.", 200., 10., null, null));
+		project.addItem(item);
+		projectDao.save(project);
+		projectDao.delete(project);
+		EzeeProject persisted = projectDao.get(project.getId(), EzeeProject.class);
+		TestCase.assertNull(persisted);
+	}
 }

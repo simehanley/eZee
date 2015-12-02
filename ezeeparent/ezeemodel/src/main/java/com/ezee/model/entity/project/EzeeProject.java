@@ -36,7 +36,7 @@ public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 	@Column(name = "END_DATE")
 	private String endDate;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "PROJECT_ID")
 	private Set<EzeeProjectItem> items;
 

@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <link type="text/css" rel="stylesheet" href="EzeeConstructionWeb.css">
-<title>eZee Construction</title>
+<title>eZee Project</title>
 <script type="text/javascript"
 	src="EzeeConstructionWeb/EzeeConstructionWeb.nocache.js?version=${currentTime}"></script>
 </head>
