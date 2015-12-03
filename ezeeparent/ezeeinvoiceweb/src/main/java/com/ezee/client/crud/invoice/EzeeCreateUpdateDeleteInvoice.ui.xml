@@ -5,7 +5,7 @@
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
 
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="255px" width="613px">
+		<g:AbsolutePanel height="255px" width="608px">
 			<g:at top="10" left="10">
 				<g:Label text="Inv. Num." styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
@@ -76,13 +76,13 @@
 				<g:CheckBox text="Manual Tax" styleName="{res.css.gwtCheckBoxSmall}" value="true" ui:field="chkManualTax"
 					wordWrap="false" />
 			</g:at>
-			<g:at top="215" left="314">
+			<g:at top="215" left="320">
 				<g:Button ui:field="btnDelete" text="Delete" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="215" left="409">
+			<g:at top="215" left="415">
 				<g:Button ui:field="btnSave" text="Save" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="215" left="504">
+			<g:at top="215" left="510">
 				<g:Button ui:field="btnClose" text="Close" styleName="{res.css.gwtButton}" />
 			</g:at>
 			<g:at top="10" left="314">

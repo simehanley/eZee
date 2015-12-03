@@ -192,18 +192,22 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		txtTax.setEnabled(entity.isManualTax());
 		txtTotal.setValue(getAmountFormat().format(entity.getInvoiceAmount()));
 		dtInvoice.setValue(DATE_UTILS.fromString(entity.getInvoiceDate()));
-		dtDue.setValue(DATE_UTILS.fromString(entity.getDateDue()));
+		if (entity.getDateDue() != null) {
+			dtDue.setValue(DATE_UTILS.fromString(entity.getDateDue()));
+		} else {
+			resolveDueDate();
+		}
 		dtPaid.setValue(DATE_UTILS.fromString(entity.getDatePaid()));
 		chkManualTax.setValue(entity.isManualTax());
 		txtDescription.setText(entity.getDescription());
 		lstClassification.setItemSelected(getItemIndex(entity.getClassification().name(), lstClassification), true);
-		resolveDueDate();
 	}
 
 	private void initialiseNew() {
 		txtAmount.setValue(EzeeFromatUtils.getAmountFormat().format(ZERO_DBL));
 		txtTax.setValue(EzeeFromatUtils.getAmountFormat().format(ZERO_DBL));
 		txtTotal.setValue(EzeeFromatUtils.getAmountFormat().format(ZERO_DBL));
+		dtInvoice.setValue(new Date());
 		initialiseDefaults();
 		resolveDueDate();
 	}
@@ -242,6 +246,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 	private void initForm() {
 		dtInvoice.setFormat(getDateBoxFormat());
+		dtInvoice.setValue(new Date());
 		dtDue.setFormat(getDateBoxFormat());
 		dtPaid.setFormat(getDateBoxFormat());
 		dtPaid.setEnabled(false);
@@ -265,6 +270,12 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 			public void onChange(ChangeEvent event) {
 				resolveDueDate();
 
+			}
+		});
+		dtInvoice.addValueChangeHandler(new ValueChangeHandler<Date>() {
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				resolveDueDate();
 			}
 		});
 	}
@@ -382,8 +393,9 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		showWaitCursor();
 		EzeeDebtAgeRule rule = (EzeeDebtAgeRule) cache.getEntities(EzeeDebtAgeRule.class)
 				.get(lstDebtAge.getSelectedItemText());
-		String today = DATE_UTILS.toString(new Date());
-		INVOICE_SERVICE.calculateDueDate(rule, today, new AsyncCallback<String>() {
+		String date = (dtInvoice.getValue() == null) ? DATE_UTILS.toString(new Date())
+				: DATE_UTILS.toString(dtInvoice.getValue());
+		INVOICE_SERVICE.calculateDueDate(rule, date, new AsyncCallback<String>() {
 
 			@Override
 			public void onFailure(Throwable caught) {

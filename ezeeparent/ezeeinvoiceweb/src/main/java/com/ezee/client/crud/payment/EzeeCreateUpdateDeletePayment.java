@@ -8,6 +8,7 @@ import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.create;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.common.web.EzeeFromatUtils.getDateBoxFormat;
 import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
@@ -51,6 +52,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<EzeePayment> {
 
@@ -61,6 +63,9 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 
 	interface EzeeCreateUpdateDeletePaymentUiBinder extends UiBinder<Widget, EzeeCreateUpdateDeletePayment> {
 	}
+
+	@UiField
+	DateBox dtPmtDate;
 
 	@UiField
 	ListBox lstPaymentType;
@@ -158,9 +163,12 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 		btnSave.setEnabled(false);
 		lstPaymentType.setEnabled(false);
 		txtDescription.setEnabled(false);
+		dtPmtDate.setEnabled(false);
 	}
 
 	private void initForm() {
+		dtPmtDate.setFormat(getDateBoxFormat());
+		dtPmtDate.setValue(new Date());
 		txtAmount.setEnabled(false);
 		txtTax.setEnabled(false);
 		txtTotal.setEnabled(false);
@@ -217,19 +225,19 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 		showCheckFields(showChequeFields);
 		txtChequeNumber.setText(entity.getChequeNumber());
 		chkPresented.setValue(entity.isChequePresented());
+		dtPmtDate.setValue(DATE_UTILS.fromString(entity.getPaymentDate()));
 	}
 
 	@Override
 	protected void bind() {
-		String date = DATE_UTILS.toString(new Date());
+		String updateDate = DATE_UTILS.toString(new Date());
+		String pmtDate = (dtPmtDate.getValue() == null) ? updateDate : DATE_UTILS.toString(dtPmtDate.getValue());
 		if (entity == null) {
 			entity = new EzeePayment();
-			entity.setCreated(date);
-			entity.setPaymentDate(date);
+			entity.setCreated(updateDate);
 			entity.setInvoices(new HashSet<>(model.getHandler().getList()));
-			bindinvoices(entity.getInvoices(), date);
 		} else {
-			entity.setUpdated(date);
+			entity.setUpdated(updateDate);
 		}
 		entity.setType(EzeePaymentType.valueOf(lstPaymentType.getSelectedItemText()));
 		entity.setPaymentDescription(txtDescription.getText());
@@ -239,13 +247,14 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 			entity.setChequeNumber(null);
 		}
 		entity.setChequePresented(chkPresented.getValue());
+		entity.setPaymentDate(pmtDate);
+		bindinvoices(entity.getInvoices(), updateDate, pmtDate);
 	}
 
-	private void bindinvoices(final Set<EzeeInvoice> invoices, final String paymentDate) {
+	private void bindinvoices(final Set<EzeeInvoice> invoices, final String updateDate, final String pmtDate) {
 		if (!isEmpty(invoices)) {
 			for (EzeeInvoice invoice : invoices) {
-				invoice.setDatePaid(paymentDate);
-				invoice.setUpdated(paymentDate);
+				invoice.setDatePaid(pmtDate);
 			}
 		}
 	}

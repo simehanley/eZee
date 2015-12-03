@@ -1,13 +1,15 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
-	xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
+	xmlns:p1="urn:import:com.google.gwt.user.cellview.client" xmlns:p2="urn:import:com.google.gwt.user.datepicker.client">
 	<ui:style>
 	
 	</ui:style>
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="386px" width="700px">
+		<g:AbsolutePanel height="328px" width="787px">
 			<g:at top="7" left="10">
-				<g:HorizontalPanel width="563px" height="36px" verticalAlignment="ALIGN_MIDDLE">
+				<g:HorizontalPanel width="767px" height="36px" verticalAlignment="ALIGN_MIDDLE">
+					<g:Label text="Pmt. Date" wordWrap="false" styleName="gwt-Label-Small"/>
+					<p2:DateBox styleName="gwt-DateBox-Small" ui:field="dtPmtDate"/>
 					<g:Label text="Type" styleName="gwt-Label-Small" />
 					<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstPaymentType" width="135px" height="30px" />
 					<g:Label text="Chq. No." styleName="gwt-Label-Small" ui:field="lblChequeNumber" />
@@ -18,25 +20,25 @@
 			<g:at top="43" left="10">
 				<g:Label text="Description" styleName="gwt-Label-Small" />
 			</g:at>
-			<g:at top="75" left="10">
-				<g:RichTextArea width="672px" height="39px" ui:field="txtDescription" styleName="gwt-RichTextArea-Medium" />
+			<g:at top="43" left="100">
+				<g:RichTextArea width="669px" height="65px" ui:field="txtDescription" styleName="gwt-RichTextArea-Medium" />
 			</g:at>
-			<g:at top="120" left="9">
+			<g:at top="82" left="9">
 				<g:Label text="Invoices" styleName="gwt-Label-Small" />
 			</g:at>
-			<g:at top="155" left="10">
-				<p1:DataGrid width="680px" height="156px" ui:field="grdInvoices" />
+			<g:at top="119" left="10">
+				<p1:DataGrid width="767px" height="130px" ui:field="grdInvoices" />
 			</g:at>
-			<g:at top="348" left="409">
+			<g:at top="289" left="496">
 				<g:Button ui:field="btnDelete" text="Delete" />
 			</g:at>
-			<g:at top="348" left="503">
+			<g:at top="289" left="590">
 				<g:Button ui:field="btnSave" text="Save" />
 			</g:at>
-			<g:at top="348" left="596">
+			<g:at top="289" left="684">
 				<g:Button ui:field="btnClose" text="Close" />
 			</g:at>
-			<g:at top="314" left="10">
+			<g:at top="255" left="97">
 				<g:HorizontalPanel width="680px" height="34px" verticalAlignment="ALIGN_MIDDLE">
 					<g:Label text="Totals" styleName="gwt-Label-Small" />
 					<g:Label text="Amount" styleName="gwt-Label-Small" />

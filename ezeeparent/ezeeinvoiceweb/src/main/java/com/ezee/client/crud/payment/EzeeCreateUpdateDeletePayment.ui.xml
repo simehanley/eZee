@@ -1,13 +1,15 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
-	xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
+	xmlns:p1="urn:import:com.google.gwt.user.cellview.client" xmlns:p2="urn:import:com.google.gwt.user.datepicker.client">
 
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
 
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="386px" width="710px">
-			<g:at top="7" left="7">
+		<g:AbsolutePanel height="320px" width="780px">
+			<g:at top="7" left="10">
 				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+					<g:Label text="Pmt. Date" wordWrap="false" styleName="{res.css.gwtLabelSmall}" />
+					<p2:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtPmtDate" />
 					<g:Label text="Type" styleName="{res.css.gwtLabelSmall}" />
 					<g:ListBox styleName="{res.css.gwtListBoxSmall}" ui:field="lstPaymentType" width="135px" height="30px" />
 					<g:Label text="Chq. No." styleName="{res.css.gwtLabelSmall}" ui:field="lblChequeNumber" />
@@ -15,21 +17,21 @@
 					<g:CheckBox text="Presented" styleName="{res.css.gwtCheckBoxSmall}" ui:field="chkPresented" wordWrap="false" />
 				</g:HorizontalPanel>
 			</g:at>
-			<g:at top="43" left="7">
+			<g:at top="43" left="10">
 				<g:Label text="Description" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
-			<g:at top="75" left="7">
-				<g:RichTextArea width="690px" height="39px" ui:field="txtDescription" styleName="{res.css.gwtRichTextAreaMedium}" />
+			<g:at top="43" left="100">
+				<g:RichTextArea width="669px" height="65px" ui:field="txtDescription" styleName="{res.css.gwtRichTextAreaMedium}" />
 			</g:at>
-			<g:at top="120" left="7">
+			<g:at top="82" left="9">
 				<g:Label text="Invoices" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
-			<g:at top="155" left="7">
-				<g:ResizeLayoutPanel width="690px" height="156px" styleName="{res.css.gwtPanelBorder}">
+			<g:at top="116" left="9">
+				<g:ResizeLayoutPanel width="760px" height="130px" styleName="{res.css.gwtPanelBorder}">
 					<p1:DataGrid width="100%" height="100%" ui:field="grdInvoices" />
 				</g:ResizeLayoutPanel>
 			</g:at>
-			<g:at top="316" left="7">
+			<g:at top="252" left="79">
 				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
 					<g:Label text="Totals" styleName="{res.css.gwtLabelSmall}" />
 					<g:Label text="Amount" styleName="{res.css.gwtLabelSmall}" />
@@ -40,13 +42,13 @@
 					<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtTotal" />
 				</g:HorizontalPanel>
 			</g:at>
-			<g:at top="348" left="427">
+			<g:at top="285" left="493">
 				<g:Button ui:field="btnDelete" text="Delete" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="348" left="518">
+			<g:at top="285" left="587">
 				<g:Button ui:field="btnSave" text="Save" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="348" left="609">
+			<g:at top="285" left="681">
 				<g:Button ui:field="btnClose" text="Close" styleName="{res.css.gwtButton}" />
 			</g:at>
 		</g:AbsolutePanel>

@@ -79,6 +79,8 @@ public interface EzeeDefaultResources extends ClientBundle {
 
 		String gwtCheckBoxSmall();
 
+		String gwtCheckBoxSmallWithBorder();
+
 		String gwtFileUploadLarge();
 
 		String gwtTextBoxMediumEmail();

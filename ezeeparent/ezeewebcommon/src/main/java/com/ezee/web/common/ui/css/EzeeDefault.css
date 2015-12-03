@@ -222,6 +222,12 @@
 .gwtCheckBoxSmall {
 	padding: 3px;
 	margin: 3px;
+	font-weight: bold;
+}
+
+.gwtCheckBoxSmallWithBorder {
+	padding: 3px;
+	margin: 3px;
 	border: 1px solid black;
 	font-weight: bold;
 }

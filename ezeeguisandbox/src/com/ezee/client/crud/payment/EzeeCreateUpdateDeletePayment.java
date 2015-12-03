@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 public class EzeeCreateUpdateDeletePayment extends DialogBox {
 
@@ -35,6 +36,7 @@ public class EzeeCreateUpdateDeletePayment extends DialogBox {
 	@UiField Label lblChequeNumber;
 	@UiField TextBox txtChequeNumber;
 	@UiField CheckBox chkPresented;
+	@UiField DateBox dtPmtDate;
 
 	interface EzeeCreateUpdateDeletePaymentUiBinder extends UiBinder<Widget, EzeeCreateUpdateDeletePayment> {
 	}
