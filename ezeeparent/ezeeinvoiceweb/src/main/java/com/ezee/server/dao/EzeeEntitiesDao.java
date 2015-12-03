@@ -89,6 +89,9 @@ public class EzeeEntitiesDao {
 		public void postProcessPayment(final EzeePayment payment) {
 			if (!isEmpty(payment.getInvoices())) {
 				payment.setInvoices(new HashSet<>(payment.getInvoices()));
+				for (EzeeInvoice invoice : payment.getInvoices()) {
+					postProcessInvoice(invoice);
+				}
 			}
 		}
 
