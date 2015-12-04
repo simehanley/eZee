@@ -1,18 +1,19 @@
 package com.ezee.client.grid.payment;
 
-import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.delete;
-import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.update;
+import static com.ezee.client.EzeeInvoiceWebConstants.PAYMENT_CRUD_HEADERS;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
+import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.delete;
+import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.update;
 
 import java.util.Set;
 
-import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.payment.EzeeCreateUpdateDeletePayment;
-import com.ezee.client.grid.EzeeGrid;
 import com.ezee.client.grid.invoice.EzeeInvoiceChangeListener;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayment;
+import com.ezee.web.common.cache.EzeeEntityCache;
+import com.ezee.web.common.ui.grid.EzeeGrid;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
 
@@ -25,7 +26,7 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 
 	private EzeeInvoiceChangeListener listener;
 
-	public EzeePaymentGrid(final EzeeInvoiceEntityCache cache) {
+	public EzeePaymentGrid(final EzeeEntityCache cache) {
 		super(cache);
 	}
 
@@ -71,7 +72,7 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 	public void deleteEntity() {
 		EzeePayment entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayment(cache, this, entity, delete, null, cheque).show();
+			new EzeeCreateUpdateDeletePayment(cache, this, entity, delete, null, cheque, PAYMENT_CRUD_HEADERS).show();
 		}
 	}
 
@@ -84,14 +85,14 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 	public void editEntity() {
 		EzeePayment entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayment(cache, this, entity, update, null, cheque).show();
+			new EzeeCreateUpdateDeletePayment(cache, this, entity, update, null, cheque, PAYMENT_CRUD_HEADERS).show();
 		}
 	}
 
 	@Override
 	public void onCreatePayment(final Set<EzeeInvoice> invoices) {
 		if (!isEmpty(invoices)) {
-			new EzeeCreateUpdateDeletePayment(cache, this, invoices).show();
+			new EzeeCreateUpdateDeletePayment(cache, this, invoices, PAYMENT_CRUD_HEADERS).show();
 		}
 	}
 

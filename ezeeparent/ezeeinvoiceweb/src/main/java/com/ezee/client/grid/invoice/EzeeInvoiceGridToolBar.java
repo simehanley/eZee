@@ -15,11 +15,11 @@ import static com.ezee.web.common.enums.EzeeReportType.detailed_payee_invoice_ex
 
 import java.util.Date;
 
-import com.ezee.client.grid.EzeeGridToolbar;
 import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.ezee.model.entity.filter.invoice.EzeeInvoiceFilter;
+import com.ezee.web.common.ui.grid.EzeeGridToolbar;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

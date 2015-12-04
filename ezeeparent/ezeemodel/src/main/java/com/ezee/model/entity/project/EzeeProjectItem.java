@@ -31,7 +31,7 @@ public class EzeeProjectItem extends EzeeDatabaseEntity {
 
 	private static final long serialVersionUID = -3908799031337740246L;
 
-	@Column(name = "ITEM_NAME")
+	@Column(name = "NAME")
 	private String name;
 
 	@OneToMany(cascade = ALL, fetch = FetchType.EAGER, orphanRemoval = true)

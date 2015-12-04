@@ -15,6 +15,16 @@
 	</listener>
 
 	<servlet>
+		<servlet-name>entityservice</servlet-name>
+		<servlet-class>com.ezee.server.EzeeEntityServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>entityservice</servlet-name>
+		<url-pattern>/EzeeConstructionWeb/entityservice</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>userservice</servlet-name>
 		<servlet-class>com.ezee.server.EzeeUserServiceImpl</servlet-class>
 	</servlet>

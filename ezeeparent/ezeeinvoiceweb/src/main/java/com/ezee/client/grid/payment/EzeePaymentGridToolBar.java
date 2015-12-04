@@ -7,12 +7,12 @@ import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import java.util.Date;
 
 import com.ezee.client.bank.EzeeBankBalance;
-import com.ezee.client.cache.EzeeInvoiceEntityCache;
-import com.ezee.client.grid.EzeeGridToolbar;
 import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeePayment;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.ezee.model.entity.filter.payment.EzeePaymentFilter;
+import com.ezee.web.common.cache.EzeeEntityCache;
+import com.ezee.web.common.ui.grid.EzeeGridToolbar;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -48,12 +48,12 @@ public class EzeePaymentGridToolBar extends EzeeGridToolbar<EzeePayment> {
 	@UiField
 	Button btnBank;
 
-	private final EzeeInvoiceEntityCache cache;
+	private final EzeeEntityCache cache;
 
 	interface EzeePaymentGridToolBarUiBinder extends UiBinder<Widget, EzeePaymentGridToolBar> {
 	}
 
-	public EzeePaymentGridToolBar(final EzeePaymentGrid grid, final EzeeInvoiceEntityCache cache) {
+	public EzeePaymentGridToolBar(final EzeePaymentGrid grid, final EzeeEntityCache cache) {
 		super(grid);
 		this.cache = cache;
 		initWidget(uiBinder.createAndBindUi(this));

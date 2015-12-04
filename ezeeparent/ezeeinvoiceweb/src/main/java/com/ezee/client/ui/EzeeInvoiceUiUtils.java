@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.model.entity.EzeeHasName;
+import com.ezee.web.common.cache.EzeeEntityCache;
 import com.google.gwt.user.client.ui.ListBox;
 
 /**
@@ -20,7 +20,7 @@ public final class EzeeInvoiceUiUtils {
 	}
 
 	public static <K extends EzeeHasName> void loadEntities(final Class<K> clazz, final ListBox listBox,
-			final EzeeInvoiceEntityCache cache) {
+			final EzeeEntityCache cache) {
 		Map<String, EzeeHasName> entities = cache.getEntities(clazz);
 		List<String> entityNames = new ArrayList<>(entities.keySet());
 		Collections.sort(entityNames);

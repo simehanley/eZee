@@ -20,7 +20,7 @@
 		</g:north>
 		<g:center>
 			<g:ResizeLayoutPanel height="100%" width="100%">
-				<p1:DataGrid width="922px" height="100%" ui:field="grid" />
+				<p1:DataGrid width="922px" height="311px" ui:field="grid" />
 			</g:ResizeLayoutPanel>
 		</g:center>
 	</g:DockLayoutPanel>

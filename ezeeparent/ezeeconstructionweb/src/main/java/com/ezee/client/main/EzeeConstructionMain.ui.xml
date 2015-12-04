@@ -35,6 +35,29 @@
 				</g:cell>
 			</g:HorizontalPanel>
 		</g:south>
+		<g:west size="10">
+			<g:StackPanel width="100%" height="100%" ui:field="menu">
+				<g:VerticalPanel g:StackPanel-text="PROJECTS">
+					<g:VerticalPanel>
+						<g:HTML text="New Project" styleName="{res.css.gwtStackPanelLink}" ui:field="newProject" />
+						<g:HTML text="Edit Project" styleName="{res.css.gwtStackPanelLink}" ui:field="editProject" />
+						<g:HTML text="Delete Project" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteProject" />
+					</g:VerticalPanel>
+				</g:VerticalPanel>
+				<g:VerticalPanel g:StackPanel-text="RESOURCES">
+					<g:VerticalPanel>
+						<g:HTML text="New Resource" styleName="{res.css.gwtStackPanelLink}" ui:field="newResource" />
+						<g:HTML text="Edit Resource" styleName="{res.css.gwtStackPanelLink}" ui:field="editResource" />
+						<g:HTML text="Delete Resource" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteResource" />
+					</g:VerticalPanel>
+				</g:VerticalPanel>
+				<g:VerticalPanel g:StackPanel-text="USER">
+					<g:VerticalPanel>
+						<g:HTML text="Edit User" styleName="{res.css.gwtStackPanelLink}" ui:field="editUser" />
+					</g:VerticalPanel>
+				</g:VerticalPanel>
+			</g:StackPanel>
+		</g:west>
 		<g:center>
 			<g:DockLayoutPanel unit="EM">
 				<g:center>

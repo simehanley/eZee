@@ -25,6 +25,16 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>entityservice</servlet-name>
+		<servlet-class>com.ezee.server.EzeeEntityServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>entityservice</servlet-name>
+		<url-pattern>/EzeeInvoiceWeb/entityservice</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>userservice</servlet-name>
 		<servlet-class>com.ezee.server.EzeeUserServiceImpl</servlet-class>
 	</servlet>

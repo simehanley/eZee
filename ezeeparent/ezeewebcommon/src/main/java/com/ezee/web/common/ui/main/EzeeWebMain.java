@@ -8,14 +8,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ezee.model.entity.EzeeUser;
+import com.ezee.web.common.ui.edit.EzeeEditUser;
+import com.ezee.web.common.ui.grid.EzeeHasGrid;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.StackPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 
 public class EzeeWebMain extends Composite {
@@ -36,6 +41,12 @@ public class EzeeWebMain extends Composite {
 
 	@UiField
 	public TabLayoutPanel tab;
+
+	@UiField
+	public HTML editUser;
+
+	@UiField
+	public StackPanel menu;
 
 	protected final EzeeUser ezeeUser;
 
@@ -73,9 +84,25 @@ public class EzeeWebMain extends Composite {
 				Window.Location.assign(GWT.getHostPageBaseURL());
 			}
 		});
+		addTabHandler();
 	}
 
 	protected void initUser() {
 		user.setText("Logged in as : " + ezeeUser.getUsername());
+	}
+
+	protected void editUser() {
+		new EzeeEditUser(ezeeUser.getUsername()).show();
+	}
+
+	private void addTabHandler() {
+		tab.addSelectionHandler(new SelectionHandler<Integer>() {
+			public void onSelection(SelectionEvent<Integer> event) {
+				int tabId = event.getSelectedItem();
+				menu.showStack(tabId);
+				EzeeHasGrid<?> grid = (EzeeHasGrid<?>) tab.getWidget(tabId);
+				grid.getGrid().redraw();
+			}
+		});
 	}
 }

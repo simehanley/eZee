@@ -14,10 +14,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.ezee.client.grid.EzeeGridModel;
-import com.ezee.client.util.EzeeDateComparator;
 import com.ezee.model.entity.EzeeInvoice;
+import com.ezee.web.common.ui.grid.EzeeGridModel;
 import com.ezee.web.common.ui.images.EzeeImageResources;
+import com.ezee.web.common.ui.utils.EzeeDateComparator;
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.ImageResourceCell;
 import com.google.gwt.core.client.GWT;

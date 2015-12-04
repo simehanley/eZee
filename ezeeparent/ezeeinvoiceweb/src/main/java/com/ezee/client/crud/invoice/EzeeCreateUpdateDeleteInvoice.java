@@ -1,10 +1,6 @@
 package com.ezee.client.crud.invoice;
 
-import static com.ezee.client.EzeeInvoiceWebConstants.DELETE_INVOICE;
-import static com.ezee.client.EzeeInvoiceWebConstants.EDIT_INVOICE;
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
-import static com.ezee.client.EzeeInvoiceWebConstants.NEW_INVOICE;
-import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.create;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
@@ -12,7 +8,9 @@ import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFromatUtils.getDateBoxFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
+import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
+import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.create;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
@@ -23,10 +21,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ezee.client.cache.EzeeInvoiceEntityCache;
-import com.ezee.client.crud.EzeeCreateUpdateDeleteEntity;
-import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityHandler;
-import com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.client.ui.EzeeInvoiceUiUtils;
 import com.ezee.common.web.EzeeFromatUtils;
 import com.ezee.model.entity.EzeeConfiguration;
@@ -36,6 +30,10 @@ import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayee;
 import com.ezee.model.entity.EzeePayer;
 import com.ezee.model.entity.enums.EzeeInvoiceClassification;
+import com.ezee.web.common.cache.EzeeEntityCache;
+import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntity;
+import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
+import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.web.common.ui.utils.EzeeListBoxUtils;
 import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.core.client.GWT;
@@ -121,15 +119,16 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 	private String supplierName;
 
-	public EzeeCreateUpdateDeleteInvoice(final EzeeInvoiceEntityCache cache,
-			final EzeeCreateUpdateDeleteEntityHandler<EzeeInvoice> handler, final String supplierName) {
-		this(cache, handler, null, create, supplierName);
+	public EzeeCreateUpdateDeleteInvoice(final EzeeEntityCache cache,
+			final EzeeCreateUpdateDeleteEntityHandler<EzeeInvoice> handler, final String supplierName,
+			final String[] headers) {
+		this(cache, handler, null, create, supplierName, headers);
 	}
 
-	public EzeeCreateUpdateDeleteInvoice(final EzeeInvoiceEntityCache cache,
+	public EzeeCreateUpdateDeleteInvoice(final EzeeEntityCache cache,
 			EzeeCreateUpdateDeleteEntityHandler<EzeeInvoice> handler, final EzeeInvoice entity,
-			final EzeeCreateUpdateDeleteEntityType type, final String supplierName) {
-		super(cache, handler, entity, type);
+			final EzeeCreateUpdateDeleteEntityType type, final String supplierName, final String[] headers) {
+		super(cache, handler, entity, type, headers);
 		setWidget(uiBinder.createAndBindUi(this));
 		this.supplierName = supplierName;
 	}
@@ -140,13 +139,13 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		initForm();
 		switch (type) {
 		case create:
-			setText(NEW_INVOICE);
+			setText(headers[NEW_HEADER_INDEX]);
 			initialiseNew();
 			btnDelete.setEnabled(false);
 			setFocus(txtInvoiceNumber);
 			break;
 		case update:
-			setText(EDIT_INVOICE);
+			setText(headers[EDIT_HEADER_INDEX]);
 			initialise();
 			setFocus(txtInvoiceNumber);
 			btnDelete.setEnabled(false);
@@ -155,7 +154,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 			}
 			break;
 		case delete:
-			setText(DELETE_INVOICE);
+			setText(headers[DELETE_HEADER_INDEX]);
 			initialise();
 			disable();
 			break;
@@ -318,7 +317,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		btnSave.setEnabled(false);
 		showWaitCursor();
 		bind();
-		INVOICE_SERVICE.saveEntity(EzeeInvoice.class.getName(), entity, new AsyncCallback<EzeeInvoice>() {
+		ENTITY_SERVICE.saveEntity(EzeeInvoice.class.getName(), entity, new AsyncCallback<EzeeInvoice>() {
 
 			@Override
 			public void onFailure(final Throwable caught) {
@@ -343,7 +342,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	void onDeleteClick(ClickEvent event) {
 		btnDelete.setEnabled(false);
 		showWaitCursor();
-		INVOICE_SERVICE.deleteEntity(EzeeInvoice.class.getName(), entity, new AsyncCallback<EzeeInvoice>() {
+		ENTITY_SERVICE.deleteEntity(EzeeInvoice.class.getName(), entity, new AsyncCallback<EzeeInvoice>() {
 
 			@Override
 			public void onFailure(Throwable caught) {

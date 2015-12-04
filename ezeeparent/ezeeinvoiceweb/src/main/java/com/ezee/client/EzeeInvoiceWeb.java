@@ -4,19 +4,21 @@ import static com.ezee.client.EzeeInvoiceWebConstants.INVOICES;
 import static com.ezee.client.EzeeInvoiceWebConstants.LOGIN_USER;
 import static com.ezee.client.EzeeInvoiceWebConstants.PAYMENTS;
 import static com.ezee.client.EzeeInvoiceWebConstants.PREMISES;
+import static com.ezee.client.EzeeInvoiceWebConstants.PREMISES_CRUD_HEADERS;
 import static com.ezee.client.EzeeInvoiceWebConstants.REGISTER_USER;
 import static com.ezee.client.EzeeInvoiceWebConstants.SUPPLIERS;
+import static com.ezee.client.EzeeInvoiceWebConstants.SUPPLIER_CRUD_HEADERS;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.grid.invoice.EzeeInvoiceGrid;
-import com.ezee.client.grid.payee.EzeePayeeGrid;
-import com.ezee.client.grid.payer.EzeePayerGrid;
+import com.ezee.client.grid.payee.EzeeInvoicePayeeGrid;
 import com.ezee.client.grid.payment.EzeePaymentGrid;
 import com.ezee.client.main.EzeeInvoiceMain;
 import com.ezee.web.common.ui.entrypoint.EzeeWebEntryPoint;
+import com.ezee.web.common.ui.grid.payee.EzeePayeeGrid;
+import com.ezee.web.common.ui.grid.payer.EzeePayerGrid;
 import com.ezee.web.common.ui.main.EzeeWebMain;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
@@ -29,8 +31,6 @@ public class EzeeInvoiceWeb extends EzeeWebEntryPoint {
 
 	private static final Logger log = Logger.getLogger("EzeeInvoiceWeb");
 
-	private EzeeInvoiceEntityCache cache;
-
 	public EzeeInvoiceWeb() {
 		super(LOGIN_USER, REGISTER_USER);
 	}
@@ -39,10 +39,6 @@ public class EzeeInvoiceWeb extends EzeeWebEntryPoint {
 	protected void initApplication() {
 		initCache();
 		initMain();
-	}
-
-	private void initCache() {
-		cache = new EzeeInvoiceEntityCache();
 	}
 
 	private void initMain() {
@@ -54,18 +50,18 @@ public class EzeeInvoiceWeb extends EzeeWebEntryPoint {
 		payment.setListener(invoice);
 		main.getTab().add(invoice, INVOICES);
 		main.getTab().add(payment, PAYMENTS);
-		main.getTab().add(createPayeeGrid(invoice), SUPPLIERS);
-		main.getTab().add(createPayerGrid(), PREMISES);
+		main.getTab().add(createSupplierGrid(invoice), SUPPLIERS);
+		main.getTab().add(createPremisesGrid(), PREMISES);
 		RootLayoutPanel.get().add(main);
 		log.log(Level.INFO, "Application initialised.");
 	}
 
-	private EzeePayeeGrid createPayeeGrid(final EzeeInvoiceGrid invoice) {
-		return new EzeePayeeGrid(cache, invoice);
+	private EzeePayeeGrid createSupplierGrid(final EzeeInvoiceGrid invoice) {
+		return new EzeeInvoicePayeeGrid(cache, SUPPLIER_CRUD_HEADERS, invoice);
 	}
 
-	private EzeePayerGrid createPayerGrid() {
-		return new EzeePayerGrid(cache);
+	private EzeePayerGrid createPremisesGrid() {
+		return new EzeePayerGrid(cache, PREMISES_CRUD_HEADERS);
 	}
 
 	private EzeeInvoiceGrid createInvoiceGrid() {

@@ -17,16 +17,6 @@
 		<constructor-arg name="dao" ref="payerDao" />
 	</bean>
 
-	<bean id="ez_paymentDao" class="com.ezee.server.dao.EzeeEntityDao">
-		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeePayment" />
-		<constructor-arg name="dao" ref="paymentDao" />
-	</bean>
-
-	<bean id="ez_invoiceDao" class="com.ezee.server.dao.EzeeEntityDao">
-		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeeInvoice" />
-		<constructor-arg name="dao" ref="invoiceDao" />
-	</bean>
-
 	<bean id="ez_debtAgeDao" class="com.ezee.server.dao.EzeeEntityDao">
 		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeeDebtAgeRule" />
 		<constructor-arg name="dao" ref="debtAgeDao" />
@@ -40,8 +30,6 @@
 	<util:list id="entityDaos">
 		<ref bean="ez_payeeDao" />
 		<ref bean="ez_payerDao" />
-		<ref bean="ez_paymentDao" />
-		<ref bean="ez_invoiceDao" />
 		<ref bean="ez_debtAgeDao" />
 		<ref bean="ez_configDao" />
 	</util:list>

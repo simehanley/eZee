@@ -17,10 +17,10 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.grid.payment.EzeePaymentGridModel;
 import com.ezee.model.entity.EzeePayer;
 import com.ezee.model.entity.EzeePayment;
+import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.dialog.EzeeDialog;
 import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.core.client.GWT;
@@ -71,12 +71,12 @@ public class EzeeBankBalance extends EzeeDialog {
 
 	private EzeePaymentGridModel model;
 
-	private final EzeeInvoiceEntityCache cache;
+	private final EzeeEntityCache cache;
 
 	interface EzeeBankBalanceUiBinder extends UiBinder<Widget, EzeeBankBalance> {
 	}
 
-	public EzeeBankBalance(final EzeeInvoiceEntityCache cache) {
+	public EzeeBankBalance(final EzeeEntityCache cache) {
 		super(false, false);
 		this.cache = cache;
 		setText(BANK);

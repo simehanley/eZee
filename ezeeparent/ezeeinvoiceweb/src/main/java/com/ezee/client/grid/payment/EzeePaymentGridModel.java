@@ -12,9 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.ezee.client.grid.EzeeGridModel;
-import com.ezee.client.util.EzeeDateComparator;
 import com.ezee.model.entity.EzeePayment;
+import com.ezee.web.common.ui.grid.EzeeGridModel;
+import com.ezee.web.common.ui.utils.EzeeDateComparator;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 

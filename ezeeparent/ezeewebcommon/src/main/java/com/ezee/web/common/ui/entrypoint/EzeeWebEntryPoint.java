@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ezee.model.entity.EzeeUser;
+import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.css.EzeeDefaultResources;
 import com.ezee.web.common.ui.css.EzeeGwtOverridesResources;
 import com.ezee.web.common.ui.login.EzeeLogin;
@@ -26,6 +27,8 @@ public abstract class EzeeWebEntryPoint implements EntryPoint, EzeeLoginListener
 	protected final EzeeRegister register;
 
 	protected EzeeUser user;
+
+	protected EzeeEntityCache cache;
 
 	public EzeeWebEntryPoint(final String loginHeader, final String registerHeader) {
 		login = new EzeeLogin(loginHeader, this, this);
@@ -47,6 +50,10 @@ public abstract class EzeeWebEntryPoint implements EntryPoint, EzeeLoginListener
 		} else {
 			initLogin();
 		}
+	}
+
+	protected void initCache() {
+		cache = new EzeeEntityCache();
 	}
 
 	private void initResources() {

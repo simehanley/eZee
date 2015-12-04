@@ -1,11 +1,12 @@
 package com.ezee.client.grid.invoice;
 
-import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
-import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.delete;
-import static com.ezee.client.crud.EzeeCreateUpdateDeleteEntityType.update;
+import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_CRUD_HEADERS;
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
+import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.delete;
+import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.update;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
@@ -15,12 +16,12 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ezee.client.cache.EzeeInvoiceEntityCache;
 import com.ezee.client.crud.invoice.EzeeCreateUpdateDeleteInvoice;
 import com.ezee.client.crud.invoice.EzeeUploadInvoiceForm;
-import com.ezee.client.grid.EzeeGrid;
 import com.ezee.client.grid.payment.EzeePaymentCreationListener;
 import com.ezee.model.entity.EzeeInvoice;
+import com.ezee.web.common.cache.EzeeEntityCache;
+import com.ezee.web.common.ui.grid.EzeeGrid;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -38,10 +39,11 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 
 	private EzeePaymentCreationListener listener;
 
-	public EzeeInvoiceGrid(final EzeeInvoiceEntityCache cache) {
+	public EzeeInvoiceGrid(final EzeeEntityCache cache) {
 		super(cache);
 	}
 
+	@Override
 	protected void initGrid() {
 		super.initGrid();
 		MultiSelectionModel<EzeeInvoice> selectModel = new MultiSelectionModel<>();
@@ -94,25 +96,25 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	public void deleteEntity() {
 		EzeeInvoice entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, delete, EMPTY_STRING).show();
+			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, delete, EMPTY_STRING, INVOICE_CRUD_HEADERS).show();
 		}
 	}
 
 	@Override
 	public void newEntity() {
-		new EzeeCreateUpdateDeleteInvoice(cache, this, EMPTY_STRING).show();
+		new EzeeCreateUpdateDeleteInvoice(cache, this, EMPTY_STRING, INVOICE_CRUD_HEADERS).show();
 	}
 
 	@Override
 	public void editEntity() {
 		EzeeInvoice entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, update, EMPTY_STRING).show();
+			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, update, EMPTY_STRING, INVOICE_CRUD_HEADERS).show();
 		}
 	}
 
 	public void newSupplierInvoice(final String supplierName) {
-		new EzeeCreateUpdateDeleteInvoice(cache, this, supplierName).show();
+		new EzeeCreateUpdateDeleteInvoice(cache, this, supplierName, INVOICE_CRUD_HEADERS).show();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -146,7 +148,7 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 			showWaitCursor();
 			final String invoiceName = entity.getFilename();
 			entity.setFilename(null);
-			INVOICE_SERVICE.saveEntity(EzeeInvoice.class.getName(), entity, new AsyncCallback<EzeeInvoice>() {
+			ENTITY_SERVICE.saveEntity(EzeeInvoice.class.getName(), entity, new AsyncCallback<EzeeInvoice>() {
 				@Override
 				public void onFailure(Throwable caught) {
 					showDefaultCursor();
