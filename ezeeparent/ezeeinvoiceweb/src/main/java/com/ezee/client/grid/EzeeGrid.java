@@ -3,6 +3,7 @@ package com.ezee.client.grid;
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_ENTER;
+import static com.google.gwt.user.cellview.client.SimplePager.TextLocation.CENTER;
 import static com.google.gwt.user.client.Event.ONCONTEXTMENU;
 import static java.util.logging.Level.SEVERE;
 
@@ -26,6 +27,7 @@ import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -41,13 +43,16 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 
 	private static final Logger log = Logger.getLogger("EzeeGrid");
 
-	protected static final int DEFAULT_PAGE_SIZE = 100;
+	protected static final int DEFAULT_PAGE_SIZE = 40;
 	protected static final int DEFAULT_GRID_SIZE = 600;
 
 	private static EzeeGridUiBinder uiBinder = GWT.create(EzeeGridUiBinder.class);
 
 	@UiField(provided = true)
 	protected DataGrid<T> grid;
+
+	@UiField(provided = true)
+	protected SimplePager pager;
 
 	@UiField(provided = true)
 	protected HorizontalPanel filterpanel;
@@ -99,6 +104,9 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		grid.addDomHandler(new EzeeGridKeyPressHandler(), KeyPressEvent.getType());
 		SingleSelectionModel<T> model = new SingleSelectionModel<>();
 		grid.setSelectionModel(model);
+		SimplePager.Resources resources = GWT.create(SimplePager.Resources.class);
+		pager = new SimplePager(CENTER, resources, false, ZERO, true);
+		pager.setDisplay(grid);
 	}
 
 	protected void initFilter() {
