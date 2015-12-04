@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<bean id="ez_payeeDao" class="com.ezee.server.dao.EzeeEntityDao">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeePayee" />
+		<constructor-arg name="dao" ref="payeeDao" />
+	</bean>
+
+	<bean id="ez_payerDao" class="com.ezee.server.dao.EzeeEntityDao">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeePayer" />
+		<constructor-arg name="dao" ref="payerDao" />
+	</bean>
+
+	<bean id="ez_debtAgeDao" class="com.ezee.server.dao.EzeeEntityDao">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeeDebtAgeRule" />
+		<constructor-arg name="dao" ref="debtAgeDao" />
+	</bean>
+
+	<bean id="ez_configDao" class="com.ezee.server.dao.EzeeEntityDao">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeeConfiguration" />
+		<constructor-arg name="dao" ref="configDao" />
+	</bean>
+
+	<bean id="ez_projectDao" class="com.ezee.server.dao.EzeeEntityDao">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.project.EzeeProject" />
+		<constructor-arg name="dao" ref="projectDao" />
+	</bean>
+
+	<util:list id="entityDaos">
+		<ref bean="ez_payeeDao" />
+		<ref bean="ez_payerDao" />
+		<ref bean="ez_debtAgeDao" />
+		<ref bean="ez_configDao" />
+		<ref bean="ez_projectDao" />
+	</util:list>
+
+	<bean id="entitiesDao" class="com.ezee.server.dao.EzeeEntitiesDao">
+		<constructor-arg name="entityDaos" ref="entityDaos" />
+	</bean>
+
+</beans>
