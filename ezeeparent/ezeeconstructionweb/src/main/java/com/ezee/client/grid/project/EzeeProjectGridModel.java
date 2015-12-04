@@ -2,6 +2,7 @@ package com.ezee.client.grid.project;
 
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,9 +69,38 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 	@Override
 	protected void addComparators(final Map<String, Column<EzeeProject, ?>> columns) {
 
+		handler.setComparator(columns.get(PROJECT), new Comparator<EzeeProject>() {
+
+			@Override
+			public int compare(final EzeeProject one, final EzeeProject two) {
+				return one.getName().compareTo(two.getName());
+			}
+		});
+
+		handler.setComparator(columns.get(START_DATE), new Comparator<EzeeProject>() {
+
+			@Override
+			public int compare(final EzeeProject one, final EzeeProject two) {
+				return dateComparator.compare(dateUtilities.fromString(one.getStartDate()),
+						dateUtilities.fromString(two.getEndDate()));
+			}
+		});
+
+		handler.setComparator(columns.get(END_DATE), new Comparator<EzeeProject>() {
+
+			@Override
+			public int compare(final EzeeProject one, final EzeeProject two) {
+				return dateComparator.compare(dateUtilities.fromString(one.getEndDate()),
+						dateUtilities.fromString(two.getEndDate()));
+			}
+
+		});
 	}
 
 	@Override
 	protected void addSortColumns(final DataGrid<EzeeProject> grid, final Map<String, Column<EzeeProject, ?>> columns) {
+		grid.getColumnSortList().push(columns.get(PROJECT));
+		grid.getColumnSortList().push(columns.get(START_DATE));
+		grid.getColumnSortList().push(columns.get(END_DATE));
 	}
 }

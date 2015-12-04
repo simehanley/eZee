@@ -21,13 +21,19 @@ public class EzeeConstructionMain extends EzeeWebMain {
 	}
 
 	@UiField
-	HTML newProject;
-
-	@UiField
 	HTML editProject;
 
 	@UiField
 	HTML deleteProject;
+
+	@UiField
+	HTML newProjectDef;
+
+	@UiField
+	HTML editProjectDef;
+
+	@UiField
+	HTML deleteProjectDef;
 
 	@UiField
 	HTML newResource;

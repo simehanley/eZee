@@ -35,6 +35,7 @@ public class EzeeProjectGridToolbar extends EzeeGridToolbar<EzeeProject> {
 	public EzeeProjectGridToolbar(final EzeeProjectGrid grid) {
 		super(grid);
 		initWidget(uiBinder.createAndBindUi(this));
+		init();
 	}
 
 	public String getProjectName() {

@@ -2,7 +2,7 @@ package com.ezee.server.dao;
 
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,6 +13,8 @@ import com.ezee.dao.EzeePaymentDao;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayment;
+import com.ezee.model.entity.project.EzeeProject;
+import com.ezee.model.entity.project.EzeeProjectItem;
 
 public class EzeeEntitiesDao {
 
@@ -79,6 +81,8 @@ public class EzeeEntitiesDao {
 				postProcessPayment((EzeePayment) entity);
 			} else if (entity instanceof EzeeInvoice) {
 				postProcessInvoice((EzeeInvoice) entity);
+			} else if (entity instanceof EzeeProject) {
+				postProcessProject((EzeeProject) entity);
 			}
 		}
 
@@ -88,7 +92,7 @@ public class EzeeEntitiesDao {
 		 */
 		public void postProcessPayment(final EzeePayment payment) {
 			if (!isEmpty(payment.getInvoices())) {
-				payment.setInvoices(new HashSet<>(payment.getInvoices()));
+				payment.setInvoices(new LinkedHashSet<>(payment.getInvoices()));
 				for (EzeeInvoice invoice : payment.getInvoices()) {
 					postProcessInvoice(invoice);
 				}
@@ -101,6 +105,18 @@ public class EzeeEntitiesDao {
 		 */
 		public void postProcessInvoice(EzeeInvoice invoice) {
 			invoice.setFile(null);
+		}
+
+		/**
+		 * Post process {@link EzeeProject} to remove non serializable
+		 * {@link PersistentCollection}
+		 */
+		public void postProcessProject(final EzeeProject project) {
+			project.setItems(new LinkedHashSet<>(project.getItems()));
+			for (EzeeProjectItem item : project.getItems()) {
+				item.setDetails(new LinkedHashSet<>(item.getDetails()));
+				item.setPayments(new LinkedHashSet<>(item.getPayments()));
+			}
 		}
 	}
 }
