@@ -43,7 +43,6 @@
 						<g:HTML text="Edit Project Def." styleName="{res.css.gwtStackPanelLink}" ui:field="editProjectDef" />
 						<g:HTML text="Delete Project Def." styleName="{res.css.gwtStackPanelLink}" ui:field="deleteProjectDef" />
 						<g:HTML text="Edit Project" styleName="{res.css.gwtStackPanelLink}" ui:field="editProject" />
-						<g:HTML text="Delete Project" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteProject" />
 					</g:VerticalPanel>
 				</g:VerticalPanel>
 				<g:VerticalPanel g:StackPanel-text="RESOURCES">

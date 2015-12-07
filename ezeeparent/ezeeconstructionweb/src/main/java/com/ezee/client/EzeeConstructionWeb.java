@@ -2,6 +2,7 @@ package com.ezee.client;
 
 import static com.ezee.client.EzeeConstructionWebConstants.LOGIN_USER;
 import static com.ezee.client.EzeeConstructionWebConstants.PROJECTS;
+import static com.ezee.client.EzeeConstructionWebConstants.PROJECT_CRUD_HEADERS;
 import static com.ezee.client.EzeeConstructionWebConstants.REGISTER_USER;
 import static com.ezee.client.EzeeConstructionWebConstants.RESOURCES;
 import static com.ezee.client.EzeeConstructionWebConstants.RESOURCE_CRUD_HEADERS;
@@ -32,7 +33,7 @@ public class EzeeConstructionWeb extends EzeeWebEntryPoint {
 	private void initMain() {
 		log.log(Level.INFO, "Initialising application.");
 		EzeeWebMain main = new EzeeConstructionMain(user);
-		EzeeProjectGrid projectGrid = new EzeeProjectGrid(cache);
+		EzeeProjectGrid projectGrid = new EzeeProjectGrid(main, cache, PROJECT_CRUD_HEADERS);
 		main.getTab().add(projectGrid, PROJECTS);
 		main.getTab().add(createResourceGrid(), RESOURCES);
 		RootLayoutPanel.get().add(main);

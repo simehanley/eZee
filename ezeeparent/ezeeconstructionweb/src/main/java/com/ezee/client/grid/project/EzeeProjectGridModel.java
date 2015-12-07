@@ -1,6 +1,7 @@
 package com.ezee.client.grid.project;
 
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
+import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -22,6 +23,7 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 	public static final String ACTUAL = "Actual";
 	public static final String PAID = "Paid";
 	public static final String BALANCE = "Balance";
+	public static final String PERCENT_COMPLETE = "% Complete";
 
 	private final EzeeDateComparator dateComparator = new EzeeDateComparator();
 
@@ -35,6 +37,7 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 		createNumericColumn(columns, grid, ACTUAL);
 		createNumericColumn(columns, grid, PAID);
 		createNumericColumn(columns, grid, BALANCE);
+		createTextColumn(columns, grid, PERCENT_COMPLETE, false);
 		return columns;
 	}
 
@@ -51,6 +54,8 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 			return getAmountFormat().format(project.paid().getTotal());
 		case BALANCE:
 			return getAmountFormat().format(project.balance().getTotal());
+		case PERCENT_COMPLETE:
+			return project.percent();
 		}
 		return null;
 	}
@@ -102,5 +107,9 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 		grid.getColumnSortList().push(columns.get(PROJECT));
 		grid.getColumnSortList().push(columns.get(START_DATE));
 		grid.getColumnSortList().push(columns.get(END_DATE));
+	}
+
+	protected String resolveCellStyleNames(final EzeeProject project) {
+		return INSTANCE.css().black();
 	}
 }
