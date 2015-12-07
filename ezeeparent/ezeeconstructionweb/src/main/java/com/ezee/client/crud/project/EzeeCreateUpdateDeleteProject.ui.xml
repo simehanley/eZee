@@ -1,0 +1,35 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:p1="urn:import:com.ezee.web.common.ui.crud.common" xmlns:p2="urn:import:com.google.gwt.user.datepicker.client">
+
+	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
+
+	<g:HTMLPanel>
+		<g:AbsolutePanel height="466px" width="328px">
+			<g:at top="10" left="10">
+				<g:Label text="Start" styleName="{res.css.gwtLabelSmall}" />
+			</g:at>
+			<g:at top="10" left="103">
+				<p2:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtStart" />
+			</g:at>
+			<g:at top="41" left="10">
+				<g:Label text="End" styleName="{res.css.gwtLabelSmall}" />
+			</g:at>
+			<g:at top="41" left="103">
+				<p2:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtEnd" />
+			</g:at>
+			<g:at top="63" left="1">
+				<p1:EzeePayerPayeeCommon ui:field="common" />
+			</g:at>
+			<g:at top="427" left="34">
+				<g:Button text="Delete" styleName="{res.css.gwtButton}" ui:field="btnDelete" />
+			</g:at>
+			<g:at top="427" left="128">
+				<g:Button text="Close" styleName="{res.css.gwtButton}" ui:field="btnClose" />
+			</g:at>
+			<g:at top="427" left="222">
+				<g:Button text="Save" styleName="{res.css.gwtButton}" ui:field="btnSave" />
+			</g:at>
+		</g:AbsolutePanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
