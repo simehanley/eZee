@@ -2,6 +2,8 @@ package com.ezee.model.entity.project;
 
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
+import static com.ezee.common.numeric.EzeeNumericUtils.isCloseToZero;
+import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
 import java.beans.Transient;
@@ -96,38 +98,60 @@ public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 	@Transient
 	public EzeeProjectAmount budgeted() {
 		double amount = ZERO_DBL, tax = ZERO_DBL;
-		for (EzeeProjectItem item : items) {
-			EzeeProjectAmount amt = item.budgeted();
-			amount += amt.getAmount();
-			tax += amt.getTax();
+		if (!isEmpty(items)) {
+			for (EzeeProjectItem item : items) {
+				EzeeProjectAmount amt = item.budgeted();
+				amount += amt.getAmount();
+				tax += amt.getTax();
+			}
 		}
-		return new EzeeProjectAmount(amount, tax);
+		return new EzeeProjectAmount(round(amount), round(tax));
 	}
 
 	@Transient
 	public EzeeProjectAmount actual() {
 		double amount = ZERO_DBL, tax = ZERO_DBL;
-		for (EzeeProjectItem item : items) {
-			EzeeProjectAmount amt = item.actual();
-			amount += amt.getAmount();
-			tax += amt.getTax();
+		if (!isEmpty(items)) {
+			for (EzeeProjectItem item : items) {
+				EzeeProjectAmount amt = item.actual();
+				amount += amt.getAmount();
+				tax += amt.getTax();
+			}
 		}
-		return new EzeeProjectAmount(amount, tax);
+		return new EzeeProjectAmount(round(amount), round(tax));
 	}
 
 	@Transient
 	public EzeeProjectAmount paid() {
 		double amount = ZERO_DBL, tax = ZERO_DBL;
-		for (EzeeProjectItem item : items) {
-			EzeeProjectAmount amt = item.paid();
-			amount += amt.getAmount();
-			tax += amt.getTax();
+		if (!isEmpty(items)) {
+			for (EzeeProjectItem item : items) {
+				EzeeProjectAmount amt = item.paid();
+				amount += amt.getAmount();
+				tax += amt.getTax();
+			}
 		}
-		return new EzeeProjectAmount(amount, tax);
+		return new EzeeProjectAmount(round(amount), round(tax));
 	}
 
 	@Transient
 	public EzeeProjectAmount balance() {
 		return actual().minus(paid());
+	}
+
+	@Transient
+	public String percent() {
+		double balance = balance().getTotal();
+		double actual = actual().getTotal();
+		if (isCloseToZero(balance)) {
+			return "100.00%";
+		}
+		double percentComplete = round((actual - balance) / balance);
+		return Double.toString(percentComplete) + "%";
+	}
+
+	@Override
+	public String toString() {
+		return "EzeeProject [getName()=" + getName() + "]";
 	}
 }
