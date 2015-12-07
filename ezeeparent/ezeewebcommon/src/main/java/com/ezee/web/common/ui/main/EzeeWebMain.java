@@ -95,7 +95,7 @@ public class EzeeWebMain extends Composite {
 		new EzeeEditUser(ezeeUser.getUsername()).show();
 	}
 
-	private void addTabHandler() {
+	protected void addTabHandler() {
 		tab.addSelectionHandler(new SelectionHandler<Integer>() {
 			public void onSelection(SelectionEvent<Integer> event) {
 				int tabId = event.getSelectedItem();

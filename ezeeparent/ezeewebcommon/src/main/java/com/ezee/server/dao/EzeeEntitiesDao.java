@@ -112,10 +112,16 @@ public class EzeeEntitiesDao {
 		 * {@link PersistentCollection}
 		 */
 		public void postProcessProject(final EzeeProject project) {
-			project.setItems(new LinkedHashSet<>(project.getItems()));
-			for (EzeeProjectItem item : project.getItems()) {
-				item.setDetails(new LinkedHashSet<>(item.getDetails()));
-				item.setPayments(new LinkedHashSet<>(item.getPayments()));
+			if (project.getItems() != null) {
+				project.setItems(new LinkedHashSet<>(project.getItems()));
+				for (EzeeProjectItem item : project.getItems()) {
+					if (item.getDetails() != null) {
+						item.setDetails(new LinkedHashSet<>(item.getDetails()));
+					}
+					if (item.getPayments() != null) {
+						item.setPayments(new LinkedHashSet<>(item.getPayments()));
+					}
+				}
 			}
 		}
 	}
