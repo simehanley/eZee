@@ -25,6 +25,9 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	public static final String PAYMENT_AMOUNT = "Amount";
 	public static final String INVOICES = "Invoices";
 
+	public static final double PAYMENT_TYPE_WIDTH = 100.;
+	public static final double INVOICES_WIDTH = 500.;
+
 	private final EzeeDateComparator dateComparator = new EzeeDateComparator();
 
 	public EzeePaymentGridModel() {
@@ -38,10 +41,10 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	@Override
 	protected Map<String, Column<EzeePayment, ?>> createColumns(final DataGrid<EzeePayment> grid) {
 		Map<String, Column<EzeePayment, ?>> columns = new HashMap<>();
-		createDateColumn(columns, grid, PAYMENT_DATE, true);
-		createTextColumn(columns, grid, PAYMENT_TYPE, true);
-		createNumericColumn(columns, grid, PAYMENT_AMOUNT);
-		createTextColumn(columns, grid, INVOICES, false);
+		createDateColumn(columns, grid, PAYMENT_DATE, DATE_FIELD_WIDTH, true);
+		createTextColumn(columns, grid, PAYMENT_TYPE, PAYMENT_TYPE_WIDTH, true);
+		createNumericColumn(columns, grid, PAYMENT_AMOUNT, NUMERIC_FIELD_WIDTH);
+		createTextColumn(columns, grid, INVOICES, INVOICES_WIDTH, false);
 		return columns;
 	}
 
@@ -59,12 +62,28 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	}
 
 	@Override
+	protected void setTextFieldValue(final String fieldName, final String fieldValue, final EzeePayment payment) {
+		/* do nothing */
+	}
+
+	@Override
 	protected Date resolveDateFieldValue(final String fieldName, final EzeePayment payment) {
 		switch (fieldName) {
 		case PAYMENT_DATE:
 			return DATE_UTILS.fromString(payment.getPaymentDate());
 		}
 		return null;
+	}
+
+	@Override
+	protected boolean resolveBooleanFieldValue(final String fieldName, final EzeePayment entity) {
+		/* do nothing */
+		return false;
+	}
+
+	@Override
+	protected void setBooleanFieldValue(final String fieldName, final boolean fieldValue, final EzeePayment entity) {
+		/* do nothing */
 	}
 
 	@Override

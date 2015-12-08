@@ -85,6 +85,9 @@ public class EzeeInvoice extends EzeeDatabaseEntity
 	@Column(name = "FILE")
 	private byte[] file;
 
+	@Transient
+	private boolean pay = false;
+
 	public EzeeInvoice() {
 		super();
 	}
@@ -245,5 +248,13 @@ public class EzeeInvoice extends EzeeDatabaseEntity
 	@Override
 	public String filterString() {
 		return invoiceId;
+	}
+
+	public final boolean isPay() {
+		return pay;
+	}
+
+	public final void setPay(boolean pay) {
+		this.pay = pay;
 	}
 }

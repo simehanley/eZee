@@ -1,13 +1,14 @@
 package com.ezee.model.entity.project;
 
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
+import static com.ezee.common.numeric.EzeeNumericUtils.isCloseToZero;
+import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import static com.ezee.model.entity.project.EzeeProjectItemUtilities.resolveActual;
 import static com.ezee.model.entity.project.EzeeProjectItemUtilities.resolveBudgeted;
 import static com.ezee.model.entity.project.EzeeProjectItemUtilities.resolvePaid;
 import static javax.persistence.CascadeType.ALL;
 
-import java.beans.Transient;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -48,7 +49,6 @@ public class EzeeProjectItem extends EzeeDatabaseEntity {
 
 	public EzeeProjectItem(final String name, final String created, final String updated) {
 		this(NULL_ID, name, created, updated);
-
 	}
 
 	public EzeeProjectItem(final Long id, final String name, final String created, final String updated) {
@@ -98,24 +98,30 @@ public class EzeeProjectItem extends EzeeDatabaseEntity {
 		this.payments = payments;
 	}
 
-	@Transient
 	public EzeeProjectAmount budgeted() {
 		return resolveBudgeted(this);
 	}
 
-	@Transient
 	public EzeeProjectAmount actual() {
 		return resolveActual(this);
 	}
 
-	@Transient
 	public EzeeProjectAmount paid() {
 		return resolvePaid(this);
 	}
 
-	@Transient
 	public EzeeProjectAmount balance() {
 		return actual().minus(paid());
+	}
+
+	public String percent() {
+		double balance = balance().getTotal();
+		double actual = actual().getTotal();
+		if (isCloseToZero(balance)) {
+			return "100.00%";
+		}
+		double percentComplete = round((actual - balance) / balance);
+		return Double.toString(percentComplete) + "%";
 	}
 
 	@Override
@@ -130,6 +136,8 @@ public class EzeeProjectItem extends EzeeDatabaseEntity {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
+		if (obj == null)
+			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		EzeeProjectItem other = (EzeeProjectItem) obj;

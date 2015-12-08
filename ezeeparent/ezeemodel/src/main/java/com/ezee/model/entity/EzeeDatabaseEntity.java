@@ -1,5 +1,8 @@
 package com.ezee.model.entity;
 
+import static com.ezee.common.EzeeCommonConstants.MINUS_ONE;
+import static com.ezee.common.EzeeCommonConstants.ONE;
+import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
 import java.io.Serializable;
@@ -17,7 +20,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  *
  */
 @MappedSuperclass
-public abstract class EzeeDatabaseEntity implements Serializable, IsSerializable {
+public abstract class EzeeDatabaseEntity implements Serializable, IsSerializable, Comparable<EzeeDatabaseEntity> {
 
 	private static final long serialVersionUID = -1523917928877244252L;
 
@@ -96,5 +99,17 @@ public abstract class EzeeDatabaseEntity implements Serializable, IsSerializable
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(final EzeeDatabaseEntity entity) {
+		if (getId() == NULL_ID && entity.getId() == NULL_ID) {
+			return ZERO;
+		} else if (getId() != NULL_ID && entity.getId() == NULL_ID) {
+			return ONE;
+		} else if (getId() == NULL_ID && entity.getId() != NULL_ID) {
+			return MINUS_ONE;
+		}
+		return getId().compareTo(entity.getId());
 	}
 }

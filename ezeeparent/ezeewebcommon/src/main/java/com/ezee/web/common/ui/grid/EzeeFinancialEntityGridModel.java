@@ -18,7 +18,7 @@ public abstract class EzeeFinancialEntityGridModel<T extends EzeeFinancialEntity
 	@Override
 	protected Map<String, Column<T, ?>> createColumns(final DataGrid<T> grid) {
 		Map<String, Column<T, ?>> columns = new HashMap<>();
-		createTextColumn(columns, grid, NAME, true);
+		createTextColumn(columns, grid, NAME, COLUMN_WIDTH_NOT_SET, true);
 		return columns;
 	}
 
@@ -33,9 +33,25 @@ public abstract class EzeeFinancialEntityGridModel<T extends EzeeFinancialEntity
 	}
 
 	@Override
+	protected void setTextFieldValue(final String fieldName, final String fieldValue, final T entity) {
+		/* do nothing */
+	}
+
+	@Override
 	protected Date resolveDateFieldValue(final String fieldName, final T entity) {
 		/* do nothing */
 		return null;
+	}
+
+	@Override
+	protected boolean resolveBooleanFieldValue(final String fieldName, final T entity) {
+		/* do nothing */
+		return false;
+	}
+
+	@Override
+	protected void setBooleanFieldValue(final String fieldName, final boolean fieldValue, final T entity) {
+		/* do nothing */
 	}
 
 	@Override

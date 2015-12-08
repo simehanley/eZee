@@ -15,19 +15,23 @@ public final class EzeeProjectItemUtilities {
 
 	public static EzeeProjectAmount resolvePaid(final EzeeProjectItem item) {
 		double amount = ZERO_DBL, tax = ZERO_DBL;
-		for (EzeeProjectPayment pmt : item.getPayments()) {
-			amount += pmt.getAmount();
-			tax += pmt.getTax();
+		if (item.getPayments() != null) {
+			for (EzeeProjectPayment pmt : item.getPayments()) {
+				amount += pmt.getAmount();
+				tax += pmt.getTax();
+			}
 		}
 		return new EzeeProjectAmount(amount, tax);
 	}
 
 	public static EzeeProjectAmount resolveBudgeted(final EzeeProjectItem item) {
 		double amount = ZERO_DBL, tax = ZERO_DBL;
-		for (EzeeProjectItemDetail detail : item.getDetails()) {
-			if (detail.getType() != variation) {
-				amount += detail.getAmount();
-				tax += detail.getTax();
+		if (item.getDetails() != null) {
+			for (EzeeProjectItemDetail detail : item.getDetails()) {
+				if (detail.getType() != variation) {
+					amount += detail.getAmount();
+					tax += detail.getTax();
+				}
 			}
 		}
 		return new EzeeProjectAmount(amount, tax);
@@ -35,9 +39,11 @@ public final class EzeeProjectItemUtilities {
 
 	public static EzeeProjectAmount resolveActual(final EzeeProjectItem item) {
 		double amount = ZERO_DBL, tax = ZERO_DBL;
-		for (EzeeProjectItemDetail detail : item.getDetails()) {
-			amount += detail.getAmount();
-			tax += detail.getTax();
+		if (item.getDetails() != null) {
+			for (EzeeProjectItemDetail detail : item.getDetails()) {
+				amount += detail.getAmount();
+				tax += detail.getTax();
+			}
 		}
 		return new EzeeProjectAmount(amount, tax);
 	}

@@ -6,8 +6,10 @@ import static com.ezee.common.numeric.EzeeNumericUtils.isCloseToZero;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
-import java.beans.Transient;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,6 +19,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.ezee.model.entity.EzeeFinancialEntity;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -41,6 +44,9 @@ public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "PROJECT_ID")
 	private Set<EzeeProjectItem> items;
+
+	@Transient
+	private boolean modified = false;
 
 	public EzeeProject() {
 		super();
@@ -91,11 +97,19 @@ public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 		return items;
 	}
 
+	public final Set<EzeeProjectItem> getSortedItems() {
+		if (!isEmpty(items)) {
+			List<EzeeProjectItem> sorted = new ArrayList<>(items);
+			Collections.sort(sorted);
+			return new LinkedHashSet<>(sorted);
+		}
+		return items;
+	}
+
 	public void setItems(Set<EzeeProjectItem> items) {
 		this.items = items;
 	}
 
-	@Transient
 	public EzeeProjectAmount budgeted() {
 		double amount = ZERO_DBL, tax = ZERO_DBL;
 		if (!isEmpty(items)) {
@@ -108,7 +122,6 @@ public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 		return new EzeeProjectAmount(round(amount), round(tax));
 	}
 
-	@Transient
 	public EzeeProjectAmount actual() {
 		double amount = ZERO_DBL, tax = ZERO_DBL;
 		if (!isEmpty(items)) {
@@ -121,7 +134,6 @@ public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 		return new EzeeProjectAmount(round(amount), round(tax));
 	}
 
-	@Transient
 	public EzeeProjectAmount paid() {
 		double amount = ZERO_DBL, tax = ZERO_DBL;
 		if (!isEmpty(items)) {
@@ -134,12 +146,10 @@ public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 		return new EzeeProjectAmount(round(amount), round(tax));
 	}
 
-	@Transient
 	public EzeeProjectAmount balance() {
 		return actual().minus(paid());
 	}
 
-	@Transient
 	public String percent() {
 		double balance = balance().getTotal();
 		double actual = actual().getTotal();
@@ -153,5 +163,13 @@ public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 	@Override
 	public String toString() {
 		return "EzeeProject [getName()=" + getName() + "]";
+	}
+
+	public final boolean isModified() {
+		return modified;
+	}
+
+	public final void setModified(boolean modified) {
+		this.modified = modified;
 	}
 }

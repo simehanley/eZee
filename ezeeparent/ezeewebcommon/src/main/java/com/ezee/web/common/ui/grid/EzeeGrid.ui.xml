@@ -14,8 +14,8 @@
 			<p1:SimplePager height="100%" width="100%" ui:field="pager" styleName="{res.css.gwtPanelBorder}" />
 		</g:south>
 		<g:center>
-			<g:ResizeLayoutPanel height="100%" width="100%">
-				<p1:DataGrid width="100%" height="100%" ui:field="grid" styleName="{res.css.gwtPanelBorder}" />
+			<g:ResizeLayoutPanel height="100%" width="99.75%" styleName="{res.css.gwtPanelBorder}">
+				<p1:DataGrid width="100%" height="100%" ui:field="grid" />
 			</g:ResizeLayoutPanel>
 		</g:center>
 

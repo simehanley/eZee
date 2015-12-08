@@ -78,7 +78,7 @@ public class EzeeProjectGrid extends EzeeFinancialEntityGrid<EzeeProject> implem
 			if (index >= ZERO) {
 				main.getTab().selectTab(index);
 			} else {
-				main.getTab().add(new EzeeProjectDetail(entity, this), entity.getName());
+				main.getTab().add(new EzeeProjectDetail(entity, this).asWidget(), entity.getName());
 				main.getTab().selectTab(main.getTab().getWidgetCount() - ONE);
 			}
 		}

@@ -25,19 +25,21 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 	public static final String BALANCE = "Balance";
 	public static final String PERCENT_COMPLETE = "% Complete";
 
+	public static final double PROJECT_WIDTH = 300.;
+
 	private final EzeeDateComparator dateComparator = new EzeeDateComparator();
 
 	@Override
 	protected Map<String, Column<EzeeProject, ?>> createColumns(final DataGrid<EzeeProject> grid) {
 		Map<String, Column<EzeeProject, ?>> columns = new HashMap<>();
-		createTextColumn(columns, grid, PROJECT, true);
-		createDateColumn(columns, grid, START_DATE, true);
-		createDateColumn(columns, grid, END_DATE, true);
-		createNumericColumn(columns, grid, BUDGETED);
-		createNumericColumn(columns, grid, ACTUAL);
-		createNumericColumn(columns, grid, PAID);
-		createNumericColumn(columns, grid, BALANCE);
-		createTextColumn(columns, grid, PERCENT_COMPLETE, false);
+		createTextColumn(columns, grid, PROJECT, PROJECT_WIDTH, true);
+		createDateColumn(columns, grid, START_DATE, DATE_FIELD_WIDTH, true);
+		createDateColumn(columns, grid, END_DATE, DATE_FIELD_WIDTH, true);
+		createNumericColumn(columns, grid, BUDGETED, NUMERIC_FIELD_WIDTH);
+		createNumericColumn(columns, grid, ACTUAL, NUMERIC_FIELD_WIDTH);
+		createNumericColumn(columns, grid, PAID, NUMERIC_FIELD_WIDTH);
+		createNumericColumn(columns, grid, BALANCE, NUMERIC_FIELD_WIDTH);
+		createTextColumn(columns, grid, PERCENT_COMPLETE, COLUMN_WIDTH_NOT_SET, false);
 		return columns;
 	}
 
@@ -61,6 +63,11 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 	}
 
 	@Override
+	protected void setTextFieldValue(final String fieldName, final String fieldValue, final EzeeProject project) {
+		/* do nothing */
+	}
+
+	@Override
 	protected Date resolveDateFieldValue(final String fieldName, final EzeeProject project) {
 		switch (fieldName) {
 		case START_DATE:
@@ -69,6 +76,17 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 			return dateUtilities.fromString(project.getEndDate());
 		}
 		return null;
+	}
+
+	@Override
+	protected boolean resolveBooleanFieldValue(final String fieldName, final EzeeProject entity) {
+		/* do nothing */
+		return false;
+	}
+
+	@Override
+	protected void setBooleanFieldValue(final String fieldName, final boolean fieldValue, final EzeeProject entity) {
+		/* do nothing */
 	}
 
 	@Override
