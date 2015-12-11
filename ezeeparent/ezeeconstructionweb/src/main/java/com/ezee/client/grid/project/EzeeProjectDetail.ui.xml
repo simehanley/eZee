@@ -1,52 +1,68 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
+	<ui:with type="com.ezee.client.css.EzeeProjectResources" field="proj" />
 
 	<g:HTMLPanel>
 		<g:DockLayoutPanel height="32%" width="100%" unit="EM">
 			<g:south size="2.8">
-				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_RIGHT" width="99.25%">
-					<g:HorizontalPanel width="90%" />
-					<g:HorizontalPanel width="10%">
-						<g:Button text="Close" styleName="{res.css.gwtButton}" ui:field="btnCloseItem" />
-						<g:Button text="Add" styleName="{res.css.gwtButton}" ui:field="btnAddItem" />
-						<g:Button text="Delete" styleName="{res.css.gwtButton}" ui:field="btnDeleteItem" />
-						<g:Button text="Save" styleName="{res.css.gwtButton}" ui:field="btnSaveItem" />
-					</g:HorizontalPanel>
+				<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="99.25%">
+					<g:cell horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="92%" height="100%">
+						<g:HTML />
+					</g:cell>
+					<g:cell horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" width="8%" height="100%">
+						<g:HorizontalPanel>
+							<g:Button text="Add" styleName="{res.css.gwtButton}" ui:field="btnAddItem" />
+							<g:Button text="Delete" styleName="{res.css.gwtButton}" ui:field="btnDeleteItem" />
+						</g:HorizontalPanel>
+					</g:cell>
 				</g:HorizontalPanel>
 			</g:south>
 			<g:center>
-				<g:HorizontalPanel ui:field="projectItems" height="95%" width="99%" styleName="{res.css.gwtPanelBorder}" />
+				<g:HorizontalPanel ui:field="projectItems" height="98%" width="99%" styleName="{res.css.gwtPanelBorder}" />
 			</g:center>
 		</g:DockLayoutPanel>
 		<g:DockLayoutPanel height="32%" width="100%" unit="EM">
 			<g:south size="2.8">
-				<g:HorizontalPanel horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" width="99.25%">
-					<g:HorizontalPanel width="90%" />
-					<g:HorizontalPanel width="10%">
-						<g:Button text="Add" styleName="{res.css.gwtButton}" />
-						<g:Button text="Delete" styleName="{res.css.gwtButton}" />
-						<g:Button text="Save" styleName="{res.css.gwtButton}" />
-					</g:HorizontalPanel>
+				<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="99.25%">
+					<g:cell horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="92%" height="100%">
+						<g:HTML />
+					</g:cell>
+					<g:cell horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" width="8%" height="100%">
+						<g:HorizontalPanel>
+							<g:Button text="Add" styleName="{res.css.gwtButton}" ui:field="btnAddItemDetail" />
+							<g:Button text="Delete" styleName="{res.css.gwtButton}" ui:field="btnDeleteItemDetail" />
+						</g:HorizontalPanel>
+					</g:cell>
 				</g:HorizontalPanel>
 			</g:south>
 			<g:center>
-				<g:HorizontalPanel ui:field="projectItemsDetails" height="95%" width="99%" styleName="{res.css.gwtPanelBorder}" />
+				<g:HorizontalPanel ui:field="projectItemDetails" height="98%" width="99%" styleName="{res.css.gwtPanelBorder}" />
 			</g:center>
 		</g:DockLayoutPanel>
 		<g:DockLayoutPanel height="32%" width="100%" unit="EM">
 			<g:south size="2.8">
-				<g:HorizontalPanel horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" width="99.25%">
-					<g:HorizontalPanel width="90%" />
-					<g:HorizontalPanel width="10%">
-						<g:Button text="Add" styleName="{res.css.gwtButton}" />
-						<g:Button text="Delete" styleName="{res.css.gwtButton}" />
-						<g:Button text="Save" styleName="{res.css.gwtButton}" />
-					</g:HorizontalPanel>
+				<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="99.25%">
+					<g:cell horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="92%" height="100%">
+						<g:HorizontalPanel>
+							<g:Button text="Save" styleName="{res.css.gwtButton}" ui:field="btnSave" />
+							<g:Button text="Close" styleName="{res.css.gwtButton}" ui:field="btnClose" />
+							<g:Label text="STATUS" styleName="{proj.css.gwtLabelProjectModify}" />
+							<g:Label text="UN-MODIFIED" styleName="{proj.css.gwtLabelProjectModifyUnmod}" ui:field="lblStatus" />
+
+						</g:HorizontalPanel>
+					</g:cell>
+					<g:cell horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" width="8%" height="100%">
+						<g:HorizontalPanel>
+							<g:Button text="Add" styleName="{res.css.gwtButton}" ui:field="btnAddPayment" />
+							<g:Button text="Delete" styleName="{res.css.gwtButton}" ui:field="btnDeletePayment" />
+						</g:HorizontalPanel>
+					</g:cell>
 				</g:HorizontalPanel>
 			</g:south>
 			<g:center>
-				<g:HorizontalPanel ui:field="projectItemsPayments" height="95%" width="99%" styleName="{res.css.gwtPanelBorder}" />
+				<g:HorizontalPanel ui:field="projectPayments" height="98%" width="99%" styleName="{res.css.gwtPanelBorder}" />
 			</g:center>
 		</g:DockLayoutPanel>
 	</g:HTMLPanel>

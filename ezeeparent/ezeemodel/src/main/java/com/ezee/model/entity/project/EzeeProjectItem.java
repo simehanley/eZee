@@ -8,6 +8,7 @@ import static com.ezee.model.entity.project.EzeeProjectItemUtilities.resolveActu
 import static com.ezee.model.entity.project.EzeeProjectItemUtilities.resolveBudgeted;
 import static com.ezee.model.entity.project.EzeeProjectItemUtilities.resolvePaid;
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -16,10 +17,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeePayee;
 
 /**
  * 
@@ -35,6 +39,10 @@ public class EzeeProjectItem extends EzeeDatabaseEntity {
 	@Column(name = "NAME")
 	private String name;
 
+	@OneToOne(fetch = EAGER)
+	@JoinTable(name = "EZEE_PROJECT_ITEM_TO_RESOURCE_MAPPING", joinColumns = @JoinColumn(name = "ITEM_ID") , inverseJoinColumns = @JoinColumn(name = "RESOURCE_ID") )
+	private EzeePayee resource;
+
 	@OneToMany(cascade = ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "ITEM_ID")
 	private Set<EzeeProjectItemDetail> details;
@@ -47,13 +55,15 @@ public class EzeeProjectItem extends EzeeDatabaseEntity {
 		super();
 	}
 
-	public EzeeProjectItem(final String name, final String created, final String updated) {
-		this(NULL_ID, name, created, updated);
+	public EzeeProjectItem(final String name, final EzeePayee resource, final String created, final String updated) {
+		this(NULL_ID, name, resource, created, updated);
 	}
 
-	public EzeeProjectItem(final Long id, final String name, final String created, final String updated) {
+	public EzeeProjectItem(final Long id, final String name, final EzeePayee resource, final String created,
+			final String updated) {
 		super(id, created, updated);
 		this.name = name;
+		this.resource = resource;
 	}
 
 	public void addDetail(final EzeeProjectItemDetail detail) {
@@ -80,6 +90,14 @@ public class EzeeProjectItem extends EzeeDatabaseEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public EzeePayee getResource() {
+		return resource;
+	}
+
+	public void setResource(final EzeePayee resource) {
+		this.resource = resource;
 	}
 
 	public Set<EzeeProjectItemDetail> getDetails() {
@@ -129,6 +147,7 @@ public class EzeeProjectItem extends EzeeDatabaseEntity {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((resource == null) ? 0 : resource.hashCode());
 		return result;
 	}
 
@@ -136,8 +155,6 @@ public class EzeeProjectItem extends EzeeDatabaseEntity {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		EzeeProjectItem other = (EzeeProjectItem) obj;
@@ -145,6 +162,11 @@ public class EzeeProjectItem extends EzeeDatabaseEntity {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
+			return false;
+		if (resource == null) {
+			if (other.resource != null)
+				return false;
+		} else if (!resource.equals(other.resource))
 			return false;
 		return true;
 	}

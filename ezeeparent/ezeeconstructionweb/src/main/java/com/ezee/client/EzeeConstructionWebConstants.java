@@ -17,4 +17,8 @@ public interface EzeeConstructionWebConstants {
 	String NEW_PROJECT = "New Project";
 	String DELETE_PROJECT = "Delete Project";
 	String[] PROJECT_CRUD_HEADERS = new String[] { NEW_PROJECT, EDIT_PROJECT, DELETE_PROJECT };
+
+	String MODIFIED = "MODIFIED";
+	String UNMODIFIED = "UN-MODIFIED";
+	String ERROR = "ERROR";
 }

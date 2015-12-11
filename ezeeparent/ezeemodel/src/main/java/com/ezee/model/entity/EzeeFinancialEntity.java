@@ -179,4 +179,13 @@ public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity
 	public String filterString() {
 		return getName();
 	}
+
+	@Override
+	public int compareTo(final EzeeDatabaseEntity entity) {
+		if (entity instanceof EzeeFinancialEntity) {
+			return getName().compareTo(((EzeeFinancialEntity) entity).getName());
+		}
+		return super.compareTo(entity);
+	}
+
 }

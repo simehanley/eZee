@@ -82,6 +82,11 @@ public class EzeeEntityCache {
 		return entities.get(clazz);
 	}
 
+	@SuppressWarnings("unchecked")
+	public final <T> Map<String, T> getEntitiesOfType(final Class<T> clazz) {
+		return (Map<String, T>) entities.get(clazz);
+	}
+
 	public final EzeeConfiguration getConfiguration() {
 		return configuration;
 	}

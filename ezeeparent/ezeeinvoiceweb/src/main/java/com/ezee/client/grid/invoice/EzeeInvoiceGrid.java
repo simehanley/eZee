@@ -94,8 +94,13 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	@Override
 	public void deleteEntity() {
 		EzeeInvoice entity = getSelected();
-		if (entity != null) {
-			new EzeeCreateUpdateDeleteInvoice(cache, this, entity, delete, EMPTY_STRING, INVOICE_CRUD_HEADERS).show();
+		if (entity.getDatePaid() == null) {
+			if (entity != null) {
+				new EzeeCreateUpdateDeleteInvoice(cache, this, entity, delete, EMPTY_STRING, INVOICE_CRUD_HEADERS)
+						.show();
+			}
+		} else {
+			showNew("Cannot Delete", "Cannot delete an invoice that has been paid.  Delete underlying payment first.");
 		}
 	}
 
@@ -127,6 +132,8 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 					}
 				}
 				listener.onCreatePayment(unpaid);
+			} else {
+				showNew("New Payment", "No invoices selected.  Please selct at least one invoice to pay.");
 			}
 		}
 	}

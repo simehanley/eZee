@@ -32,11 +32,13 @@ import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
+import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -179,6 +181,8 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 				showCheckFields(showChequeFields);
 			}
 		});
+		FocusHandler focusHandler = new EzeeTextBoxUtils.TextBoxFocusHandler();
+		txtChequeNumber.addFocusHandler(focusHandler);
 	}
 
 	private void showCheckFields(boolean show) {
@@ -329,6 +333,7 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 		hidden.add(EzeeInvoiceGridModel.DUE_DATE);
 		hidden.add(EzeeInvoiceGridModel.PAID_PATE);
 		hidden.add(EzeeInvoiceGridModel.FILE);
+		hidden.add(EzeeInvoiceGridModel.PAY);
 		return new EzeeInvoiceGridModel(hidden);
 	}
 }

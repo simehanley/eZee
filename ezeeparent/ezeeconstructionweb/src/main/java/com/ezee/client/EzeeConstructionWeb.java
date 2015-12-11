@@ -10,6 +10,7 @@ import static com.ezee.client.EzeeConstructionWebConstants.RESOURCE_CRUD_HEADERS
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.ezee.client.css.EzeeProjectResources;
 import com.ezee.client.grid.project.EzeeProjectGrid;
 import com.ezee.client.main.EzeeConstructionMain;
 import com.ezee.web.common.ui.entrypoint.EzeeWebEntryPoint;
@@ -42,5 +43,11 @@ public class EzeeConstructionWeb extends EzeeWebEntryPoint {
 
 	private EzeePayeeGrid createResourceGrid() {
 		return new EzeePayeeGrid(cache, RESOURCE_CRUD_HEADERS);
+	}
+
+	@Override
+	protected void initResources() {
+		super.initResources();
+		EzeeProjectResources.INSTANCE.css().ensureInjected();
 	}
 }

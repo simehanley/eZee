@@ -6,6 +6,7 @@ import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
+import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_RIGHT;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -59,8 +60,8 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		super();
 	}
 
-	public EzeeInvoiceGridModel(Set<String> hiddenColumns) {
-		super(hiddenColumns);
+	public EzeeInvoiceGridModel(final Set<String> hiddenColumns) {
+		super(null, hiddenColumns);
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		createTextColumn(columns, grid, INVOICE_NUM, INVOICE_NUM_WIDTH, true);
 		createTextColumn(columns, grid, SUPPLIER, SUPPLIER_WIDTH, true);
 		createTextColumn(columns, grid, PREMISES, PREMISES_WIDTH, true);
-		createNumericColumn(columns, grid, TOTAL, NUMERIC_FIELD_WIDTH);
+		createTextColumn(columns, grid, TOTAL, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
 		createDateColumn(columns, grid, INVOICE_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, DUE_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, PAID_PATE, DATE_FIELD_WIDTH, true);

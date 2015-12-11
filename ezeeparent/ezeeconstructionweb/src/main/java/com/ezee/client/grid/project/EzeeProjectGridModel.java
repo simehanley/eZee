@@ -2,6 +2,7 @@ package com.ezee.client.grid.project;
 
 import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
+import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_RIGHT;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -25,7 +26,7 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 	public static final String BALANCE = "Balance";
 	public static final String PERCENT_COMPLETE = "% Complete";
 
-	public static final double PROJECT_WIDTH = 300.;
+	public static final double PROJECT_WIDTH = 500.;
 
 	private final EzeeDateComparator dateComparator = new EzeeDateComparator();
 
@@ -35,11 +36,11 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 		createTextColumn(columns, grid, PROJECT, PROJECT_WIDTH, true);
 		createDateColumn(columns, grid, START_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, END_DATE, DATE_FIELD_WIDTH, true);
-		createNumericColumn(columns, grid, BUDGETED, NUMERIC_FIELD_WIDTH);
-		createNumericColumn(columns, grid, ACTUAL, NUMERIC_FIELD_WIDTH);
-		createNumericColumn(columns, grid, PAID, NUMERIC_FIELD_WIDTH);
-		createNumericColumn(columns, grid, BALANCE, NUMERIC_FIELD_WIDTH);
-		createTextColumn(columns, grid, PERCENT_COMPLETE, COLUMN_WIDTH_NOT_SET, false);
+		createTextColumn(columns, grid, BUDGETED, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+		createTextColumn(columns, grid, ACTUAL, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+		createTextColumn(columns, grid, PAID, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+		createTextColumn(columns, grid, BALANCE, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+		createTextColumn(columns, grid, PERCENT_COMPLETE, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
 		return columns;
 	}
 

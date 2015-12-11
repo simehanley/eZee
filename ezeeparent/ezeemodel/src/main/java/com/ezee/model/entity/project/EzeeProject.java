@@ -6,10 +6,7 @@ import static com.ezee.common.numeric.EzeeNumericUtils.isCloseToZero;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,6 +14,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -31,6 +30,10 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 @Entity
 @Table(name = "EZEE_PROJECT")
+
+@NamedNativeQueries({
+		@NamedNativeQuery(name = "deleteOrphanItemMappings", query = "delete from EZEE_PROJECT_ITEM_TO_RESOURCE_MAPPING where ITEM_ID in (select ID from EZEE_PROJECT_ITEM where PROJECT_ID is null)"),
+		@NamedNativeQuery(name = "deleteOrphanItems", query = "delete from EZEE_PROJECT_ITEM where PROJECT_ID is null") })
 public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 
 	private static final long serialVersionUID = -8129003866149538189L;
@@ -94,15 +97,6 @@ public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 	}
 
 	public final Set<EzeeProjectItem> getItems() {
-		return items;
-	}
-
-	public final Set<EzeeProjectItem> getSortedItems() {
-		if (!isEmpty(items)) {
-			List<EzeeProjectItem> sorted = new ArrayList<>(items);
-			Collections.sort(sorted);
-			return new LinkedHashSet<>(sorted);
-		}
 		return items;
 	}
 

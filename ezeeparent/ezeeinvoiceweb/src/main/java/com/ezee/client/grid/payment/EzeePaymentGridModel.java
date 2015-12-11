@@ -5,6 +5,7 @@ import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
 import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
+import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_RIGHT;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -34,8 +35,8 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 		super();
 	}
 
-	public EzeePaymentGridModel(Set<String> hiddenColumns) {
-		super(hiddenColumns);
+	public EzeePaymentGridModel(final Set<String> hiddenColumns) {
+		super(null, hiddenColumns);
 	}
 
 	@Override
@@ -43,7 +44,7 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 		Map<String, Column<EzeePayment, ?>> columns = new HashMap<>();
 		createDateColumn(columns, grid, PAYMENT_DATE, DATE_FIELD_WIDTH, true);
 		createTextColumn(columns, grid, PAYMENT_TYPE, PAYMENT_TYPE_WIDTH, true);
-		createNumericColumn(columns, grid, PAYMENT_AMOUNT, NUMERIC_FIELD_WIDTH);
+		createTextColumn(columns, grid, PAYMENT_AMOUNT, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
 		createTextColumn(columns, grid, INVOICES, INVOICES_WIDTH, false);
 		return columns;
 	}

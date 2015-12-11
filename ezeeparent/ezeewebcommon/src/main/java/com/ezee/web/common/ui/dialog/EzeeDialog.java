@@ -4,6 +4,7 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FocusWidget;
+import com.google.gwt.user.client.ui.TextBox;
 
 /**
  * 

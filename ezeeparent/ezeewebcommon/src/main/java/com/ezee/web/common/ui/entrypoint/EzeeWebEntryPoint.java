@@ -56,7 +56,7 @@ public abstract class EzeeWebEntryPoint implements EntryPoint, EzeeLoginListener
 		cache = new EzeeEntityCache();
 	}
 
-	private void initResources() {
+	protected void initResources() {
 		EzeeDefaultResources.INSTANCE.css().ensureInjected();
 		EzeeGwtOverridesResources.INSTANCE.dataGridStyle().ensureInjected();
 	}

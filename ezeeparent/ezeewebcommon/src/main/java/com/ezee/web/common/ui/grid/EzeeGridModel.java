@@ -7,7 +7,6 @@ import static com.ezee.common.web.EzeeFromatUtils.getDateFormat;
 import static com.google.gwt.dom.client.Style.Unit.PX;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_LEFT;
-import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_RIGHT;
 
 import java.util.Date;
 import java.util.List;
@@ -26,6 +25,7 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 import com.google.gwt.view.client.ListDataProvider;
 
 /**
@@ -46,11 +46,18 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 
 	protected Set<String> hiddenColumns;
 
+	protected EzeeGridModelListener<T> listener;
+
 	public EzeeGridModel() {
 		this(null);
 	}
 
-	public EzeeGridModel(Set<String> hiddenColumns) {
+	public EzeeGridModel(final EzeeGridModelListener<T> listener) {
+		this(listener, null);
+	}
+
+	public EzeeGridModel(final EzeeGridModelListener<T> listener, final Set<String> hiddenColumns) {
+		this.listener = listener;
 		this.hiddenColumns = hiddenColumns;
 	}
 
@@ -99,6 +106,12 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 
 	protected void createTextColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
 			final String fieldName, final double width, boolean sortable) {
+		createTextColumn(columns, grid, fieldName, width, sortable, ALIGN_LEFT);
+	}
+
+	protected void createTextColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
+			final String fieldName, final double width, boolean sortable,
+			HorizontalAlignmentConstant horizontalAlignment) {
 		if (!isHiddenColumn(fieldName)) {
 			TextColumn<T> column = new TextColumn<T>() {
 				@Override
@@ -111,7 +124,7 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 					return resolveCellStyleNames(entity);
 				}
 			};
-			column.setHorizontalAlignment(ALIGN_LEFT);
+			column.setHorizontalAlignment(horizontalAlignment);
 			createColumn(columns, grid, column, fieldName, width, sortable);
 		}
 	}
@@ -133,8 +146,14 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 			column.setFieldUpdater(new FieldUpdater<T, String>() {
 
 				@Override
-				public void update(int index, T object, String value) {
-					setTextFieldValue(fieldName, value, object);
+				public void update(int index, T entity, String value) {
+					String current = resolveTextFieldValue(fieldName, entity);
+					if (!value.equals(current)) {
+						setTextFieldValue(fieldName, value, entity);
+						if (listener != null) {
+							listener.modelUpdated(entity);
+						}
+					}
 				}
 			});
 			column.setHorizontalAlignment(ALIGN_LEFT);
@@ -161,25 +180,6 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 		}
 	}
 
-	protected void createNumericColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
-			final String fieldName, final double width) {
-		if (!isHiddenColumn(fieldName)) {
-			TextColumn<T> column = new TextColumn<T>() {
-				@Override
-				public String getValue(final T entity) {
-					return resolveTextFieldValue(fieldName, entity);
-				}
-
-				@Override
-				public String getCellStyleNames(final Context context, final T entity) {
-					return resolveCellStyleNames(entity);
-				}
-			};
-			column.setHorizontalAlignment(ALIGN_RIGHT);
-			createColumn(columns, grid, column, fieldName, width, false);
-		}
-	}
-
 	protected void createEditableCheckBoxColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
 			final String fieldName, final double width) {
 
@@ -198,7 +198,13 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 
 			@Override
 			public void update(int index, T entity, Boolean value) {
-				setBooleanFieldValue(fieldName, value, entity);
+				Boolean current = resolveBooleanFieldValue(fieldName, entity);
+				if (!value.equals(current)) {
+					setBooleanFieldValue(fieldName, value, entity);
+					if (listener != null) {
+						listener.modelUpdated(entity);
+					}
+				}
 			}
 		});
 

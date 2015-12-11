@@ -125,6 +125,7 @@ public class EzeeProjectPayment extends EzeeDatabaseEntity implements IsSerializ
 		temp = Double.doubleToLongBits(amount);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((chequeNumber == null) ? 0 : chequeNumber.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((paymentDate == null) ? 0 : paymentDate.hashCode());
 		temp = Double.doubleToLongBits(tax);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -145,6 +146,11 @@ public class EzeeProjectPayment extends EzeeDatabaseEntity implements IsSerializ
 			if (other.chequeNumber != null)
 				return false;
 		} else if (!chequeNumber.equals(other.chequeNumber))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
 			return false;
 		if (paymentDate == null) {
 			if (other.paymentDate != null)
