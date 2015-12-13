@@ -5,8 +5,8 @@ import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
-import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
-import static com.ezee.common.web.EzeeFromatUtils.getDateBoxFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getDateBoxFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 import com.ezee.client.grid.invoice.EzeeCreateUpdateDeleteInvoiceHandler;
 import com.ezee.client.ui.EzeeInvoiceUiUtils;
-import com.ezee.common.web.EzeeFromatUtils;
+import com.ezee.common.web.EzeeFormatUtils;
 import com.ezee.model.entity.EzeeConfiguration;
 import com.ezee.model.entity.EzeeDebtAgeRule;
 import com.ezee.model.entity.EzeeHasName;
@@ -206,9 +206,9 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	}
 
 	private void initialiseNew() {
-		txtAmount.setValue(EzeeFromatUtils.getAmountFormat().format(ZERO_DBL));
-		txtTax.setValue(EzeeFromatUtils.getAmountFormat().format(ZERO_DBL));
-		txtTotal.setValue(EzeeFromatUtils.getAmountFormat().format(ZERO_DBL));
+		txtAmount.setValue(EzeeFormatUtils.getAmountFormat().format(ZERO_DBL));
+		txtTax.setValue(EzeeFormatUtils.getAmountFormat().format(ZERO_DBL));
+		txtTotal.setValue(EzeeFormatUtils.getAmountFormat().format(ZERO_DBL));
 		dtInvoice.setValue(new Date());
 		initialiseDefaults();
 		resolveDueDate();

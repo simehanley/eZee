@@ -3,7 +3,7 @@ package com.ezee.web.common.ui.grid;
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
-import static com.ezee.common.web.EzeeFromatUtils.getDateFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getDateFormat;
 import static com.google.gwt.dom.client.Style.Unit.PX;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_LEFT;
@@ -19,6 +19,7 @@ import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.DateCell;
+import com.google.gwt.cell.client.DatePickerCell;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.user.cellview.client.Column;
@@ -96,6 +97,8 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 
 	protected abstract Date resolveDateFieldValue(String fieldName, T entity);
 
+	protected abstract void setDateFieldValue(String fieldName, Date fieldValue, T entity);
+
 	protected abstract void addComparators(final Map<String, Column<T, ?>> columns);
 
 	protected abstract void addSortColumns(DataGrid<T> grid, Map<String, Column<T, ?>> columns);
@@ -130,7 +133,8 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 	}
 
 	protected void createEditableTextColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
-			final String fieldName, final double width, boolean sortable) {
+			final String fieldName, final double width, boolean sortable,
+			HorizontalAlignmentConstant horizontalAlignment) {
 		if (!isHiddenColumn(fieldName)) {
 			Column<T, String> column = new Column<T, String>(new EditTextCell()) {
 				@Override
@@ -156,7 +160,7 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 					}
 				}
 			});
-			column.setHorizontalAlignment(ALIGN_LEFT);
+			column.setHorizontalAlignment(horizontalAlignment);
 			createColumn(columns, grid, column, fieldName, width, sortable);
 		}
 	}
@@ -175,6 +179,40 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 					return resolveCellStyleNames(entity);
 				}
 			};
+			column.setHorizontalAlignment(ALIGN_CENTER);
+			createColumn(columns, grid, column, fieldName, width, sortable);
+		}
+	}
+
+	protected void createEditableDateColumn(final Map<String, Column<T, ?>> columns, final DataGrid<T> grid,
+			final String fieldName, final double width, boolean sortable) {
+		if (!isHiddenColumn(fieldName)) {
+			Column<T, Date> column = new Column<T, Date>(new DatePickerCell(getDateFormat())) {
+				@Override
+				public Date getValue(final T entity) {
+					return resolveDateFieldValue(fieldName, entity);
+				}
+
+				@Override
+				public String getCellStyleNames(final Context context, final T entity) {
+					return resolveCellStyleNames(entity);
+				}
+			};
+
+			column.setFieldUpdater(new FieldUpdater<T, Date>() {
+
+				@Override
+				public void update(int index, final T entity, final Date value) {
+					Date current = resolveDateFieldValue(fieldName, entity);
+					if (!value.equals(current)) {
+						setDateFieldValue(fieldName, value, entity);
+						if (listener != null) {
+							listener.modelUpdated(entity);
+						}
+					}
+
+				}
+			});
 			column.setHorizontalAlignment(ALIGN_CENTER);
 			createColumn(columns, grid, column, fieldName, width, sortable);
 		}

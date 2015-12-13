@@ -10,7 +10,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
-import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.enums.EzeePaymentType;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -21,7 +20,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 @Entity
 @Table(name = "EZEE_PROJECT_PAYMENT")
-public class EzeeProjectPayment extends EzeeDatabaseEntity implements IsSerializable {
+public class EzeeProjectPayment extends EzeeProjectDatabaseEntity implements IsSerializable {
 
 	private static final long serialVersionUID = -3074199701630243689L;
 
@@ -115,52 +114,5 @@ public class EzeeProjectPayment extends EzeeDatabaseEntity implements IsSerializ
 	@Transient
 	public double getTotal() {
 		return getAmount() + getTax();
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(amount);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((chequeNumber == null) ? 0 : chequeNumber.hashCode());
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((paymentDate == null) ? 0 : paymentDate.hashCode());
-		temp = Double.doubleToLongBits(tax);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (getClass() != obj.getClass())
-			return false;
-		EzeeProjectPayment other = (EzeeProjectPayment) obj;
-		if (Double.doubleToLongBits(amount) != Double.doubleToLongBits(other.amount))
-			return false;
-		if (chequeNumber == null) {
-			if (other.chequeNumber != null)
-				return false;
-		} else if (!chequeNumber.equals(other.chequeNumber))
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
-		if (paymentDate == null) {
-			if (other.paymentDate != null)
-				return false;
-		} else if (!paymentDate.equals(other.paymentDate))
-			return false;
-		if (Double.doubleToLongBits(tax) != Double.doubleToLongBits(other.tax))
-			return false;
-		if (type != other.type)
-			return false;
-		return true;
 	}
 }

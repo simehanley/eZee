@@ -1,8 +1,10 @@
 package com.ezee.client.grid.project.data.item;
 
-import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getPercentFormat;
 import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
+import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_LEFT;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_RIGHT;
 
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ public class EzeeProjectItemGridModel extends EzeeGridModel<EzeeProjectItem> {
 	@Override
 	protected Map<String, Column<EzeeProjectItem, ?>> createColumns(final DataGrid<EzeeProjectItem> grid) {
 		Map<String, Column<EzeeProjectItem, ?>> columns = new HashMap<>();
-		createEditableTextColumn(columns, grid, NAME, NAME_WIDTH, true);
+		createEditableTextColumn(columns, grid, NAME, NAME_WIDTH, true, ALIGN_LEFT);
 		createResourcesListBoxColumn(columns, grid, RESOURCE, RESOURCE_WIDTH);
 		createTextColumn(columns, grid, BUDGETED, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
 		createTextColumn(columns, grid, ACTUAL, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
@@ -69,7 +71,7 @@ public class EzeeProjectItemGridModel extends EzeeGridModel<EzeeProjectItem> {
 		case BALANCE:
 			return getAmountFormat().format(item.balance().getTotal());
 		case PERCENT_COMPLETE:
-			return item.percent();
+			return getPercentFormat().format(item.percent());
 		default:
 			return null;
 		}
@@ -87,6 +89,11 @@ public class EzeeProjectItemGridModel extends EzeeGridModel<EzeeProjectItem> {
 	protected Date resolveDateFieldValue(String fieldName, EzeeProjectItem entity) {
 		/* do nothing */
 		return null;
+	}
+
+	@Override
+	protected void setDateFieldValue(final String fieldName, final Date fieldValue, final EzeeProjectItem entity) {
+		/* do nothing */
 	}
 
 	@Override

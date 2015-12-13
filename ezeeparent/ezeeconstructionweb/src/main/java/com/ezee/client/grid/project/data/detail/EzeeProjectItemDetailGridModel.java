@@ -1,9 +1,11 @@
 package com.ezee.client.grid.project.data.detail;
 
-import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
+import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_LEFT;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_RIGHT;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,11 +39,11 @@ public class EzeeProjectItemDetailGridModel extends EzeeGridModel<EzeeProjectIte
 	@Override
 	protected Map<String, Column<EzeeProjectItemDetail, ?>> createColumns(final DataGrid<EzeeProjectItemDetail> grid) {
 		Map<String, Column<EzeeProjectItemDetail, ?>> columns = new HashMap<>();
-		createEditableTextColumn(columns, grid, DESCRIPTION, DESCRIPTION_WIDTH, true);
+		createEditableTextColumn(columns, grid, DESCRIPTION, DESCRIPTION_WIDTH, true, ALIGN_LEFT);
 		createProjectItemTypeListBoxColumn(columns, grid, TYPE, TYPE_WIDTH);
-		createTextColumn(columns, grid, AMOUNT, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, TAX, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, TOTAL, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+		createEditableTextColumn(columns, grid, AMOUNT, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
+		createEditableTextColumn(columns, grid, TAX, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
+		createTextColumn(columns, grid, TOTAL, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
 		return columns;
 	}
 
@@ -87,6 +89,12 @@ public class EzeeProjectItemDetailGridModel extends EzeeGridModel<EzeeProjectIte
 	}
 
 	@Override
+	protected void setDateFieldValue(final String fieldName, final Date fieldValue,
+			final EzeeProjectItemDetail entity) {
+		/* do nothing */
+	}
+
+	@Override
 	protected boolean resolveBooleanFieldValue(String fieldName, EzeeProjectItemDetail entity) {
 		/* do nothing */
 		return false;
@@ -105,12 +113,40 @@ public class EzeeProjectItemDetailGridModel extends EzeeGridModel<EzeeProjectIte
 				return one.getDescription().compareTo(two.getDescription());
 			}
 		});
+		handler.setComparator(columns.get(TYPE), new Comparator<EzeeProjectItemDetail>() {
+			@Override
+			public int compare(final EzeeProjectItemDetail one, final EzeeProjectItemDetail two) {
+				return one.getType().compareTo(two.getType());
+			}
+		});
+		handler.setComparator(columns.get(AMOUNT), new Comparator<EzeeProjectItemDetail>() {
+			@Override
+			public int compare(final EzeeProjectItemDetail one, final EzeeProjectItemDetail two) {
+				return new BigDecimal(one.getAmount()).compareTo(new BigDecimal(two.getAmount()));
+			}
+		});
+		handler.setComparator(columns.get(TAX), new Comparator<EzeeProjectItemDetail>() {
+			@Override
+			public int compare(final EzeeProjectItemDetail one, final EzeeProjectItemDetail two) {
+				return new BigDecimal(one.getTax()).compareTo(new BigDecimal(two.getTax()));
+			}
+		});
+		handler.setComparator(columns.get(TOTAL), new Comparator<EzeeProjectItemDetail>() {
+			@Override
+			public int compare(final EzeeProjectItemDetail one, final EzeeProjectItemDetail two) {
+				return new BigDecimal(one.getTotal()).compareTo(new BigDecimal(two.getTotal()));
+			}
+		});
 	}
 
 	@Override
 	protected void addSortColumns(DataGrid<EzeeProjectItemDetail> grid,
 			Map<String, Column<EzeeProjectItemDetail, ?>> columns) {
 		grid.getColumnSortList().push(columns.get(DESCRIPTION));
+		grid.getColumnSortList().push(columns.get(TYPE));
+		grid.getColumnSortList().push(columns.get(AMOUNT));
+		grid.getColumnSortList().push(columns.get(TOTAL));
+		grid.getColumnSortList().push(columns.get(TAX));
 
 	}
 
@@ -141,6 +177,6 @@ public class EzeeProjectItemDetailGridModel extends EzeeGridModel<EzeeProjectIte
 			}
 		});
 		typeColumn.setHorizontalAlignment(ALIGN_CENTER);
-		createColumn(columns, grid, typeColumn, fieldName, width, false);
+		createColumn(columns, grid, typeColumn, fieldName, width, true);
 	}
 }

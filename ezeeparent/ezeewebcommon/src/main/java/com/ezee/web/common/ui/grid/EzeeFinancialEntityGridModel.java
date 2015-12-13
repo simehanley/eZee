@@ -44,6 +44,11 @@ public abstract class EzeeFinancialEntityGridModel<T extends EzeeFinancialEntity
 	}
 
 	@Override
+	protected void setDateFieldValue(final String fieldName, final Date fieldValue, final T entity) {
+		/* do nothing */
+	}
+
+	@Override
 	protected boolean resolveBooleanFieldValue(final String fieldName, final T entity) {
 		/* do nothing */
 		return false;

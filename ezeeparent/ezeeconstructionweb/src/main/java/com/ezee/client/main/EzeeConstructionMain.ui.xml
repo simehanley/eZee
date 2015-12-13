@@ -40,7 +40,7 @@
 				<g:VerticalPanel g:StackPanel-text="PROJECTS">
 					<g:VerticalPanel>
 						<g:HTML text="New Definition" styleName="{res.css.gwtStackPanelLink}" ui:field="newProjectDef" />
-						<g:HTML text="Edit Definition." styleName="{res.css.gwtStackPanelLink}" ui:field="editProjectDef" />
+						<g:HTML text="Edit Definition" styleName="{res.css.gwtStackPanelLink}" ui:field="editProjectDef" />
 						<g:HTML text="Delete Definition" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteProjectDef" />
 						<g:HTML text="Edit Project" styleName="{res.css.gwtStackPanelLink}" ui:field="editProject" />
 					</g:VerticalPanel>

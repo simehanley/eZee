@@ -1,7 +1,7 @@
 package com.ezee.common.web;
 
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
-import static com.ezee.common.web.EzeeFromatUtils.getDateFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getDateFormat;
 
 import java.util.Date;
 

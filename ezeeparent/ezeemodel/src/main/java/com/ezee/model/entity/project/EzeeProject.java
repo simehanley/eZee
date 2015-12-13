@@ -2,7 +2,7 @@ package com.ezee.model.entity.project;
 
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
-import static com.ezee.common.numeric.EzeeNumericUtils.isCloseToZero;
+import static com.ezee.common.numeric.EzeeNumericUtils.percentComplete;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
@@ -144,14 +144,10 @@ public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 		return actual().minus(paid());
 	}
 
-	public String percent() {
+	public double percent() {
 		double balance = balance().getTotal();
 		double actual = actual().getTotal();
-		if (isCloseToZero(balance)) {
-			return "100.00%";
-		}
-		double percentComplete = round((actual - balance) / balance);
-		return Double.toString(percentComplete) + "%";
+		return percentComplete(actual, balance);
 	}
 
 	@Override

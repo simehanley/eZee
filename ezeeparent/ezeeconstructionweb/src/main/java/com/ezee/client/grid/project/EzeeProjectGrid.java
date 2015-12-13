@@ -20,6 +20,7 @@ import com.ezee.model.entity.project.EzeeProject;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.grid.EzeeFinancialEntityGrid;
 import com.ezee.web.common.ui.main.EzeeWebMain;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
 
@@ -35,6 +36,7 @@ public class EzeeProjectGrid extends EzeeFinancialEntityGrid<EzeeProject> implem
 	@Override
 	protected void initGrid() {
 		super.initGrid();
+		grid.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 		model = new EzeeProjectGridModel();
 		model.bind(grid);
 	}
@@ -106,6 +108,7 @@ public class EzeeProjectGrid extends EzeeFinancialEntityGrid<EzeeProject> implem
 	@Override
 	public void detailSaved(final EzeeProject project) {
 		onSave(project);
+		grid.redraw();
 	}
 
 	@Override

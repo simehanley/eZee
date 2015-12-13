@@ -3,7 +3,7 @@ package com.ezee.client.crud.payment;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
-import static com.ezee.common.web.EzeeFromatUtils.getDateBoxFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getDateBoxFormat;
 import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 import com.ezee.client.grid.invoice.EzeeInvoiceGridModel;
 import com.ezee.common.numeric.EzeeNumericUtils;
-import com.ezee.common.web.EzeeFromatUtils;
+import com.ezee.common.web.EzeeFormatUtils;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayment;
 import com.ezee.model.entity.enums.EzeePaymentType;
@@ -213,9 +213,9 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 			amount = EzeeNumericUtils.round(amount);
 			tax = EzeeNumericUtils.round(tax);
 			total = EzeeNumericUtils.round(total);
-			txtAmount.setText(EzeeFromatUtils.getAmountFormat().format(amount));
-			txtTax.setText(EzeeFromatUtils.getAmountFormat().format(tax));
-			txtTotal.setText(EzeeFromatUtils.getAmountFormat().format(total));
+			txtAmount.setText(EzeeFormatUtils.getAmountFormat().format(amount));
+			txtTax.setText(EzeeFormatUtils.getAmountFormat().format(tax));
+			txtTotal.setText(EzeeFormatUtils.getAmountFormat().format(total));
 		}
 	}
 

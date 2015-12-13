@@ -6,7 +6,7 @@ import static com.ezee.client.grid.payment.EzeePaymentGridModel.PAYMENT_DATE;
 import static com.ezee.client.grid.payment.EzeePaymentGridModel.PAYMENT_TYPE;
 import static com.ezee.client.ui.EzeeInvoiceUiUtils.loadEntities;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
-import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.ezee.web.common.ui.css.EzeeGwtOverridesResources.INSTANCE;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;

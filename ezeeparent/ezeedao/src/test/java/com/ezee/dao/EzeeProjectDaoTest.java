@@ -83,12 +83,17 @@ public class EzeeProjectDaoTest extends AbstractEzeeDaoTest<EzeeProject> {
 		EzeeProject project = new EzeeProject();
 		project.setName("COMPLEX PROJECT");
 		projectDao.save(project);
-		project.addItem(new EzeeProjectItem("PRELIM", resource, null, null));
-		project.addItem(new EzeeProjectItem("BUILD WORKS", resource, null, null));
-		project.addItem(new EzeeProjectItem("BUILD SERVICES", resource, null, null));
-		project.addItem(new EzeeProjectItem("EXTERNAL WORKS", resource, null, null));
+
+		EzeeProjectItem one = new EzeeProjectItem("PRELIM", resource, null, null);
+		EzeeProjectItem two = new EzeeProjectItem("BUILD WORKS", resource, null, null);
+		EzeeProjectItem three = new EzeeProjectItem("BUILD SERVICES", resource, null, null);
+		EzeeProjectItem four = new EzeeProjectItem("EXTERNAL WORKS", resource, null, null);
+		project.addItem(one);
+		project.addItem(two);
+		project.addItem(three);
+		project.addItem(four);
 		projectDao.save(project);
-		project.getItems().remove(new EzeeProjectItem("EXTERNAL WORKS", resource, null, null));
+		project.getItems().remove(four);
 		projectDao.save(project);
 		EzeeProject persisted = projectDao.get(project.getId(), EzeeProject.class);
 		TestCase.assertTrue(persisted.getItems().size() == 3);

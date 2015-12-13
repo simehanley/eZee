@@ -1,6 +1,7 @@
 package com.ezee.client.grid.project;
 
-import static com.ezee.common.web.EzeeFromatUtils.getAmountFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getPercentFormat;
 import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_RIGHT;
 
@@ -58,7 +59,7 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 		case BALANCE:
 			return getAmountFormat().format(project.balance().getTotal());
 		case PERCENT_COMPLETE:
-			return project.percent();
+			return getPercentFormat().format(project.percent());
 		}
 		return null;
 	}
@@ -77,6 +78,11 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 			return dateUtilities.fromString(project.getEndDate());
 		}
 		return null;
+	}
+
+	@Override
+	protected void setDateFieldValue(final String fieldName, final Date fieldValue, final EzeeProject entity) {
+		/* do nothing */
 	}
 
 	@Override

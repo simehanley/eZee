@@ -15,7 +15,7 @@ import static com.ezee.web.common.enums.EzeeReportType.detailed_payee_invoice_ex
 
 import java.util.Date;
 
-import com.ezee.common.web.EzeeFromatUtils;
+import com.ezee.common.web.EzeeFormatUtils;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.ezee.model.entity.filter.invoice.EzeeInvoiceFilter;
@@ -79,8 +79,8 @@ public class EzeeInvoiceGridToolBar extends EzeeGridToolbar<EzeeInvoice> {
 	@Override
 	public void init() {
 		KeyPressHandler filterHandler = new EzeeToolbarKeyPressHandler();
-		dtFrom.setFormat(EzeeFromatUtils.getDateBoxFormat());
-		dtTo.setFormat(EzeeFromatUtils.getDateBoxFormat());
+		dtFrom.setFormat(EzeeFormatUtils.getDateBoxFormat());
+		dtTo.setFormat(EzeeFormatUtils.getDateBoxFormat());
 		dtFrom.addDomHandler(filterHandler, KeyPressEvent.getType());
 		dtTo.addDomHandler(filterHandler, KeyPressEvent.getType());
 		txtInvoiceNumber.addKeyPressHandler(filterHandler);

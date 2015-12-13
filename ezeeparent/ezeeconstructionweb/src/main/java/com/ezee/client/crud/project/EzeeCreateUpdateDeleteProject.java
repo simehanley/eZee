@@ -1,6 +1,6 @@
 package com.ezee.client.crud.project;
 
-import static com.ezee.common.web.EzeeFromatUtils.getDateBoxFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getDateBoxFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;

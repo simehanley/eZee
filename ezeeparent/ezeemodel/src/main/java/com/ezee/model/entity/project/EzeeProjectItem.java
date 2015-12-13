@@ -1,8 +1,7 @@
 package com.ezee.model.entity.project;
 
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
-import static com.ezee.common.numeric.EzeeNumericUtils.isCloseToZero;
-import static com.ezee.common.numeric.EzeeNumericUtils.round;
+import static com.ezee.common.numeric.EzeeNumericUtils.percentComplete;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import static com.ezee.model.entity.project.EzeeProjectItemUtilities.resolveActual;
 import static com.ezee.model.entity.project.EzeeProjectItemUtilities.resolveBudgeted;
@@ -22,7 +21,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.EzeePayee;
 
 /**
@@ -32,7 +30,7 @@ import com.ezee.model.entity.EzeePayee;
  */
 @Entity
 @Table(name = "EZEE_PROJECT_ITEM")
-public class EzeeProjectItem extends EzeeDatabaseEntity {
+public class EzeeProjectItem extends EzeeProjectDatabaseEntity {
 
 	private static final long serialVersionUID = -3908799031337740246L;
 
@@ -132,42 +130,9 @@ public class EzeeProjectItem extends EzeeDatabaseEntity {
 		return actual().minus(paid());
 	}
 
-	public String percent() {
+	public double percent() {
 		double balance = balance().getTotal();
 		double actual = actual().getTotal();
-		if (isCloseToZero(balance)) {
-			return "100.00%";
-		}
-		double percentComplete = round((actual - balance) / balance);
-		return Double.toString(percentComplete) + "%";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((resource == null) ? 0 : resource.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (getClass() != obj.getClass())
-			return false;
-		EzeeProjectItem other = (EzeeProjectItem) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (resource == null) {
-			if (other.resource != null)
-				return false;
-		} else if (!resource.equals(other.resource))
-			return false;
-		return true;
+		return percentComplete(actual, balance);
 	}
 }

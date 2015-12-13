@@ -66,7 +66,10 @@ public abstract class EzeeProjectDataGrid<T extends EzeeDatabaseEntity> extends 
 	public void addEntity(T entity) {
 		getModel().getHandler().getList().add(entity);
 		getGrid().getSelectionModel().setSelected(entity, true);
-		getGrid().getRowElement(getGrid().getVisibleItems().indexOf(entity)).scrollIntoView();
+		int index = getGrid().getVisibleItems().indexOf(entity);
+		if (index >= ZERO) {
+			getGrid().getRowElement(index).scrollIntoView();
+		}
 	}
 
 	public void removeEntity(T entity) {
@@ -83,7 +86,9 @@ public abstract class EzeeProjectDataGrid<T extends EzeeDatabaseEntity> extends 
 
 	public T getSelected() {
 		if (model.getHandler().getList().size() > ZERO) {
-			return grid.getVisibleItem(grid.getKeyboardSelectedRow());
+			if (grid.getKeyboardSelectedRow() >= ZERO) {
+				return grid.getVisibleItem(grid.getKeyboardSelectedRow());
+			}
 		}
 		return null;
 	}

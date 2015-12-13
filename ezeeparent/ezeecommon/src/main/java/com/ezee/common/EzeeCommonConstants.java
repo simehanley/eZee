@@ -8,6 +8,9 @@ package com.ezee.common;
 public interface EzeeCommonConstants {
 
 	double ZERO_DBL = 0.;
+	double ONE_DBL = 1.;
+
+	double PERCENT_MULTIPLIER = 100.;
 
 	int ZERO = 0;
 	int ONE = 1;

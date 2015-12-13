@@ -7,7 +7,7 @@ import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import java.util.Date;
 
 import com.ezee.client.bank.EzeeBankBalance;
-import com.ezee.common.web.EzeeFromatUtils;
+import com.ezee.common.web.EzeeFormatUtils;
 import com.ezee.model.entity.EzeePayment;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.ezee.model.entity.filter.payment.EzeePaymentFilter;
@@ -70,8 +70,8 @@ public class EzeePaymentGridToolBar extends EzeeGridToolbar<EzeePayment> {
 		btnRefresh.addClickHandler(refreshHandler);
 		ClickHandler clearHandler = new EzeeToolbarClearHandler();
 		btnClear.addClickHandler(clearHandler);
-		dtFrom.setFormat(EzeeFromatUtils.getDateBoxFormat());
-		dtTo.setFormat(EzeeFromatUtils.getDateBoxFormat());
+		dtFrom.setFormat(EzeeFormatUtils.getDateBoxFormat());
+		dtTo.setFormat(EzeeFormatUtils.getDateBoxFormat());
 	}
 
 	public String getInvoiceNumber() {

@@ -10,7 +10,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
-import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.enums.EzeeProjectItemType;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -21,7 +20,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 @Entity
 @Table(name = "EZEE_PROJECT_ITEM_DETAIL")
-public class EzeeProjectItemDetail extends EzeeDatabaseEntity implements IsSerializable {
+public class EzeeProjectItemDetail extends EzeeProjectDatabaseEntity implements IsSerializable {
 
 	private static final long serialVersionUID = 4722296927992884033L;
 
@@ -91,40 +90,5 @@ public class EzeeProjectItemDetail extends EzeeDatabaseEntity implements IsSeria
 	@Transient
 	public double getTotal() {
 		return getAmount() + getTax();
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(amount);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		temp = Double.doubleToLongBits(tax);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (getClass() != obj.getClass())
-			return false;
-		EzeeProjectItemDetail other = (EzeeProjectItemDetail) obj;
-		if (Double.doubleToLongBits(amount) != Double.doubleToLongBits(other.amount))
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
-		if (Double.doubleToLongBits(tax) != Double.doubleToLongBits(other.tax))
-			return false;
-		if (type != other.type)
-			return false;
-		return true;
 	}
 }
