@@ -1,13 +1,17 @@
 package com.ezee.web.common.ui.main;
 
+import static com.ezee.common.web.EzeeFormatUtils.getFullDateTimeFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.AUTO_LOGIN_HELPER;
+import static com.ezee.web.common.EzeeWebCommonConstants.CONFIG_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.SUPPORT_EMAIL;
-import static com.ezee.web.common.EzeeWebCommonConstants.UTILITY_SERVICE;
+import static java.util.logging.Level.SEVERE;
 
-import java.util.logging.Level;
+import java.util.Date;
 import java.util.logging.Logger;
 
+import com.ezee.model.entity.EzeeConfiguration;
 import com.ezee.model.entity.EzeeUser;
+import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.edit.EzeeEditUser;
 import com.ezee.web.common.ui.grid.EzeeHasGrid;
 import com.google.gwt.core.client.GWT;
@@ -16,6 +20,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
@@ -40,6 +45,12 @@ public class EzeeWebMain extends Composite {
 	public HTML email;
 
 	@UiField
+	public HTML licensedto;
+
+	@UiField
+	public HTML date;
+
+	@UiField
 	public TabLayoutPanel tab;
 
 	@UiField
@@ -50,8 +61,11 @@ public class EzeeWebMain extends Composite {
 
 	protected final EzeeUser ezeeUser;
 
-	public EzeeWebMain(final EzeeUser user) {
+	protected final EzeeEntityCache cache;
+
+	public EzeeWebMain(final EzeeUser user, final EzeeEntityCache cache) {
 		this.ezeeUser = user;
+		this.cache = cache;
 	}
 
 	public final TabLayoutPanel getTab() {
@@ -59,15 +73,17 @@ public class EzeeWebMain extends Composite {
 	}
 
 	protected void initMain() {
-		UTILITY_SERVICE.getVersion(new AsyncCallback<String>() {
+		CONFIG_SERVICE.getConfiguration(new AsyncCallback<EzeeConfiguration>() {
+
 			@Override
-			public void onSuccess(final String result) {
-				version.setText("Version : " + result);
+			public void onSuccess(final EzeeConfiguration result) {
+				version.setText(cache.getConfiguration().getVersion());
+				licensedto.setText("Licenced To : " + cache.getConfiguration().getLicensee());
 			}
 
 			@Override
-			public void onFailure(Throwable caught) {
-				log.log(Level.SEVERE, "Unable to resolve software version.", caught);
+			public void onFailure(final Throwable caught) {
+				log.log(SEVERE, "Unable to resolve system configuration.", caught);
 
 			}
 		});
@@ -85,6 +101,8 @@ public class EzeeWebMain extends Composite {
 			}
 		});
 		addTabHandler();
+		setDate();
+		applyDateTimer();
 	}
 
 	protected void initUser() {
@@ -104,5 +122,19 @@ public class EzeeWebMain extends Composite {
 				grid.getGrid().redraw();
 			}
 		});
+	}
+
+	private void applyDateTimer() {
+		Timer dateTimer = new Timer() {
+			@Override
+			public void run() {
+				setDate();
+			}
+		};
+		dateTimer.scheduleRepeating(60 * 1000);
+	}
+
+	private void setDate() {
+		date.setText("Date : " + getFullDateTimeFormat().format(new Date()));
 	}
 }

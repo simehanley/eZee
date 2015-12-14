@@ -5,6 +5,7 @@ import static com.ezee.web.common.ui.utils.EzeeTabLayoutPanelUtils.getFirstInsta
 
 import com.ezee.client.grid.project.EzeeProjectGrid;
 import com.ezee.model.entity.EzeeUser;
+import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.grid.EzeeHasGrid;
 import com.ezee.web.common.ui.grid.payee.EzeePayeeGrid;
 import com.ezee.web.common.ui.main.EzeeWebMain;
@@ -46,8 +47,8 @@ public class EzeeConstructionMain extends EzeeWebMain {
 	@UiField
 	HTML deleteResource;
 
-	public EzeeConstructionMain(final EzeeUser user) {
-		super(user);
+	public EzeeConstructionMain(final EzeeUser user, final EzeeEntityCache cache) {
+		super(user, cache);
 		initWidget(uiBinder.createAndBindUi(this));
 		initUser();
 		initMain();

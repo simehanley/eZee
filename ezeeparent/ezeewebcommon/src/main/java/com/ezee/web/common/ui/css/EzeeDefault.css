@@ -49,6 +49,22 @@
 	color: white;
 }
 
+.headerLabelSmall {
+	font-weight: bold;
+	font-size: 15px;
+	color: white;
+	margin: 5px;
+}
+
+.headerLinkSmall {
+	font-weight: bold;
+	font-size: 15px;
+	color: white;
+	text-decoration: underline;
+	cursor: pointer;
+	margin: 5px;
+}
+
 .footer {
 	background-color: #6699CC;
 	border: 1px solid #6f7277;

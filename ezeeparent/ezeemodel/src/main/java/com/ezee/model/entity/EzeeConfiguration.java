@@ -30,6 +30,9 @@ public class EzeeConfiguration extends EzeeDatabaseEntity implements IsSerializa
 	@Column(name = "DEFAULT_MANUAL_TAX")
 	private boolean defaultManualTax;
 
+	@Column(name = "LICENSEE")
+	private String licensee;
+
 	public EzeeConfiguration() {
 		super();
 	}
@@ -89,4 +92,13 @@ public class EzeeConfiguration extends EzeeDatabaseEntity implements IsSerializa
 	public void setDefaultInvoicePremises(String defaultInvoicePremises) {
 		this.defaultInvoicePremises = defaultInvoicePremises;
 	}
+
+	public final String getLicensee() {
+		return licensee;
+	}
+
+	public void setLicensee(String licensee) {
+		this.licensee = licensee;
+	}
+
 }

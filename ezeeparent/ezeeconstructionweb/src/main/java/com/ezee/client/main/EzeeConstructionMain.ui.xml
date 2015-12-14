@@ -5,18 +5,20 @@
 
 	<g:DockLayoutPanel unit="EM">
 		<g:north size="5">
-			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" title="header" height="100%" width="100%"
-				styleName="{res.css.header}">
-				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="10%" height="100%">
-					<g:HTML styleName="{res.css.headerLabel}" />
-				</g:cell>
-				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="80%" height="100%">
-					<g:HTML text="eZee Project" styleName="{res.css.headerLabel}" />
-				</g:cell>
-				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="10%" height="100%">
+			<g:HorizontalPanel title="header" height="100%" width="100%" styleName="{res.css.header}">
+				<g:cell horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="25%" height="100%">
 					<g:VerticalPanel height="100%">
-						<g:HTML ui:field="user" styleName="{res.css.footerLabel}" wordWrap="false" />
-						<g:HTML text="Logout" ui:field="logout" styleName="{res.css.gwtLink}" />
+						<g:HTML styleName="{res.css.headerLabelSmall}" ui:field="licensedto" />
+						<g:HTML styleName="{res.css.headerLabelSmall}" ui:field="date" />
+					</g:VerticalPanel>
+				</g:cell>
+				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="50%" height="100%">
+					<g:HTML text="eZee Invoices" styleName="{res.css.headerLabel}" />
+				</g:cell>
+				<g:cell horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" width="25%" height="100%">
+					<g:VerticalPanel height="100%">
+						<g:HTML ui:field="user" styleName="{res.css.headerLabelSmall}" wordWrap="false" />
+						<g:HTML text="Logout" ui:field="logout" styleName="{res.css.headerLinkSmall}" />
 					</g:VerticalPanel>
 				</g:cell>
 			</g:HorizontalPanel>

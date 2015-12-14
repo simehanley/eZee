@@ -27,6 +27,7 @@ import com.ezee.web.common.ui.grid.EzeeGrid;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.view.client.MultiSelectionModel;
 
 /**
  * 
@@ -47,6 +48,8 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	@Override
 	protected void initGrid() {
 		super.initGrid();
+		MultiSelectionModel<EzeeInvoice> selectModel = new MultiSelectionModel<>();
+		grid.setSelectionModel(selectModel);
 		model = new EzeeInvoiceGridModel();
 		model.bind(grid);
 	}
@@ -121,9 +124,11 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 		new EzeeCreateUpdateDeleteInvoice(cache, this, supplierName, INVOICE_CRUD_HEADERS).show();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void newPayment() {
 		if (listener != null) {
-			Set<EzeeInvoice> selected = getInvoicesToPay();
+			MultiSelectionModel<EzeeInvoice> model = (MultiSelectionModel<EzeeInvoice>) grid.getSelectionModel();
+			Set<EzeeInvoice> selected = model.getSelectedSet();
 			if (!isEmpty(selected)) {
 				Set<EzeeInvoice> unpaid = new HashSet<>();
 				for (EzeeInvoice invoice : selected) {
@@ -138,6 +143,8 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 		}
 	}
 
+	/** reverting this for the time being - may reinstate if necessary **/
+	@SuppressWarnings("unused")
 	private Set<EzeeInvoice> getInvoicesToPay() {
 		List<EzeeInvoice> invoices = model.getHandler().getList();
 		Set<EzeeInvoice> toPay = new HashSet<>();

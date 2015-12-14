@@ -19,8 +19,14 @@ public class EzeeFormatUtils {
 
 	private static DateBox.Format DATE_BOX_FORMAT = new DateBox.DefaultFormat(DATE_FORMAT);
 
+	private static final DateTimeFormat FULL_DATE_TIME_FORMAT = DateTimeFormat.getFormat(" EEEE, dd MMMM yyyy hh:mm a");
+
 	public static final DateTimeFormat getDateFormat() {
 		return DATE_FORMAT;
+	}
+
+	public static final DateTimeFormat getFullDateTimeFormat() {
+		return FULL_DATE_TIME_FORMAT;
 	}
 
 	public static final NumberFormat getAmountFormat() {

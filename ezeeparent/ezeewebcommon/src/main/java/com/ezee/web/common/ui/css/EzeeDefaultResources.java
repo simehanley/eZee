@@ -37,6 +37,10 @@ public interface EzeeDefaultResources extends ClientBundle {
 
 		String headerLabel();
 
+		String headerLabelSmall();
+
+		String headerLinkSmall();
+
 		String footer();
 
 		String footerLabel();

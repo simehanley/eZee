@@ -33,7 +33,7 @@ public class EzeeConstructionWeb extends EzeeWebEntryPoint {
 
 	private void initMain() {
 		log.log(Level.INFO, "Initialising application.");
-		EzeeWebMain main = new EzeeConstructionMain(user);
+		EzeeWebMain main = new EzeeConstructionMain(user, cache);
 		EzeeProjectGrid projectGrid = new EzeeProjectGrid(main, cache, PROJECT_CRUD_HEADERS);
 		main.getTab().add(projectGrid, PROJECTS);
 		main.getTab().add(createResourceGrid(), RESOURCES);

@@ -15,6 +15,8 @@ public interface EzeeProjectResources extends ClientBundle {
 		String gwtLabelProjectModifyUnmod();
 
 		String gwtLabelProjectModifyMod();
+		
+		String projectMainBackGround();
 	}
 
 	@Source("EzeeProject.css")

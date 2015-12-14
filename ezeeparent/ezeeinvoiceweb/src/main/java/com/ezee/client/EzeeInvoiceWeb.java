@@ -43,7 +43,7 @@ public class EzeeInvoiceWeb extends EzeeWebEntryPoint {
 
 	private void initMain() {
 		log.log(Level.INFO, "Initialising application.");
-		EzeeWebMain main = new EzeeInvoiceMain(user);
+		EzeeWebMain main = new EzeeInvoiceMain(user, cache);
 		EzeeInvoiceGrid invoice = createInvoiceGrid();
 		EzeePaymentGrid payment = createPaymentGrid();
 		invoice.setListener(payment);

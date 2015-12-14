@@ -4,6 +4,8 @@ import static com.ezee.client.EzeeConstructionWebConstants.ERROR;
 import static com.ezee.client.EzeeConstructionWebConstants.MODIFIED;
 import static com.ezee.client.EzeeConstructionWebConstants.UNMODIFIED;
 import static com.ezee.client.css.EzeeProjectResources.INSTANCE;
+import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getPercentFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
@@ -31,6 +33,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class EzeeProjectDetail extends Composite {
@@ -90,6 +93,21 @@ public class EzeeProjectDetail extends Composite {
 	@UiField
 	Button btnClose;
 
+	@UiField
+	TextBox txtBudget;
+
+	@UiField
+	TextBox txtActual;
+
+	@UiField
+	TextBox txtPaid;
+
+	@UiField
+	TextBox txtBalance;
+
+	@UiField
+	TextBox txtPercent;
+
 	public EzeeProjectDetail(final EzeeProject project, final EzeeProjectDetailListener listener,
 			final Map<String, EzeePayee> resources) {
 		this.project = project;
@@ -108,6 +126,7 @@ public class EzeeProjectDetail extends Composite {
 		projectPaymentGrid = new EzeeProjectPaymentGrid(this);
 		projectPayments.add(projectPaymentGrid);
 		projectItemGrid.addListener(projectPaymentGrid);
+		updateTotals();
 	}
 
 	public final EzeeProject getProject() {
@@ -223,6 +242,7 @@ public class EzeeProjectDetail extends Composite {
 		projectItemGrid.getGrid().redraw();
 		projectItemDetailGrid.getGrid().redraw();
 		projectPaymentGrid.getGrid().redraw();
+		updateTotals();
 	}
 
 	public void unmodified() {
@@ -238,5 +258,14 @@ public class EzeeProjectDetail extends Composite {
 	private void reBindProject(final EzeeProject result) {
 		this.project = result;
 		listener.detailSaved(result);
+		updateTotals();
+	}
+
+	private void updateTotals() {
+		txtBudget.setValue(getAmountFormat().format(project.budgeted().getTotal()));
+		txtActual.setValue(getAmountFormat().format(project.actual().getTotal()));
+		txtPaid.setValue(getAmountFormat().format(project.paid().getTotal()));
+		txtBalance.setValue(getAmountFormat().format(project.balance().getTotal()));
+		txtPercent.setValue(getPercentFormat().format(project.percent()));
 	}
 }

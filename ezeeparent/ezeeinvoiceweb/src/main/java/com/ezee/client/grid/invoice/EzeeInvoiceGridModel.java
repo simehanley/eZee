@@ -74,7 +74,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		createDateColumn(columns, grid, INVOICE_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, DUE_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, PAID_PATE, DATE_FIELD_WIDTH, true);
-		createEditableCheckBoxColumn(columns, grid, PAY, PAY_WIDTH);
+		/* createEditableCheckBoxColumn(columns, grid, PAY, PAY_WIDTH); */
 		createImageColumn(columns, grid, FILE, FILE_WIDTH);
 		return columns;
 	}
