@@ -13,7 +13,6 @@ public class EzeeInvoiceMain extends Composite {
 
 	@UiField
 	TabLayoutPanel tab;
-	
 
 	interface EzeeInvoiceMainUiBinder extends UiBinder<Widget, EzeeInvoiceMain> {
 	}
@@ -25,5 +24,4 @@ public class EzeeInvoiceMain extends Composite {
 	public final TabLayoutPanel getTab() {
 		return tab;
 	}
-	
 }
