@@ -14,7 +14,7 @@ import com.ezee.web.common.ui.grid.EzeeFinancialEntityToolbar;
  * @author siborg
  *
  */
-public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
+public class EzeePayeeGrid<T extends EzeePayee> extends EzeeFinancialEntityGrid<T> {
 
 	public EzeePayeeGrid(final EzeeEntityCache cache, final String[] crudHeaders) {
 		super(cache, crudHeaders);
@@ -22,14 +22,14 @@ public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
 
 	protected void initGrid() {
 		super.initGrid();
-		model = new EzeePayeeGridModel();
+		model = new EzeePayeeGridModel<T>();
 		model.bind(grid);
 	}
 
 	@Override
 	protected void initFilter() {
 		super.initFilter();
-		toolBar = new EzeeFinancialEntityToolbar<EzeePayee>(this);
+		toolBar = new EzeeFinancialEntityToolbar<T>(this);
 		filterpanel.add(toolBar);
 	}
 
@@ -40,22 +40,22 @@ public class EzeePayeeGrid extends EzeeFinancialEntityGrid<EzeePayee> {
 
 	@Override
 	public void deleteEntity() {
-		EzeePayee entity = getSelected();
+		T entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayee(cache, this, entity, delete, crudHeaders).show();
+			new EzeeCreateUpdateDeletePayee<T>(cache, this, entity, delete, crudHeaders).show();
 		}
 	}
 
 	@Override
 	public void newEntity() {
-		new EzeeCreateUpdateDeletePayee(cache, this, crudHeaders).show();
+		new EzeeCreateUpdateDeletePayee<T>(cache, this, crudHeaders).show();
 	}
 
 	@Override
 	public void editEntity() {
-		EzeePayee entity = getSelected();
+		T entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeletePayee(cache, this, entity, update, crudHeaders).show();
+			new EzeeCreateUpdateDeletePayee<T>(cache, this, entity, update, crudHeaders).show();
 		}
 	}
 }

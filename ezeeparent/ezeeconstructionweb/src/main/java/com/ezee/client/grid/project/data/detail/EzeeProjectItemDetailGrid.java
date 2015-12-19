@@ -1,6 +1,8 @@
 package com.ezee.client.grid.project.data.detail;
 
+import static com.ezee.client.EzeeConstructionWebConstants.DEFAULT_ITEM_DETAIL;
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
+import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.model.entity.enums.EzeeProjectItemType.expense;
@@ -39,29 +41,30 @@ public class EzeeProjectItemDetailGrid extends EzeeProjectDataGrid<EzeeProjectIt
 	protected void loadEntities() {
 		EzeeProject project = projectDetail.getProject();
 		if (!isEmpty(project.getItems())) {
-			loadDetail(project.getItems().iterator().next());
+			loadDetails(project.getItems().iterator().next());
 		}
 	}
 
 	@Override
 	public EzeeProjectItemDetail newEntity() {
-		return new EzeeProjectItemDetail(EMPTY_STRING, expense, ZERO_DBL, ZERO_DBL, DATE_UTILS.toString(new Date()),
-				null);
+		return new EzeeProjectItemDetail(EMPTY_STRING, expense, DEFAULT_ITEM_DETAIL, ZERO_DBL,
+				DATE_UTILS.toString(new Date()), null);
 	}
 
 	@Override
 	public void itemSelected(final EzeeProjectItem item) {
-		loadDetail(item);
+		loadDetails(item);
 	}
 
-	private void loadDetail(final EzeeProjectItem item) {
+	private void loadDetails(final EzeeProjectItem item) {
 		model.getHandler().getList().clear();
 		if (item != null && item.getDetails() != null) {
 			if (!isEmpty(item.getDetails())) {
 				model.getHandler().getList().addAll(sorted(item.getDetails()));
-				grid.redraw();
 			}
 		}
+		grid.redraw();
+		setSelected(ZERO);
 	}
 
 	@Override

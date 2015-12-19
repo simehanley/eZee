@@ -1,12 +1,13 @@
 package com.ezee.client.grid.project.data;
 
+import static com.ezee.common.EzeeCommonConstants.ONE;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 
 import java.util.Map;
 
 import com.ezee.client.grid.project.EzeeProjectDetail;
 import com.ezee.model.entity.EzeeDatabaseEntity;
-import com.ezee.model.entity.EzeePayee;
+import com.ezee.model.entity.EzeeResource;
 import com.ezee.web.common.ui.css.EzeeGwtOverridesResources;
 import com.ezee.web.common.ui.grid.EzeeGridModel;
 import com.google.gwt.core.client.GWT;
@@ -33,7 +34,7 @@ public abstract class EzeeProjectDataGrid<T extends EzeeDatabaseEntity> extends 
 
 	protected EzeeGridModel<T> model;
 
-	protected final Map<String, EzeePayee> resources;
+	protected final Map<String, EzeeResource> resources;
 
 	protected final EzeeProjectDetail projectDetail;
 
@@ -41,7 +42,7 @@ public abstract class EzeeProjectDataGrid<T extends EzeeDatabaseEntity> extends 
 		this(projectDetail, null);
 	}
 
-	public EzeeProjectDataGrid(final EzeeProjectDetail projectDetail, final Map<String, EzeePayee> resources) {
+	public EzeeProjectDataGrid(final EzeeProjectDetail projectDetail, final Map<String, EzeeResource> resources) {
 		this.projectDetail = projectDetail;
 		this.resources = resources;
 		init();
@@ -66,14 +67,19 @@ public abstract class EzeeProjectDataGrid<T extends EzeeDatabaseEntity> extends 
 	public void addEntity(T entity) {
 		getModel().getHandler().getList().add(entity);
 		getGrid().getSelectionModel().setSelected(entity, true);
-		int index = getGrid().getVisibleItems().indexOf(entity);
-		if (index >= ZERO) {
-			getGrid().getRowElement(index).scrollIntoView();
-		}
 	}
 
 	public void removeEntity(T entity) {
+		int index = getModel().getHandler().getList().indexOf(entity);
 		getModel().getHandler().getList().remove(entity);
+		int size = getModel().getHandler().getList().size();
+		if (size > ZERO) {
+			if (size == index) {
+				index = size - ONE;
+			}
+			T selected = getModel().getHandler().getList().get(index);
+			getGrid().getSelectionModel().setSelected(selected, true);
+		}
 	}
 
 	public final DataGrid<T> getGrid() {
@@ -84,12 +90,18 @@ public abstract class EzeeProjectDataGrid<T extends EzeeDatabaseEntity> extends 
 		return model;
 	}
 
+	@SuppressWarnings("unchecked")
 	public T getSelected() {
 		if (model.getHandler().getList().size() > ZERO) {
-			if (grid.getKeyboardSelectedRow() >= ZERO) {
-				return grid.getVisibleItem(grid.getKeyboardSelectedRow());
-			}
+			return ((SingleSelectionModel<T>) grid.getSelectionModel()).getSelectedObject();
 		}
 		return null;
+	}
+
+	protected void setSelected(int index) {
+		if (index >= ZERO && model.getHandler().getList().size() > index) {
+			T entity = model.getHandler().getList().get(index);
+			getGrid().getSelectionModel().setSelected(entity, true);
+		}
 	}
 }

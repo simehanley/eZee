@@ -4,6 +4,7 @@ import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.numeric.EzeeNumericUtils.percentComplete;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
+import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
 import java.util.LinkedHashSet;
@@ -152,7 +153,8 @@ public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 
 	@Override
 	public String toString() {
-		return "EzeeProject [getName()=" + getName() + "]";
+		return "EzeeProject [startDate=" + startDate + ", endDate=" + endDate + ", items=" + items + ", modified="
+				+ modified + "]";
 	}
 
 	public final boolean isModified() {
@@ -161,5 +163,16 @@ public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 
 	public final void setModified(boolean modified) {
 		this.modified = modified;
+	}
+
+	public EzeeProjectItem getItem(final String gridId) {
+		if (!isEmpty(items) && hasLength(gridId)) {
+			for (EzeeProjectItem item : items) {
+				if (gridId.equals(item.getGridId())) {
+					return item;
+				}
+			}
+		}
+		return null;
 	}
 }

@@ -15,6 +15,7 @@ import com.ezee.model.entity.EzeeDebtAgeRule;
 import com.ezee.model.entity.EzeeHasName;
 import com.ezee.model.entity.EzeePayee;
 import com.ezee.model.entity.EzeePayer;
+import com.ezee.model.entity.EzeeResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
@@ -35,6 +36,7 @@ public class EzeeEntityCache {
 	}
 
 	private void loadEntities() {
+		loadEntities(EzeeResource.class);
 		loadEntities(EzeePayee.class);
 		loadEntities(EzeePayer.class);
 		loadEntities(EzeeDebtAgeRule.class);

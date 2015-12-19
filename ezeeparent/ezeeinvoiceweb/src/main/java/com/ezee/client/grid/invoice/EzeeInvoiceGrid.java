@@ -221,4 +221,16 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	public void onCreatePaymentFromNewInvoice(final EzeeInvoice invoice) {
 		listener.onCreatePayment(Collections.singleton(invoice));
 	}
+
+	@Override
+	public void onSave(final EzeeInvoice invoice) {
+		clearSelected();
+		super.onSave(invoice);
+	}
+
+	@Override
+	public void onDelete(EzeeInvoice entity) {
+		clearSelected();
+		super.onDelete(entity);
+	}
 }

@@ -1,9 +1,14 @@
 package com.ezee.model.entity;
 
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
+import static javax.persistence.DiscriminatorType.STRING;
+import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
 import javax.persistence.Table;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -14,6 +19,9 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  *
  */
 @Entity
+@Inheritance(strategy = SINGLE_TABLE)
+@DiscriminatorColumn(name = "SOURCE", discriminatorType = STRING)
+@DiscriminatorValue("EzeeInvoiceWeb")
 @Table(name = "EZEE_PAYEE")
 public class EzeePayee extends EzeeFinancialEntity implements IsSerializable {
 

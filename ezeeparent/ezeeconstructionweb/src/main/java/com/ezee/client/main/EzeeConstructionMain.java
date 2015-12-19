@@ -7,7 +7,7 @@ import com.ezee.client.grid.project.EzeeProjectGrid;
 import com.ezee.model.entity.EzeeUser;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.grid.EzeeHasGrid;
-import com.ezee.web.common.ui.grid.payee.EzeePayeeGrid;
+import com.ezee.web.common.ui.grid.resource.EzeeResourceGrid;
 import com.ezee.web.common.ui.main.EzeeWebMain;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -96,11 +96,11 @@ public class EzeeConstructionMain extends EzeeWebMain {
 			} else if (event.getSource().equals(deleteProjectDef)) {
 				getFirstInstanceOf(EzeeProjectGrid.class, tab).deleteEntity();
 			} else if (event.getSource().equals(newResource)) {
-				getFirstInstanceOf(EzeePayeeGrid.class, tab).newEntity();
+				getFirstInstanceOf(EzeeResourceGrid.class, tab).newEntity();
 			} else if (event.getSource().equals(editResource)) {
-				getFirstInstanceOf(EzeePayeeGrid.class, tab).editEntity();
+				getFirstInstanceOf(EzeeResourceGrid.class, tab).editEntity();
 			} else if (event.getSource().equals(deleteResource)) {
-				getFirstInstanceOf(EzeePayeeGrid.class, tab).deleteEntity();
+				getFirstInstanceOf(EzeeResourceGrid.class, tab).deleteEntity();
 			} else if (event.getSource().equals(editUser)) {
 				editUser();
 			} else if (event.getSource().equals(tab)) {

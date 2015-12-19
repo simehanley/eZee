@@ -91,4 +91,10 @@ public class EzeeProjectItemDetail extends EzeeProjectDatabaseEntity implements 
 	public double getTotal() {
 		return getAmount() + getTax();
 	}
+
+	@Override
+	public String toString() {
+		return "EzeeProjectItemDetail [description=" + description + ", type=" + type + ", amount=" + amount + ", tax="
+				+ tax + ", getGridId()=" + getGridId() + ", getId()=" + getId() + "]";
+	}
 }

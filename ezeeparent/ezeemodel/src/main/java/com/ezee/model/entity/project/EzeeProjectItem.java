@@ -135,4 +135,10 @@ public class EzeeProjectItem extends EzeeProjectDatabaseEntity {
 		double actual = actual().getTotal();
 		return percentComplete(actual, balance);
 	}
+
+	@Override
+	public String toString() {
+		return "EzeeProjectItem [name=" + name + ", resource=" + resource + ", details=" + details + ", payments="
+				+ payments + ", getGridId()=" + getGridId() + ", getId()=" + getId() + "]";
+	}
 }

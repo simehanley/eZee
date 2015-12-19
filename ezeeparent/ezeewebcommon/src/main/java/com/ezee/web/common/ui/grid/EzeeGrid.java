@@ -1,13 +1,25 @@
 package com.ezee.web.common.ui.grid;
 
+import static com.ezee.common.EzeeCommonConstants.ONE;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
+import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
+import static com.google.gwt.event.dom.client.KeyCodes.KEY_D;
+import static com.google.gwt.event.dom.client.KeyCodes.KEY_DOWN;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_ENTER;
+import static com.google.gwt.event.dom.client.KeyCodes.KEY_PAGEDOWN;
+import static com.google.gwt.event.dom.client.KeyCodes.KEY_PAGEUP;
+import static com.google.gwt.event.dom.client.KeyCodes.KEY_U;
+import static com.google.gwt.event.dom.client.KeyCodes.KEY_UP;
+import static com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.BOUND_TO_SELECTION;
+import static com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.DISABLED;
 import static com.google.gwt.user.cellview.client.SimplePager.TextLocation.CENTER;
 import static com.google.gwt.user.client.Event.ONCONTEXTMENU;
 import static java.util.logging.Level.SEVERE;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
@@ -22,11 +34,13 @@ import com.google.gwt.event.dom.client.ContextMenuEvent;
 import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -36,6 +50,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
@@ -83,11 +98,33 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		return grid;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected T getSelected() {
 		if (model.getHandler().getList().size() > ZERO) {
-			return grid.getVisibleItem(grid.getKeyboardSelectedRow());
+			if (grid.getSelectionModel() instanceof SingleSelectionModel<?>) {
+				return ((SingleSelectionModel<T>) grid.getSelectionModel()).getSelectedObject();
+			} else if (grid.getSelectionModel() instanceof MultiSelectionModel<?>) {
+				Set<T> selected = ((MultiSelectionModel<T>) grid.getSelectionModel()).getSelectedSet();
+				if (!isEmpty(selected)) {
+					return new ArrayList<>(selected).get(ZERO);
+				}
+			}
 		}
 		return null;
+	}
+
+	protected void clearSelected() {
+		T selected = getSelected();
+		if (selected != null) {
+			grid.getSelectionModel().setSelected(selected, false);
+		}
+	}
+
+	protected void setSelected(int index) {
+		if (index >= ZERO && model.getHandler().getList().size() > index) {
+			T entity = model.getHandler().getList().get(index);
+			getGrid().getSelectionModel().setSelected(entity, true);
+		}
 	}
 
 	private void init() {
@@ -122,6 +159,7 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 			}
 		}
 		grid.redraw();
+		setSelected(ZERO);
 	}
 
 	protected void loadEntities() {
@@ -192,29 +230,33 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 			List<T> entities = model.getHandler().getList();
 			if (entities.contains(entity)) {
 				int index = entityIndex(entity);
+				entities.remove(index);
 				entities.add(index, entity);
-				entities.remove(++index);
 			} else {
 				entities.add(entity);
 			}
+			getGrid().getSelectionModel().setSelected(entity, true);
 		}
 	}
 
 	@Override
 	public void onDelete(T entity) {
 		if (entity != null) {
+			int index = model.getHandler().getList().indexOf(entity);
 			model.getHandler().getList().remove(entity);
+			int size = model.getHandler().getList().size();
+			if (size > ZERO) {
+				if (size == index) {
+					index = size - ONE;
+				}
+				T selected = model.getHandler().getList().get(index);
+				getGrid().getSelectionModel().setSelected(selected, true);
+			}
 		}
 	}
 
 	private int entityIndex(T entity) {
-		List<T> entities = model.getHandler().getList();
-		for (int i = ZERO; i < entities.size(); i++) {
-			if (entities.get(i).equals(entity)) {
-				return i;
-			}
-		}
-		return ZERO;
+		return model.getHandler().getList().indexOf(entity);
 	}
 
 	protected EzeeEntityFilter<T> resolveFilter() {
@@ -235,6 +277,14 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		public void onKeyPress(KeyPressEvent event) {
 			if (event.getNativeEvent().getKeyCode() == KEY_ENTER) {
 				editEntity();
+			} else if (event.getNativeEvent().getKeyCode() == KEY_U
+					|| event.getNativeEvent().getKeyCode() == KEY_PAGEUP) {
+				int row = grid.getKeyboardSelectedRow();
+				setSelected(row - ONE);
+			} else if (event.getNativeEvent().getKeyCode() == KEY_D
+					|| event.getNativeEvent().getKeyCode() == KEY_PAGEDOWN) {
+				int row = grid.getKeyboardSelectedRow();
+				setSelected(row + ONE);
 			}
 		}
 	}

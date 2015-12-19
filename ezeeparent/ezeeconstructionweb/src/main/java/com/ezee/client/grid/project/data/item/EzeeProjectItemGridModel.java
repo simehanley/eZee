@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ezee.model.entity.EzeePayee;
+import com.ezee.model.entity.EzeeResource;
 import com.ezee.model.entity.project.EzeeProjectItem;
 import com.ezee.web.common.ui.grid.EzeeGridModel;
 import com.ezee.web.common.ui.grid.EzeeGridModelListener;
@@ -36,10 +36,10 @@ public class EzeeProjectItemGridModel extends EzeeGridModel<EzeeProjectItem> {
 	private static final double NAME_WIDTH = 250.;
 	private static final double RESOURCE_WIDTH = 250.;
 
-	private final Map<String, EzeePayee> resources;
+	private final Map<String, EzeeResource> resources;
 
 	public EzeeProjectItemGridModel(final EzeeGridModelListener<EzeeProjectItem> listener,
-			final Map<String, EzeePayee> resources) {
+			final Map<String, EzeeResource> resources) {
 		super(listener);
 		this.resources = resources;
 	}
@@ -125,8 +125,8 @@ public class EzeeProjectItemGridModel extends EzeeGridModel<EzeeProjectItem> {
 		resourceColumn.setFieldUpdater(new FieldUpdater<EzeeProjectItem, String>() {
 			@Override
 			public void update(final int index, final EzeeProjectItem item, final String value) {
-				EzeePayee payee = resources.get(value);
-				if (!payee.equals(item.getResource())) {
+				EzeeResource resource = resources.get(value);
+				if (!resource.equals(item.getResource())) {
 					item.setResource(resources.get(value));
 					if (listener != null) {
 						listener.modelUpdated(item);

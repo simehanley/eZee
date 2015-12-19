@@ -21,4 +21,7 @@ public interface EzeeConstructionWebConstants {
 	String MODIFIED = "MODIFIED";
 	String UNMODIFIED = "UN-MODIFIED";
 	String ERROR = "ERROR";
+
+	double DEFAULT_PAYMENT = 5000.;
+	double DEFAULT_ITEM_DETAIL = 10000.;
 }

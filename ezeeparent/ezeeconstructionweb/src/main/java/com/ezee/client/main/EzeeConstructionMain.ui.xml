@@ -13,7 +13,7 @@
 					</g:VerticalPanel>
 				</g:cell>
 				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="50%" height="100%">
-					<g:HTML text="eZee Invoices" styleName="{res.css.headerLabel}" />
+					<g:HTML text="eZee Project" styleName="{res.css.headerLabel}" />
 				</g:cell>
 				<g:cell horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" width="25%" height="100%">
 					<g:VerticalPanel height="100%">

@@ -1,9 +1,6 @@
 package com.ezee.client.main;
 
-import static com.ezee.common.web.EzeeFormatUtils.getFullDateTimeFormat;
 import static com.ezee.web.common.ui.utils.EzeeTabLayoutPanelUtils.getFirstInstanceOf;
-
-import java.util.Date;
 
 import com.ezee.client.grid.invoice.EzeeInvoiceGrid;
 import com.ezee.client.grid.payee.EzeeInvoicePayeeGrid;
@@ -17,7 +14,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 

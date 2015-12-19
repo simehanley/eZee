@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ezee.client.crud.project.EzeeCreateUpdateDeleteProject;
-import com.ezee.model.entity.EzeePayee;
+import com.ezee.model.entity.EzeeResource;
 import com.ezee.model.entity.project.EzeeProject;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.grid.EzeeFinancialEntityGrid;
@@ -89,7 +89,7 @@ public class EzeeProjectGrid extends EzeeFinancialEntityGrid<EzeeProject> implem
 			if (index >= ZERO) {
 				main.getTab().selectTab(index);
 			} else {
-				Map<String, EzeePayee> resources = resolveResources();
+				Map<String, EzeeResource> resources = resolveResources();
 				if (!isEmpty(resources)) {
 					main.getTab().add(new EzeeProjectDetail(entity, this, resources).asWidget(), entity.getName());
 					main.getTab().selectTab(main.getTab().getWidgetCount() - ONE);
@@ -119,13 +119,13 @@ public class EzeeProjectGrid extends EzeeFinancialEntityGrid<EzeeProject> implem
 		}
 	}
 
-	private Map<String, EzeePayee> resolveResources() {
-		Map<String, EzeePayee> resources = cache.getEntitiesOfType(EzeePayee.class);
-		List<EzeePayee> sorted = new ArrayList<>(resources.values());
+	private Map<String, EzeeResource> resolveResources() {
+		Map<String, EzeeResource> resources = cache.getEntitiesOfType(EzeeResource.class);
+		List<EzeeResource> sorted = new ArrayList<>(resources.values());
 		Collections.sort(sorted);
-		Map<String, EzeePayee> sortedMap = new LinkedHashMap<>();
-		for (EzeePayee payee : sorted) {
-			sortedMap.put(payee.getName(), payee);
+		Map<String, EzeeResource> sortedMap = new LinkedHashMap<>();
+		for (EzeeResource resource : sorted) {
+			sortedMap.put(resource.getName(), resource);
 		}
 		return sortedMap;
 	}

@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.MenuBar;
  * @author siborg
  *
  */
-public class EzeeInvoicePayeeGrid extends EzeePayeeGrid {
+public class EzeeInvoicePayeeGrid extends EzeePayeeGrid<EzeePayee> {
 
 	private final EzeeInvoiceGrid invoiceGrid;
 

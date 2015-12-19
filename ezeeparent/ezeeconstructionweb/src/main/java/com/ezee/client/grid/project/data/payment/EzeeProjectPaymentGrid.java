@@ -1,6 +1,8 @@
 package com.ezee.client.grid.project.data.payment;
 
+import static com.ezee.client.EzeeConstructionWebConstants.DEFAULT_PAYMENT;
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
+import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
@@ -45,7 +47,7 @@ public class EzeeProjectPaymentGrid extends EzeeProjectDataGrid<EzeeProjectPayme
 
 	@Override
 	public EzeeProjectPayment newEntity() {
-		return new EzeeProjectPayment(DATE_UTILS.toString(new Date()), cheque, EMPTY_STRING, ZERO_DBL, ZERO_DBL,
+		return new EzeeProjectPayment(DATE_UTILS.toString(new Date()), cheque, EMPTY_STRING, DEFAULT_PAYMENT, ZERO_DBL,
 				DATE_UTILS.toString(new Date()), null);
 	}
 
@@ -59,9 +61,10 @@ public class EzeeProjectPaymentGrid extends EzeeProjectDataGrid<EzeeProjectPayme
 		if (item != null && item.getPayments() != null) {
 			if (!isEmpty(item.getPayments())) {
 				model.getHandler().getList().addAll(sorted(item.getPayments()));
-				grid.redraw();
 			}
 		}
+		grid.redraw();
+		setSelected(ZERO);
 	}
 
 	@Override

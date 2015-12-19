@@ -2,6 +2,7 @@ package com.ezee.server.dao;
 
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -29,33 +30,45 @@ public class EzeeEntitiesDao {
 	}
 
 	public <T extends EzeeDatabaseEntity> T getEntity(final Class<T> clazz, final long id) {
-		T entity = getDao(clazz).getDao().get(id, clazz);
-		if (entity != null) {
-			postprocessor.postProcessEntity(entity);
+		if (containsDao(clazz)) {
+			T entity = getDao(clazz).getDao().get(id, clazz);
+			if (entity != null) {
+				postprocessor.postProcessEntity(entity);
+			}
+			return entity;
 		}
-		return entity;
+		return null;
 	}
 
 	public <T extends EzeeDatabaseEntity> List<T> getEntities(final Class<T> clazz) {
-		List<T> entities = getDao(clazz).getDao().get(clazz);
-		if (!isEmpty(entities)) {
-			for (T entity : entities) {
-				postprocessor.postProcessEntity(entity);
+		if (containsDao(clazz)) {
+			List<T> entities = getDao(clazz).getDao().get(clazz);
+			if (!isEmpty(entities)) {
+				for (T entity : entities) {
+					postprocessor.postProcessEntity(entity);
+				}
 			}
+			return entities;
 		}
-		return entities;
+		return new ArrayList<>();
 	}
 
 	public <T extends EzeeDatabaseEntity> T saveEntity(final Class<T> clazz, final T entity) {
-		getDao(clazz).getDao().save(entity);
-		postprocessor.postProcessEntity(entity);
-		return entity;
+		if (containsDao(clazz)) {
+			getDao(clazz).getDao().save(entity);
+			postprocessor.postProcessEntity(entity);
+			return entity;
+		}
+		return null;
 	}
 
 	public <T extends EzeeDatabaseEntity> T deleteEntity(final Class<T> clazz, final T entity) {
-		getDao(clazz).getDao().delete(entity);
-		postprocessor.postProcessEntity(entity);
-		return entity;
+		if (containsDao(clazz)) {
+			getDao(clazz).getDao().delete(entity);
+			postprocessor.postProcessEntity(entity);
+			return entity;
+		}
+		return null;
 	}
 
 	public List<EzeePayment> getOutstandingCheques(final Long premisesId) {
@@ -72,6 +85,10 @@ public class EzeeEntitiesDao {
 	@SuppressWarnings("unchecked")
 	private <T extends EzeeDatabaseEntity> EzeeEntityDao<T> getDao(final Class<T> clazz) {
 		return (EzeeEntityDao<T>) daoCache.get(clazz);
+	}
+
+	private <T> boolean containsDao(final Class<T> clazz) {
+		return daoCache.containsKey(clazz);
 	}
 
 	private static class EzeeEntitiesDaoPostProcessor {

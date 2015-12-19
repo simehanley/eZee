@@ -14,7 +14,7 @@ import com.ezee.client.css.EzeeProjectResources;
 import com.ezee.client.grid.project.EzeeProjectGrid;
 import com.ezee.client.main.EzeeConstructionMain;
 import com.ezee.web.common.ui.entrypoint.EzeeWebEntryPoint;
-import com.ezee.web.common.ui.grid.payee.EzeePayeeGrid;
+import com.ezee.web.common.ui.grid.resource.EzeeResourceGrid;
 import com.ezee.web.common.ui.main.EzeeWebMain;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
@@ -41,8 +41,8 @@ public class EzeeConstructionWeb extends EzeeWebEntryPoint {
 		log.log(Level.INFO, "Application initialised.");
 	}
 
-	private EzeePayeeGrid createResourceGrid() {
-		return new EzeePayeeGrid(cache, RESOURCE_CRUD_HEADERS);
+	private EzeeResourceGrid createResourceGrid() {
+		return new EzeeResourceGrid(cache, RESOURCE_CRUD_HEADERS);
 	}
 
 	@Override

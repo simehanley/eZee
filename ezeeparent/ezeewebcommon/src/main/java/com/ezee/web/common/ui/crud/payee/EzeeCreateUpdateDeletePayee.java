@@ -28,13 +28,13 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 
-public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancialEntity<EzeePayee> {
+public class EzeeCreateUpdateDeletePayee<T extends EzeePayee> extends EzeeCreateUpdateDeleteFinancialEntity<T> {
 
 	private static final Logger log = Logger.getLogger("EzeeCreateUpdateDeletePayee");
 
 	private static EzeeCreateUpdateDeletePayeeUiBinder uiBinder = GWT.create(EzeeCreateUpdateDeletePayeeUiBinder.class);
 
-	interface EzeeCreateUpdateDeletePayeeUiBinder extends UiBinder<Widget, EzeeCreateUpdateDeletePayee> {
+	interface EzeeCreateUpdateDeletePayeeUiBinder extends UiBinder<Widget, EzeeCreateUpdateDeletePayee<?>> {
 	}
 
 	@UiField
@@ -53,12 +53,12 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 	Button btnDelete;
 
 	public EzeeCreateUpdateDeletePayee(final EzeeEntityCache cache,
-			final EzeeCreateUpdateDeleteEntityHandler<EzeePayee> handler, final String[] headers) {
+			final EzeeCreateUpdateDeleteEntityHandler<T> handler, final String[] headers) {
 		this(cache, handler, null, create, headers);
 	}
 
 	public EzeeCreateUpdateDeletePayee(final EzeeEntityCache cache,
-			final EzeeCreateUpdateDeleteEntityHandler<EzeePayee> handler, final EzeePayee entity,
+			final EzeeCreateUpdateDeleteEntityHandler<T> handler, final T entity,
 			final EzeeCreateUpdateDeleteEntityType type, final String[] headers) {
 		super(cache, handler, entity, type, headers);
 		setWidget(uiBinder.createAndBindUi(this));
@@ -109,7 +109,7 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 	@Override
 	protected void bind() {
 		if (entity == null) {
-			entity = new EzeePayee();
+			entity = createEntity();
 			entity.setCreated(DATE_UTILS.toString(new Date()));
 			entity.setUpdated(null);
 		} else {
@@ -148,19 +148,19 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 		btnSave.setEnabled(false);
 		showWaitCursor();
 		bind();
-		ENTITY_SERVICE.saveEntity(EzeePayee.class.getName(), entity, new AsyncCallback<EzeePayee>() {
+		ENTITY_SERVICE.saveEntity(entity.getClass().getName(), entity, new AsyncCallback<T>() {
 
 			@Override
 			public void onFailure(final Throwable caught) {
 				btnSave.setEnabled(true);
 				showDefaultCursor();
-				log.log(Level.SEVERE, "Error persisting supplier '" + entity + "'.", caught);
-				showNew(ERROR, "Error persisting supplier '" + entity + "'.  Please see log for details.");
+				log.log(Level.SEVERE, "Error persisting entity '" + entity + "'.", caught);
+				showNew(ERROR, "Error persisting entity '" + entity + "'.  Please see log for details.");
 			}
 
 			@Override
-			public void onSuccess(final EzeePayee result) {
-				log.log(Level.INFO, "Saved supplier '" + entity + "' successfully");
+			public void onSuccess(final T result) {
+				log.log(Level.INFO, "Saved entity '" + entity + "' successfully");
 				handler.onSave(result);
 				updateCache(result, type);
 				btnSave.setEnabled(true);
@@ -174,19 +174,19 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 	void onDeleteClick(ClickEvent event) {
 		btnDelete.setEnabled(false);
 		showWaitCursor();
-		ENTITY_SERVICE.deleteEntity(EzeePayee.class.getName(), entity, new AsyncCallback<EzeePayee>() {
+		ENTITY_SERVICE.deleteEntity(entity.getClass().getName(), entity, new AsyncCallback<T>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
 				btnDelete.setEnabled(true);
 				showDefaultCursor();
-				log.log(Level.SEVERE, "Error deleting supplier '" + entity + "'.", caught);
+				log.log(Level.SEVERE, "Error deleting entity '" + entity + "'.", caught);
 				showNew(ERROR, "Error deleting supplier '" + entity + "'.  Please see log for details");
 			}
 
 			@Override
-			public void onSuccess(EzeePayee result) {
-				log.log(Level.INFO, "Supplier '" + entity + "' deleted successfully");
+			public void onSuccess(T result) {
+				log.log(Level.INFO, "Entity '" + entity + "' deleted successfully");
 				handler.onDelete(result);
 				updateCache(result, type);
 				btnDelete.setEnabled(true);
@@ -194,5 +194,10 @@ public class EzeeCreateUpdateDeletePayee extends EzeeCreateUpdateDeleteFinancial
 				close();
 			}
 		});
+	}
+
+	@SuppressWarnings("unchecked")
+	protected T createEntity() {
+		return (T) new EzeePayee();
 	}
 }

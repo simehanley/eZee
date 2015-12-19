@@ -115,4 +115,11 @@ public class EzeeProjectPayment extends EzeeProjectDatabaseEntity implements IsS
 	public double getTotal() {
 		return getAmount() + getTax();
 	}
+
+	@Override
+	public String toString() {
+		return "EzeeProjectPayment [paymentDate=" + paymentDate + ", type=" + type + ", description=" + description
+				+ ", amount=" + amount + ", tax=" + tax + ", chequeNumber=" + chequeNumber + ", getGridId()="
+				+ getGridId() + ", getId()=" + getId() + "]";
+	}
 }
