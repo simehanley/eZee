@@ -14,8 +14,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  */
 @RemoteServiceRelativePath("invoiceservice")
 public interface EzeeInvoiceService extends RemoteService {
-
 	List<EzeePayment> getOutstandingCheques(Long premisesId);
-
 	String calculateDueDate(EzeeDebtAgeRule rule, String today);
 }

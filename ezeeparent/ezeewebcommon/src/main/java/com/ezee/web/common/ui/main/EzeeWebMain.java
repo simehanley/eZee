@@ -2,14 +2,10 @@ package com.ezee.web.common.ui.main;
 
 import static com.ezee.common.web.EzeeFormatUtils.getFullDateTimeFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.AUTO_LOGIN_HELPER;
-import static com.ezee.web.common.EzeeWebCommonConstants.CONFIG_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.SUPPORT_EMAIL;
-import static java.util.logging.Level.SEVERE;
 
 import java.util.Date;
-import java.util.logging.Logger;
 
-import com.ezee.model.entity.EzeeConfiguration;
 import com.ezee.model.entity.EzeeUser;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.edit.EzeeEditUser;
@@ -22,15 +18,12 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.StackPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 
 public class EzeeWebMain extends Composite {
-
-	private static final Logger log = Logger.getLogger("EzeeWebMain");
 
 	@UiField
 	public HTML user;
@@ -73,20 +66,10 @@ public class EzeeWebMain extends Composite {
 	}
 
 	protected void initMain() {
-		CONFIG_SERVICE.getConfiguration(new AsyncCallback<EzeeConfiguration>() {
-
-			@Override
-			public void onSuccess(final EzeeConfiguration result) {
-				version.setText(cache.getConfiguration().getVersion());
-				licensedto.setText("Licenced To : " + cache.getConfiguration().getLicensee());
-			}
-
-			@Override
-			public void onFailure(final Throwable caught) {
-				log.log(SEVERE, "Unable to resolve system configuration.", caught);
-
-			}
-		});
+		if (cache.getConfiguration() != null) {
+			version.setText(cache.getConfiguration().getVersion());
+			licensedto.setText(cache.getConfiguration().getLicensee());
+		}
 		email.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {

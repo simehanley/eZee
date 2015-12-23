@@ -87,8 +87,10 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 	private byte[] generateEzeeInvoiceReport(final Map<String, List<EzeeInvoice>> supplierInvoices) throws IOException {
 		Workbook book = new HSSFWorkbook();
 		Sheet sheet = book.createSheet("invoices");
-		generateEzeeInvoiceReportHeader(book, sheet);
+		generateExcelReportHeader(book, sheet, INVOICE_REPORT_INDEXES, INVOICE_REPORT_FIELDS);
 		generateEzeeInvoiceReportContent(book, sheet, supplierInvoices);
+		formatReport(sheet, INVOICE_ID_INDEX, PAYMENT_DATE_INDEX);
+		setPrintArea(sheet);
 		ByteArrayOutputStream result = new ByteArrayOutputStream();
 		book.write(result);
 		result.close();
@@ -101,11 +103,63 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 		for (String key : supplierInvoices.keySet()) {
 			currentRow += generateEzeeInvoiceReportContent(book, sheet, supplierInvoices.get(key), currentRow);
 		}
+		if (supplierInvoices.size() > ONE) {
+			generateEzeeInvoiceReportTotal(book, sheet, supplierInvoices, currentRow);
+		}
+	}
+
+	private void generateEzeeInvoiceReportTotal(final Workbook book, final Sheet sheet,
+			final Map<String, List<EzeeInvoice>> supplierInvoices, int currentRow) {
+		double expenseamount = ZERO_DBL, expesetax = ZERO_DBL, expensetotal = ZERO_DBL;
+		double capitalamount = ZERO_DBL, capitaltax = ZERO_DBL, capitaltotal = ZERO_DBL;
+		double amount = ZERO_DBL, tax = ZERO_DBL, total = ZERO_DBL;
+		CellStyle boldStyle = boldStyle(book, false);
+		CellStyle boldCurrencyStyle = currencyStyle(book, true);
+
+		for (String key : supplierInvoices.keySet()) {
+			List<EzeeInvoice> invoices = supplierInvoices.get(key);
+			for (EzeeInvoice invoice : invoices) {
+				switch (invoice.getClassification()) {
+				case captial:
+					capitalamount += invoice.getAmount();
+					capitaltax += invoice.getTax();
+					capitaltotal += invoice.getInvoiceAmount();
+					break;
+				default:
+					expenseamount += invoice.getAmount();
+					expesetax += invoice.getTax();
+					expensetotal += invoice.getInvoiceAmount();
+					break;
+				}
+				amount += invoice.getAmount();
+				tax += invoice.getTax();
+				total += invoice.getInvoiceAmount();
+			}
+		}
+
+		/* expense total */
+		generateEzeeInvoiceReportContentTotalRow(sheet, currentRow, boldStyle, boldCurrencyStyle, expenseamount,
+				expesetax, expensetotal, "Grand Total Expenses :");
+
+		/* capital total */
+		currentRow += TWO;
+		generateEzeeInvoiceReportContentTotalRow(sheet, currentRow, boldStyle, boldCurrencyStyle, capitalamount,
+				capitaltax, capitaltotal, "Grand Total Capital :");
+
+		/* supplier total */
+		currentRow += TWO;
+		generateEzeeInvoiceReportContentTotalRow(sheet, currentRow, boldStyle, boldCurrencyStyle, amount, tax, total,
+				"Grand Total :");
+
 	}
 
 	private int generateEzeeInvoiceReportContent(final Workbook book, final Sheet sheet,
 			final List<EzeeInvoice> invoices, int currentRow) {
+
+		double expenseamount = ZERO_DBL, expesetax = ZERO_DBL, expensetotal = ZERO_DBL;
+		double capitalamount = ZERO_DBL, capitaltax = ZERO_DBL, capitaltotal = ZERO_DBL;
 		double amount = ZERO_DBL, tax = ZERO_DBL, total = ZERO_DBL;
+
 		CellStyle currencyStyle = currencyStyle(book, false);
 		CellStyle boldCurrencyStyle = currencyStyle(book, true);
 		CellStyle boldStyle = boldStyle(book, false);
@@ -136,6 +190,18 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 			dueDate.setCellValue(invoice.getDateDue());
 			Cell paymentDate = newrow.createCell(PAYMENT_DATE_INDEX, CELL_TYPE_STRING);
 			paymentDate.setCellValue(invoice.getDatePaid());
+			switch (invoice.getClassification()) {
+			case captial:
+				capitalamount += invoice.getAmount();
+				capitaltax += invoice.getTax();
+				capitaltotal += invoice.getInvoiceAmount();
+				break;
+			default:
+				expenseamount += invoice.getAmount();
+				expesetax += invoice.getTax();
+				expensetotal += invoice.getInvoiceAmount();
+				break;
+			}
 			amount += invoice.getAmount();
 			tax += invoice.getTax();
 			total += invoice.getInvoiceAmount();
@@ -144,10 +210,35 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 		}
 		++currentRow;
 		++rowsAdded;
+
+		/* expense total */
+		generateEzeeInvoiceReportContentTotalRow(sheet, currentRow, boldStyle, boldCurrencyStyle, expenseamount,
+				expesetax, expensetotal, "Expenses For " + supplierName + " :");
+
+		/* capital total */
+		currentRow += TWO;
+		rowsAdded += TWO;
+		generateEzeeInvoiceReportContentTotalRow(sheet, currentRow, boldStyle, boldCurrencyStyle, capitalamount,
+				capitaltax, capitaltotal, "Capital For " + supplierName + " :");
+
+		/* supplier total */
+		currentRow += TWO;
+		rowsAdded += TWO;
+		generateEzeeInvoiceReportContentTotalRow(sheet, currentRow, boldStyle, boldCurrencyStyle, amount, tax, total,
+				"Total For " + supplierName + " :");
+
+		rowsAdded += TWO;
+
+		return rowsAdded;
+	}
+
+	private void generateEzeeInvoiceReportContentTotalRow(final Sheet sheet, final int currentRow,
+			final CellStyle boldStyle, final CellStyle boldCurrencyStyle, final double amount, final double tax,
+			final double total, final String summary) {
 		Row totalrow = sheet.createRow(currentRow);
 		Cell totalSummary = totalrow.createCell(INVOICE_ID_INDEX, CELL_TYPE_STRING);
 		totalSummary.setCellStyle(boldStyle);
-		totalSummary.setCellValue("Totals for '" + supplierName + " :");
+		totalSummary.setCellValue(summary);
 		Cell totalAmount = totalrow.createCell(AMOUNT_INDEX, CELL_TYPE_NUMERIC);
 		totalAmount.setCellStyle(boldCurrencyStyle);
 		totalAmount.setCellValue(amount);
@@ -157,20 +248,6 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 		Cell grandTotal = totalrow.createCell(TOTAL_INDEX, CELL_TYPE_NUMERIC);
 		grandTotal.setCellStyle(boldCurrencyStyle);
 		grandTotal.setCellValue(total);
-		rowsAdded += TWO;
-		return rowsAdded;
-	}
-
-	private void generateEzeeInvoiceReportHeader(final Workbook book, final Sheet sheet) {
-		Row header = sheet.createRow(ZERO);
-		int[] indexes = INVOICE_REPORT_INDEXES;
-		String[] fields = INVOICE_REPORT_FIELDS;
-		CellStyle headerStyle = boldStyle(book, true);
-		for (int i = ZERO; i < indexes.length; i++) {
-			Cell cell = header.createCell(i, CELL_TYPE_STRING);
-			cell.setCellValue(fields[i]);
-			cell.setCellStyle(headerStyle);
-		}
 	}
 
 	private Map<String, List<EzeeInvoice>> resolveInvoicesBySupplier(final List<EzeeInvoice> invoices) {

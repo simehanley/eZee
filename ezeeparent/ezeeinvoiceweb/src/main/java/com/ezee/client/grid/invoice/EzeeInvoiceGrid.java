@@ -57,7 +57,7 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	@Override
 	protected void initFilter() {
 		super.initFilter();
-		toolBar = new EzeeInvoiceGridToolBar(this);
+		toolBar = new EzeeInvoiceGridToolBar(this, cache);
 		filterpanel.add(toolBar);
 	}
 

@@ -37,6 +37,9 @@ public class EzeePaymentGridToolBar extends EzeeGridToolbar<EzeePayment> {
 	DateBox dtTo;
 
 	@UiField
+	TextBox txtSupplier;
+
+	@UiField
 	TextBox txtInvoiceNumber;
 
 	@UiField
@@ -63,6 +66,7 @@ public class EzeePaymentGridToolBar extends EzeeGridToolbar<EzeePayment> {
 	@Override
 	public void init() {
 		KeyPressHandler filterHandler = new EzeeToolbarKeyPressHandler();
+		txtSupplier.addKeyPressHandler(filterHandler);
 		txtInvoiceNumber.addKeyPressHandler(filterHandler);
 		dtFrom.addDomHandler(filterHandler, KeyPressEvent.getType());
 		dtTo.addDomHandler(filterHandler, KeyPressEvent.getType());
@@ -74,23 +78,31 @@ public class EzeePaymentGridToolBar extends EzeeGridToolbar<EzeePayment> {
 		dtTo.setFormat(EzeeFormatUtils.getDateBoxFormat());
 	}
 
-	public String getInvoiceNumber() {
+	private String getSupplierNames() {
+		if (hasLength(txtSupplier.getText())) {
+			return txtSupplier.getText();
+		}
+		return EMPTY_STRING;
+	}
+
+	private String getInvoiceNumbers() {
 		if (hasLength(txtInvoiceNumber.getText())) {
 			return txtInvoiceNumber.getText();
 		}
 		return EMPTY_STRING;
 	}
 
-	public Date getFrom() {
+	private Date getFrom() {
 		return dtFrom.getValue();
 	}
 
-	public Date getTo() {
+	private Date getTo() {
 		return dtTo.getValue();
 	}
 
 	@Override
 	public void clearToolbar() {
+		txtSupplier.setText(EMPTY_STRING);
 		txtInvoiceNumber.setText(EMPTY_STRING);
 		dtFrom.setValue(null);
 		dtTo.setValue(null);
@@ -98,7 +110,7 @@ public class EzeePaymentGridToolBar extends EzeeGridToolbar<EzeePayment> {
 
 	@Override
 	public EzeeEntityFilter<EzeePayment> resolveFilter() {
-		return new EzeePaymentFilter(getInvoiceNumber(), getFrom(), getTo(), DATE_UTILS);
+		return new EzeePaymentFilter(getSupplierNames(), getInvoiceNumbers(), getFrom(), getTo(), DATE_UTILS);
 	}
 
 	@UiHandler("btnBank")

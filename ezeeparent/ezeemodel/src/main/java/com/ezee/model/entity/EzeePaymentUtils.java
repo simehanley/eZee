@@ -1,10 +1,7 @@
-package com.ezee.client.grid.payment;
+package com.ezee.model.entity;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import com.ezee.model.entity.EzeeInvoice;
-import com.ezee.model.entity.EzeePayment;
 
 /**
  * 
@@ -22,5 +19,13 @@ public class EzeePaymentUtils {
 			invoiceNumbers.add(invoice.getInvoiceId());
 		}
 		return invoiceNumbers.toString();
+	}
+
+	public static final String getInvoiceSuppliers(final EzeePayment payment) {
+		Set<String> suppliers = new HashSet<>();
+		for (EzeeInvoice invoice : payment.getInvoices()) {
+			suppliers.add(invoice.getPayee().getName());
+		}
+		return suppliers.toString();
 	}
 }

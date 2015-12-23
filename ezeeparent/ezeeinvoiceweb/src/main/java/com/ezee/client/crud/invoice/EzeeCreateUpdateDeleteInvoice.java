@@ -216,12 +216,14 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 
 	private void initialiseDefaults() {
 		EzeeConfiguration configuration = cache.getConfiguration();
-		chkManualTax.setValue(configuration.getDefaultManualTax());
-		txtTax.setEnabled(chkManualTax.getValue());
-		setValue(configuration.getDefaultDebtAgeRule(), lstDebtAge);
-		String supplier = hasLength(supplierName) ? supplierName : configuration.getDefaultInvoiceSupplier();
-		setValue(supplier, lstSupplier);
-		setValue(configuration.getDefaultInvoicePremises(), lstPremises);
+		if (configuration != null) {
+			chkManualTax.setValue(configuration.getDefaultManualTax());
+			txtTax.setEnabled(chkManualTax.getValue());
+			setValue(configuration.getDefaultDebtAgeRule(), lstDebtAge);
+			String supplier = hasLength(supplierName) ? supplierName : configuration.getDefaultInvoiceSupplier();
+			setValue(supplier, lstSupplier);
+			setValue(configuration.getDefaultInvoicePremises(), lstPremises);
+		}
 	}
 
 	@Override

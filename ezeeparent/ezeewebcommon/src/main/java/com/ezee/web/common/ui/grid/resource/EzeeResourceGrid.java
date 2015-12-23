@@ -15,6 +15,12 @@ public class EzeeResourceGrid extends EzeePayeeGrid<EzeeResource> {
 	}
 
 	@Override
+	protected void createToolbar() {
+		toolBar = new EzeeResourceToolbar(this);
+		filterpanel.add(toolBar);
+	}
+
+	@Override
 	public String getGridClass() {
 		return EzeeResource.class.getName();
 	}

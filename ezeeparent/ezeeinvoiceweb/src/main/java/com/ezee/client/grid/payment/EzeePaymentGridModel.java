@@ -1,7 +1,8 @@
 package com.ezee.client.grid.payment;
 
-import static com.ezee.client.grid.payment.EzeePaymentUtils.getInvoiceNumbers;
 import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
+import static com.ezee.model.entity.EzeePaymentUtils.getInvoiceNumbers;
+import static com.ezee.model.entity.EzeePaymentUtils.getInvoiceSuppliers;
 import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
@@ -24,10 +25,12 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	public static final String PAYMENT_DATE = "Paid";
 	public static final String PAYMENT_TYPE = "Type";
 	public static final String PAYMENT_AMOUNT = "Amount";
+	public static final String SUPPLIERS = "Suppliers";
 	public static final String INVOICES = "Invoices";
 
 	public static final double PAYMENT_TYPE_WIDTH = 100.;
-	public static final double INVOICES_WIDTH = 500.;
+	public static final double SUPPLIERS_WIDTH = 300.;
+	public static final double INVOICES_WIDTH = 300;
 
 	private final EzeeDateComparator dateComparator = new EzeeDateComparator();
 
@@ -44,8 +47,9 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 		Map<String, Column<EzeePayment, ?>> columns = new HashMap<>();
 		createDateColumn(columns, grid, PAYMENT_DATE, DATE_FIELD_WIDTH, true);
 		createTextColumn(columns, grid, PAYMENT_TYPE, PAYMENT_TYPE_WIDTH, true);
-		createTextColumn(columns, grid, PAYMENT_AMOUNT, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, INVOICES, INVOICES_WIDTH, false);
+		createTextColumn(columns, grid, PAYMENT_AMOUNT, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
+		createTextColumn(columns, grid, SUPPLIERS, SUPPLIERS_WIDTH, true);
+		createTextColumn(columns, grid, INVOICES, INVOICES_WIDTH, true);
 		return columns;
 	}
 
@@ -56,6 +60,8 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 			return payment.getType().toString();
 		case PAYMENT_AMOUNT:
 			return getAmountFormat().format(payment.getPaymentAmount());
+		case SUPPLIERS:
+			return getInvoiceSuppliers(payment);
 		case INVOICES:
 			return getInvoiceNumbers(payment);
 		}
@@ -95,19 +101,35 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	@Override
 	protected void addComparators(final Map<String, Column<EzeePayment, ?>> columns) {
 		handler.setComparator(columns.get(PAYMENT_DATE), new Comparator<EzeePayment>() {
-
 			@Override
 			public int compare(final EzeePayment one, final EzeePayment two) {
 				return dateComparator.compare(DATE_UTILS.fromString(one.getPaymentDate()),
 						DATE_UTILS.fromString(two.getPaymentDate()));
 			}
 		});
-
 		handler.setComparator(columns.get(PAYMENT_TYPE), new Comparator<EzeePayment>() {
 
 			@Override
 			public int compare(final EzeePayment one, final EzeePayment two) {
 				return one.getType().compareTo(two.getType());
+			}
+		});
+		handler.setComparator(columns.get(INVOICES), new Comparator<EzeePayment>() {
+			@Override
+			public int compare(final EzeePayment one, final EzeePayment two) {
+				return getInvoiceNumbers(one).compareTo(getInvoiceNumbers(two));
+			}
+		});
+		handler.setComparator(columns.get(SUPPLIERS), new Comparator<EzeePayment>() {
+			@Override
+			public int compare(final EzeePayment one, final EzeePayment two) {
+				return getInvoiceSuppliers(one).compareTo(getInvoiceNumbers(two));
+			}
+		});
+		handler.setComparator(columns.get(PAYMENT_AMOUNT), new Comparator<EzeePayment>() {
+			@Override
+			public int compare(final EzeePayment one, final EzeePayment two) {
+				return new Double(one.getPaymentAmount()).compareTo(new Double(two.getPaymentAmount()));
 			}
 		});
 	}
@@ -116,6 +138,9 @@ public class EzeePaymentGridModel extends EzeeGridModel<EzeePayment> {
 	protected void addSortColumns(final DataGrid<EzeePayment> grid, final Map<String, Column<EzeePayment, ?>> columns) {
 		grid.getColumnSortList().push(columns.get(PAYMENT_DATE));
 		grid.getColumnSortList().push(columns.get(PAYMENT_TYPE));
+		grid.getColumnSortList().push(columns.get(PAYMENT_AMOUNT));
+		grid.getColumnSortList().push(columns.get(SUPPLIERS));
+		grid.getColumnSortList().push(columns.get(INVOICES));
 	}
 
 	@Override

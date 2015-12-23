@@ -11,6 +11,7 @@
 	<import resource="classpath:ezeeweb-db-context.xml" />
 	<import resource="classpath:ezeedao-context.xml" />
 	<import resource="ezeeconstructionweb-dao-context.xml" />
+	<import resource="ezeeconstructionweb-report-context.xml" />
 
 	<bean id="ezeeinvoice-web-properties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="ignoreResourceNotFound" value="true" />

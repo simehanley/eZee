@@ -6,12 +6,17 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-
 	<bean id="invoiceReportGenerator" class="com.ezee.server.report.excel.invoice.EzeeInvoiceReportGenerator" />
+
+	<bean id="supplierReportGenerator" class="com.ezee.server.report.excel.payee.EzeePayeeReportGenerator" />
+
+	<bean id="premisesReportGenerator" class="com.ezee.server.report.excel.payer.EzeePayerReportGenerator" />
 
 	<util:map key-type="com.ezee.web.common.enums.EzeeReportType" value-type="com.ezee.server.report.EzeeReportGenerator"
 		id="Report_Generators">
 		<entry key="detailed_payee_invoice_excel" value-ref="invoiceReportGenerator" />
+		<entry key="payee_report_excel" value-ref="supplierReportGenerator" />
+		<entry key="payer_report_excel" value-ref="premisesReportGenerator" />
 	</util:map>
 
 </beans>

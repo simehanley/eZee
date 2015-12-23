@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import com.ezee.model.entity.EzeeUser;
 import com.ezee.web.common.cache.EzeeEntityCache;
+import com.ezee.web.common.cache.EzeeEntityCacheListener;
 import com.ezee.web.common.ui.css.EzeeDefaultResources;
 import com.ezee.web.common.ui.css.EzeeGwtOverridesResources;
 import com.ezee.web.common.ui.login.EzeeLogin;
@@ -18,7 +19,8 @@ import com.ezee.web.common.ui.register.EzeeRegisterListener;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
-public abstract class EzeeWebEntryPoint implements EntryPoint, EzeeLoginListener, EzeeRegisterListener {
+public abstract class EzeeWebEntryPoint
+		implements EntryPoint, EzeeLoginListener, EzeeRegisterListener, EzeeEntityCacheListener {
 
 	private static final Logger log = Logger.getLogger("EzeeWebEntryPoint");
 
@@ -54,6 +56,8 @@ public abstract class EzeeWebEntryPoint implements EntryPoint, EzeeLoginListener
 
 	protected void initCache() {
 		cache = new EzeeEntityCache();
+		cache.addListener(this);
+		cache.loadEntities();
 	}
 
 	protected void initResources() {

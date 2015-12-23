@@ -41,5 +41,7 @@ public interface EzeeInvoiceWebConstants {
 	String LOGIN_USER = "eZee Invoices Login";
 	String REGISTER_USER = "eZee Invoices Register User";
 
+	String SHOW_PAID_INVOICES = "SHOW_PAID";
+
 	EzeeInvoiceServiceAsync INVOICE_SERVICE = GWT.create(EzeeInvoiceService.class);
 }

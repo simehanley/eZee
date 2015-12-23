@@ -3,6 +3,7 @@ package com.ezee.model.entity;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
+import static com.ezee.model.entity.EzeePaymentUtils.getInvoiceNumbers;
 
 import java.beans.Transient;
 import java.util.HashSet;
@@ -157,9 +158,6 @@ public class EzeePayment extends EzeeDatabaseEntity
 
 	@Override
 	public String filterString() {
-		if (!isEmpty(invoices)) {
-			return invoices.toString();
-		}
-		return null;
+		return getInvoiceNumbers(this);
 	}
 }

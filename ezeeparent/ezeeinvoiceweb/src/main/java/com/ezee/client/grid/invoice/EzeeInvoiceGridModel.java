@@ -70,11 +70,10 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		createTextColumn(columns, grid, INVOICE_NUM, INVOICE_NUM_WIDTH, true);
 		createTextColumn(columns, grid, SUPPLIER, SUPPLIER_WIDTH, true);
 		createTextColumn(columns, grid, PREMISES, PREMISES_WIDTH, true);
-		createTextColumn(columns, grid, TOTAL, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+		createTextColumn(columns, grid, TOTAL, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
 		createDateColumn(columns, grid, INVOICE_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, DUE_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, PAID_PATE, DATE_FIELD_WIDTH, true);
-		/* createEditableCheckBoxColumn(columns, grid, PAY, PAY_WIDTH); */
 		createImageColumn(columns, grid, FILE, FILE_WIDTH);
 		return columns;
 	}
@@ -141,33 +140,25 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 
 	@Override
 	protected void addComparators(final Map<String, Column<EzeeInvoice, ?>> columns) {
-
 		handler.setComparator(columns.get(INVOICE_NUM), new Comparator<EzeeInvoice>() {
-
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
 				return one.getInvoiceId().compareTo(two.getInvoiceId());
 			}
 		});
-
 		handler.setComparator(columns.get(SUPPLIER), new Comparator<EzeeInvoice>() {
-
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
 				return one.getPayee().getName().compareTo(two.getPayee().getName());
 			}
 		});
-
 		handler.setComparator(columns.get(PREMISES), new Comparator<EzeeInvoice>() {
-
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
 				return one.getPayer().getName().compareTo(two.getPayer().getName());
 			}
 		});
-
 		handler.setComparator(columns.get(INVOICE_DATE), new Comparator<EzeeInvoice>() {
-
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
 				return dateComparator.compare(dateUtilities.fromString(one.getInvoiceDate()),
@@ -176,21 +167,23 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		});
 
 		handler.setComparator(columns.get(DUE_DATE), new Comparator<EzeeInvoice>() {
-
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
 				return dateComparator.compare(dateUtilities.fromString(one.getDateDue()),
 						dateUtilities.fromString(two.getDateDue()));
 			}
-
 		});
-
 		handler.setComparator(columns.get(PAID_PATE), new Comparator<EzeeInvoice>() {
-
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
 				return dateComparator.compare(dateUtilities.fromString(one.getDatePaid()),
 						dateUtilities.fromString(two.getDatePaid()));
+			}
+		});
+		handler.setComparator(columns.get(TOTAL), new Comparator<EzeeInvoice>() {
+			@Override
+			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
+				return new Double(one.getInvoiceAmount()).compareTo(new Double(two.getInvoiceAmount()));
 			}
 		});
 	}
@@ -203,6 +196,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		grid.getColumnSortList().push(columns.get(INVOICE_DATE));
 		grid.getColumnSortList().push(columns.get(DUE_DATE));
 		grid.getColumnSortList().push(columns.get(PAID_PATE));
+		grid.getColumnSortList().push(columns.get(TOTAL));
 	}
 
 	@Override

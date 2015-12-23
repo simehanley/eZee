@@ -33,6 +33,12 @@ public class EzeeConfiguration extends EzeeDatabaseEntity implements IsSerializa
 	@Column(name = "LICENSEE")
 	private String licensee;
 
+	@Column(name = "DEFAULT_REVERSE_TAX")
+	private boolean defaultReverseTax;
+
+	@Column(name = "DEFAULT_SHOW_PAID")
+	private boolean defaultShowPaid;
+
 	public EzeeConfiguration() {
 		super();
 	}
@@ -101,4 +107,19 @@ public class EzeeConfiguration extends EzeeDatabaseEntity implements IsSerializa
 		this.licensee = licensee;
 	}
 
+	public final boolean getDefaultReverseTax() {
+		return defaultReverseTax;
+	}
+
+	public void setDefaultReverseTax(boolean defaultReverseTax) {
+		this.defaultReverseTax = defaultReverseTax;
+	}
+
+	public final boolean getDefaultShowPaid() {
+		return defaultShowPaid;
+	}
+
+	public void setDefaultShowPaid(boolean defaultShowPaid) {
+		this.defaultShowPaid = defaultShowPaid;
+	}
 }

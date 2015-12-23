@@ -1,5 +1,7 @@
 package com.ezee.server.report.excel;
 
+import static com.ezee.common.EzeeCommonConstants.ZERO;
+import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING;
 import static org.apache.poi.ss.usermodel.CellStyle.ALIGN_CENTER;
 
 import java.io.IOException;
@@ -8,9 +10,14 @@ import java.io.OutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.PrintSetup;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import com.ezee.server.report.AbstractReportGenerator;
@@ -44,10 +51,40 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 	protected String DUE_DATE = "Due Date";
 	protected String PAYMENT_DATE = "Payment Date";
 
+	protected int FE_NAME_INDEX = 0;
+	protected int FE_CONTACT_INDEX = 1;
+	protected int FE_ADDRESS_LINE_1_INDEX = 2;
+	protected int FE_ADDRESS_LINE_2_INDEX = 3;
+	protected int FE_SUBURB_INDEX = 4;
+	protected int FE_CITY_INDEX = 5;
+	protected int FE_STATE_INDEX = 6;
+	protected int FE_POSTCODE_INDEX = 7;
+	protected int FE_PHONE_INDEX = 8;
+	protected int FE_FAX_INDEX = 9;
+	protected int FE_EMAIL_INDEX = 10;
+
+	protected String FE_NAME = "Name";
+	protected String FE_CONTACT = "Contact";
+	protected String FE_ADDRESS_LINE_1 = "Address (1)";
+	protected String FE_ADDRESS_LINE_2 = "Address (2)";
+	protected String FE_SUBURB = "Suburb";
+	protected String FE_CITY = "City";
+	protected String FE_STATE = "State";
+	protected String FE_POSTCODE = "PostCode";
+	protected String FE_PHONE = "Phone";
+	protected String FE_FAX = "Fax";
+	protected String FE_EMAIL = "E-Mail";
+
 	protected int[] INVOICE_REPORT_INDEXES = { INVOICE_ID_INDEX, SUPPLIER_INDEX, PREMISES_INDEX, CLASSIFICATION_INDEX,
 			AMOUNT_INDEX, TAX_INDEX, TOTAL_INDEX, INVOICE_DATE_INDEX, DUE_DATE_INDEX, PAYMENT_DATE_INDEX };
 	protected String[] INVOICE_REPORT_FIELDS = { INVOICE_ID, SUPPLIER, PREMISES, CLASSIFICATION, AMOUNT, TAX, TOTAL,
 			INVOICE_DATE, DUE_DATE, PAYMENT_DATE };
+
+	protected int[] FE_REPORT_INDEXES = { FE_NAME_INDEX, FE_CONTACT_INDEX, FE_ADDRESS_LINE_1_INDEX,
+			FE_ADDRESS_LINE_2_INDEX, FE_SUBURB_INDEX, FE_CITY_INDEX, FE_STATE_INDEX, FE_POSTCODE_INDEX, FE_PHONE_INDEX,
+			FE_FAX_INDEX, FE_EMAIL_INDEX };
+	protected String[] FE_REPORT_FIELDS = { FE_NAME, FE_CONTACT, FE_ADDRESS_LINE_1, FE_ADDRESS_LINE_2, FE_SUBURB,
+			FE_CITY, FE_STATE, FE_POSTCODE, FE_PHONE, FE_FAX, FE_EMAIL };
 
 	protected OutputStream createExcelFilenameResponseHeader(final HttpServletResponse resp, final String filename)
 			throws IOException {
@@ -56,6 +93,17 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 		resp.addHeader("Content-Type", "application/vnd.ms-excel");
 		resp.setHeader("Content-Disposition", "attachement;filename=" + filename);
 		return stream;
+	}
+
+	protected void generateExcelReportHeader(final Workbook book, final Sheet sheet, final int[] indexes,
+			final String[] fieldnames) {
+		Row header = sheet.createRow(ZERO);
+		CellStyle headerStyle = boldStyle(book, true);
+		for (int i = ZERO; i < indexes.length; i++) {
+			Cell cell = header.createCell(i, CELL_TYPE_STRING);
+			cell.setCellValue(fieldnames[i]);
+			cell.setCellStyle(headerStyle);
+		}
 	}
 
 	protected CellStyle dateStyle(final Workbook book, final boolean bold) {
@@ -89,5 +137,18 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 		Font font = book.createFont();
 		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		return font;
+	}
+
+	protected void formatReport(final Sheet sheet, final int startIndex, final int endIndex) {
+		for (int i = startIndex; i <= endIndex; i++) {
+			sheet.autoSizeColumn(i);
+		}
+	}
+
+	protected void setPrintArea(final Sheet sheet) {
+		PrintSetup printSetup = sheet.getPrintSetup();
+		printSetup.setLandscape(true);
+		printSetup.setPaperSize(HSSFPrintSetup.A4_PAPERSIZE);
+		sheet.setAutobreaks(true);
 	}
 }

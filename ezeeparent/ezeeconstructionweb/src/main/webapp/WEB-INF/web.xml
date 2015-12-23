@@ -53,6 +53,16 @@
 		<servlet-name>configservice</servlet-name>
 		<url-pattern>/EzeeConstructionWeb/configservice</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>reportService</servlet-name>
+		<servlet-class>com.ezee.server.report.EzeeReportService</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>reportService</servlet-name>
+		<url-pattern>/EzeeConstructionWeb/reportservice</url-pattern>
+	</servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>EzeeConstructionWeb.jsp</welcome-file>

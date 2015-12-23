@@ -1,69 +1,66 @@
 package com.ezee.web.common.ui.utils;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
-import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.web.common.EzeeWebCommonConstants.LOCAL_STORAGE;
 import static com.ezee.web.common.EzeeWebCommonConstants.REMEMBER_ME;
 import static com.ezee.web.common.EzeeWebCommonConstants.REMEMBER_ME_USER;
 
 import com.ezee.model.entity.EzeeUser;
-import com.google.gwt.storage.client.Storage;
 
 public final class EzeeAutoLogin {
-
-	private final Storage storage = Storage.getLocalStorageIfSupported();
 
 	public boolean doAutoLogin() {
 		return isRememberMeSet() && isRememberUserNameSet();
 	}
 
 	public boolean isRememberMeSet() {
-		return isSupported() && Boolean.valueOf(storage.getItem(REMEMBER_ME));
+		return isSupported() && LOCAL_STORAGE.isSet(REMEMBER_ME);
 	}
 
 	public boolean isRememberUserNameSet() {
-		return isSupported() && hasLength(storage.getItem(REMEMBER_ME_USER));
+		return isSupported() && LOCAL_STORAGE.isSet(REMEMBER_ME_USER);
 	}
 
 	public void setRememberMe() {
 		if (isSupported()) {
-			storage.setItem(REMEMBER_ME, "true");
+			LOCAL_STORAGE.setValue(REMEMBER_ME, "true");
 		}
 	}
 
 	public void setRememberMeUser(final String username) {
 		if (isSupported()) {
-			storage.setItem(REMEMBER_ME_USER, username);
+			LOCAL_STORAGE.setValue(REMEMBER_ME_USER, username);
 		}
 	}
 
 	public void unsetRememberMe() {
 		if (isSupported()) {
-			storage.removeItem(REMEMBER_ME);
+			LOCAL_STORAGE.removeValue(REMEMBER_ME);
 		}
 	}
 
 	public void unsetRememberMeUser() {
 		if (isSupported()) {
-			storage.removeItem(REMEMBER_ME_USER);
+			LOCAL_STORAGE.removeValue(REMEMBER_ME_USER);
 		}
 	}
 
 	public String getRememberMeUserName() {
 		if (isRememberUserNameSet()) {
-			return storage.getItem(REMEMBER_ME_USER);
+			return LOCAL_STORAGE.getValue(REMEMBER_ME_USER);
 		}
 		return null;
 	}
 
 	public void clearAutoLogin() {
 		if (isSupported()) {
-			storage.removeItem(REMEMBER_ME);
-			storage.removeItem(REMEMBER_ME_USER);
+			LOCAL_STORAGE.removeValue(REMEMBER_ME);
+			LOCAL_STORAGE.removeValue(REMEMBER_ME_USER);
 		}
 	}
 
 	public boolean isSupported() {
-		return storage != null;
+		return LOCAL_STORAGE.isSupported();
 	}
 
 	public EzeeUser getAutoLoginUser() {

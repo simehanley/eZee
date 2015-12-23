@@ -7,7 +7,6 @@ import com.ezee.model.entity.EzeePayee;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.payee.EzeeCreateUpdateDeletePayee;
 import com.ezee.web.common.ui.grid.EzeeFinancialEntityGrid;
-import com.ezee.web.common.ui.grid.EzeeFinancialEntityToolbar;
 
 /**
  * 
@@ -29,7 +28,11 @@ public class EzeePayeeGrid<T extends EzeePayee> extends EzeeFinancialEntityGrid<
 	@Override
 	protected void initFilter() {
 		super.initFilter();
-		toolBar = new EzeeFinancialEntityToolbar<T>(this);
+		createToolbar();
+	}
+
+	protected void createToolbar() {
+		toolBar = new EzeePayeeToolbar<T>(this);
 		filterpanel.add(toolBar);
 	}
 

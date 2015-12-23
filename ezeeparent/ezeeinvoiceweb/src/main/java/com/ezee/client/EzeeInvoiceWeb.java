@@ -8,6 +8,7 @@ import static com.ezee.client.EzeeInvoiceWebConstants.PREMISES_CRUD_HEADERS;
 import static com.ezee.client.EzeeInvoiceWebConstants.REGISTER_USER;
 import static com.ezee.client.EzeeInvoiceWebConstants.SUPPLIERS;
 import static com.ezee.client.EzeeInvoiceWebConstants.SUPPLIER_CRUD_HEADERS;
+import static java.util.logging.Level.SEVERE;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +40,6 @@ public class EzeeInvoiceWeb extends EzeeWebEntryPoint {
 	@Override
 	protected void initApplication() {
 		initCache();
-		initMain();
 	}
 
 	private void initMain() {
@@ -71,5 +71,17 @@ public class EzeeInvoiceWeb extends EzeeWebEntryPoint {
 
 	private EzeePaymentGrid createPaymentGrid() {
 		return new EzeePaymentGrid(cache);
+	}
+
+	@Override
+	public void configurationLoaded() {
+		initMain();
+
+	}
+
+	@Override
+	public void configurationLoadFailed() {
+		log.log(SEVERE, "Configuration failed to load.  Will start application without defaults.");
+		initMain();
 	}
 }

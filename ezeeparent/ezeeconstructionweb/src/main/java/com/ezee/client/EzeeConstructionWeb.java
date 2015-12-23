@@ -6,6 +6,7 @@ import static com.ezee.client.EzeeConstructionWebConstants.PROJECT_CRUD_HEADERS;
 import static com.ezee.client.EzeeConstructionWebConstants.REGISTER_USER;
 import static com.ezee.client.EzeeConstructionWebConstants.RESOURCES;
 import static com.ezee.client.EzeeConstructionWebConstants.RESOURCE_CRUD_HEADERS;
+import static java.util.logging.Level.SEVERE;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +29,6 @@ public class EzeeConstructionWeb extends EzeeWebEntryPoint {
 
 	protected void initApplication() {
 		initCache();
-		initMain();
 	}
 
 	private void initMain() {
@@ -49,5 +49,17 @@ public class EzeeConstructionWeb extends EzeeWebEntryPoint {
 	protected void initResources() {
 		super.initResources();
 		EzeeProjectResources.INSTANCE.css().ensureInjected();
+	}
+
+	@Override
+	public void configurationLoaded() {
+		initMain();
+
+	}
+
+	@Override
+	public void configurationLoadFailed() {
+		log.log(SEVERE, "Configuration failed to load.  Will start application without defaults.");
+		initMain();
 	}
 }

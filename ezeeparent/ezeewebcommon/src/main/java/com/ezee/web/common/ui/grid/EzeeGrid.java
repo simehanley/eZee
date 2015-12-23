@@ -5,14 +5,10 @@ import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_D;
-import static com.google.gwt.event.dom.client.KeyCodes.KEY_DOWN;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_ENTER;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_PAGEDOWN;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_PAGEUP;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_U;
-import static com.google.gwt.event.dom.client.KeyCodes.KEY_UP;
-import static com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.BOUND_TO_SELECTION;
-import static com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.DISABLED;
 import static com.google.gwt.user.cellview.client.SimplePager.TextLocation.CENTER;
 import static com.google.gwt.user.client.Event.ONCONTEXTMENU;
 import static java.util.logging.Level.SEVERE;
@@ -22,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import com.ezee.common.EzeeCommonConstants;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.ezee.web.common.cache.EzeeEntityCache;
@@ -34,13 +31,11 @@ import com.google.gwt.event.dom.client.ContextMenuEvent;
 import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.DataGrid;
-import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -233,7 +228,7 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 				entities.remove(index);
 				entities.add(index, entity);
 			} else {
-				entities.add(entity);
+				entities.add(ZERO, entity);
 			}
 			getGrid().getSelectionModel().setSelected(entity, true);
 		}

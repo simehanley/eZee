@@ -3,6 +3,7 @@ package com.ezee.web.common.cache;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,11 +32,12 @@ public class EzeeEntityCache {
 
 	private EzeeConfiguration configuration;
 
+	private final List<EzeeEntityCacheListener> listeners = new ArrayList<>();
+
 	public EzeeEntityCache() {
-		loadEntities();
 	}
 
-	private void loadEntities() {
+	public void loadEntities() {
 		loadEntities(EzeeResource.class);
 		loadEntities(EzeePayee.class);
 		loadEntities(EzeePayer.class);
@@ -71,11 +73,13 @@ public class EzeeEntityCache {
 			@Override
 			public void onFailure(final Throwable caught) {
 				log.log(Level.SEVERE, "Unable to retrieve ezee configuration.", caught);
+				notifyConfigurationLoadFailed();
 			}
 
 			@Override
 			public void onSuccess(final List<EzeeConfiguration> result) {
 				configuration = result.get(ZERO);
+				notifyConfigurationLoaded();
 			}
 		});
 	}
@@ -91,5 +95,21 @@ public class EzeeEntityCache {
 
 	public final EzeeConfiguration getConfiguration() {
 		return configuration;
+	}
+
+	public void addListener(final EzeeEntityCacheListener listener) {
+		listeners.add(listener);
+	}
+
+	private void notifyConfigurationLoaded() {
+		for (EzeeEntityCacheListener listener : listeners) {
+			listener.configurationLoaded();
+		}
+	}
+
+	private void notifyConfigurationLoadFailed() {
+		for (EzeeEntityCacheListener listener : listeners) {
+			listener.configurationLoadFailed();
+		}
 	}
 }
