@@ -23,7 +23,7 @@
 			<g:at top="170" left="10">
 				<g:Label text="City" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
-			<g:at top="202" left="10">
+			<g:at top="204" left="10">
 				<g:Label text="State" styleName="{res.css.gwtLabelSmall}" />
 			</g:at>
 			<g:at top="235" left="10">

@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import com.ezee.common.EzeeCommonConstants;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.ezee.web.common.cache.EzeeEntityCache;

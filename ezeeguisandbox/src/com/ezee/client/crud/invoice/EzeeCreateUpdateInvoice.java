@@ -53,14 +53,15 @@ public class EzeeCreateUpdateInvoice extends Composite {
 	Button btnClose;
 
 	@UiField
-	Button btnEdit;
+	Button btnSave;
 
 	@UiField
 	Button btnDelete;
 
 	@UiField
 	ListBox lstClassification;
-	@UiField DateBox dtInvoice;
+	@UiField
+	DateBox dtInvoice;
 
 	interface EzeeCreateUpdateInvoiceUiBinder extends UiBinder<Widget, EzeeCreateUpdateInvoice> {
 	}

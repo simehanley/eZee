@@ -5,91 +5,70 @@
 	
 	</ui:style>
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="255px" width="613px">
+		<g:AbsolutePanel height="288px" width="628px">
 			<g:at top="10" left="10">
-				<g:Label text="Inv. Num." styleName="gwt-Label-Small" />
+				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE" width="515px" height="34px">
+					<g:Label text="Inv. Num." styleName="gwt-Label-Small" />
+					<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtInvoiceNumber" />
+					<g:CheckBox text="Manual Tax" styleName="gwt-CheckBox-Small" value="true" ui:field="chkManualTax"
+						wordWrap="false" />
+					<g:CheckBox text="Reverse Tax" styleName="gwt-CheckBox-Small" value="false" ui:field="chkReverseTax"
+						wordWrap="false" />
+				</g:HorizontalPanel>
 			</g:at>
 			<g:at top="44" left="10">
-				<g:Label text="Premises" styleName="gwt-Label-Small" />
+				<g:HorizontalPanel width="610px" verticalAlignment="ALIGN_MIDDLE">
+					<g:Label text="Premises" styleName="gwt-Label-Small" />
+					<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstPremises" />
+					<g:Label text="Supplier" styleName="gwt-Label-Small" />
+					<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstSupplier" />
+				</g:HorizontalPanel>
 			</g:at>
 			<g:at top="78" left="10">
-				<g:Label text="Supplier" styleName="gwt-Label-Small" />
+				<g:HorizontalPanel width="610px" verticalAlignment="ALIGN_MIDDLE">
+					<g:Label text="Inv. Date" styleName="gwt-Label-Small" wordWrap="false" />
+					<p1:DateBox ui:field="dtInvoice" styleName="gwt-DateBox-Small" />
+					<g:Label text="Due Date" styleName="gwt-Label-Small" />
+					<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtDue" />
+					<g:Label text="Paid Date" styleName="gwt-Label-Small" />
+					<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtPaid" />
+				</g:HorizontalPanel>
 			</g:at>
-			<g:at top="112" left="10">
-				<g:Label text="Amount" styleName="gwt-Label-Small" />
+			<g:at top="112" left="10" width="610px" height="34px">
+				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE" width="610px">
+					<g:Label text="Amount" styleName="gwt-Label-Small" />
+					<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtAmount" />
+					<g:Label text="Tax" styleName="gwt-Label-Small" />
+					<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtTax" />
+					<g:Label text="Total" styleName="gwt-Label-Small" />
+					<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtTotal" />
+				</g:HorizontalPanel>
 			</g:at>
-			<g:at top="145" left="10">
-				<g:Label text="Tax" styleName="gwt-Label-Small" />
+			<g:at top="146" left="10">
+				<g:Label text="Description" styleName="gwt-Label-Small" />
 			</g:at>
-			<g:at top="179" left="10">
-				<g:Label text="Total" styleName="gwt-Label-Small" />
+			<g:at top="146" left="98">
+				<g:RichTextArea width="515px" height="60px" styleName="gwt-RichTextArea-Medium" ui:field="txtDescription" />
 			</g:at>
-			<g:at top="10" left="97">
-				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtInvoiceNumber" />
+			<g:at top="212" left="10">
+				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+					<g:Label text="Debt Age" styleName="gwt-Label-Small" />
+					<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstDebtAge" />
+					<g:Label text="Class." styleName="gwt-Label-Small" />
+					<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstClassification" />
+				</g:HorizontalPanel>
 			</g:at>
-			<g:at top="44" left="97">
-				<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstPremises" />
+			<g:at top="249" left="243">
+				<g:Button ui:field="btnPay" text="Pay" />
 			</g:at>
-			<g:at top="78" left="97">
-				<g:ListBox styleName="gwt-ListBox-Medium" ui:field="lstSupplier" />
-			</g:at>
-			<g:at top="115" left="100">
-				<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtAmount" />
-			</g:at>
-			<g:at top="148" left="100">
-				<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtTax" />
-			</g:at>
-			<g:at top="182" left="100">
-				<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtTotal" />
-			</g:at>
-			<g:at top="112" left="210">
-				<g:Label text="Inv. Date" styleName="gwt-Label-Small" wordWrap="false" />
-			</g:at>
-			<g:at top="112" left="298">
-				<p1:DateBox ui:field="dtInvoice" styleName="gwt-DateBox-Small" />
-			</g:at>
-			<g:at top="145" left="210">
-				<g:Label text="Due Date" styleName="gwt-Label-Small" />
-			</g:at>
-			<g:at top="221" left="80">
-				<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtDue" />
-			</g:at>
-			<g:at top="179" left="210">
-				<g:Label text="Paid Date" styleName="gwt-Label-Small" />
-			</g:at>
-			<g:at top="179" left="298">
-				<p1:DateBox styleName="gwt-DateBox-Small" ui:field="dtPaid" />
-			</g:at>
-			<g:at top="112" left="408">
-				<g:Label text="Debt Age" styleName="gwt-Label-Small" />
-			</g:at>
-			<g:at top="111" left="496">
-				<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstDebtAge" />
-			</g:at>
-			<g:at top="145" left="408">
-				<g:Label text="Class." styleName="gwt-Label-Small" />
-			</g:at>
-			<g:at top="145" left="496">
-				<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstClassification" />
-			</g:at>
-			<g:at top="13" left="478">
-				<g:CheckBox text="Manual Tax" styleName="gwt-CheckBox-Small" value="true" ui:field="chkManualTax"
-					wordWrap="false" />
-			</g:at>
-			<g:at top="215" left="314">
+			<g:at top="249" left="337">
 				<g:Button ui:field="btnDelete" text="Delete" />
 			</g:at>
-			<g:at top="215" left="409">
-				<g:Button ui:field="btnEdit" text="Edit" />
+			<g:at top="249" left="431">
+				<g:Button ui:field="btnSave" text="Save" />
 			</g:at>
-			<g:at top="215" left="504">
+			<g:at top="249" left="525">
 				<g:Button ui:field="btnClose" text="Close" />
-			</g:at>
-			<g:at top="10" left="314">
-				<g:Label text="Description" styleName="gwt-Label-Medium" />
-			</g:at>
-			<g:at top="44" left="314">
-				<g:RichTextArea width="284px" height="60px" styleName="gwt-RichTextArea-Medium" ui:field="txtDescription" />
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>

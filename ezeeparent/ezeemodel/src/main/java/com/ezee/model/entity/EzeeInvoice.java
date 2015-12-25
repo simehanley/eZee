@@ -61,6 +61,9 @@ public class EzeeInvoice extends EzeeDatabaseEntity
 	@Column(name = "MANUAL_TAX")
 	private boolean manualtax = Boolean.TRUE;
 
+	@Column(name = "REVERSE_TAX")
+	private boolean reversetax = Boolean.FALSE;
+
 	@Column(name = "INVOICE_DATE")
 	private String invoiceDate;
 
@@ -233,6 +236,14 @@ public class EzeeInvoice extends EzeeDatabaseEntity
 
 	public void setInvoiceDate(String invoiceDate) {
 		this.invoiceDate = invoiceDate;
+	}
+
+	public final boolean isReverseTax() {
+		return reversetax;
+	}
+
+	public void setReverseTax(boolean reversetax) {
+		this.reversetax = reversetax;
 	}
 
 	@Override

@@ -7,10 +7,10 @@
 	<g:HTMLPanel>
 		<g:AbsolutePanel height="311px" width="620px">
 			<g:at top="10" left="7">
-				<g:Label text="Premises" styleName="{res.css.gwtLabelMedium}" />
-			</g:at>
-			<g:at top="9" left="173">
-				<g:ListBox styleName="{res.css.gwtListBoxMedium}" ui:field="lstPremises" />
+				<g:HorizontalPanel>
+					<g:Label text="Premises" styleName="{res.css.gwtLabelMedium}" />
+					<g:ListBox styleName="{res.css.gwtListBoxMedium}" ui:field="lstPremises" />
+				</g:HorizontalPanel>
 			</g:at>
 			<g:at top="44" left="7">
 				<g:Label text="Outstanding Cheques" styleName="{res.css.gwtLabelMedium}" />

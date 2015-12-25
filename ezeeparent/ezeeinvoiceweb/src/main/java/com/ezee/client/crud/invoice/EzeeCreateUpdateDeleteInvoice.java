@@ -1,6 +1,7 @@
 package com.ezee.client.crud.invoice;
 
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
+import static com.ezee.common.EzeeCommonConstants.ONE_DBL;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
@@ -108,6 +109,9 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	CheckBox chkManualTax;
 
 	@UiField
+	CheckBox chkReverseTax;
+
+	@UiField
 	Button btnPay;
 
 	@UiField
@@ -172,6 +176,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		dtInvoice.setEnabled(false);
 		txtDescription.setEnabled(false);
 		chkManualTax.setEnabled(false);
+		chkReverseTax.setEnabled(false);
 		lstDebtAge.setEnabled(false);
 		btnSave.setEnabled(false);
 		btnPay.setEnabled(false);
@@ -200,9 +205,11 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		}
 		dtPaid.setValue(DATE_UTILS.fromString(entity.getDatePaid()));
 		chkManualTax.setValue(entity.isManualTax());
+		chkReverseTax.setValue(entity.isReverseTax());
 		txtDescription.setText(entity.getDescription());
 		lstClassification.setItemSelected(getItemIndex(entity.getClassification().name(), lstClassification), true);
 		btnPay.setEnabled(entity.getDatePaid() == null);
+		initialiseAmountFields();
 	}
 
 	private void initialiseNew() {
@@ -218,12 +225,19 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		EzeeConfiguration configuration = cache.getConfiguration();
 		if (configuration != null) {
 			chkManualTax.setValue(configuration.getDefaultManualTax());
-			txtTax.setEnabled(chkManualTax.getValue());
+			chkReverseTax.setValue(configuration.getDefaultReverseTax());
 			setValue(configuration.getDefaultDebtAgeRule(), lstDebtAge);
 			String supplier = hasLength(supplierName) ? supplierName : configuration.getDefaultInvoiceSupplier();
 			setValue(supplier, lstSupplier);
 			setValue(configuration.getDefaultInvoicePremises(), lstPremises);
+			initialiseAmountFields();
 		}
+	}
+
+	private void initialiseAmountFields() {
+		txtTax.setEnabled(chkManualTax.getValue());
+		txtAmount.setEnabled(!chkReverseTax.getValue());
+		txtTotal.setEnabled(chkReverseTax.getValue());
 	}
 
 	@Override
@@ -244,6 +258,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		entity.setDateDue(DATE_UTILS.toString(dtDue.getValue()));
 		entity.setDatePaid(DATE_UTILS.toString(dtPaid.getValue()));
 		entity.setManualTax(chkManualTax.getValue());
+		entity.setReverseTax(chkReverseTax.getValue());
 		entity.setDescription(txtDescription.getText());
 		entity.setClassification(EzeeInvoiceClassification.valueOf(lstClassification.getSelectedItemText()));
 	}
@@ -254,7 +269,6 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		dtDue.setFormat(getDateBoxFormat());
 		dtPaid.setFormat(getDateBoxFormat());
 		dtPaid.setEnabled(false);
-		txtTotal.setEnabled(false);
 		taxRate = cache.getConfiguration().getInvoiceTaxRate();
 		KeyPressHandler keyPressHandler = new EzeeTextBoxUtils.NumericKeyPressHandler();
 		BlurHandler blurHandler = new NumericBlurHandler();
@@ -262,13 +276,11 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		txtAmount.addBlurHandler(blurHandler);
 		txtTax.addKeyPressHandler(keyPressHandler);
 		txtTax.addBlurHandler(blurHandler);
-		chkManualTax.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-			@Override
-			public void onValueChange(ValueChangeEvent<Boolean> event) {
-				txtTax.setEnabled(event.getValue());
-				resolveInvoiceAmount();
-			}
-		});
+		txtTotal.addKeyPressHandler(keyPressHandler);
+		txtTotal.addBlurHandler(blurHandler);
+		EzeeInvoiceTaxChangeHandler taxChangeHandler = new EzeeInvoiceTaxChangeHandler();
+		chkManualTax.addValueChangeHandler(taxChangeHandler);
+		chkReverseTax.addValueChangeHandler(taxChangeHandler);
 		lstDebtAge.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
@@ -287,6 +299,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		txtInvoiceNumber.addFocusHandler(focusHandler);
 		txtAmount.addFocusHandler(focusHandler);
 		txtTax.addFocusHandler(focusHandler);
+		txtTotal.addFocusHandler(focusHandler);
 	}
 
 	private EzeeDebtAgeRule getAgeRule() {
@@ -366,20 +379,35 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	}
 
 	private void resolveInvoiceAmount() {
-		double amount = hasLength(txtAmount.getText()) ? round(getAmountFormat().parse(txtAmount.getValue()))
-				: ZERO_DBL;
-		double tax = resolveTaxAmount(amount);
-		double total = amount + tax;
-		txtAmount.setValue(getAmountFormat().format(amount));
+		double gross = ZERO_DBL, net = ZERO_DBL, tax = ZERO_DBL;
+		if (chkReverseTax.getValue()) {
+			gross = hasLength(txtTotal.getText()) ? round(getAmountFormat().parse(txtTotal.getValue())) : ZERO_DBL;
+			net = resolveNetAmount(gross);
+			tax = gross - net;
+		} else {
+			net = hasLength(txtAmount.getText()) ? round(getAmountFormat().parse(txtAmount.getValue())) : ZERO_DBL;
+			tax = resolveTaxAmount(net);
+			gross = net + tax;
+		}
+		txtAmount.setValue(getAmountFormat().format(net));
 		txtTax.setValue(getAmountFormat().format(tax));
-		txtTotal.setValue(getAmountFormat().format(total));
+		txtTotal.setValue(getAmountFormat().format(gross));
 	}
 
-	private double resolveTaxAmount(double amount) {
+	private double resolveTaxAmount(double netAmount) {
 		if (!hasLength(txtTax.getText())) {
 			return ZERO_DBL;
 		}
-		return chkManualTax.getValue() ? round(getAmountFormat().parse(txtTax.getValue())) : round(amount * taxRate);
+		return chkManualTax.getValue() ? round(getAmountFormat().parse(txtTax.getValue())) : round(netAmount * taxRate);
+	}
+
+	private double resolveNetAmount(double grossAmount) {
+		if (chkManualTax.getValue()) {
+			double tax = (hasLength(txtTax.getText())) ? round(getAmountFormat().parse(txtTax.getValue())) : ZERO_DBL;
+			return grossAmount - tax;
+		} else {
+			return round(grossAmount / (ONE_DBL + taxRate));
+		}
 	}
 
 	private void resolveDueDate() {
@@ -430,5 +458,14 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 				}
 			}
 		});
+	}
+
+	private class EzeeInvoiceTaxChangeHandler implements ValueChangeHandler<Boolean> {
+
+		@Override
+		public void onValueChange(ValueChangeEvent<Boolean> event) {
+			initialiseAmountFields();
+			resolveInvoiceAmount();
+		}
 	}
 }
