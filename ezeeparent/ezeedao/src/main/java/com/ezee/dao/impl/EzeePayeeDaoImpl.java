@@ -12,25 +12,15 @@ import com.ezee.model.entity.filter.EzeeStringFilter;
  * @author siborg
  *
  */
-public class EzeePayeeDaoImpl extends EzeeBaseDaoImpl<EzeePayee> implements EzeePayeeDao {
+public abstract class EzeePayeeDaoImpl<T extends EzeePayee> extends EzeeBaseDaoImpl<T> implements EzeePayeeDao<T> {
 
 	@Override
-	public EzeePayee get(long id) {
-		return super.get(id, EzeePayee.class);
-	}
-
-	@Override
-	public List<EzeePayee> get() {
-		return super.get(EzeePayee.class);
-	}
-
-	@Override
-	public List<EzeePayee> get(final EzeeStringFilter<EzeePayee> filter) {
-		List<EzeePayee> unfiltered = get();
-		List<EzeePayee> filtered = new ArrayList<>();
-		for (EzeePayee payee : unfiltered) {
-			if (filter.include(payee)) {
-				filtered.add(payee);
+	public List<T> get(final EzeeStringFilter<T> filter) {
+		List<T> unfiltered = get();
+		List<T> filtered = new ArrayList<>();
+		for (T entity : unfiltered) {
+			if (filter.include(entity)) {
+				filtered.add(entity);
 			}
 		}
 		return filtered;

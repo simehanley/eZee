@@ -28,7 +28,7 @@ public class EzeeInvoiceDaoImpl extends EzeeBaseDaoImpl<EzeeInvoice> implements 
 		deleteMappings(entity, "deletePayeeMappingsSql");
 		deleteMappings(entity, "deletePayerMappingsSql");
 		deleteMappings(entity, "deleteAgeDebtMappingsSql");
-		entity.setPayee(null);
+		entity.setSupplier(null);
 		entity.setPayer(null);
 		entity.setAgeRule(null);
 		super.delete(entity);

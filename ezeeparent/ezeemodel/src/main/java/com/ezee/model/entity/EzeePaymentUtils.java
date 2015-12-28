@@ -24,7 +24,7 @@ public class EzeePaymentUtils {
 	public static final String getInvoiceSuppliers(final EzeePayment payment) {
 		Set<String> suppliers = new HashSet<>();
 		for (EzeeInvoice invoice : payment.getInvoices()) {
-			suppliers.add(invoice.getPayee().getName());
+			suppliers.add(invoice.getSupplier().getName());
 		}
 		return suppliers.toString();
 	}

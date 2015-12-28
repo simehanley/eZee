@@ -3,8 +3,8 @@ package com.ezee.client.main;
 import static com.ezee.web.common.ui.utils.EzeeTabLayoutPanelUtils.getFirstInstanceOf;
 
 import com.ezee.client.grid.invoice.EzeeInvoiceGrid;
-import com.ezee.client.grid.payee.EzeeInvoicePayeeGrid;
 import com.ezee.client.grid.payment.EzeePaymentGrid;
+import com.ezee.client.grid.supplier.EzeeInvoiceSupplierGrid;
 import com.ezee.model.entity.EzeeUser;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.grid.payer.EzeePayerGrid;
@@ -105,13 +105,13 @@ public class EzeeInvoiceMain extends EzeeWebMain {
 			} else if (event.getSource().equals(makePayment)) {
 				getFirstInstanceOf(EzeeInvoiceGrid.class, tab).newPayment();
 			} else if (event.getSource().equals(newSupplier)) {
-				getFirstInstanceOf(EzeeInvoicePayeeGrid.class, tab).newEntity();
+				getFirstInstanceOf(EzeeInvoiceSupplierGrid.class, tab).newEntity();
 			} else if (event.getSource().equals(editSupplier)) {
-				getFirstInstanceOf(EzeeInvoicePayeeGrid.class, tab).editEntity();
+				getFirstInstanceOf(EzeeInvoiceSupplierGrid.class, tab).editEntity();
 			} else if (event.getSource().equals(deleteSupplier)) {
-				getFirstInstanceOf(EzeeInvoicePayeeGrid.class, tab).deleteEntity();
+				getFirstInstanceOf(EzeeInvoiceSupplierGrid.class, tab).deleteEntity();
 			} else if (event.getSource().equals(raiseSupplierInvoice)) {
-				getFirstInstanceOf(EzeeInvoicePayeeGrid.class, tab).newSupplierInvoice();
+				getFirstInstanceOf(EzeeInvoiceSupplierGrid.class, tab).newSupplierInvoice();
 			} else if (event.getSource().equals(newPremises)) {
 				getFirstInstanceOf(EzeePayerGrid.class, tab).newEntity();
 			} else if (event.getSource().equals(editPremises)) {

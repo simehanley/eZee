@@ -47,11 +47,11 @@
 						<g:HTML text="Edit Project" styleName="{res.css.gwtStackPanelLink}" ui:field="editProject" />
 					</g:VerticalPanel>
 				</g:VerticalPanel>
-				<g:VerticalPanel g:StackPanel-text="RESOURCES">
+				<g:VerticalPanel g:StackPanel-text="CONTRACTORS">
 					<g:VerticalPanel>
-						<g:HTML text="New Resource" styleName="{res.css.gwtStackPanelLink}" ui:field="newResource" />
-						<g:HTML text="Edit Resource" styleName="{res.css.gwtStackPanelLink}" ui:field="editResource" />
-						<g:HTML text="Delete Resource" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteResource" />
+						<g:HTML text="New Contractor" styleName="{res.css.gwtStackPanelLink}" ui:field="newContractor" />
+						<g:HTML text="Edit Contractor" styleName="{res.css.gwtStackPanelLink}" ui:field="editContractor" />
+						<g:HTML text="Delete Contractor" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteContractor" />
 					</g:VerticalPanel>
 				</g:VerticalPanel>
 				<g:VerticalPanel g:StackPanel-text="USER">

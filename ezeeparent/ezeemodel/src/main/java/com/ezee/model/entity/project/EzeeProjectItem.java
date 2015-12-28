@@ -21,7 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.ezee.model.entity.EzeePayee;
+import com.ezee.model.entity.EzeeContractor;
 
 /**
  * 
@@ -38,8 +38,8 @@ public class EzeeProjectItem extends EzeeProjectDatabaseEntity {
 	private String name;
 
 	@OneToOne(fetch = EAGER)
-	@JoinTable(name = "EZEE_PROJECT_ITEM_TO_RESOURCE_MAPPING", joinColumns = @JoinColumn(name = "ITEM_ID") , inverseJoinColumns = @JoinColumn(name = "RESOURCE_ID") )
-	private EzeePayee resource;
+	@JoinTable(name = "EZEE_PROJECT_ITEM_TO_CONTRACTOR_MAPPING", joinColumns = @JoinColumn(name = "ITEM_ID") , inverseJoinColumns = @JoinColumn(name = "RESOURCE_ID") )
+	private EzeeContractor contractor;
 
 	@OneToMany(cascade = ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "ITEM_ID")
@@ -53,15 +53,16 @@ public class EzeeProjectItem extends EzeeProjectDatabaseEntity {
 		super();
 	}
 
-	public EzeeProjectItem(final String name, final EzeePayee resource, final String created, final String updated) {
-		this(NULL_ID, name, resource, created, updated);
+	public EzeeProjectItem(final String name, final EzeeContractor contractor, final String created,
+			final String updated) {
+		this(NULL_ID, name, contractor, created, updated);
 	}
 
-	public EzeeProjectItem(final Long id, final String name, final EzeePayee resource, final String created,
+	public EzeeProjectItem(final Long id, final String name, final EzeeContractor contractor, final String created,
 			final String updated) {
 		super(id, created, updated);
 		this.name = name;
-		this.resource = resource;
+		this.contractor = contractor;
 	}
 
 	public void addDetail(final EzeeProjectItemDetail detail) {
@@ -90,12 +91,12 @@ public class EzeeProjectItem extends EzeeProjectDatabaseEntity {
 		this.name = name;
 	}
 
-	public EzeePayee getResource() {
-		return resource;
+	public EzeeContractor getContractor() {
+		return contractor;
 	}
 
-	public void setResource(final EzeePayee resource) {
-		this.resource = resource;
+	public void setContractor(final EzeeContractor contractor) {
+		this.contractor = contractor;
 	}
 
 	public Set<EzeeProjectItemDetail> getDetails() {
@@ -138,7 +139,7 @@ public class EzeeProjectItem extends EzeeProjectDatabaseEntity {
 
 	@Override
 	public String toString() {
-		return "EzeeProjectItem [name=" + name + ", resource=" + resource + ", details=" + details + ", payments="
+		return "EzeeProjectItem [name=" + name + ", resource=" + contractor + ", details=" + details + ", payments="
 				+ payments + ", getGridId()=" + getGridId() + ", getId()=" + getId() + "]";
 	}
 }

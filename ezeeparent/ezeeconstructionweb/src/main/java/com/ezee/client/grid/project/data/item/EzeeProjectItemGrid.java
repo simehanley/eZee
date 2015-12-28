@@ -13,7 +13,7 @@ import java.util.Map;
 
 import com.ezee.client.grid.project.EzeeProjectDetail;
 import com.ezee.client.grid.project.data.EzeeProjectDataGrid;
-import com.ezee.model.entity.EzeeResource;
+import com.ezee.model.entity.EzeeContractor;
 import com.ezee.model.entity.project.EzeeProject;
 import com.ezee.model.entity.project.EzeeProjectItem;
 import com.ezee.web.common.ui.grid.EzeeGridModelListener;
@@ -23,7 +23,7 @@ public class EzeeProjectItemGrid extends EzeeProjectDataGrid<EzeeProjectItem> {
 
 	private final List<EzeeProjectItemGridListener> listeners = new ArrayList<>();
 
-	public EzeeProjectItemGrid(final EzeeProjectDetail projectDetail, final Map<String, EzeeResource> resources) {
+	public EzeeProjectItemGrid(final EzeeProjectDetail projectDetail, final Map<String, EzeeContractor> resources) {
 		super(projectDetail, resources);
 	}
 

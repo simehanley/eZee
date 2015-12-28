@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.ezee.client.grid.project.EzeeProjectDetail;
 import com.ezee.model.entity.EzeeDatabaseEntity;
-import com.ezee.model.entity.EzeeResource;
+import com.ezee.model.entity.EzeeContractor;
 import com.ezee.web.common.ui.css.EzeeGwtOverridesResources;
 import com.ezee.web.common.ui.grid.EzeeGridModel;
 import com.google.gwt.core.client.GWT;
@@ -34,7 +34,7 @@ public abstract class EzeeProjectDataGrid<T extends EzeeDatabaseEntity> extends 
 
 	protected EzeeGridModel<T> model;
 
-	protected final Map<String, EzeeResource> resources;
+	protected final Map<String, EzeeContractor> resources;
 
 	protected final EzeeProjectDetail projectDetail;
 
@@ -42,7 +42,7 @@ public abstract class EzeeProjectDataGrid<T extends EzeeDatabaseEntity> extends 
 		this(projectDetail, null);
 	}
 
-	public EzeeProjectDataGrid(final EzeeProjectDetail projectDetail, final Map<String, EzeeResource> resources) {
+	public EzeeProjectDataGrid(final EzeeProjectDetail projectDetail, final Map<String, EzeeContractor> resources) {
 		this.projectDetail = projectDetail;
 		this.resources = resources;
 		init();

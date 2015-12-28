@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ezee.model.entity.EzeeInvoice;
-import com.ezee.model.entity.EzeePayee;
 import com.ezee.model.entity.EzeePayer;
+import com.ezee.model.entity.EzeeSupplier;
 
 import junit.framework.TestCase;
 
@@ -19,7 +19,7 @@ import junit.framework.TestCase;
 public class EzeeInvoiceDaoTest extends AbstractEzeeDaoTest<EzeeInvoice> {
 
 	@Autowired
-	private EzeePayeeDao payeeDao;
+	private EzeeSupplierDao supplierDao;
 
 	@Autowired
 	private EzeePayerDao payerDao;
@@ -28,13 +28,13 @@ public class EzeeInvoiceDaoTest extends AbstractEzeeDaoTest<EzeeInvoice> {
 	private EzeeInvoiceDao invoiceDao;
 
 	private final EzeePayer payer = new EzeePayer();
-	private final EzeePayee payee = new EzeePayee();
+	private final EzeeSupplier supplier = new EzeeSupplier();
 
 	@Override
 	@Test
 	public void canPersist() {
 		init();
-		EzeeInvoice invoice = new EzeeInvoice("1", payee, payer, 100., 10., "TEST", true, "5/11/2015", "31/12/2015",
+		EzeeInvoice invoice = new EzeeInvoice("1", supplier, payer, 100., 10., "TEST", true, "5/11/2015", "31/12/2015",
 				null, "5/11/2015", null, expense);
 		TestCase.assertNull(invoice.getId());
 		invoiceDao.save(invoice);
@@ -45,7 +45,7 @@ public class EzeeInvoiceDaoTest extends AbstractEzeeDaoTest<EzeeInvoice> {
 	@Test
 	public void canEdit() {
 		init();
-		EzeeInvoice invoice = new EzeeInvoice("1", payee, payer, 100., 10., "TEST", true, "5/11/2015", "31/12/2015",
+		EzeeInvoice invoice = new EzeeInvoice("1", supplier, payer, 100., 10., "TEST", true, "5/11/2015", "31/12/2015",
 				null, "5/11/2015", null, expense);
 		invoiceDao.save(invoice);
 		TestCase.assertNull(invoice.getDatePaid());
@@ -60,7 +60,7 @@ public class EzeeInvoiceDaoTest extends AbstractEzeeDaoTest<EzeeInvoice> {
 	@Test
 	public void canDelete() {
 		init();
-		EzeeInvoice invoice = new EzeeInvoice("1", payee, payer, 100., 10., "TEST", true, "5/11/2015", "31/12/2015",
+		EzeeInvoice invoice = new EzeeInvoice("1", supplier, payer, 100., 10., "TEST", true, "5/11/2015", "31/12/2015",
 				null, "5/11/2015", null, expense);
 		invoiceDao.save(invoice);
 		EzeeInvoice persisted = invoiceDao.get(invoice.getId(), EzeeInvoice.class);
@@ -72,6 +72,6 @@ public class EzeeInvoiceDaoTest extends AbstractEzeeDaoTest<EzeeInvoice> {
 
 	private void init() {
 		payerDao.save(payer);
-		payeeDao.save(payee);
+		supplierDao.save(supplier);
 	}
 }

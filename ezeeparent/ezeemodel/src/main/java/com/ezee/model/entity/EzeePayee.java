@@ -6,7 +6,6 @@ import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.Table;
@@ -20,10 +19,9 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 @Entity
 @Inheritance(strategy = SINGLE_TABLE)
-@DiscriminatorColumn(name = "SOURCE", discriminatorType = STRING)
-@DiscriminatorValue("EzeeInvoiceWeb")
+@DiscriminatorColumn(name = "PAYEE_TYPE", discriminatorType = STRING)
 @Table(name = "EZEE_PAYEE")
-public class EzeePayee extends EzeeFinancialEntity implements IsSerializable {
+public abstract class EzeePayee extends EzeeFinancialEntity implements IsSerializable {
 
 	private static final long serialVersionUID = -7361680029940311470L;
 

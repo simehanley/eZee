@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import com.ezee.client.grid.project.data.detail.EzeeProjectItemDetailGrid;
 import com.ezee.client.grid.project.data.item.EzeeProjectItemGrid;
 import com.ezee.client.grid.project.data.payment.EzeeProjectPaymentGrid;
-import com.ezee.model.entity.EzeeResource;
+import com.ezee.model.entity.EzeeContractor;
 import com.ezee.model.entity.project.EzeeProject;
 import com.ezee.model.entity.project.EzeeProjectItem;
 import com.ezee.model.entity.project.EzeeProjectItemDetail;
@@ -56,7 +56,7 @@ public class EzeeProjectDetail extends Composite {
 
 	private EzeeProjectPaymentGrid projectPaymentGrid;
 
-	private final Map<String, EzeeResource> resources;
+	private final Map<String, EzeeContractor> resources;
 
 	@UiField
 	HorizontalPanel projectItems;
@@ -110,7 +110,7 @@ public class EzeeProjectDetail extends Composite {
 	TextBox txtPercent;
 
 	public EzeeProjectDetail(final EzeeProject project, final EzeeProjectDetailListener listener,
-			final Map<String, EzeeResource> resources) {
+			final Map<String, EzeeContractor> resources) {
 		this.project = project;
 		this.listener = listener;
 		this.resources = resources;

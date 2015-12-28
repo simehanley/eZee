@@ -26,9 +26,11 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<bean id="payeeDao" class="com.ezee.dao.impl.EzeePayeeDaoImpl" parent="baseDao" />
-	
-	<bean id="resourceDao" class="com.ezee.dao.impl.EzeeResourceDaoImpl" parent="baseDao" />
+	<bean id="payeeDao" class="com.ezee.dao.impl.EzeePayeeDaoImpl" parent="baseDao" abstract="true" />
+
+	<bean id="contractorDao" class="com.ezee.dao.impl.EzeeContractorDaoImpl" parent="payeeDao" />
+
+	<bean id="supplierDao" class="com.ezee.dao.impl.EzeeSupplierDaoImpl" parent="payeeDao" />
 
 	<bean id="payerDao" class="com.ezee.dao.impl.EzeePayerDaoImpl" parent="baseDao" />
 

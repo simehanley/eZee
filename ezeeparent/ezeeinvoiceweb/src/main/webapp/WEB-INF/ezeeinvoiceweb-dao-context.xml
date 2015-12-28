@@ -7,9 +7,9 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-	<bean id="ez_payeeDao" class="com.ezee.server.dao.EzeeEntityDao">
-		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeePayee" />
-		<constructor-arg name="dao" ref="payeeDao" />
+	<bean id="ez_supplierDao" class="com.ezee.server.dao.EzeeEntityDao">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeeSupplier" />
+		<constructor-arg name="dao" ref="supplierDao" />
 	</bean>
 
 	<bean id="ez_payerDao" class="com.ezee.server.dao.EzeeEntityDao">
@@ -26,19 +26,19 @@
 		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeeConfiguration" />
 		<constructor-arg name="dao" ref="configDao" />
 	</bean>
-	
+
 	<bean id="ez_invoiceDao" class="com.ezee.server.dao.EzeeEntityDao">
 		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeeInvoice" />
 		<constructor-arg name="dao" ref="invoiceDao" />
 	</bean>
-	
+
 	<bean id="ez_paymentDao" class="com.ezee.server.dao.EzeeEntityDao">
 		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeePayment" />
 		<constructor-arg name="dao" ref="paymentDao" />
 	</bean>
 
 	<util:list id="entityDaos">
-		<ref bean="ez_payeeDao" />
+		<ref bean="ez_supplierDao" />
 		<ref bean="ez_payerDao" />
 		<ref bean="ez_debtAgeDao" />
 		<ref bean="ez_configDao" />

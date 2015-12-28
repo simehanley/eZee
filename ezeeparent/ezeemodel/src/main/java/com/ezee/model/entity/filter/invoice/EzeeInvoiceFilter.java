@@ -4,8 +4,8 @@ import java.util.Date;
 
 import com.ezee.common.EzeeDateUtilities;
 import com.ezee.model.entity.EzeeInvoice;
-import com.ezee.model.entity.EzeePayee;
 import com.ezee.model.entity.EzeePayer;
+import com.ezee.model.entity.EzeeSupplier;
 import com.ezee.model.entity.filter.EzeeDateRangeFilter;
 import com.ezee.model.entity.filter.EzeeDelimitedStringFilter;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
@@ -18,7 +18,7 @@ import com.ezee.model.entity.filter.EzeeStringFilter;
  */
 public class EzeeInvoiceFilter implements EzeeEntityFilter<EzeeInvoice> {
 
-	private final EzeeEntityFilter<EzeePayee> supplierFilter;
+	private final EzeeEntityFilter<EzeeSupplier> supplierFilter;
 
 	private final EzeeEntityFilter<EzeePayer> premisesFilter;
 
@@ -39,7 +39,7 @@ public class EzeeInvoiceFilter implements EzeeEntityFilter<EzeeInvoice> {
 
 	@Override
 	public boolean include(final EzeeInvoice invoice) {
-		if (!supplierFilter.include(invoice.getPayee())) {
+		if (!supplierFilter.include(invoice.getSupplier())) {
 			return false;
 		} else if (!premisesFilter.include(invoice.getPayer())) {
 			return false;

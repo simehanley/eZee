@@ -12,11 +12,11 @@
 			<g:at top="365" left="37">
 				<g:Button ui:field="btnDelete" text="Delete" styleName="{res.css.gwtButton}" />
 			</g:at>
-			<g:at top="365" left="229">
-				<g:Button text="Close" ui:field="btnClose" styleName="{res.css.gwtButton}" />
-			</g:at>
 			<g:at top="365" left="133">
 				<g:Button text="Save" ui:field="btnSave" styleName="{res.css.gwtButton}" />
+			</g:at>
+			<g:at top="365" left="229">
+				<g:Button text="Close" ui:field="btnClose" styleName="{res.css.gwtButton}" />
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>

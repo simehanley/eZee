@@ -28,7 +28,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 
-public class EzeeCreateUpdateDeletePayee<T extends EzeePayee> extends EzeeCreateUpdateDeleteFinancialEntity<T> {
+public abstract class EzeeCreateUpdateDeletePayee<T extends EzeePayee>
+		extends EzeeCreateUpdateDeleteFinancialEntity<T> {
 
 	private static final Logger log = Logger.getLogger("EzeeCreateUpdateDeletePayee");
 
@@ -79,7 +80,7 @@ public class EzeeCreateUpdateDeletePayee<T extends EzeePayee> extends EzeeCreate
 			btnDelete.setEnabled(false);
 			break;
 		case delete:
-			setText(headers[EDIT_HEADER_INDEX]);
+			setText(headers[DELETE_HEADER_INDEX]);
 			initialise();
 			disable();
 			break;
@@ -196,8 +197,5 @@ public class EzeeCreateUpdateDeletePayee<T extends EzeePayee> extends EzeeCreate
 		});
 	}
 
-	@SuppressWarnings("unchecked")
-	protected T createEntity() {
-		return (T) new EzeePayee();
-	}
+	protected abstract T createEntity();
 }

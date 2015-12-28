@@ -6,7 +6,7 @@ import static com.ezee.model.entity.enums.EzeeProjectItemType.expense;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ezee.model.entity.EzeePayee;
+import com.ezee.model.entity.EzeeContractor;
 import com.ezee.model.entity.project.EzeeProject;
 import com.ezee.model.entity.project.EzeeProjectItem;
 import com.ezee.model.entity.project.EzeeProjectItemDetail;
@@ -17,12 +17,12 @@ import junit.framework.TestCase;
 public class EzeeProjectDaoTest extends AbstractEzeeDaoTest<EzeeProject> {
 
 	@Autowired
-	private EzeePayeeDao payeeDao;
+	private EzeeContractorDao contractorDao;
 
 	@Autowired
 	private EzeeProjectDao projectDao;
 
-	private final EzeePayee resource = new EzeePayee();
+	private final EzeeContractor contractor = new EzeeContractor();
 
 	@Test
 	@Override
@@ -64,14 +64,14 @@ public class EzeeProjectDaoTest extends AbstractEzeeDaoTest<EzeeProject> {
 
 	@Test
 	public void canPersistProjectWithUnderlyingItem() {
-		payeeDao.save(resource);
+		contractorDao.save(contractor);
 		EzeeProject project = new EzeeProject();
 		project.setName("COMPLEX PROJECT");
 		projectDao.save(project);
-		project.addItem(new EzeeProjectItem("PRELIM", resource, null, null));
-		project.addItem(new EzeeProjectItem("BUILD WORKS", resource, null, null));
-		project.addItem(new EzeeProjectItem("BUILD SERVICES", resource, null, null));
-		project.addItem(new EzeeProjectItem("EXTERNAL WORKS", resource, null, null));
+		project.addItem(new EzeeProjectItem("PRELIM", contractor, null, null));
+		project.addItem(new EzeeProjectItem("BUILD WORKS", contractor, null, null));
+		project.addItem(new EzeeProjectItem("BUILD SERVICES", contractor, null, null));
+		project.addItem(new EzeeProjectItem("EXTERNAL WORKS", contractor, null, null));
 		projectDao.save(project);
 		EzeeProject persisted = projectDao.get(project.getId(), EzeeProject.class);
 		TestCase.assertTrue(persisted.getItems().size() == 4);
@@ -79,15 +79,14 @@ public class EzeeProjectDaoTest extends AbstractEzeeDaoTest<EzeeProject> {
 
 	@Test
 	public void canEditProjectWithUnderlyingItem() {
-		payeeDao.save(resource);
+		contractorDao.save(contractor);
 		EzeeProject project = new EzeeProject();
 		project.setName("COMPLEX PROJECT");
 		projectDao.save(project);
-
-		EzeeProjectItem one = new EzeeProjectItem("PRELIM", resource, null, null);
-		EzeeProjectItem two = new EzeeProjectItem("BUILD WORKS", resource, null, null);
-		EzeeProjectItem three = new EzeeProjectItem("BUILD SERVICES", resource, null, null);
-		EzeeProjectItem four = new EzeeProjectItem("EXTERNAL WORKS", resource, null, null);
+		EzeeProjectItem one = new EzeeProjectItem("PRELIM", contractor, null, null);
+		EzeeProjectItem two = new EzeeProjectItem("BUILD WORKS", contractor, null, null);
+		EzeeProjectItem three = new EzeeProjectItem("BUILD SERVICES", contractor, null, null);
+		EzeeProjectItem four = new EzeeProjectItem("EXTERNAL WORKS", contractor, null, null);
 		project.addItem(one);
 		project.addItem(two);
 		project.addItem(three);
@@ -101,14 +100,14 @@ public class EzeeProjectDaoTest extends AbstractEzeeDaoTest<EzeeProject> {
 
 	@Test
 	public void canDeleteProjectWithUnderlyingItem() {
-		payeeDao.save(resource);
+		contractorDao.save(contractor);
 		EzeeProject project = new EzeeProject();
 		project.setName("COMPLEX PROJECT");
 		projectDao.save(project);
-		project.addItem(new EzeeProjectItem("PRELIM", resource, null, null));
-		project.addItem(new EzeeProjectItem("BUILD WORKS", resource, null, null));
-		project.addItem(new EzeeProjectItem("BUILD SERVICES", resource, null, null));
-		project.addItem(new EzeeProjectItem("EXTERNAL WORKS", resource, null, null));
+		project.addItem(new EzeeProjectItem("PRELIM", contractor, null, null));
+		project.addItem(new EzeeProjectItem("BUILD WORKS", contractor, null, null));
+		project.addItem(new EzeeProjectItem("BUILD SERVICES", contractor, null, null));
+		project.addItem(new EzeeProjectItem("EXTERNAL WORKS", contractor, null, null));
 		projectDao.save(project);
 		projectDao.delete(project);
 		EzeeProject persisted = projectDao.get(project.getId(), EzeeProject.class);
@@ -117,11 +116,11 @@ public class EzeeProjectDaoTest extends AbstractEzeeDaoTest<EzeeProject> {
 
 	@Test
 	public void canPersistProjectWithUnderlyingItemDetailAndPayments() {
-		payeeDao.save(resource);
+		contractorDao.save(contractor);
 		EzeeProject project = new EzeeProject();
 		project.setName("COMPLEX PROJECT");
 		projectDao.save(project);
-		EzeeProjectItem item = new EzeeProjectItem("BUILD WORKS", resource, null, null);
+		EzeeProjectItem item = new EzeeProjectItem("BUILD WORKS", contractor, null, null);
 		item.addDetail(new EzeeProjectItemDetail("Demolition/EathWorks", expense, 100., 10., null, null));
 		item.addDetail(new EzeeProjectItemDetail("Concrete", expense, 250., 10., null, null));
 		item.addPayment(
@@ -137,11 +136,11 @@ public class EzeeProjectDaoTest extends AbstractEzeeDaoTest<EzeeProject> {
 
 	@Test
 	public void canDeleteProjectWithUnderlyingItemDetailAndPayments() {
-		payeeDao.save(resource);
+		contractorDao.save(contractor);
 		EzeeProject project = new EzeeProject();
 		project.setName("COMPLEX PROJECT");
 		projectDao.save(project);
-		EzeeProjectItem item = new EzeeProjectItem("BUILD WORKS", resource, null, null);
+		EzeeProjectItem item = new EzeeProjectItem("BUILD WORKS", contractor, null, null);
 		item.addDetail(new EzeeProjectItemDetail("Demolition/EathWorks", expense, 100., 10., null, null));
 		item.addDetail(new EzeeProjectItemDetail("Concrete", expense, 250., 10., null, null));
 		item.addPayment(

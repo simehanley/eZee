@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ezee.model.entity.EzeeResource;
+import com.ezee.model.entity.EzeeContractor;
 import com.ezee.model.entity.project.EzeeProjectItem;
 import com.ezee.web.common.ui.grid.EzeeGridModel;
 import com.ezee.web.common.ui.grid.EzeeGridModelListener;
@@ -26,7 +26,7 @@ import com.google.gwt.user.cellview.client.DataGrid;
 public class EzeeProjectItemGridModel extends EzeeGridModel<EzeeProjectItem> {
 
 	private static final String NAME = "Name";
-	private static final String RESOURCE = "Resource";
+	private static final String CONTRACTOR = "Contractor";
 	private static final String BUDGETED = "Budget";
 	private static final String ACTUAL = "Actual";
 	private static final String PAID = "Paid";
@@ -34,21 +34,21 @@ public class EzeeProjectItemGridModel extends EzeeGridModel<EzeeProjectItem> {
 	private static final String PERCENT_COMPLETE = "% Complete";
 
 	private static final double NAME_WIDTH = 250.;
-	private static final double RESOURCE_WIDTH = 250.;
+	private static final double CONTRACTOR_WIDTH = 250.;
 
-	private final Map<String, EzeeResource> resources;
+	private final Map<String, EzeeContractor> contractors;
 
 	public EzeeProjectItemGridModel(final EzeeGridModelListener<EzeeProjectItem> listener,
-			final Map<String, EzeeResource> resources) {
+			final Map<String, EzeeContractor> contractors) {
 		super(listener);
-		this.resources = resources;
+		this.contractors = contractors;
 	}
 
 	@Override
 	protected Map<String, Column<EzeeProjectItem, ?>> createColumns(final DataGrid<EzeeProjectItem> grid) {
 		Map<String, Column<EzeeProjectItem, ?>> columns = new HashMap<>();
 		createEditableTextColumn(columns, grid, NAME, NAME_WIDTH, true, ALIGN_LEFT);
-		createResourcesListBoxColumn(columns, grid, RESOURCE, RESOURCE_WIDTH);
+		createContractorListBoxColumn(columns, grid, CONTRACTOR, CONTRACTOR_WIDTH);
 		createTextColumn(columns, grid, BUDGETED, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
 		createTextColumn(columns, grid, ACTUAL, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
 		createTextColumn(columns, grid, PAID, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
@@ -107,14 +107,14 @@ public class EzeeProjectItemGridModel extends EzeeGridModel<EzeeProjectItem> {
 		/* do nothing */
 	}
 
-	private void createResourcesListBoxColumn(final Map<String, Column<EzeeProjectItem, ?>> columns,
+	private void createContractorListBoxColumn(final Map<String, Column<EzeeProjectItem, ?>> columns,
 			final DataGrid<EzeeProjectItem> grid, final String fieldName, final double width) {
 
-		SelectionCell cell = new SelectionCell(new ArrayList<>(resources.keySet()));
+		SelectionCell cell = new SelectionCell(new ArrayList<>(contractors.keySet()));
 		Column<EzeeProjectItem, String> resourceColumn = new Column<EzeeProjectItem, String>(cell) {
 			@Override
 			public String getValue(final EzeeProjectItem item) {
-				return item.getResource().getName();
+				return item.getContractor().getName();
 			}
 
 			@Override
@@ -125,9 +125,9 @@ public class EzeeProjectItemGridModel extends EzeeGridModel<EzeeProjectItem> {
 		resourceColumn.setFieldUpdater(new FieldUpdater<EzeeProjectItem, String>() {
 			@Override
 			public void update(final int index, final EzeeProjectItem item, final String value) {
-				EzeeResource resource = resources.get(value);
-				if (!resource.equals(item.getResource())) {
-					item.setResource(resources.get(value));
+				EzeeContractor resource = contractors.get(value);
+				if (!resource.equals(item.getContractor())) {
+					item.setContractor(contractors.get(value));
 					if (listener != null) {
 						listener.modelUpdated(item);
 					}

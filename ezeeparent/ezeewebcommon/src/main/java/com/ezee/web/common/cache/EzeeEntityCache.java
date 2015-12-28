@@ -11,12 +11,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ezee.model.entity.EzeeConfiguration;
+import com.ezee.model.entity.EzeeContractor;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.EzeeDebtAgeRule;
 import com.ezee.model.entity.EzeeHasName;
-import com.ezee.model.entity.EzeePayee;
 import com.ezee.model.entity.EzeePayer;
-import com.ezee.model.entity.EzeeResource;
+import com.ezee.model.entity.EzeeSupplier;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
@@ -38,8 +38,8 @@ public class EzeeEntityCache {
 	}
 
 	public void loadEntities() {
-		loadEntities(EzeeResource.class);
-		loadEntities(EzeePayee.class);
+		loadEntities(EzeeContractor.class);
+		loadEntities(EzeeSupplier.class);
 		loadEntities(EzeePayer.class);
 		loadEntities(EzeeDebtAgeRule.class);
 		loadConfiguration();

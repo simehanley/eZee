@@ -7,7 +7,7 @@ import com.ezee.client.grid.project.EzeeProjectGrid;
 import com.ezee.model.entity.EzeeUser;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.grid.EzeeHasGrid;
-import com.ezee.web.common.ui.grid.resource.EzeeResourceGrid;
+import com.ezee.web.common.ui.grid.contractor.EzeeContractorGrid;
 import com.ezee.web.common.ui.main.EzeeWebMain;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -39,13 +39,13 @@ public class EzeeConstructionMain extends EzeeWebMain {
 	HTML deleteProjectDef;
 
 	@UiField
-	HTML newResource;
+	HTML newContractor;
 
 	@UiField
-	HTML editResource;
+	HTML editContractor;
 
 	@UiField
-	HTML deleteResource;
+	HTML deleteContractor;
 
 	public EzeeConstructionMain(final EzeeUser user, final EzeeEntityCache cache) {
 		super(user, cache);
@@ -62,9 +62,9 @@ public class EzeeConstructionMain extends EzeeWebMain {
 		newProjectDef.addClickHandler(mainClickHandler);
 		editProjectDef.addClickHandler(mainClickHandler);
 		deleteProjectDef.addClickHandler(mainClickHandler);
-		newResource.addClickHandler(mainClickHandler);
-		editResource.addClickHandler(mainClickHandler);
-		deleteResource.addClickHandler(mainClickHandler);
+		newContractor.addClickHandler(mainClickHandler);
+		editContractor.addClickHandler(mainClickHandler);
+		deleteContractor.addClickHandler(mainClickHandler);
 		editUser.addClickHandler(mainClickHandler);
 		tab.addDomHandler(mainClickHandler, ClickEvent.getType());
 	}
@@ -95,12 +95,12 @@ public class EzeeConstructionMain extends EzeeWebMain {
 				getFirstInstanceOf(EzeeProjectGrid.class, tab).editEntity();
 			} else if (event.getSource().equals(deleteProjectDef)) {
 				getFirstInstanceOf(EzeeProjectGrid.class, tab).deleteEntity();
-			} else if (event.getSource().equals(newResource)) {
-				getFirstInstanceOf(EzeeResourceGrid.class, tab).newEntity();
-			} else if (event.getSource().equals(editResource)) {
-				getFirstInstanceOf(EzeeResourceGrid.class, tab).editEntity();
-			} else if (event.getSource().equals(deleteResource)) {
-				getFirstInstanceOf(EzeeResourceGrid.class, tab).deleteEntity();
+			} else if (event.getSource().equals(newContractor)) {
+				getFirstInstanceOf(EzeeContractorGrid.class, tab).newEntity();
+			} else if (event.getSource().equals(editContractor)) {
+				getFirstInstanceOf(EzeeContractorGrid.class, tab).editEntity();
+			} else if (event.getSource().equals(deleteContractor)) {
+				getFirstInstanceOf(EzeeContractorGrid.class, tab).deleteEntity();
 			} else if (event.getSource().equals(editUser)) {
 				editUser();
 			} else if (event.getSource().equals(tab)) {

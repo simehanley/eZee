@@ -28,7 +28,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 
 @NamedNativeQueries({
-		@NamedNativeQuery(name = "deletePayeeMappingsSql", query = "delete from EZEE_INVOICE_TO_PAYEE_MAPPING where INVOICE_ID = :id"),
+		@NamedNativeQuery(name = "deletePayeeMappingsSql", query = "delete from EZEE_INVOICE_TO_SUPPLIER_MAPPING where INVOICE_ID = :id"),
 		@NamedNativeQuery(name = "deletePayerMappingsSql", query = "delete from EZEE_INVOICE_TO_PAYER_MAPPING where INVOICE_ID = :id"),
 		@NamedNativeQuery(name = "deleteAgeDebtMappingsSql", query = "delete from EZEE_INVOICE_TO_DEBT_AGE_MAPPING where INVOICE_ID = :id") })
 @Entity
@@ -42,8 +42,8 @@ public class EzeeInvoice extends EzeeDatabaseEntity
 	private String invoiceId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinTable(name = "EZEE_INVOICE_TO_PAYEE_MAPPING", joinColumns = @JoinColumn(name = "INVOICE_ID") , inverseJoinColumns = @JoinColumn(name = "PAYEE_ID") )
-	private EzeePayee payee;
+	@JoinTable(name = "EZEE_INVOICE_TO_SUPPLIER_MAPPING", joinColumns = @JoinColumn(name = "INVOICE_ID") , inverseJoinColumns = @JoinColumn(name = "PAYEE_ID") )
+	private EzeeSupplier supplier;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "EZEE_INVOICE_TO_PAYER_MAPPING", joinColumns = @JoinColumn(name = "INVOICE_ID") , inverseJoinColumns = @JoinColumn(name = "PAYER_ID") )
@@ -95,21 +95,21 @@ public class EzeeInvoice extends EzeeDatabaseEntity
 		super();
 	}
 
-	public EzeeInvoice(final String invoiceId, final EzeePayee payee, final EzeePayer payer, final double amount,
+	public EzeeInvoice(final String invoiceId, final EzeeSupplier supplier, final EzeePayer payer, final double amount,
 			final double tax, final String description, final boolean manualtax, final String invoiceDate,
 			final String dateDue, final String datePaid, final String created, final String updated,
 			final EzeeInvoiceClassification classification) {
-		this(NULL_ID, invoiceId, payee, payer, amount, tax, description, manualtax, invoiceDate, dateDue, datePaid,
+		this(NULL_ID, invoiceId, supplier, payer, amount, tax, description, manualtax, invoiceDate, dateDue, datePaid,
 				created, updated, classification);
 	}
 
-	public EzeeInvoice(final Long id, final String invoiceId, final EzeePayee payee, final EzeePayer payer,
+	public EzeeInvoice(final Long id, final String invoiceId, final EzeeSupplier supplier, final EzeePayer payer,
 			final double amount, final double tax, final String description, final boolean manualtax,
 			final String invoiceDate, final String dateDue, final String datePaid, final String created,
 			final String updated, final EzeeInvoiceClassification classification) {
 		super(id, created, updated);
 		this.invoiceId = invoiceId;
-		this.payee = payee;
+		this.supplier = supplier;
 		this.payer = payer;
 		this.amount = amount;
 		this.tax = tax;
@@ -130,8 +130,8 @@ public class EzeeInvoice extends EzeeDatabaseEntity
 		return invoiceId;
 	}
 
-	public final EzeePayee getPayee() {
-		return payee;
+	public final EzeeSupplier getSupplier() {
+		return supplier;
 	}
 
 	public final EzeePayer getPayer() {
@@ -166,8 +166,8 @@ public class EzeeInvoice extends EzeeDatabaseEntity
 		this.invoiceId = invoiceId;
 	}
 
-	public void setPayee(EzeePayee payee) {
-		this.payee = payee;
+	public void setSupplier(EzeeSupplier supplier) {
+		this.supplier = supplier;
 	}
 
 	public void setPayer(EzeePayer payer) {

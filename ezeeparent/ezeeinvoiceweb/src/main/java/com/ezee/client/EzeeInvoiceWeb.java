@@ -14,12 +14,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ezee.client.grid.invoice.EzeeInvoiceGrid;
-import com.ezee.client.grid.payee.EzeeInvoicePayeeGrid;
 import com.ezee.client.grid.payment.EzeePaymentGrid;
+import com.ezee.client.grid.supplier.EzeeInvoiceSupplierGrid;
 import com.ezee.client.main.EzeeInvoiceMain;
-import com.ezee.model.entity.EzeePayee;
 import com.ezee.web.common.ui.entrypoint.EzeeWebEntryPoint;
-import com.ezee.web.common.ui.grid.payee.EzeePayeeGrid;
 import com.ezee.web.common.ui.grid.payer.EzeePayerGrid;
 import com.ezee.web.common.ui.main.EzeeWebMain;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -57,8 +55,8 @@ public class EzeeInvoiceWeb extends EzeeWebEntryPoint {
 		log.log(Level.INFO, "Application initialised.");
 	}
 
-	private EzeePayeeGrid<EzeePayee> createSupplierGrid(final EzeeInvoiceGrid invoice) {
-		return new EzeeInvoicePayeeGrid(cache, SUPPLIER_CRUD_HEADERS, invoice);
+	private EzeeInvoiceSupplierGrid createSupplierGrid(final EzeeInvoiceGrid invoice) {
+		return new EzeeInvoiceSupplierGrid(cache, SUPPLIER_CRUD_HEADERS, invoice);
 	}
 
 	private EzeePayerGrid createPremisesGrid() {

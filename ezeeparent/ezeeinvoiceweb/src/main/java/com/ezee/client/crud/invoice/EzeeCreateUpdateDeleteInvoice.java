@@ -29,8 +29,8 @@ import com.ezee.model.entity.EzeeConfiguration;
 import com.ezee.model.entity.EzeeDebtAgeRule;
 import com.ezee.model.entity.EzeeHasName;
 import com.ezee.model.entity.EzeeInvoice;
-import com.ezee.model.entity.EzeePayee;
 import com.ezee.model.entity.EzeePayer;
+import com.ezee.model.entity.EzeeSupplier;
 import com.ezee.model.entity.enums.EzeeInvoiceClassification;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntity;
@@ -171,6 +171,8 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		lstPremises.setEnabled(false);
 		lstSupplier.setEnabled(false);
 		txtAmount.setEnabled(false);
+		txtTax.setEnabled(false);
+		txtTotal.setEnabled(false);
 		dtDue.setEnabled(false);
 		dtPaid.setEnabled(false);
 		dtInvoice.setEnabled(false);
@@ -187,7 +189,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	protected void initialise() {
 		txtInvoiceNumber.setValue(entity.getInvoiceId());
 		lstPremises.setItemSelected(getItemIndex(entity.getPayer().getName(), lstPremises), true);
-		lstSupplier.setItemSelected(getItemIndex(entity.getPayee().getName(), lstSupplier), true);
+		lstSupplier.setItemSelected(getItemIndex(entity.getSupplier().getName(), lstSupplier), true);
 		if (entity.getAgeRule() == null) {
 			lstDebtAge.setItemSelected(ZERO, true);
 		} else {
@@ -250,7 +252,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		}
 		entity.setInvoiceId(txtInvoiceNumber.getText());
 		entity.setPayer(getPremises());
-		entity.setPayee(getSupplier());
+		entity.setSupplier(getSupplier());
 		entity.setAgeRule(getAgeRule());
 		entity.setAmount(getAmountFormat().parse(txtAmount.getText()));
 		entity.setTax(getAmountFormat().parse(txtTax.getText()));
@@ -306,8 +308,8 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 		return getEntity(EzeeDebtAgeRule.class, lstDebtAge);
 	}
 
-	private EzeePayee getSupplier() {
-		return getEntity(EzeePayee.class, lstSupplier);
+	private EzeeSupplier getSupplier() {
+		return getEntity(EzeeSupplier.class, lstSupplier);
 	}
 
 	private EzeePayer getPremises() {
@@ -324,7 +326,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	}
 
 	private void loadEntities() {
-		EzeeInvoiceUiUtils.loadEntities(EzeePayee.class, lstSupplier, cache);
+		EzeeInvoiceUiUtils.loadEntities(EzeeSupplier.class, lstSupplier, cache);
 		EzeeInvoiceUiUtils.loadEntities(EzeePayer.class, lstPremises, cache);
 		EzeeInvoiceUiUtils.loadEntities(EzeeDebtAgeRule.class, lstDebtAge, cache);
 		EzeeListBoxUtils.loadEnums(EzeeInvoiceClassification.values(), lstClassification);

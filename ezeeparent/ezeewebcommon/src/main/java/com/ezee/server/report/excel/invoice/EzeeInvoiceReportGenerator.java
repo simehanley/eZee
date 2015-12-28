@@ -164,13 +164,13 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 		CellStyle boldCurrencyStyle = currencyStyle(book, true);
 		CellStyle boldStyle = boldStyle(book, false);
 		int rowsAdded = ZERO;
-		String supplierName = invoices.get(EzeeCommonConstants.ZERO).getPayee().getName();
+		String supplierName = invoices.get(EzeeCommonConstants.ZERO).getSupplier().getName();
 		for (EzeeInvoice invoice : invoices) {
 			Row newrow = sheet.createRow(currentRow);
 			Cell invoiceNum = newrow.createCell(INVOICE_ID_INDEX, CELL_TYPE_STRING);
 			invoiceNum.setCellValue(invoice.getInvoiceId());
 			Cell supplier = newrow.createCell(SUPPLIER_INDEX, CELL_TYPE_STRING);
-			supplier.setCellValue(invoice.getPayee().getName());
+			supplier.setCellValue(invoice.getSupplier().getName());
 			Cell premises = newrow.createCell(PREMISES_INDEX, CELL_TYPE_STRING);
 			premises.setCellValue(invoice.getPayer().getName());
 			Cell classification = newrow.createCell(CLASSIFICATION_INDEX, CELL_TYPE_STRING);
@@ -253,7 +253,7 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 	private Map<String, List<EzeeInvoice>> resolveInvoicesBySupplier(final List<EzeeInvoice> invoices) {
 		Map<String, List<EzeeInvoice>> supplierInvoices = new HashMap<>();
 		for (EzeeInvoice invoice : invoices) {
-			String key = invoice.getPayee().getName();
+			String key = invoice.getSupplier().getName();
 			if (!supplierInvoices.containsKey(key)) {
 				supplierInvoices.put(key, new ArrayList<>());
 			}
@@ -272,7 +272,7 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 		String invoiceIds = request.getParameter(EXCEL_INVOICE_INVOICES_FILTER);
 		String from = request.getParameter(EXCEL_INVOICE_DATE_FROM_FILTER);
 		String to = request.getParameter(EXCEL_INVOICE_DATE_TO_FILTER);
-		boolean includePaid = Boolean.getBoolean(request.getParameter(EXCEL_INVOICE_INCLUDE_PAID_FILTER));
+		boolean includePaid = Boolean.valueOf(request.getParameter(EXCEL_INVOICE_INCLUDE_PAID_FILTER));
 		return new EzeeInvoiceFilter(supplier, premises, invoiceIds, SERVER_DATE_UTILS.fromString(from),
 				SERVER_DATE_UTILS.fromString(to), SERVER_DATE_UTILS, includePaid);
 	}

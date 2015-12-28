@@ -1,9 +1,9 @@
-package com.ezee.client.grid.payee;
+package com.ezee.client.grid.supplier;
 
 import com.ezee.client.grid.invoice.EzeeInvoiceGrid;
 import com.ezee.model.entity.EzeePayee;
 import com.ezee.web.common.cache.EzeeEntityCache;
-import com.ezee.web.common.ui.grid.payee.EzeePayeeGrid;
+import com.ezee.web.common.ui.grid.supplier.EzeeSupplierGrid;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
 
@@ -12,11 +12,11 @@ import com.google.gwt.user.client.ui.MenuBar;
  * @author siborg
  *
  */
-public class EzeeInvoicePayeeGrid extends EzeePayeeGrid<EzeePayee> {
+public class EzeeInvoiceSupplierGrid extends EzeeSupplierGrid {
 
 	private final EzeeInvoiceGrid invoiceGrid;
 
-	public EzeeInvoicePayeeGrid(final EzeeEntityCache cache, final String[] crudHeaders,
+	public EzeeInvoiceSupplierGrid(final EzeeEntityCache cache, final String[] crudHeaders,
 			final EzeeInvoiceGrid invoiceGrid) {
 		super(cache, crudHeaders);
 		this.invoiceGrid = invoiceGrid;

@@ -6,11 +6,11 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="resourceReportGenerator" class="com.ezee.server.report.excel.resource.EzeeResourceReportGenerator" />
+	<bean id="contractorReportGenerator" class="com.ezee.server.report.excel.contractor.EzeeContractorReportGenerator" />
 
 	<util:map key-type="com.ezee.web.common.enums.EzeeReportType" value-type="com.ezee.server.report.EzeeReportGenerator"
 		id="Report_Generators">
-		<entry key="resource_report_excel" value-ref="resourceReportGenerator" />
+		<entry key="contractor_report_excel" value-ref="contractorReportGenerator" />
 	</util:map>
 
 </beans>

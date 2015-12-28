@@ -7,9 +7,9 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-	<bean id="ez_resourceDao" class="com.ezee.server.dao.EzeeEntityDao">
-		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeeResource" />
-		<constructor-arg name="dao" ref="resourceDao" />
+	<bean id="ez_contractorDao" class="com.ezee.server.dao.EzeeEntityDao">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeeContractor" />
+		<constructor-arg name="dao" ref="contractorDao" />
 	</bean>
 
 	<bean id="ez_payerDao" class="com.ezee.server.dao.EzeeEntityDao">
@@ -33,7 +33,7 @@
 	</bean>
 
 	<util:list id="entityDaos">
-		<ref bean="ez_resourceDao" />
+		<ref bean="ez_contractorDao" />
 		<ref bean="ez_payerDao" />
 		<ref bean="ez_debtAgeDao" />
 		<ref bean="ez_configDao" />

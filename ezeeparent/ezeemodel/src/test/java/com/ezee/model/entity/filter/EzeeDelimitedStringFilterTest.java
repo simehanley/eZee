@@ -5,6 +5,7 @@ import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import org.junit.Test;
 
 import com.ezee.model.entity.EzeePayee;
+import com.ezee.model.entity.EzeeSupplier;
 
 import junit.framework.TestCase;
 
@@ -18,7 +19,7 @@ public class EzeeDelimitedStringFilterTest {
 	@Test
 	public void nullCompareStringPassesFilter() {
 		EzeeDelimitedStringFilter<EzeePayee> filter = new EzeeDelimitedStringFilter<>(null);
-		EzeePayee payee = new EzeePayee("TEST", EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,
+		EzeePayee payee = new EzeeSupplier("TEST", EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,
 				EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING);
 		TestCase.assertTrue(filter.include(payee));
 	}
@@ -26,7 +27,7 @@ public class EzeeDelimitedStringFilterTest {
 	@Test
 	public void nonNullCompareStringAndNullNameFailsFilter() {
 		EzeeDelimitedStringFilter<EzeePayee> filter = new EzeeDelimitedStringFilter<>("TEST,BLAH");
-		EzeePayee payee = new EzeePayee(null, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,
+		EzeePayee payee = new EzeeSupplier(null, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,
 				EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING);
 		TestCase.assertFalse(filter.include(payee));
 	}
@@ -34,8 +35,9 @@ public class EzeeDelimitedStringFilterTest {
 	@Test
 	public void caseInSensitiveFilteringWorksAsExpected() {
 		EzeeDelimitedStringFilter<EzeePayee> filter = new EzeeDelimitedStringFilter<>("es,blah");
-		EzeePayee payee = new EzeePayee("BLAH", EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,
-				EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING);
+		EzeeSupplier payee = new EzeeSupplier("BLAH", EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,
+				EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,
+				EMPTY_STRING);
 		TestCase.assertTrue(filter.include(payee));
 	}
 
@@ -43,7 +45,7 @@ public class EzeeDelimitedStringFilterTest {
 	public void caseSensitiveFilteringWorksAsExpected() {
 		EzeeDelimitedStringFilter<EzeePayee> filter = new EzeeDelimitedStringFilter<>("es,blah",
 				EzeeDelimitedStringFilter.DEFAULT_DELIMITER, true);
-		EzeePayee payee = new EzeePayee("BLAH", EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,
+		EzeePayee payee = new EzeeSupplier("BLAH", EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,
 				EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING);
 		TestCase.assertFalse(filter.include(payee));
 	}
