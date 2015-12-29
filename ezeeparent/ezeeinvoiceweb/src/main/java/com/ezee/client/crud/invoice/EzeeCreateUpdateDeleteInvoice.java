@@ -23,11 +23,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ezee.client.grid.invoice.EzeeCreateUpdateDeleteInvoiceHandler;
-import com.ezee.client.ui.EzeeInvoiceUiUtils;
 import com.ezee.common.web.EzeeFormatUtils;
 import com.ezee.model.entity.EzeeConfiguration;
 import com.ezee.model.entity.EzeeDebtAgeRule;
-import com.ezee.model.entity.EzeeHasName;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayer;
 import com.ezee.model.entity.EzeeSupplier;
@@ -305,30 +303,21 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteEntity<
 	}
 
 	private EzeeDebtAgeRule getAgeRule() {
-		return getEntity(EzeeDebtAgeRule.class, lstDebtAge);
+		return EzeeListBoxUtils.getEntity(EzeeDebtAgeRule.class, lstDebtAge, cache);
 	}
 
 	private EzeeSupplier getSupplier() {
-		return getEntity(EzeeSupplier.class, lstSupplier);
+		return EzeeListBoxUtils.getEntity(EzeeSupplier.class, lstSupplier, cache);
 	}
 
 	private EzeePayer getPremises() {
-		return getEntity(EzeePayer.class, lstPremises);
-	}
-
-	@SuppressWarnings("unchecked")
-	private <T extends EzeeHasName> T getEntity(final Class<T> clazz, final ListBox listBox) {
-		String name = listBox.getSelectedValue();
-		if (name != null) {
-			return (T) cache.getEntities(clazz).get(name);
-		}
-		return null;
+		return EzeeListBoxUtils.getEntity(EzeePayer.class, lstPremises, cache);
 	}
 
 	private void loadEntities() {
-		EzeeInvoiceUiUtils.loadEntities(EzeeSupplier.class, lstSupplier, cache);
-		EzeeInvoiceUiUtils.loadEntities(EzeePayer.class, lstPremises, cache);
-		EzeeInvoiceUiUtils.loadEntities(EzeeDebtAgeRule.class, lstDebtAge, cache);
+		EzeeListBoxUtils.loadEntities(EzeeSupplier.class, lstSupplier, cache);
+		EzeeListBoxUtils.loadEntities(EzeePayer.class, lstPremises, cache);
+		EzeeListBoxUtils.loadEntities(EzeeDebtAgeRule.class, lstDebtAge, cache);
 		EzeeListBoxUtils.loadEnums(EzeeInvoiceClassification.values(), lstClassification);
 	}
 

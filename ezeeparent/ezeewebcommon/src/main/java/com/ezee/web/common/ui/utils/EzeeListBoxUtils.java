@@ -3,6 +3,13 @@ package com.ezee.web.common.ui.utils;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import com.ezee.model.entity.EzeeHasName;
+import com.ezee.web.common.cache.EzeeEntityCache;
 import com.google.gwt.user.client.ui.ListBox;
 
 /**
@@ -41,5 +48,25 @@ public final class EzeeListBoxUtils {
 				listBox.setSelectedIndex(index);
 			}
 		}
+	}
+
+	public static <K extends EzeeHasName> void loadEntities(final Class<K> clazz, final ListBox listBox,
+			final EzeeEntityCache cache) {
+		Map<String, EzeeHasName> entities = cache.getEntities(clazz);
+		List<String> entityNames = new ArrayList<>(entities.keySet());
+		Collections.sort(entityNames);
+		for (String key : entityNames) {
+			listBox.addItem(key);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T extends EzeeHasName> T getEntity(final Class<T> clazz, final ListBox listBox,
+			final EzeeEntityCache cache) {
+		String name = listBox.getSelectedValue();
+		if (name != null) {
+			return (T) cache.getEntities(clazz).get(name);
+		}
+		return null;
 	}
 }

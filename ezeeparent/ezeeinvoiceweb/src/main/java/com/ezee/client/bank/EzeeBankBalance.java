@@ -4,12 +4,12 @@ import static com.ezee.client.EzeeInvoiceWebConstants.BANK;
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.client.grid.payment.EzeePaymentGridModel.PAYMENT_DATE;
 import static com.ezee.client.grid.payment.EzeePaymentGridModel.PAYMENT_TYPE;
-import static com.ezee.client.ui.EzeeInvoiceUiUtils.loadEntities;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.ezee.web.common.ui.css.EzeeGwtOverridesResources.INSTANCE;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
+import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.loadEntities;
 
 import java.util.HashSet;
 import java.util.List;

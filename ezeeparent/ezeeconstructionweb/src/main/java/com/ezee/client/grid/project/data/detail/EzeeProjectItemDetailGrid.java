@@ -1,15 +1,8 @@
 package com.ezee.client.grid.project.data.detail;
 
-import static com.ezee.client.EzeeConstructionWebConstants.DEFAULT_ITEM_DETAIL;
-import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
-import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
-import static com.ezee.model.entity.enums.EzeeProjectItemType.expense;
 import static com.ezee.model.entity.project.util.EzeeDatabaseEntityUtils.sorted;
-import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
-
-import java.util.Date;
 
 import com.ezee.client.grid.project.EzeeProjectDetail;
 import com.ezee.client.grid.project.data.EzeeProjectDataGrid;
@@ -46,12 +39,6 @@ public class EzeeProjectItemDetailGrid extends EzeeProjectDataGrid<EzeeProjectIt
 	}
 
 	@Override
-	public EzeeProjectItemDetail newEntity() {
-		return new EzeeProjectItemDetail(EMPTY_STRING, expense, DEFAULT_ITEM_DETAIL, ZERO_DBL,
-				DATE_UTILS.toString(new Date()), null);
-	}
-
-	@Override
 	public void itemSelected(final EzeeProjectItem item) {
 		loadDetails(item);
 	}
@@ -75,5 +62,17 @@ public class EzeeProjectItemDetailGrid extends EzeeProjectDataGrid<EzeeProjectIt
 				grid.redraw();
 			}
 		}
+	}
+
+	@Override
+	protected void newEntity() {
+	}
+
+	@Override
+	protected void editEntity() {
+	}
+
+	@Override
+	protected void deleteEntity() {
 	}
 }

@@ -1,15 +1,8 @@
 package com.ezee.client.grid.project.data.payment;
 
-import static com.ezee.client.EzeeConstructionWebConstants.DEFAULT_PAYMENT;
-import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
-import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
-import static com.ezee.model.entity.enums.EzeePaymentType.cheque;
 import static com.ezee.model.entity.project.util.EzeeDatabaseEntityUtils.sorted;
-import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
-
-import java.util.Date;
 
 import com.ezee.client.grid.project.EzeeProjectDetail;
 import com.ezee.client.grid.project.data.EzeeProjectDataGrid;
@@ -46,12 +39,6 @@ public class EzeeProjectPaymentGrid extends EzeeProjectDataGrid<EzeeProjectPayme
 	}
 
 	@Override
-	public EzeeProjectPayment newEntity() {
-		return new EzeeProjectPayment(DATE_UTILS.toString(new Date()), cheque, EMPTY_STRING, DEFAULT_PAYMENT, ZERO_DBL,
-				DATE_UTILS.toString(new Date()), null);
-	}
-
-	@Override
 	public void itemSelected(final EzeeProjectItem item) {
 		loadPayments(item);
 	}
@@ -75,5 +62,17 @@ public class EzeeProjectPaymentGrid extends EzeeProjectDataGrid<EzeeProjectPayme
 				grid.redraw();
 			}
 		}
+	}
+
+	@Override
+	protected void newEntity() {
+	}
+
+	@Override
+	protected void editEntity() {
+	}
+
+	@Override
+	protected void deleteEntity() {
 	}
 }

@@ -221,6 +221,15 @@
 	font-weight: bold;
 }
 
+.gwtListBoxLarge {
+	width: 310px;
+	height: 27px;
+	padding: 3px;
+	margin: 3px;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
 .gwtRichTextAreaMedium {
 	margin: 3px;
 	border: 1px solid black;

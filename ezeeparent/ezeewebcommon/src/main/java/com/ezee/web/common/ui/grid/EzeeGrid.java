@@ -4,11 +4,7 @@ import static com.ezee.common.EzeeCommonConstants.ONE;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
-import static com.google.gwt.event.dom.client.KeyCodes.KEY_D;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_ENTER;
-import static com.google.gwt.event.dom.client.KeyCodes.KEY_PAGEDOWN;
-import static com.google.gwt.event.dom.client.KeyCodes.KEY_PAGEUP;
-import static com.google.gwt.event.dom.client.KeyCodes.KEY_U;
 import static com.google.gwt.user.cellview.client.SimplePager.TextLocation.CENTER;
 import static com.google.gwt.user.client.Event.ONCONTEXTMENU;
 import static java.util.logging.Level.SEVERE;
@@ -271,14 +267,6 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		public void onKeyPress(KeyPressEvent event) {
 			if (event.getNativeEvent().getKeyCode() == KEY_ENTER) {
 				editEntity();
-			} else if (event.getNativeEvent().getKeyCode() == KEY_U
-					|| event.getNativeEvent().getKeyCode() == KEY_PAGEUP) {
-				int row = grid.getKeyboardSelectedRow();
-				setSelected(row - ONE);
-			} else if (event.getNativeEvent().getKeyCode() == KEY_D
-					|| event.getNativeEvent().getKeyCode() == KEY_PAGEDOWN) {
-				int row = grid.getKeyboardSelectedRow();
-				setSelected(row + ONE);
 			}
 		}
 	}

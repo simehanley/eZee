@@ -91,7 +91,7 @@ public class EzeeProjectGrid extends EzeeFinancialEntityGrid<EzeeProject> implem
 			} else {
 				Map<String, EzeeContractor> resources = resolveResources();
 				if (!isEmpty(resources)) {
-					main.getTab().add(new EzeeProjectDetail(entity, this, resources).asWidget(), entity.getName());
+					main.getTab().add(new EzeeProjectDetail(entity, cache, this).asWidget(), entity.getName());
 					main.getTab().selectTab(main.getTab().getWidgetCount() - ONE);
 				} else {
 					showNew("Error", "Resources need to be added prior to editing project detail.");

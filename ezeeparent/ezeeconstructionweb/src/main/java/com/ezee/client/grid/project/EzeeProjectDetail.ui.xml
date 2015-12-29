@@ -26,6 +26,7 @@
 					<g:cell horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" width="8%" height="100%">
 						<g:HorizontalPanel>
 							<g:Button text="Add" styleName="{res.css.gwtButton}" ui:field="btnAddItem" />
+							<g:Button text="Edit" styleName="{res.css.gwtButton}" ui:field="btnEditItem" />
 							<g:Button text="Delete" styleName="{res.css.gwtButton}" ui:field="btnDeleteItem" />
 						</g:HorizontalPanel>
 					</g:cell>
@@ -42,6 +43,7 @@
 						<g:cell horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" width="100%" height="100%">
 							<g:HorizontalPanel>
 								<g:Button text="Add" styleName="{res.css.gwtButton}" ui:field="btnAddItemDetail" />
+								<g:Button text="Edit" styleName="{res.css.gwtButton}" ui:field="btnEditItemDetail" />
 								<g:Button text="Delete" styleName="{res.css.gwtButton}" ui:field="btnDeleteItemDetail" />
 							</g:HorizontalPanel>
 						</g:cell>
@@ -57,6 +59,7 @@
 						<g:cell horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" width="100%" height="100%">
 							<g:HorizontalPanel>
 								<g:Button text="Add" styleName="{res.css.gwtButton}" ui:field="btnAddPayment" />
+								<g:Button text="Edit" styleName="{res.css.gwtButton}" ui:field="btnEditPayment" />
 								<g:Button text="Delete" styleName="{res.css.gwtButton}" ui:field="btnDeletePayment" />
 							</g:HorizontalPanel>
 						</g:cell>
