@@ -38,7 +38,7 @@ public class EzeeProjectItem extends EzeeProjectDatabaseEntity {
 	private String name;
 
 	@OneToOne(fetch = EAGER)
-	@JoinTable(name = "EZEE_PROJECT_ITEM_TO_CONTRACTOR_MAPPING", joinColumns = @JoinColumn(name = "ITEM_ID") , inverseJoinColumns = @JoinColumn(name = "RESOURCE_ID") )
+	@JoinTable(name = "EZEE_PROJECT_ITEM_TO_CONTRACTOR_MAPPING", joinColumns = @JoinColumn(name = "ITEM_ID") , inverseJoinColumns = @JoinColumn(name = "CONTRACTOR_ID") )
 	private EzeeContractor contractor;
 
 	@OneToMany(cascade = ALL, fetch = FetchType.EAGER, orphanRemoval = true)
