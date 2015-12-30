@@ -3,6 +3,7 @@ package com.ezee.client.grid.project;
 import static com.ezee.client.EzeeConstructionWebConstants.ERROR;
 import static com.ezee.client.EzeeConstructionWebConstants.MODIFIED;
 import static com.ezee.client.EzeeConstructionWebConstants.PROJECT_ITEM_CRUD_HEADERS;
+import static com.ezee.client.EzeeConstructionWebConstants.PROJECT_ITEM_DETAIL_CRUD_HEADERS;
 import static com.ezee.client.EzeeConstructionWebConstants.UNMODIFIED;
 import static com.ezee.client.css.EzeeProjectResources.INSTANCE;
 import static com.ezee.common.EzeeCommonConstants.MINUS_ONE;
@@ -19,11 +20,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ezee.client.crud.project.item.EzeeCreateUpdateDeleteProjectItem;
+import com.ezee.client.crud.project.item.detail.EzeeCreateUpdateDeleteProjectItemDetail;
 import com.ezee.client.grid.project.data.detail.EzeeProjectItemDetailGrid;
 import com.ezee.client.grid.project.data.item.EzeeProjectItemGrid;
 import com.ezee.client.grid.project.data.payment.EzeeProjectPaymentGrid;
 import com.ezee.model.entity.project.EzeeProject;
 import com.ezee.model.entity.project.EzeeProjectItem;
+import com.ezee.model.entity.project.EzeeProjectItemDetail;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.google.gwt.core.client.GWT;
@@ -54,13 +57,15 @@ public class EzeeProjectDetail extends Composite {
 
 	private EzeeProjectItemGrid projectItemGrid;
 
+	private final EzeeCreateUpdateProjectItemHandler projectItemHandler = new EzeeCreateUpdateProjectItemHandler();
+
 	private EzeeProjectItemDetailGrid projectItemDetailGrid;
+
+	private final EzeeCreateUpdateProjectItemDetailHandler projectItemDetailHandler = new EzeeCreateUpdateProjectItemDetailHandler();
 
 	private EzeeProjectPaymentGrid projectPaymentGrid;
 
 	private final EzeeEntityCache cache;
-
-	private final EzeeCreateUpdateProjectItemHandler projectItemHandler = new EzeeCreateUpdateProjectItemHandler();
 
 	@UiField
 	HorizontalPanel projectItems;
@@ -164,6 +169,7 @@ public class EzeeProjectDetail extends Composite {
 
 	@UiHandler("btnAddItemDetail")
 	void onAddItemDetailClick(ClickEvent event) {
+		newProjectItemDetail();
 		// if (projectItemGrid.getSelected() != null) {
 		// EzeeProjectItem item =
 		// project.getItem(projectItemGrid.getSelected().getGridId());
@@ -179,8 +185,14 @@ public class EzeeProjectDetail extends Composite {
 		// }
 	}
 
+	@UiHandler("btnEditItemDetail")
+	void onEditItemDetailClick(ClickEvent event) {
+		editProjectItemDetail();
+	}
+
 	@UiHandler("btnDeleteItemDetail")
 	void onDeleteItemDetailClick(ClickEvent event) {
+		deleteProjectItemDetail();
 		// EzeeProjectItemDetail detail = projectItemDetailGrid.getSelected();
 		// if (detail != null && projectItemGrid.getSelected() != null) {
 		// EzeeProjectItem item =
@@ -317,6 +329,20 @@ public class EzeeProjectDetail extends Composite {
 		}
 	}
 
+	private class EzeeCreateUpdateProjectItemDetailHandler
+			implements EzeeCreateUpdateDeleteEntityHandler<EzeeProjectItemDetail> {
+
+		@Override
+		public void onSave(final EzeeProjectItemDetail detail) {
+			/* implement me */
+		}
+
+		@Override
+		public void onDelete(final EzeeProjectItemDetail detail) {
+			/* implement me */
+		}
+	}
+
 	public void newProjectItem() {
 		new EzeeCreateUpdateDeleteProjectItem(cache, projectItemHandler, PROJECT_ITEM_CRUD_HEADERS).show();
 	}
@@ -334,6 +360,27 @@ public class EzeeProjectDetail extends Composite {
 		if (item != null) {
 			new EzeeCreateUpdateDeleteProjectItem(cache, projectItemHandler, item, delete, PROJECT_ITEM_CRUD_HEADERS)
 					.show();
+		}
+	}
+
+	public void newProjectItemDetail() {
+		new EzeeCreateUpdateDeleteProjectItemDetail(cache, projectItemDetailHandler, PROJECT_ITEM_DETAIL_CRUD_HEADERS)
+				.show();
+	}
+
+	public void editProjectItemDetail() {
+		EzeeProjectItemDetail detail = projectItemDetailGrid.getSelected();
+		if (detail != null) {
+			new EzeeCreateUpdateDeleteProjectItemDetail(cache, projectItemDetailHandler, detail, update,
+					PROJECT_ITEM_DETAIL_CRUD_HEADERS).show();
+		}
+	}
+
+	public void deleteProjectItemDetail() {
+		EzeeProjectItemDetail detail = projectItemDetailGrid.getSelected();
+		if (detail != null) {
+			new EzeeCreateUpdateDeleteProjectItemDetail(cache, projectItemDetailHandler, detail, delete,
+					PROJECT_ITEM_DETAIL_CRUD_HEADERS).show();
 		}
 	}
 }
