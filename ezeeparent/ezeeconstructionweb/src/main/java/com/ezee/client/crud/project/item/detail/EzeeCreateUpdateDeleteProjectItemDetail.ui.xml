@@ -10,7 +10,7 @@
 			<g:HorizontalPanel>
 				<g:Label text="Description" styleName="{res.css.gwtLabelSmall}" />
 				<g:RichTextArea styleName="{res.css.gwtRichTextAreaMedium}"
-					height="128px" width="289px" />
+					height="128px" width="289px" ui:field="rtxDescription"/>
 				<g:VerticalPanel>
 					<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
 						<g:Label text="Amount" styleName="{res.css.gwtLabelSmall}" />

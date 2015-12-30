@@ -9,7 +9,7 @@ import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.creat
 
 import com.ezee.common.web.EzeeFormatUtils;
 import com.ezee.model.entity.EzeeConfiguration;
-import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeTaxableEntity;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -22,7 +22,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.TextBox;
 
-public abstract class EzeeCreateUpdateDeleteTaxableEntity<T extends EzeeDatabaseEntity>
+public abstract class EzeeCreateUpdateDeleteTaxableEntity<T extends EzeeTaxableEntity>
 		extends EzeeCreateUpdateDeleteEntity<T> {
 
 	@UiField
@@ -81,8 +81,7 @@ public abstract class EzeeCreateUpdateDeleteTaxableEntity<T extends EzeeDatabase
 		txtAmount.setEnabled(!chkReverseTax.getValue());
 		txtTotal.setEnabled(chkReverseTax.getValue());
 	}
-	
-	
+
 	protected void initialiseNew() {
 		txtAmount.setValue(EzeeFormatUtils.getAmountFormat().format(ZERO_DBL));
 		txtTax.setValue(EzeeFormatUtils.getAmountFormat().format(ZERO_DBL));
@@ -97,6 +96,33 @@ public abstract class EzeeCreateUpdateDeleteTaxableEntity<T extends EzeeDatabase
 			chkReverseTax.setValue(configuration.getDefaultReverseTax());
 			initialiseAmountFields();
 		}
+	}
+
+	@Override
+	protected void initialise() {
+		txtAmount.setValue(getAmountFormat().format(entity.getNet()));
+		txtTax.setValue(getAmountFormat().format(entity.getTax()));
+		txtTax.setEnabled(entity.isManualTax());
+		txtTotal.setValue(getAmountFormat().format(entity.getGross()));
+		chkManualTax.setValue(entity.isManualTax());
+		chkReverseTax.setValue(entity.isReverseTax());
+		initialiseAmountFields();
+	}
+
+	@Override
+	protected void bind() {
+		entity.setNet(getAmountFormat().parse(txtAmount.getText()));
+		entity.setTax(getAmountFormat().parse(txtTax.getText()));
+		entity.setManualTax(chkManualTax.getValue());
+		entity.setReverseTax(chkReverseTax.getValue());
+	}
+
+	protected void disable() {
+		txtAmount.setEnabled(false);
+		txtTax.setEnabled(false);
+		txtTotal.setEnabled(false);
+		chkManualTax.setEnabled(false);
+		chkReverseTax.setEnabled(false);
 	}
 
 	private void resolveInvoiceAmount() {

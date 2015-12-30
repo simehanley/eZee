@@ -334,12 +334,24 @@ public class EzeeProjectDetail extends Composite {
 
 		@Override
 		public void onSave(final EzeeProjectItemDetail detail) {
-			/* implement me */
+			int index = projectItemDetailGrid.getIndex(detail);
+			if (index == MINUS_ONE) {
+				EzeeProjectItem item = project.getItem(projectItemGrid.getSelected().getGridId());
+				item.addDetail(detail);
+				projectItemDetailGrid.addEntity(detail);
+			}
+			modified();
 		}
 
 		@Override
 		public void onDelete(final EzeeProjectItemDetail detail) {
-			/* implement me */
+			int index = projectItemDetailGrid.getIndex(detail);
+			if (index != MINUS_ONE) {
+				EzeeProjectItem item = project.getItem(projectItemGrid.getSelected().getGridId());
+				item.getDetails().remove(detail);
+				projectItemDetailGrid.removeEntity(detail);
+				modified();
+			}
 		}
 	}
 
@@ -364,8 +376,11 @@ public class EzeeProjectDetail extends Composite {
 	}
 
 	public void newProjectItemDetail() {
-		new EzeeCreateUpdateDeleteProjectItemDetail(cache, projectItemDetailHandler, PROJECT_ITEM_DETAIL_CRUD_HEADERS)
-				.show();
+		EzeeProjectItem item = projectItemGrid.getSelected();
+		if (item != null) {
+			new EzeeCreateUpdateDeleteProjectItemDetail(cache, projectItemDetailHandler,
+					PROJECT_ITEM_DETAIL_CRUD_HEADERS).show();
+		}
 	}
 
 	public void editProjectItemDetail() {

@@ -6,10 +6,10 @@ import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeTaxableEntity;
 
 @MappedSuperclass
-public abstract class EzeeProjectDatabaseEntity extends EzeeDatabaseEntity {
+public abstract class EzeeProjectDatabaseEntity extends EzeeTaxableEntity {
 
 	private static final long serialVersionUID = -2764220584875151458L;
 

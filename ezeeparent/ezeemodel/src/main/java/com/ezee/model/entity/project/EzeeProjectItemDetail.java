@@ -37,6 +37,12 @@ public class EzeeProjectItemDetail extends EzeeProjectDatabaseEntity implements 
 	@Column(name = "TAX")
 	private double tax;
 
+	@Column(name = "MANUAL_TAX")
+	private boolean manualtax = Boolean.TRUE;
+
+	@Column(name = "REVERSE_TAX")
+	private boolean reversetax = Boolean.FALSE;
+
 	public EzeeProjectItemDetail() {
 		super();
 	}
@@ -93,8 +99,41 @@ public class EzeeProjectItemDetail extends EzeeProjectDatabaseEntity implements 
 	}
 
 	@Override
+	public final boolean isManualTax() {
+		return manualtax;
+	}
+
+	public void setManualTax(boolean manualtax) {
+		this.manualtax = manualtax;
+	}
+
+	@Override
+	public final boolean isReverseTax() {
+		return reversetax;
+	}
+
+	public void setReverseTax(boolean reversetax) {
+		this.reversetax = reversetax;
+	}
+
+	@Override
 	public String toString() {
 		return "EzeeProjectItemDetail [description=" + description + ", type=" + type + ", amount=" + amount + ", tax="
 				+ tax + ", getGridId()=" + getGridId() + ", getId()=" + getId() + "]";
+	}
+
+	@Override
+	public double getNet() {
+		return getAmount();
+	}
+
+	@Override
+	public double getGross() {
+		return getTotal();
+	}
+
+	@Override
+	public void setNet(double net) {
+		setAmount(net);
 	}
 }

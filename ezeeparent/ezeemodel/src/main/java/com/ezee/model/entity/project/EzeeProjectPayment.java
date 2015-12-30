@@ -43,6 +43,12 @@ public class EzeeProjectPayment extends EzeeProjectDatabaseEntity implements IsS
 	@Column(name = "CHEQUE_NUMBER")
 	private String chequeNumber;
 
+	@Column(name = "MANUAL_TAX")
+	private boolean manualtax = Boolean.TRUE;
+
+	@Column(name = "REVERSE_TAX")
+	private boolean reversetax = Boolean.FALSE;
+
 	public EzeeProjectPayment() {
 		super();
 	}
@@ -117,9 +123,41 @@ public class EzeeProjectPayment extends EzeeProjectDatabaseEntity implements IsS
 	}
 
 	@Override
+	public final boolean isManualTax() {
+		return manualtax;
+	}
+
+	public void setManualTax(boolean manualtax) {
+		this.manualtax = manualtax;
+	}
+
+	public final boolean isReverseTax() {
+		return reversetax;
+	}
+
+	public void setReverseTax(boolean reversetax) {
+		this.reversetax = reversetax;
+	}
+
+	@Override
 	public String toString() {
 		return "EzeeProjectPayment [paymentDate=" + paymentDate + ", type=" + type + ", description=" + description
 				+ ", amount=" + amount + ", tax=" + tax + ", chequeNumber=" + chequeNumber + ", getGridId()="
 				+ getGridId() + ", getId()=" + getId() + "]";
+	}
+
+	@Override
+	public double getNet() {
+		return getAmount();
+	}
+
+	@Override
+	public void setNet(double net) {
+		setAmount(net);
+	}
+
+	@Override
+	public double getGross() {
+		return getTotal();
 	}
 }

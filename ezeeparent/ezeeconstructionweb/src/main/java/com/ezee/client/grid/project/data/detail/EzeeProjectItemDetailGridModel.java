@@ -14,10 +14,6 @@ import java.util.Map;
 import com.ezee.model.entity.enums.EzeeProjectItemType;
 import com.ezee.model.entity.project.EzeeProjectItemDetail;
 import com.ezee.web.common.ui.grid.EzeeGridModel;
-import com.ezee.web.common.ui.grid.EzeeGridModelListener;
-import com.google.gwt.cell.client.Cell.Context;
-import com.google.gwt.cell.client.FieldUpdater;
-import com.google.gwt.cell.client.SelectionCell;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 
@@ -32,17 +28,17 @@ public class EzeeProjectItemDetailGridModel extends EzeeGridModel<EzeeProjectIte
 	private static final double DESCRIPTION_WIDTH = 400.;
 	private static final double TYPE_WIDTH = 100.;
 
-	public EzeeProjectItemDetailGridModel(final EzeeGridModelListener<EzeeProjectItemDetail> listener) {
-		super(listener);
+	public EzeeProjectItemDetailGridModel() {
+		super();
 	}
 
 	@Override
 	protected Map<String, Column<EzeeProjectItemDetail, ?>> createColumns(final DataGrid<EzeeProjectItemDetail> grid) {
 		Map<String, Column<EzeeProjectItemDetail, ?>> columns = new HashMap<>();
-		createEditableTextColumn(columns, grid, DESCRIPTION, DESCRIPTION_WIDTH, true, ALIGN_LEFT);
-		createProjectItemTypeListBoxColumn(columns, grid, TYPE, TYPE_WIDTH);
-		createEditableTextColumn(columns, grid, AMOUNT, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
-		createEditableTextColumn(columns, grid, TAX, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
+		createTextColumn(columns, grid, DESCRIPTION, DESCRIPTION_WIDTH, true, ALIGN_LEFT);
+		createTextColumn(columns, grid, TYPE, TYPE_WIDTH, true, ALIGN_CENTER);
+		createTextColumn(columns, grid, AMOUNT, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
+		createTextColumn(columns, grid, TAX, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
 		createTextColumn(columns, grid, TOTAL, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
 		return columns;
 	}
@@ -148,35 +144,5 @@ public class EzeeProjectItemDetailGridModel extends EzeeGridModel<EzeeProjectIte
 		grid.getColumnSortList().push(columns.get(TOTAL));
 		grid.getColumnSortList().push(columns.get(TAX));
 
-	}
-
-	private void createProjectItemTypeListBoxColumn(final Map<String, Column<EzeeProjectItemDetail, ?>> columns,
-			final DataGrid<EzeeProjectItemDetail> grid, final String fieldName, final double width) {
-
-		SelectionCell cell = new SelectionCell(EzeeProjectItemType.types());
-		Column<EzeeProjectItemDetail, String> typeColumn = new Column<EzeeProjectItemDetail, String>(cell) {
-			@Override
-			public String getValue(final EzeeProjectItemDetail item) {
-				return item.getType().name();
-			}
-
-			@Override
-			public String getCellStyleNames(final Context context, final EzeeProjectItemDetail item) {
-				return resolveCellStyleNames(item);
-			}
-		};
-
-		typeColumn.setFieldUpdater(new FieldUpdater<EzeeProjectItemDetail, String>() {
-			@Override
-			public void update(final int index, final EzeeProjectItemDetail item, final String value) {
-
-				item.setType(EzeeProjectItemType.get(value));
-				if (listener != null) {
-					listener.modelUpdated(item);
-				}
-			}
-		});
-		typeColumn.setHorizontalAlignment(ALIGN_CENTER);
-		createColumn(columns, grid, typeColumn, fieldName, width, true);
 	}
 }

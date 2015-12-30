@@ -1,7 +1,11 @@
 package com.ezee.client.crud.project.item.detail;
 
+import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.create;
+import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.getItemIndex;
 import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.loadEnums;
+
+import java.util.Date;
 
 import com.ezee.model.entity.enums.EzeeProjectItemType;
 import com.ezee.model.entity.project.EzeeProjectItemDetail;
@@ -16,6 +20,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.Widget;
 
 public class EzeeCreateUpdateDeleteProjectItemDetail
@@ -38,6 +43,9 @@ public class EzeeCreateUpdateDeleteProjectItemDetail
 	Button btnClose;
 
 	@UiField
+	RichTextArea rtxDescription;
+
+	@UiField
 	ListBox lstType;
 
 	public EzeeCreateUpdateDeleteProjectItemDetail(EzeeEntityCache cache,
@@ -50,6 +58,7 @@ public class EzeeCreateUpdateDeleteProjectItemDetail
 			final EzeeProjectItemDetail entity, final EzeeCreateUpdateDeleteEntityType type, final String[] headers) {
 		super(cache, handler, entity, type, headers);
 		setWidget(uiBinder.createAndBindUi(this));
+		setModal(true);
 	}
 
 	@Override
@@ -72,7 +81,7 @@ public class EzeeCreateUpdateDeleteProjectItemDetail
 		case delete:
 			setText(headers[EDIT_HEADER_INDEX]);
 			initialise();
-			// disable();
+			disable();
 			break;
 		}
 		super.show();
@@ -80,10 +89,31 @@ public class EzeeCreateUpdateDeleteProjectItemDetail
 
 	@Override
 	protected void initialise() {
+		super.initialise();
+		rtxDescription.setText(entity.getDescription());
+		lstType.setItemSelected(getItemIndex(entity.getType().toString(), lstType), true);
+
 	}
 
 	@Override
 	protected void bind() {
+		if (entity == null) {
+			entity = new EzeeProjectItemDetail();
+			entity.setCreated(DATE_UTILS.toString(new Date()));
+		} else {
+			entity.setUpdated(DATE_UTILS.toString(new Date()));
+		}
+		entity.setDescription(rtxDescription.getText());
+		entity.setType(EzeeProjectItemType.get(lstType.getSelectedItemText()));
+		super.bind();
+	}
+
+	@Override
+	protected void disable() {
+		super.disable();
+		rtxDescription.setEnabled(false);
+		lstType.setEnabled(false);
+		btnSave.setEnabled(false);
 	}
 
 	private void loadTypes() {
@@ -92,6 +122,23 @@ public class EzeeCreateUpdateDeleteProjectItemDetail
 
 	@UiHandler("btnClose")
 	void onCloseClick(ClickEvent event) {
+		close();
+	}
+
+	@UiHandler("btnSave")
+	void onSaveClick(ClickEvent event) {
+		if (handler != null) {
+			bind();
+			handler.onSave(entity);
+		}
+		close();
+	}
+
+	@UiHandler("btnDelete")
+	void onDeleteClick(ClickEvent event) {
+		if (handler != null) {
+			handler.onDelete(entity);
+		}
 		close();
 	}
 }

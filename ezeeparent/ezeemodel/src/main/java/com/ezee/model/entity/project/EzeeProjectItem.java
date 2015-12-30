@@ -20,6 +20,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.ezee.model.entity.EzeeContractor;
 
@@ -141,5 +142,58 @@ public class EzeeProjectItem extends EzeeProjectDatabaseEntity {
 	public String toString() {
 		return "EzeeProjectItem [name=" + name + ", resource=" + contractor + ", details=" + details + ", payments="
 				+ payments + ", getGridId()=" + getGridId() + ", getId()=" + getId() + "]";
+	}
+
+	@Transient
+	@Override
+	public double getNet() {
+		throw new UnsupportedOperationException("Not implemented.");
+	}
+
+	@Transient
+	@Override
+	public double getTax() {
+		throw new UnsupportedOperationException("Not implemented.");
+	}
+
+	@Transient
+	@Override
+	public double getGross() {
+		throw new UnsupportedOperationException("Not implemented.");
+	}
+
+	@Transient
+	@Override
+	public boolean isManualTax() {
+		throw new UnsupportedOperationException("Not implemented.");
+	}
+
+	@Transient
+	@Override
+	public boolean isReverseTax() {
+		throw new UnsupportedOperationException("Not implemented.");
+	}
+
+	@Override
+	public void setNet(double net) {
+		throw new UnsupportedOperationException("Not implemented.");
+
+	}
+
+	@Override
+	public void setTax(double tax) {
+		throw new UnsupportedOperationException("Not implemented.");
+
+	}
+
+	@Override
+	public void setManualTax(boolean manualTax) {
+		throw new UnsupportedOperationException("Not implemented.");
+
+	}
+
+	@Override
+	public void setReverseTax(boolean reverseTax) {
+		throw new UnsupportedOperationException("Not implemented.");
 	}
 }

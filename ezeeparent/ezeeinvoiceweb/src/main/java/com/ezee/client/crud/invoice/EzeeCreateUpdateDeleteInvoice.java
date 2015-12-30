@@ -3,7 +3,6 @@ package com.ezee.client.crud.invoice;
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_SERVICE;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
-import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getDateBoxFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
@@ -137,19 +136,15 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteTaxable
 		super.show();
 	}
 
-	private void disable() {
+	protected void disable() {
+		super.disable();
 		txtInvoiceNumber.setEnabled(false);
 		lstPremises.setEnabled(false);
 		lstSupplier.setEnabled(false);
-		txtAmount.setEnabled(false);
-		txtTax.setEnabled(false);
-		txtTotal.setEnabled(false);
 		dtDue.setEnabled(false);
 		dtPaid.setEnabled(false);
 		dtInvoice.setEnabled(false);
 		txtDescription.setEnabled(false);
-		chkManualTax.setEnabled(false);
-		chkReverseTax.setEnabled(false);
 		lstDebtAge.setEnabled(false);
 		btnSave.setEnabled(false);
 		btnPay.setEnabled(false);
@@ -158,6 +153,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteTaxable
 
 	@Override
 	protected void initialise() {
+		super.initialise();
 		txtInvoiceNumber.setValue(entity.getInvoiceId());
 		lstPremises.setItemSelected(getItemIndex(entity.getPayer().getName(), lstPremises), true);
 		lstSupplier.setItemSelected(getItemIndex(entity.getSupplier().getName(), lstSupplier), true);
@@ -166,10 +162,6 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteTaxable
 		} else {
 			lstDebtAge.setItemSelected(getItemIndex(entity.getAgeRule().getName(), lstDebtAge), true);
 		}
-		txtAmount.setValue(getAmountFormat().format(entity.getAmount()));
-		txtTax.setValue(getAmountFormat().format(entity.getTax()));
-		txtTax.setEnabled(entity.isManualTax());
-		txtTotal.setValue(getAmountFormat().format(entity.getInvoiceAmount()));
 		dtInvoice.setValue(DATE_UTILS.fromString(entity.getInvoiceDate()));
 		if (entity.getDateDue() != null) {
 			dtDue.setValue(DATE_UTILS.fromString(entity.getDateDue()));
@@ -177,12 +169,9 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteTaxable
 			resolveDueDate();
 		}
 		dtPaid.setValue(DATE_UTILS.fromString(entity.getDatePaid()));
-		chkManualTax.setValue(entity.isManualTax());
-		chkReverseTax.setValue(entity.isReverseTax());
 		txtDescription.setText(entity.getDescription());
 		lstClassification.setItemSelected(getItemIndex(entity.getClassification().name(), lstClassification), true);
 		btnPay.setEnabled(entity.getDatePaid() == null);
-		initialiseAmountFields();
 	}
 
 	protected void initialiseNew() {
@@ -213,15 +202,12 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteTaxable
 		entity.setPayer(getPremises());
 		entity.setSupplier(getSupplier());
 		entity.setAgeRule(getAgeRule());
-		entity.setAmount(getAmountFormat().parse(txtAmount.getText()));
-		entity.setTax(getAmountFormat().parse(txtTax.getText()));
 		entity.setInvoiceDate(DATE_UTILS.toString(dtInvoice.getValue()));
 		entity.setDateDue(DATE_UTILS.toString(dtDue.getValue()));
 		entity.setDatePaid(DATE_UTILS.toString(dtPaid.getValue()));
-		entity.setManualTax(chkManualTax.getValue());
-		entity.setReverseTax(chkReverseTax.getValue());
 		entity.setDescription(txtDescription.getText());
 		entity.setClassification(EzeeInvoiceClassification.valueOf(lstClassification.getSelectedItemText()));
+		super.bind();
 	}
 
 	protected void initForm() {

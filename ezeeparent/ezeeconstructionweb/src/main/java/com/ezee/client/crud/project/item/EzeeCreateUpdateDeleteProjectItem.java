@@ -56,6 +56,7 @@ public class EzeeCreateUpdateDeleteProjectItem extends EzeeCreateUpdateDeleteEnt
 			final EzeeCreateUpdateDeleteEntityType type, final String[] headers) {
 		super(cache, handler, entity, type, headers);
 		setWidget(uiBinder.createAndBindUi(this));
+		setModal(true);
 	}
 
 	@Override

@@ -33,8 +33,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 		@NamedNativeQuery(name = "deleteAgeDebtMappingsSql", query = "delete from EZEE_INVOICE_TO_DEBT_AGE_MAPPING where INVOICE_ID = :id") })
 @Entity
 @Table(name = "EZEE_INVOICE")
-public class EzeeInvoice extends EzeeDatabaseEntity
-		implements IsSerializable, EzeeStringFilterable, EzeeDateFilterable {
+public class EzeeInvoice extends EzeeTaxableEntity implements IsSerializable, EzeeStringFilterable, EzeeDateFilterable {
 
 	private static final long serialVersionUID = -588454316909349202L;
 
@@ -267,5 +266,22 @@ public class EzeeInvoice extends EzeeDatabaseEntity
 
 	public final void setPay(boolean pay) {
 		this.pay = pay;
+	}
+
+	@Transient
+	@Override
+	public double getNet() {
+		return getAmount();
+	}
+
+	@Transient
+	@Override
+	public double getGross() {
+		return getInvoiceAmount();
+	}
+
+	@Override
+	public void setNet(double net) {
+		setAmount(net);
 	}
 }
