@@ -29,6 +29,12 @@ public interface EzeeConstructionWebConstants {
 	String[] PROJECT_ITEM_DETAIL_CRUD_HEADERS = new String[] { NEW_PROJECT_ITEM_DETAIL, EDIT_PROJECT_ITEM_DETAIL,
 			DELETE_PROJECT_ITEM_DETAIL };
 
+	String EDIT_PROJECT_PAYMENT = "Edit Project Payment";
+	String NEW_PROJECT_PAYMENT = "New Project Payment";
+	String DELETE_PROJECT_PAYMENT = "Delete Project Payment";
+	String[] PROJECT_PAYMENT_CRUD_HEADERS = new String[] { NEW_PROJECT_PAYMENT, EDIT_PROJECT_PAYMENT,
+			DELETE_PROJECT_PAYMENT };
+
 	String MODIFIED = "MODIFIED";
 	String UNMODIFIED = "UN-MODIFIED";
 	String ERROR = "ERROR";

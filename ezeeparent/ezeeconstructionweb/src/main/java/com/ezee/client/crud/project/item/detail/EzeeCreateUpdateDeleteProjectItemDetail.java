@@ -92,7 +92,6 @@ public class EzeeCreateUpdateDeleteProjectItemDetail
 		super.initialise();
 		rtxDescription.setText(entity.getDescription());
 		lstType.setItemSelected(getItemIndex(entity.getType().toString(), lstType), true);
-
 	}
 
 	@Override
