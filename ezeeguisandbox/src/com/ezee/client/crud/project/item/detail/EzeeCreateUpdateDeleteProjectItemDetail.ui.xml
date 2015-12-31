@@ -48,7 +48,6 @@
 					</g:HorizontalPanel>
 				</g:cell>
 			</g:HorizontalPanel>
-
 		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

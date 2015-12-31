@@ -5,5 +5,55 @@
 	
 	</ui:style>
 	<g:HTMLPanel>
+		<g:VerticalPanel>
+			<g:HorizontalPanel>
+				<g:Label text="Description" styleName="gwt-Label-Small" />
+				<g:RichTextArea styleName="gwt-RichTextArea-Medium"
+					height="128px" width="289px" />
+				<g:VerticalPanel>
+					<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+						<g:Label text="Amount" styleName="gwt-Label-Small" />
+						<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtAmount" />
+					</g:HorizontalPanel>
+					<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+						<g:Label text="Tax" styleName="gwt-Label-Small" />
+						<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtTax" />
+					</g:HorizontalPanel>
+					<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+						<g:Label text="Total" styleName="gwt-Label-Small" />
+						<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtTotal" />
+					</g:HorizontalPanel>
+					<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+						<g:Label text="Type" styleName="gwt-Label-Small" />
+						<g:ListBox styleName="gwt-ListBox-Small" ui:field="lstPaymentTypes" />
+					</g:HorizontalPanel>
+				</g:VerticalPanel>
+			</g:HorizontalPanel>
+			<g:HorizontalPanel>
+				<g:Label text="Inv. Num." styleName="gwt-Label-Small" wordWrap="false"/>
+				<g:TextBox styleName="gwt-TextBox-Medium" ui:field="txtInvoiceNumber"/>
+				<g:Label text="Chq. Num." styleName="gwt-Label-Small"/>
+				<g:TextBox styleName="gwt-TextBox-Medium" width="180px" ui:field="txtChequeNumber"/>
+			</g:HorizontalPanel>
+			<g:HorizontalPanel width="100%">
+				<g:cell horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE"
+					width="50%" height="100%">
+					<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+						<g:CheckBox text="Manual Tax" styleName="gwt-CheckBox-Small"
+							ui:field="chkManualTax" />
+						<g:CheckBox text="Reverse Tax" styleName="gwt-CheckBox-Small"
+							ui:field="chkReverseTax" />
+					</g:HorizontalPanel>
+				</g:cell>
+				<g:cell horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE"
+					width="50%" height="100%">
+					<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+						<g:Button ui:field="btnDelete" text="Delete" />
+						<g:Button ui:field="btnSave" text="Save" />
+						<g:Button ui:field="btnClose" text="Close" />
+					</g:HorizontalPanel>
+				</g:cell>
+			</g:HorizontalPanel>
+		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
