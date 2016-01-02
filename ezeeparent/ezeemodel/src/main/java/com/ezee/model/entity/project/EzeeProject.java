@@ -153,8 +153,7 @@ public class EzeeProject extends EzeeFinancialEntity implements IsSerializable {
 
 	@Override
 	public String toString() {
-		return "EzeeProject [startDate=" + startDate + ", endDate=" + endDate + ", items=" + items + ", modified="
-				+ modified + "]";
+		return "EzeeProject [getName()=" + getName() + "]";
 	}
 
 	public final boolean isModified() {

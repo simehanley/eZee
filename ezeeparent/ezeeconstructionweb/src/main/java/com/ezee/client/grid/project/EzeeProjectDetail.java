@@ -42,6 +42,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.StackLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -132,6 +133,12 @@ public class EzeeProjectDetail extends Composite {
 	@UiField
 	TextBox txtPercent;
 
+	@UiField
+	StackLayoutPanel panel;
+
+	@UiField
+	Button btnRefresh;
+
 	public EzeeProjectDetail(final EzeeProject project, final EzeeEntityCache cache,
 			final EzeeProjectDetailListener listener) {
 		this.project = project;
@@ -190,38 +197,16 @@ public class EzeeProjectDetail extends Composite {
 	@UiHandler("btnAddPayment")
 	void onAddPaymentClick(ClickEvent event) {
 		newProjectPayment();
-		// if (projectItemGrid.getSelected() != null) {
-		// EzeeProjectItem item =
-		// project.getItem(projectItemGrid.getSelected().getGridId());
-		// if (item != null) {
-		// EzeeProjectPayment payment = projectPaymentGrid.newEntity();
-		// item.addPayment(payment);
-		// projectPaymentGrid.addEntity(payment);
-		// modified();
-		// }
-		// } else {
-		// EzeeMessageDialog.showNew("Add Payment", "Select and/or add an item
-		// to allocate a payment to.");
-		// }
 	}
 
 	@UiHandler("btnEditPayment")
 	void onEditPaymentClick(ClickEvent event) {
-
+		editProjectPayment();
 	}
 
 	@UiHandler("btnDeletePayment")
 	void onDeletePaymentClick(ClickEvent event) {
-		// EzeeProjectPayment payment = projectPaymentGrid.getSelected();
-		// if (payment != null && projectItemGrid.getSelected() != null) {
-		// EzeeProjectItem item =
-		// project.getItem(projectItemGrid.getSelected().getGridId());
-		// if (item != null) {
-		// item.getPayments().remove(payment);
-		// projectPaymentGrid.removeEntity(payment);
-		// modified();
-		// }
-		// }
+		deleteProjectPayment();
 	}
 
 	@UiHandler("btnClose")
@@ -236,6 +221,11 @@ public class EzeeProjectDetail extends Composite {
 
 	private void close() {
 		listener.detailClosed(project);
+	}
+
+	@UiHandler("btnRefresh")
+	void onRefreshClick(ClickEvent event) {
+		projectItemGrid.refresh();
 	}
 
 	private void save() {
@@ -265,9 +255,6 @@ public class EzeeProjectDetail extends Composite {
 		lblStatus.setStyleName(INSTANCE.css().gwtLabelProjectModifyMod());
 		lblStatus.setText(MODIFIED);
 		updateTotals();
-		projectItemDetailGrid.getGrid().redraw();
-		projectPaymentGrid.getGrid().redraw();
-		projectItemGrid.getGrid().redraw();
 	}
 
 	public void unmodified() {
@@ -303,6 +290,7 @@ public class EzeeProjectDetail extends Composite {
 				project.addItem(item);
 				projectItemGrid.addEntity(item);
 			}
+			projectItemGrid.getGrid().redraw();
 			modified();
 		}
 
@@ -328,6 +316,8 @@ public class EzeeProjectDetail extends Composite {
 				item.addDetail(detail);
 				projectItemDetailGrid.addEntity(detail);
 			}
+			projectItemDetailGrid.getGrid().redraw();
+			replaceItem();
 			modified();
 		}
 
@@ -338,6 +328,7 @@ public class EzeeProjectDetail extends Composite {
 				EzeeProjectItem item = project.getItem(projectItemGrid.getSelected().getGridId());
 				item.getDetails().remove(detail);
 				projectItemDetailGrid.removeEntity(detail);
+				replaceItem();
 				modified();
 			}
 		}
@@ -347,15 +338,29 @@ public class EzeeProjectDetail extends Composite {
 			implements EzeeCreateUpdateDeleteEntityHandler<EzeeProjectPayment> {
 
 		@Override
-		public void onSave(final EzeeProjectPayment entity) {
-
+		public void onSave(final EzeeProjectPayment payment) {
+			int index = projectPaymentGrid.getIndex(payment);
+			if (index == MINUS_ONE) {
+				EzeeProjectItem item = project.getItem(projectItemGrid.getSelected().getGridId());
+				item.addPayment(payment);
+				projectPaymentGrid.addEntity(payment);
+			}
+			projectPaymentGrid.getGrid().redraw();
+			replaceItem();
+			modified();
 		}
 
 		@Override
-		public void onDelete(final EzeeProjectPayment entity) {
-
+		public void onDelete(final EzeeProjectPayment payment) {
+			int index = projectPaymentGrid.getIndex(payment);
+			if (index != MINUS_ONE) {
+				EzeeProjectItem item = project.getItem(projectItemGrid.getSelected().getGridId());
+				item.getPayments().remove(payment);
+				projectPaymentGrid.removeEntity(payment);
+				replaceItem();
+				modified();
+			}
 		}
-
 	}
 
 	public void newProjectItem() {
@@ -402,11 +407,45 @@ public class EzeeProjectDetail extends Composite {
 		}
 	}
 
-	private void newProjectPayment() {
+	public void newProjectPayment() {
 		EzeeProjectItem item = projectItemGrid.getSelected();
 		if (item != null) {
 			new EzeeCreateUpdateDeleteProjectItemPayment(cache, projectPaymentHandler, PROJECT_PAYMENT_CRUD_HEADERS)
 					.show();
+		}
+	}
+
+	public void editProjectPayment() {
+		EzeeProjectPayment payment = projectPaymentGrid.getSelected();
+		if (payment != null) {
+			new EzeeCreateUpdateDeleteProjectItemPayment(cache, projectPaymentHandler, payment, update,
+					PROJECT_PAYMENT_CRUD_HEADERS).show();
+		}
+	}
+
+	public void deleteProjectPayment() {
+		EzeeProjectPayment payment = projectPaymentGrid.getSelected();
+		if (payment != null) {
+			new EzeeCreateUpdateDeleteProjectItemPayment(cache, projectPaymentHandler, payment, delete,
+					PROJECT_PAYMENT_CRUD_HEADERS).show();
+		}
+	}
+
+	private int getProjectItemIndex() {
+		EzeeProjectItem item = projectItemGrid.getSelected();
+		if (item != null) {
+			return projectItemGrid.getIndex(item);
+		}
+		return MINUS_ONE;
+	}
+
+	private void replaceItem() {
+		int index = getProjectItemIndex();
+		EzeeProjectItem item = projectItemGrid.getSelected();
+		if (index != MINUS_ONE && item != null) {
+			projectItemGrid.getModel().getHandler().getList().remove(index);
+			projectItemGrid.getModel().getHandler().getList().add(index, item);
+			projectItemGrid.getGrid().redraw();
 		}
 	}
 }

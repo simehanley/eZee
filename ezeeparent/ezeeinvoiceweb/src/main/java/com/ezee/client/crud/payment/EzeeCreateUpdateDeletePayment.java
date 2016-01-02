@@ -177,18 +177,17 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 			@Override
 			public void onChange(ChangeEvent event) {
 				EzeePaymentType type = EzeePaymentType.valueOf(lstPaymentType.getSelectedItemText());
-				boolean showChequeFields = (type == cheque);
-				showCheckFields(showChequeFields);
+				boolean enableChequeFields = (type == cheque);
+				enableCheckFields(enableChequeFields);
 			}
 		});
 		FocusHandler focusHandler = new EzeeTextBoxUtils.TextBoxFocusHandler();
 		txtChequeNumber.addFocusHandler(focusHandler);
 	}
 
-	private void showCheckFields(boolean show) {
-		lblChequeNumber.setVisible(show);
-		txtChequeNumber.setVisible(show);
-		chkPresented.setVisible(show);
+	private void enableCheckFields(boolean enable) {
+		txtChequeNumber.setEnabled(enable);
+		chkPresented.setEnabled(enable);
 	}
 
 	private void loadInvoices() {
@@ -223,8 +222,8 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 	protected void initialise() {
 		lstPaymentType.setItemSelected(getItemIndex(entity.getType().toString(), lstPaymentType), true);
 		txtDescription.setText(entity.getPaymentDescription());
-		boolean showChequeFields = (entity.getType() == cheque);
-		showCheckFields(showChequeFields);
+		boolean enableChequeFields = (entity.getType() == cheque);
+		enableCheckFields(enableChequeFields);
 		txtChequeNumber.setText(entity.getChequeNumber());
 		chkPresented.setValue(entity.isChequePresented());
 		dtPmtDate.setValue(DATE_UTILS.fromString(entity.getPaymentDate()));

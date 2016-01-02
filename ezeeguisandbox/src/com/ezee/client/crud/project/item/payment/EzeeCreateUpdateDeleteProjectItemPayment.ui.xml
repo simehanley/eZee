@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.google.gwt.user.datepicker.client">
 	<ui:style>
 	
 	</ui:style>
@@ -9,8 +9,12 @@
 			<g:HorizontalPanel>
 				<g:Label text="Description" styleName="gwt-Label-Small" />
 				<g:RichTextArea styleName="gwt-RichTextArea-Medium"
-					height="128px" width="289px" />
+					height="163px" width="289px" />
 				<g:VerticalPanel>
+					<g:HorizontalPanel>
+						<g:Label text="Date" styleName="gwt-Label-Small"/>
+						<p1:DateBox styleName="gwt-DateBox-Small"/>
+					</g:HorizontalPanel>
 					<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
 						<g:Label text="Amount" styleName="gwt-Label-Small" />
 						<g:TextBox styleName="gwt-TextBox-Small" ui:field="txtAmount" />

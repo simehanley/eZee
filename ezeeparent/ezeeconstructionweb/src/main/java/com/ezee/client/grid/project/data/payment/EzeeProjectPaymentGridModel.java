@@ -15,11 +15,7 @@ import java.util.Map;
 import com.ezee.model.entity.enums.EzeePaymentType;
 import com.ezee.model.entity.project.EzeeProjectPayment;
 import com.ezee.web.common.ui.grid.EzeeGridModel;
-import com.ezee.web.common.ui.grid.EzeeGridModelListener;
 import com.ezee.web.common.ui.utils.EzeeDateComparator;
-import com.google.gwt.cell.client.Cell.Context;
-import com.google.gwt.cell.client.FieldUpdater;
-import com.google.gwt.cell.client.SelectionCell;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 
@@ -27,35 +23,40 @@ public class EzeeProjectPaymentGridModel extends EzeeGridModel<EzeeProjectPaymen
 
 	private static final String PAYMENT_DATE = "Date";
 	private static final String PAYMENT_TYPE = "Type";
+	private static final String INVOICE_REF = "Invoice Ref.";
 	private static final String DESCRIPTION = "Description";
 	private static final String AMOUNT = "Amount";
 	private static final String TAX = "Tax";
 	private static final String TOTAL = "Total";
 
+	private static final double INVOICE_REF_WIDTH = 150.;
 	private static final double DESCRIPTION_WIDTH = 400.;
 	private static final double TYPE_WIDTH = 100.;
 
 	private final EzeeDateComparator dateComparator = new EzeeDateComparator();
 
-	public EzeeProjectPaymentGridModel(final EzeeGridModelListener<EzeeProjectPayment> listener) {
-		super(listener);
+	public EzeeProjectPaymentGridModel() {
+		super();
 	}
 
 	@Override
 	protected Map<String, Column<EzeeProjectPayment, ?>> createColumns(DataGrid<EzeeProjectPayment> grid) {
 		Map<String, Column<EzeeProjectPayment, ?>> columns = new HashMap<>();
-		createEditableDateColumn(columns, grid, PAYMENT_DATE, DATE_FIELD_WIDTH, true);
-		createProjectPaymentTypeListBoxColumn(columns, grid, PAYMENT_TYPE, TYPE_WIDTH);
-		createEditableTextColumn(columns, grid, DESCRIPTION, DESCRIPTION_WIDTH, true, ALIGN_LEFT);
-		createEditableTextColumn(columns, grid, AMOUNT, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
-		createEditableTextColumn(columns, grid, TAX, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
-		createTextColumn(columns, grid, TOTAL, NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+		createDateColumn(columns, grid, PAYMENT_DATE, DATE_FIELD_WIDTH, true);
+		createTextColumn(columns, grid, PAYMENT_TYPE, TYPE_WIDTH, true, ALIGN_CENTER);
+		createTextColumn(columns, grid, INVOICE_REF, INVOICE_REF_WIDTH, true, ALIGN_LEFT);
+		createTextColumn(columns, grid, DESCRIPTION, DESCRIPTION_WIDTH, true, ALIGN_LEFT);
+		createTextColumn(columns, grid, AMOUNT, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
+		createTextColumn(columns, grid, TAX, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
+		createTextColumn(columns, grid, TOTAL, NUMERIC_FIELD_WIDTH, true, ALIGN_RIGHT);
 		return columns;
 	}
 
 	@Override
 	protected String resolveTextFieldValue(final String fieldName, final EzeeProjectPayment payment) {
 		switch (fieldName) {
+		case INVOICE_REF:
+			return payment.getInvoiceRef();
 		case DESCRIPTION:
 			return payment.getDescription();
 		case PAYMENT_TYPE:
@@ -122,6 +123,13 @@ public class EzeeProjectPaymentGridModel extends EzeeGridModel<EzeeProjectPaymen
 				return one.getType().compareTo(two.getType());
 			}
 		});
+		handler.setComparator(columns.get(INVOICE_REF), new Comparator<EzeeProjectPayment>() {
+
+			@Override
+			public int compare(final EzeeProjectPayment one, final EzeeProjectPayment two) {
+				return one.getInvoiceRef().compareTo(two.getInvoiceRef());
+			}
+		});
 		handler.setComparator(columns.get(DESCRIPTION), new Comparator<EzeeProjectPayment>() {
 			@Override
 			public int compare(final EzeeProjectPayment one, final EzeeProjectPayment two) {
@@ -157,6 +165,7 @@ public class EzeeProjectPaymentGridModel extends EzeeGridModel<EzeeProjectPaymen
 		grid.getColumnSortList().push(columns.get(AMOUNT));
 		grid.getColumnSortList().push(columns.get(TAX));
 		grid.getColumnSortList().push(columns.get(TOTAL));
+		grid.getColumnSortList().push(columns.get(INVOICE_REF));
 	}
 
 	@Override
@@ -166,34 +175,5 @@ public class EzeeProjectPaymentGridModel extends EzeeGridModel<EzeeProjectPaymen
 
 	@Override
 	protected void setBooleanFieldValue(String fieldName, boolean fieldValue, EzeeProjectPayment entity) {
-	}
-
-	private void createProjectPaymentTypeListBoxColumn(final Map<String, Column<EzeeProjectPayment, ?>> columns,
-			final DataGrid<EzeeProjectPayment> grid, final String fieldName, final double width) {
-
-		SelectionCell cell = new SelectionCell(EzeePaymentType.types());
-		Column<EzeeProjectPayment, String> typeColumn = new Column<EzeeProjectPayment, String>(cell) {
-			@Override
-			public String getValue(final EzeeProjectPayment item) {
-				return item.getType().name();
-			}
-
-			@Override
-			public String getCellStyleNames(final Context context, final EzeeProjectPayment item) {
-				return resolveCellStyleNames(item);
-			}
-		};
-
-		typeColumn.setFieldUpdater(new FieldUpdater<EzeeProjectPayment, String>() {
-			@Override
-			public void update(final int index, final EzeeProjectPayment payment, final String value) {
-				payment.setType(EzeePaymentType.get(value));
-				if (listener != null) {
-					listener.modelUpdated(payment);
-				}
-			}
-		});
-		typeColumn.setHorizontalAlignment(ALIGN_CENTER);
-		createColumn(columns, grid, typeColumn, fieldName, width, false);
 	}
 }

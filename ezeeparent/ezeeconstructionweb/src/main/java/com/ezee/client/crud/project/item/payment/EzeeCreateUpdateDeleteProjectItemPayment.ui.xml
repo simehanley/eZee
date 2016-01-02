@@ -1,5 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:p1="urn:import:com.google.gwt.user.datepicker.client">
 
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
 
@@ -7,13 +8,17 @@
 		<g:VerticalPanel>
 			<g:HorizontalPanel>
 				<g:Label text="Description" styleName="{res.css.gwtLabelSmall}" />
-				<g:RichTextArea styleName="{res.css.gwtRichTextAreaMedium}" height="128px" width="289px" />
+				<g:RichTextArea styleName="{res.css.gwtRichTextAreaMedium}" height="163px" width="289px" ui:field="rtxDescription" />
 				<g:VerticalPanel>
+					<g:HorizontalPanel>
+						<g:Label text="Date" styleName="{res.css.gwtLabelSmall}" />
+						<p1:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtPaymentDate" />
+					</g:HorizontalPanel>
 					<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
 						<g:Label text="Amount" styleName="{res.css.gwtLabelSmall}" />
 						<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtAmount" />
 					</g:HorizontalPanel>
-					<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE"> 	
+					<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
 						<g:Label text="Tax" styleName="{res.css.gwtLabelSmall}" />
 						<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtTax" />
 					</g:HorizontalPanel>
@@ -23,7 +28,7 @@
 					</g:HorizontalPanel>
 					<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
 						<g:Label text="Type" styleName="{res.css.gwtLabelSmall}" />
-						<g:ListBox styleName="{res.css.gwtListBoxSmall}" ui:field="lstPaymentTypes" />
+						<g:ListBox styleName="{res.css.gwtListBoxSmall}" ui:field="lstPaymentType" />
 					</g:HorizontalPanel>
 				</g:VerticalPanel>
 			</g:HorizontalPanel>

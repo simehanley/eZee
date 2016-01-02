@@ -43,6 +43,9 @@ public class EzeeProjectPayment extends EzeeProjectDatabaseEntity implements IsS
 	@Column(name = "CHEQUE_NUMBER")
 	private String chequeNumber;
 
+	@Column(name = "INVOICE_REF")
+	private String invoiceRef;
+
 	@Column(name = "MANUAL_TAX")
 	private boolean manualtax = Boolean.TRUE;
 
@@ -115,6 +118,14 @@ public class EzeeProjectPayment extends EzeeProjectDatabaseEntity implements IsS
 
 	public void setChequeNumber(String chequeNumber) {
 		this.chequeNumber = chequeNumber;
+	}
+
+	public final String getInvoiceRef() {
+		return invoiceRef;
+	}
+
+	public void setInvoiceRef(String invoiceRef) {
+		this.invoiceRef = invoiceRef;
 	}
 
 	@Transient

@@ -10,7 +10,6 @@ import com.ezee.client.grid.project.data.item.EzeeProjectItemGridListener;
 import com.ezee.model.entity.project.EzeeProject;
 import com.ezee.model.entity.project.EzeeProjectItem;
 import com.ezee.model.entity.project.EzeeProjectPayment;
-import com.ezee.web.common.ui.grid.EzeeGridModelListener;
 
 public class EzeeProjectPaymentGrid extends EzeeProjectDataGrid<EzeeProjectPayment>
 		implements EzeeProjectItemGridListener {
@@ -21,12 +20,7 @@ public class EzeeProjectPaymentGrid extends EzeeProjectDataGrid<EzeeProjectPayme
 
 	protected void initGrid() {
 		super.initGrid();
-		model = new EzeeProjectPaymentGridModel(new EzeeGridModelListener<EzeeProjectPayment>() {
-			@Override
-			public void modelUpdated(final EzeeProjectPayment entity) {
-				projectDetail.modified();
-			}
-		});
+		model = new EzeeProjectPaymentGridModel();
 		model.bind(grid);
 	}
 
@@ -66,13 +60,16 @@ public class EzeeProjectPaymentGrid extends EzeeProjectDataGrid<EzeeProjectPayme
 
 	@Override
 	protected void newEntity() {
+		projectDetail.newProjectPayment();
 	}
 
 	@Override
 	protected void editEntity() {
+		projectDetail.editProjectPayment();
 	}
 
 	@Override
 	protected void deleteEntity() {
+		projectDetail.deleteProjectPayment();
 	}
 }
