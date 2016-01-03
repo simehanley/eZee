@@ -142,6 +142,8 @@ public class EzeeProjectDetail extends Composite {
 	@UiField
 	Button btnReport;
 
+	private boolean modified = false;
+
 	public EzeeProjectDetail(final EzeeProject project, final EzeeEntityCache cache,
 			final EzeeProjectDetailListener listener) {
 		this.project = project;
@@ -219,7 +221,7 @@ public class EzeeProjectDetail extends Composite {
 
 	@UiHandler("btnSave")
 	void onSaveClick(ClickEvent event) {
-		save();
+		save(false);
 	}
 
 	private void close() {
@@ -228,7 +230,11 @@ public class EzeeProjectDetail extends Composite {
 
 	@UiHandler("btnRefresh")
 	void onRefreshClick(ClickEvent event) {
-		refresh();
+		if (modified) {
+			save(true);
+		} else {
+			refresh();
+		}
 	}
 
 	@UiHandler("btnReport")
@@ -236,7 +242,7 @@ public class EzeeProjectDetail extends Composite {
 		showNew("Not Implemented", "Project report is yet to be implemented.");
 	}
 
-	private void save() {
+	private void save(final boolean refresh) {
 		showWaitCursor();
 		ENTITY_SERVICE.saveEntity(EzeeProject.class.getName(), project, new AsyncCallback<EzeeProject>() {
 
@@ -255,6 +261,9 @@ public class EzeeProjectDetail extends Composite {
 				reBindProject(result);
 				unmodified();
 				log.log(Level.INFO, "Saved project '" + project + "'.");
+				if (refresh) {
+					refresh();
+				}
 			}
 		});
 	}
@@ -294,11 +303,13 @@ public class EzeeProjectDetail extends Composite {
 		lblStatus.setStyleName(INSTANCE.css().gwtLabelProjectModifyMod());
 		lblStatus.setText(MODIFIED);
 		updateTotals();
+		modified = true;
 	}
 
 	public void unmodified() {
 		lblStatus.setStyleName(INSTANCE.css().gwtLabelProjectModifyUnmod());
 		lblStatus.setText(UNMODIFIED);
+		modified = false;
 	}
 
 	public void error() {
