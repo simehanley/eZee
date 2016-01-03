@@ -13,8 +13,10 @@ import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteTaxableEntity;
+import com.ezee.web.common.ui.utils.EzeeRichTextAreaUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -69,12 +71,12 @@ public class EzeeCreateUpdateDeleteProjectItemDetail
 		case create:
 			setText(headers[NEW_HEADER_INDEX]);
 			initialiseNew();
-			setFocus(txtAmount);
+			setFocus(rtxDescription);
 			btnDelete.setEnabled(false);
 			break;
 		case update:
 			setText(headers[EDIT_HEADER_INDEX]);
-			setFocus(txtAmount);
+			setFocus(rtxDescription);
 			initialise();
 			btnDelete.setEnabled(false);
 			break;
@@ -113,6 +115,14 @@ public class EzeeCreateUpdateDeleteProjectItemDetail
 		rtxDescription.setEnabled(false);
 		lstType.setEnabled(false);
 		btnSave.setEnabled(false);
+	}
+
+	@Override
+	protected void initForm() {
+		super.initForm();
+		KeyPressHandler handler = new EzeeRichTextAreaUtils.TabKeyPressHandler(new Widget[] { btnSave },
+				new Widget[] { txtAmount, txtTax, txtAmount });
+		rtxDescription.addKeyPressHandler(handler);
 	}
 
 	private void loadTypes() {

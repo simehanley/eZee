@@ -16,12 +16,14 @@ import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteTaxableEntity;
+import com.ezee.web.common.ui.utils.EzeeRichTextAreaUtils;
 import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -86,12 +88,12 @@ public class EzeeCreateUpdateDeleteProjectItemPayment extends EzeeCreateUpdateDe
 		case create:
 			setText(headers[NEW_HEADER_INDEX]);
 			initialiseNew();
-			setFocus(txtAmount);
+			setFocus(rtxDescription);
 			btnDelete.setEnabled(false);
 			break;
 		case update:
 			setText(headers[EDIT_HEADER_INDEX]);
-			setFocus(txtAmount);
+			setFocus(rtxDescription);
 			initialise();
 			btnDelete.setEnabled(false);
 			break;
@@ -121,18 +123,21 @@ public class EzeeCreateUpdateDeleteProjectItemPayment extends EzeeCreateUpdateDe
 		FocusHandler focusHandler = new EzeeTextBoxUtils.TextBoxFocusHandler();
 		txtChequeNumber.addFocusHandler(focusHandler);
 		txtInvoiceNumber.addFocusHandler(focusHandler);
+		KeyPressHandler handler = new EzeeRichTextAreaUtils.TabKeyPressHandler(new Widget[] { btnSave },
+				new Widget[] { dtPaymentDate });
+		rtxDescription.addKeyPressHandler(handler);
 	}
 
 	@Override
 	protected void initialise() {
 		super.initialise();
+		boolean enableChequeFields = (entity.getType() == cheque);
+		enableCheckFields(enableChequeFields);
 		dtPaymentDate.setValue(DATE_UTILS.fromString(entity.getPaymentDate()));
 		lstPaymentType.setItemSelected(getItemIndex(entity.getType().toString(), lstPaymentType), true);
 		rtxDescription.setText(entity.getDescription());
 		txtChequeNumber.setText(entity.getChequeNumber());
 		txtInvoiceNumber.setText(entity.getInvoiceRef());
-		boolean enableChequeFields = (entity.getType() == cheque);
-		enableCheckFields(enableChequeFields);
 	}
 
 	@Override
@@ -175,6 +180,9 @@ public class EzeeCreateUpdateDeleteProjectItemPayment extends EzeeCreateUpdateDe
 
 	private void enableCheckFields(boolean enableChequeFields) {
 		txtChequeNumber.setEnabled(enableChequeFields);
+		if (!enableChequeFields) {
+			txtChequeNumber.setText(null);
+		}
 	}
 
 	@UiHandler("btnClose")

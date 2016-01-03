@@ -32,6 +32,7 @@ import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
+import com.ezee.web.common.ui.utils.EzeeRichTextAreaUtils;
 import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
@@ -39,6 +40,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -183,11 +185,18 @@ public class EzeeCreateUpdateDeletePayment extends EzeeCreateUpdateDeleteEntity<
 		});
 		FocusHandler focusHandler = new EzeeTextBoxUtils.TextBoxFocusHandler();
 		txtChequeNumber.addFocusHandler(focusHandler);
+		KeyPressHandler handler = new EzeeRichTextAreaUtils.TabKeyPressHandler(
+				new Widget[] { txtChequeNumber, lstPaymentType }, new Widget[] { btnSave });
+		txtDescription.addKeyPressHandler(handler);
 	}
 
 	private void enableCheckFields(boolean enable) {
 		txtChequeNumber.setEnabled(enable);
 		chkPresented.setEnabled(enable);
+		if (!enable) {
+			txtChequeNumber.setText(null);
+			chkPresented.setValue(false);
+		}
 	}
 
 	private void loadInvoices() {

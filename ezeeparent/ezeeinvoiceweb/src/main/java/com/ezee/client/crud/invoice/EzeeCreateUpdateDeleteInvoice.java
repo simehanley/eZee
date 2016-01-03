@@ -29,10 +29,14 @@ import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteTaxableEntity;
 import com.ezee.web.common.ui.utils.EzeeListBoxUtils;
+import com.ezee.web.common.ui.utils.EzeeRichTextAreaUtils;
+import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -229,6 +233,11 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteTaxable
 				resolveDueDate();
 			}
 		});
+		FocusHandler focusHandler = new EzeeTextBoxUtils.TextBoxFocusHandler();
+		txtInvoiceNumber.addFocusHandler(focusHandler);
+		KeyPressHandler handler = new EzeeRichTextAreaUtils.TabKeyPressHandler(
+				new Widget[] { txtTotal, txtTax, txtAmount }, new Widget[] { lstDebtAge });
+		txtDescription.addKeyPressHandler(handler);
 	}
 
 	private EzeeDebtAgeRule getAgeRule() {

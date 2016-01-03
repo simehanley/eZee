@@ -139,6 +139,9 @@ public class EzeeProjectDetail extends Composite {
 	@UiField
 	Button btnRefresh;
 
+	@UiField
+	Button btnReport;
+
 	public EzeeProjectDetail(final EzeeProject project, final EzeeEntityCache cache,
 			final EzeeProjectDetailListener listener) {
 		this.project = project;
@@ -225,7 +228,12 @@ public class EzeeProjectDetail extends Composite {
 
 	@UiHandler("btnRefresh")
 	void onRefreshClick(ClickEvent event) {
-		projectItemGrid.refresh();
+		refresh();
+	}
+
+	@UiHandler("btnReport")
+	void onReportClick(ClickEvent event) {
+		showNew("Not Implemented", "Project report is yet to be implemented.");
 	}
 
 	private void save() {
@@ -249,6 +257,37 @@ public class EzeeProjectDetail extends Composite {
 				log.log(Level.INFO, "Saved project '" + project + "'.");
 			}
 		});
+	}
+
+	private void refresh() {
+		showWaitCursor();
+		ENTITY_SERVICE.getEntity(EzeeProject.class.getName(), project.getId(), new AsyncCallback<EzeeProject>() {
+
+			@Override
+			public void onFailure(final Throwable caught) {
+				showDefaultCursor();
+				String message = "Failed to retrieve persisted project '" + project + "'. See log for details.";
+				log.log(Level.SEVERE, message, caught);
+				showNew("Error", message);
+				error();
+			}
+
+			@Override
+			public void onSuccess(final EzeeProject result) {
+				showDefaultCursor();
+				reBindProject(result);
+				unmodified();
+				reloadUi();
+				log.log(Level.INFO, "Refreshed project '" + project + "'.");
+			}
+		});
+	}
+
+	private void reloadUi() {
+		projectItemGrid.reloadEntities();
+		projectItemDetailGrid.reloadEntities();
+		projectPaymentGrid.reloadEntities();
+
 	}
 
 	public void modified() {

@@ -40,6 +40,12 @@
 					<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtTotal" />
 				</g:HorizontalPanel>
 			</g:at>
+			<g:at top="146" left="10">
+				<g:Label text="Description" styleName="{res.css.gwtLabelSmall}" />
+			</g:at>
+			<g:at top="146" left="98">
+				<g:RichTextArea width="515px" height="60px" styleName="{res.css.gwtRichTextAreaMedium}" ui:field="txtDescription" />
+			</g:at>
 			<g:at top="212" left="10">
 				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
 					<g:Label text="Debt Age" styleName="{res.css.gwtLabelSmall}" />
@@ -51,12 +57,6 @@
 					<g:CheckBox text="Reverse Tax" styleName="{res.css.gwtCheckBoxSmall}" value="false" ui:field="chkReverseTax"
 						wordWrap="false" />
 				</g:HorizontalPanel>
-			</g:at>
-			<g:at top="146" left="10">
-				<g:Label text="Description" styleName="{res.css.gwtLabelSmall}" />
-			</g:at>
-			<g:at top="146" left="98">
-				<g:RichTextArea width="515px" height="60px" styleName="{res.css.gwtRichTextAreaMedium}" ui:field="txtDescription" />
 			</g:at>
 			<g:at top="249" left="243">
 				<g:Button ui:field="btnPay" text="Pay" styleName="{res.css.gwtButton}" />

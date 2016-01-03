@@ -68,6 +68,10 @@ public abstract class EzeeProjectDataGrid<T extends EzeeDatabaseEntity> extends 
 
 	protected abstract void loadEntities();
 
+	public void reloadEntities() {
+		loadEntities();
+	}
+
 	public void addEntity(T entity, int index) {
 		getModel().getHandler().getList().add(index, entity);
 		getGrid().getSelectionModel().setSelected(entity, true);

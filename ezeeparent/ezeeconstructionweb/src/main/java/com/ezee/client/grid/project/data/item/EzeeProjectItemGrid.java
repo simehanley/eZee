@@ -35,20 +35,6 @@ public class EzeeProjectItemGrid extends EzeeProjectDataGrid<EzeeProjectItem> {
 		model.bind(grid);
 	}
 
-	public void refresh() {
-		EzeeProjectItem item = getSelected();
-		if (item != null) {
-			int index = getIndex(item);
-			List<EzeeProjectItem> items = new ArrayList<>(model.getHandler().getList());
-			model.getHandler().getList().clear();
-			if (!isEmpty(items)) {
-				model.getHandler().getList().addAll(items);
-			}
-			grid.redraw();
-			setSelected(index);
-		}
-	}
-
 	@Override
 	protected void loadEntities() {
 		model.getHandler().getList().clear();
