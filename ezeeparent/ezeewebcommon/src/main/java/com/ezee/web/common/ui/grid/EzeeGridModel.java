@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.ezee.common.EzeeDateUtilities;
-import com.ezee.common.web.EzeeClientDateUtils;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.CheckboxCell;
@@ -40,8 +38,6 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 
 	protected static final double DATE_FIELD_WIDTH = 85.;
 	protected static final double NUMERIC_FIELD_WIDTH = 100.;
-
-	protected final EzeeDateUtilities dateUtilities = new EzeeClientDateUtils();
 
 	protected ListHandler<T> handler;
 

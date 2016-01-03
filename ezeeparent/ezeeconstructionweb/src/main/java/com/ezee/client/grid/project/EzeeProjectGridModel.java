@@ -2,6 +2,7 @@ package com.ezee.client.grid.project;
 
 import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getPercentFormat;
+import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_RIGHT;
 
@@ -73,9 +74,9 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 	protected Date resolveDateFieldValue(final String fieldName, final EzeeProject project) {
 		switch (fieldName) {
 		case START_DATE:
-			return dateUtilities.fromString(project.getStartDate());
+			return DATE_UTILS.fromString(project.getStartDate());
 		case END_DATE:
-			return dateUtilities.fromString(project.getEndDate());
+			return DATE_UTILS.fromString(project.getEndDate());
 		}
 		return null;
 	}
@@ -111,8 +112,8 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 
 			@Override
 			public int compare(final EzeeProject one, final EzeeProject two) {
-				return dateComparator.compare(dateUtilities.fromString(one.getStartDate()),
-						dateUtilities.fromString(two.getEndDate()));
+				return dateComparator.compare(DATE_UTILS.fromString(one.getStartDate()),
+						DATE_UTILS.fromString(two.getEndDate()));
 			}
 		});
 
@@ -120,10 +121,9 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 
 			@Override
 			public int compare(final EzeeProject one, final EzeeProject two) {
-				return dateComparator.compare(dateUtilities.fromString(one.getEndDate()),
-						dateUtilities.fromString(two.getEndDate()));
+				return dateComparator.compare(DATE_UTILS.fromString(one.getEndDate()),
+						DATE_UTILS.fromString(two.getEndDate()));
 			}
-
 		});
 	}
 

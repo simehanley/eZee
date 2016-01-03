@@ -19,7 +19,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -43,6 +45,7 @@ import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.filter.invoice.EzeeInvoiceFilter;
 import com.ezee.server.report.EzeeReportGenerator;
 import com.ezee.server.report.excel.AbstractExcelReportGenerator;
+import com.ezee.web.common.ui.utils.EzeeDateComparator;
 
 /**
  * 
@@ -56,6 +59,10 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 	@Autowired
 	private EzeeInvoiceDao dao;
 
+	private static final EzeeInvoiceSupplierNameCompataor EZEE_INVOICE_SUPLIER_NAME_COMPARATOR = new EzeeInvoiceSupplierNameCompataor();
+
+	private static final EzeeInvoiceDateCompataor EZEE_INVOICE_DATE_COMPARATOR = new EzeeInvoiceDateCompataor();
+
 	@Override
 	public void generateReport(final HttpServletRequest request, final HttpServletResponse response) {
 		try {
@@ -68,6 +75,7 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 	private void generateEzeeInvoiceReport(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		List<EzeeInvoice> invoices = getInvoices(request);
+		Collections.sort(invoices, EZEE_INVOICE_SUPLIER_NAME_COMPARATOR);
 		if (!isEmpty(invoices)) {
 			Map<String, List<EzeeInvoice>> supplierInvoices = resolveInvoicesBySupplier(invoices);
 			generateEzeeInvoiceReport(supplierInvoices, response);
@@ -165,6 +173,7 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 		CellStyle boldStyle = boldStyle(book, false);
 		int rowsAdded = ZERO;
 		String supplierName = invoices.get(EzeeCommonConstants.ZERO).getSupplier().getName();
+		Collections.sort(invoices, EZEE_INVOICE_DATE_COMPARATOR);
 		for (EzeeInvoice invoice : invoices) {
 			Row newrow = sheet.createRow(currentRow);
 			Cell invoiceNum = newrow.createCell(INVOICE_ID_INDEX, CELL_TYPE_STRING);
@@ -251,7 +260,7 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 	}
 
 	private Map<String, List<EzeeInvoice>> resolveInvoicesBySupplier(final List<EzeeInvoice> invoices) {
-		Map<String, List<EzeeInvoice>> supplierInvoices = new HashMap<>();
+		Map<String, List<EzeeInvoice>> supplierInvoices = new LinkedHashMap<>();
 		for (EzeeInvoice invoice : invoices) {
 			String key = invoice.getSupplier().getName();
 			if (!supplierInvoices.containsKey(key)) {
@@ -275,5 +284,24 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 		boolean includePaid = Boolean.valueOf(request.getParameter(EXCEL_INVOICE_INCLUDE_PAID_FILTER));
 		return new EzeeInvoiceFilter(supplier, premises, invoiceIds, SERVER_DATE_UTILS.fromString(from),
 				SERVER_DATE_UTILS.fromString(to), SERVER_DATE_UTILS, includePaid);
+	}
+
+	private static class EzeeInvoiceSupplierNameCompataor implements Comparator<EzeeInvoice> {
+
+		@Override
+		public int compare(final EzeeInvoice one, final EzeeInvoice two) {
+			return one.getSupplier().getName().compareTo(two.getSupplier().getName());
+		}
+	}
+
+	private static class EzeeInvoiceDateCompataor implements Comparator<EzeeInvoice> {
+
+		private final EzeeDateComparator dateComparator = new EzeeDateComparator();
+
+		@Override
+		public int compare(final EzeeInvoice one, final EzeeInvoice two) {
+			return dateComparator.compare(SERVER_DATE_UTILS.fromString(one.getInvoiceDate()),
+					SERVER_DATE_UTILS.fromString(two.getInvoiceDate()));
+		}
 	}
 }

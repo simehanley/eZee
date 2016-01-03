@@ -112,8 +112,8 @@ public class EzeeProjectPaymentGridModel extends EzeeGridModel<EzeeProjectPaymen
 		handler.setComparator(columns.get(PAYMENT_DATE), new Comparator<EzeeProjectPayment>() {
 			@Override
 			public int compare(final EzeeProjectPayment one, final EzeeProjectPayment two) {
-				return dateComparator.compare(dateUtilities.fromString(one.getPaymentDate()),
-						dateUtilities.fromString(two.getPaymentDate()));
+				return dateComparator.compare(DATE_UTILS.fromString(one.getPaymentDate()),
+						DATE_UTILS.fromString(two.getPaymentDate()));
 			}
 		});
 		handler.setComparator(columns.get(PAYMENT_TYPE), new Comparator<EzeeProjectPayment>() {
