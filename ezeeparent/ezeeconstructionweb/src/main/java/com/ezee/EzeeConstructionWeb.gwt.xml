@@ -4,19 +4,15 @@
 	<inherits name='com.google.gwt.user.User' />
 	<inherits name="com.google.gwt.logging.Logging" />
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
+	<inherits name='com.googlecode.mgwt.MGWT' />
 
 	<inherits name="com.ezee.EzeeCommon" />
 	<inherits name="com.ezee.EzeeModel" />
 	<inherits name="com.ezee.EzeeWebCommon" />
 
-	<inherits name="com.sencha.gxt.ui.GXT" />
-	<!--inherits name="com.sencha.gxt.theme.neptune.Theme" /-->
-
 	<set-property name="gwt.logging.enabled" value="TRUE" />
 	<set-property name="gwt.logging.logLevel" value="INFO" />
 	<set-property name="gwt.logging.consoleHandler" value="ENABLED" />
-
-	<stylesheet src="reset.css" />
 
 	<entry-point class='com.ezee.client.EzeeConstructionWeb' />
 

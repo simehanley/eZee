@@ -8,9 +8,12 @@
 
 	<bean id="contractorReportGenerator" class="com.ezee.server.report.excel.contractor.EzeeContractorReportGenerator" />
 
+	<bean id="projectReportGenerator" class="com.ezee.server.report.excel.project.EzeeProjectReportGenerator" />
+
 	<util:map key-type="com.ezee.web.common.enums.EzeeReportType" value-type="com.ezee.server.report.EzeeReportGenerator"
 		id="Report_Generators">
 		<entry key="contractor_report_excel" value-ref="contractorReportGenerator" />
+		<entry key="detailed_project_report_excel" value-ref="projectReportGenerator" />
 	</util:map>
 
 </beans>

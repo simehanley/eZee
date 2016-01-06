@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.StackPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
+import com.googlecode.mgwt.ui.client.MGWT;
 
 public class EzeeWebMain extends Composite {
 
@@ -68,7 +69,6 @@ public class EzeeWebMain extends Composite {
 	protected void initMain() {
 		if (cache.getConfiguration() != null) {
 			version.setText(cache.getConfiguration().getVersion());
-			licensedto.setText(cache.getConfiguration().getLicensee());
 		}
 		email.addClickHandler(new ClickHandler() {
 			@Override
@@ -84,8 +84,17 @@ public class EzeeWebMain extends Composite {
 			}
 		});
 		addTabHandler();
-		setDate();
-		applyDateTimer();
+		if (MGWT.getFormFactor().isDesktop()) {
+			addDesktopOnlyElements();
+		}
+	}
+
+	private void addDesktopOnlyElements() {
+		if (cache.getConfiguration() != null) {
+			licensedto.setText(cache.getConfiguration().getLicensee());
+			setDate();
+			applyDateTimer();
+		}
 	}
 
 	protected void initUser() {

@@ -123,7 +123,6 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 		double amount = ZERO_DBL, tax = ZERO_DBL, total = ZERO_DBL;
 		CellStyle boldStyle = boldStyle(book, false);
 		CellStyle boldCurrencyStyle = currencyStyle(book, true);
-
 		for (String key : supplierInvoices.keySet()) {
 			List<EzeeInvoice> invoices = supplierInvoices.get(key);
 			for (EzeeInvoice invoice : invoices) {

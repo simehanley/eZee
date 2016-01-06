@@ -43,6 +43,8 @@ public interface EzeeWebCommonConstants {
 	String EXCEL_INVOICE_DATE_TO_FILTER = "DateTo";
 	String EXCEL_INVOICE_INCLUDE_PAID_FILTER = "IncludePaid";
 
+	String EXCEL_PROJECT_ID = "ProjectId";
+
 	String EXCEL_FE_FILTER = "FE_FILTER";
 
 	String SUPPORT_EMAIL = "mailto:support@ezeeit.com";

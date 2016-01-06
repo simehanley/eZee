@@ -11,6 +11,10 @@ import static com.ezee.common.EzeeCommonConstants.MINUS_ONE;
 import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getPercentFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
+import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_PROJECT_ID;
+import static com.ezee.web.common.EzeeWebCommonConstants.REPORT_SERVICE;
+import static com.ezee.web.common.EzeeWebCommonConstants.REPORT_TYPE;
+import static com.ezee.web.common.enums.EzeeReportType.detailed_project_report_excel;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.delete;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.update;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
@@ -37,6 +41,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -45,6 +50,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.StackLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.mgwt.ui.client.MGWT;
 
 public class EzeeProjectDetail extends Composite {
 
@@ -134,6 +140,24 @@ public class EzeeProjectDetail extends Composite {
 	TextBox txtPercent;
 
 	@UiField
+	Label lblTotals;
+
+	@UiField
+	Label lblBudget;
+
+	@UiField
+	Label lblActual;
+
+	@UiField
+	Label lblPaid;
+
+	@UiField
+	Label lblBalance;
+
+	@UiField
+	Label lblPercent;
+
+	@UiField
 	StackLayoutPanel panel;
 
 	@UiField
@@ -162,7 +186,25 @@ public class EzeeProjectDetail extends Composite {
 		projectPaymentGrid = new EzeeProjectPaymentGrid(this);
 		projectPayments.add(projectPaymentGrid);
 		projectItemGrid.addListener(projectPaymentGrid);
-		updateTotals();
+		if (!MGWT.getFormFactor().isDesktop()) {
+			hideTotals();
+		} else {
+			updateTotals();
+		}
+	}
+
+	private void hideTotals() {
+		txtBudget.setVisible(false);
+		txtActual.setVisible(false);
+		txtPaid.setVisible(false);
+		txtBalance.setVisible(false);
+		txtPercent.setVisible(false);
+		lblTotals.setVisible(false);
+		lblBudget.setVisible(false);
+		lblActual.setVisible(false);
+		lblPaid.setVisible(false);
+		lblBalance.setVisible(false);
+		lblPercent.setVisible(false);
 	}
 
 	public final EzeeProject getProject() {
@@ -239,7 +281,8 @@ public class EzeeProjectDetail extends Composite {
 
 	@UiHandler("btnReport")
 	void onReportClick(ClickEvent event) {
-		showNew("Not Implemented", "Project report is yet to be implemented.");
+		String reportServiceUrl = GWT.getModuleBaseURL() + resolveReportParamString();
+		Window.Location.assign(reportServiceUrl);
 	}
 
 	private void save(final boolean refresh) {
@@ -324,11 +367,13 @@ public class EzeeProjectDetail extends Composite {
 	}
 
 	private void updateTotals() {
-		txtBudget.setValue(getAmountFormat().format(project.budgeted().getTotal()));
-		txtActual.setValue(getAmountFormat().format(project.actual().getTotal()));
-		txtPaid.setValue(getAmountFormat().format(project.paid().getTotal()));
-		txtBalance.setValue(getAmountFormat().format(project.balance().getTotal()));
-		txtPercent.setValue(getPercentFormat().format(project.percent()));
+		if (MGWT.getFormFactor().isDesktop()) {
+			txtBudget.setValue(getAmountFormat().format(project.budgeted().getTotal()));
+			txtActual.setValue(getAmountFormat().format(project.actual().getTotal()));
+			txtPaid.setValue(getAmountFormat().format(project.paid().getTotal()));
+			txtBalance.setValue(getAmountFormat().format(project.balance().getTotal()));
+			txtPercent.setValue(getPercentFormat().format(project.percent()));
+		}
 	}
 
 	private class EzeeCreateUpdateProjectItemHandler implements EzeeCreateUpdateDeleteEntityHandler<EzeeProjectItem> {
@@ -497,5 +542,12 @@ public class EzeeProjectDetail extends Composite {
 			projectItemGrid.getModel().getHandler().getList().add(index, item);
 			projectItemGrid.getGrid().redraw();
 		}
+	}
+
+	private String resolveReportParamString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(REPORT_SERVICE + "?" + REPORT_TYPE + "=" + detailed_project_report_excel);
+		builder.append("&" + EXCEL_PROJECT_ID + "=" + project.getId());
+		return builder.toString();
 	}
 }

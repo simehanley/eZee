@@ -75,6 +75,22 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 	protected String FE_FAX = "Fax";
 	protected String FE_EMAIL = "E-Mail";
 
+	protected String PROJECT_ITEM_NAME = "Name";
+	protected String PROJECT_ITEM_CONTRACTOR = "Contractor";
+	protected String PROJECT_ITEM_BUDGET = "Budget";
+	protected String PROJECT_ITEM_ACTUAL = "Actual";
+	protected String PROJECT_ITEM_PAID = "Paid";
+	protected String PROJECT_ITEM_BALANCE = "Balance";
+	protected String PROJECT_ITEM_COMPLETE = "% Complete";
+
+	protected int PROJECT_ITEM_NAME_INDEX = 0;
+	protected int PROJECT_ITEM_CONTRACTOR_INDEX = 1;
+	protected int PROJECT_ITEM_BUDGET_INDEX = 2;
+	protected int PROJECT_ITEM_ACTUAL_INDEX = 3;
+	protected int PROJECT_ITEM_PAID_INDEX = 4;
+	protected int PROJECT_ITEM_BALANCE_INDEX = 5;
+	protected int PROJECT_ITEM_COMPLETE_INDEX = 6;
+
 	protected int[] INVOICE_REPORT_INDEXES = { INVOICE_ID_INDEX, SUPPLIER_INDEX, PREMISES_INDEX, CLASSIFICATION_INDEX,
 			AMOUNT_INDEX, TAX_INDEX, TOTAL_INDEX, INVOICE_DATE_INDEX, DUE_DATE_INDEX, PAYMENT_DATE_INDEX };
 	protected String[] INVOICE_REPORT_FIELDS = { INVOICE_ID, SUPPLIER, PREMISES, CLASSIFICATION, AMOUNT, TAX, TOTAL,
@@ -85,6 +101,12 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 			FE_FAX_INDEX, FE_EMAIL_INDEX };
 	protected String[] FE_REPORT_FIELDS = { FE_NAME, FE_CONTACT, FE_ADDRESS_LINE_1, FE_ADDRESS_LINE_2, FE_SUBURB,
 			FE_CITY, FE_STATE, FE_POSTCODE, FE_PHONE, FE_FAX, FE_EMAIL };
+
+	protected int[] PROJECT_ITEM_HEADER_INDEXES = { PROJECT_ITEM_NAME_INDEX, PROJECT_ITEM_CONTRACTOR_INDEX,
+			PROJECT_ITEM_BUDGET_INDEX, PROJECT_ITEM_ACTUAL_INDEX, PROJECT_ITEM_PAID_INDEX, PROJECT_ITEM_BALANCE_INDEX,
+			PROJECT_ITEM_COMPLETE_INDEX };
+	protected String[] PROJECT_ITEM_HEADER_FIELDS = { PROJECT_ITEM_NAME, PROJECT_ITEM_CONTRACTOR, PROJECT_ITEM_BUDGET,
+			PROJECT_ITEM_ACTUAL, PROJECT_ITEM_PAID, PROJECT_ITEM_BALANCE, PROJECT_ITEM_COMPLETE };
 
 	protected OutputStream createExcelFilenameResponseHeader(final HttpServletResponse resp, final String filename)
 			throws IOException {
@@ -97,7 +119,12 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 
 	protected void generateExcelReportHeader(final Workbook book, final Sheet sheet, final int[] indexes,
 			final String[] fieldnames) {
-		Row header = sheet.createRow(ZERO);
+		generateExcelReportHeader(book, sheet, indexes, fieldnames, ZERO);
+	}
+
+	protected void generateExcelReportHeader(final Workbook book, final Sheet sheet, final int[] indexes,
+			final String[] fieldnames, int currentRow) {
+		Row header = sheet.createRow(currentRow);
 		CellStyle headerStyle = boldStyle(book, true);
 		for (int i = ZERO; i < indexes.length; i++) {
 			Cell cell = header.createCell(i, CELL_TYPE_STRING);
