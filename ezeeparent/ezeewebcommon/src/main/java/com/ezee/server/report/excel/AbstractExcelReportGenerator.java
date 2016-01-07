@@ -1,5 +1,6 @@
 package com.ezee.server.report.excel;
 
+import static com.ezee.common.EzeeCommonConstants.ONE;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING;
 import static org.apache.poi.ss.usermodel.CellStyle.ALIGN_CENTER;
@@ -75,6 +76,12 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 	protected String FE_FAX = "Fax";
 	protected String FE_EMAIL = "E-Mail";
 
+	protected String PROJECT_START = "Start";
+	protected String PROJECT_END = "End";
+
+	protected int PROJECT_START_INDEX = 1;
+	protected int PROJECT_END_INDEX = 2;
+
 	protected String PROJECT_ITEM_NAME = "Name";
 	protected String PROJECT_ITEM_CONTRACTOR = "Contractor";
 	protected String PROJECT_ITEM_BUDGET = "Budget";
@@ -91,6 +98,24 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 	protected int PROJECT_ITEM_BALANCE_INDEX = 5;
 	protected int PROJECT_ITEM_COMPLETE_INDEX = 6;
 
+	protected String PROJECT_ITEM_DETAIL_DESC = "Description";
+	protected String PROJECT_ITEM_DETAIL_TYPE = "Type";
+	protected String PROJECT_ITEM_DETAIL_AMOUNT = "Amount";
+	protected String PROJECT_ITEM_DETAIL_TAX = "Tax";
+	protected String PROJECT_ITEM_DETAIL_TOTAL = "Total";
+
+	protected int PROJECT_ITEM_DETAIL_DESC_INDEX = 1;
+	protected int PROJECT_ITEM_DETAIL_TYPE_INDEX = 2;
+	protected int PROJECT_ITEM_DETAIL_AMOUNT_INDEX = 3;
+	protected int PROJECT_ITEM_DETAIL_TAX_INDEX = 4;
+	protected int PROJECT_ITEM_DETAIL_TOTAL_INDEX = 5;
+
+	protected String PROJECT_PMT_REF = "Ref";
+	protected String PROJECT_PMT_DATE = "Date";
+
+	protected int PROJECT_PMT_REF_INDEX = 6;
+	protected int PROJECT_PMT_DATE_INDEX = 7;
+
 	protected int[] INVOICE_REPORT_INDEXES = { INVOICE_ID_INDEX, SUPPLIER_INDEX, PREMISES_INDEX, CLASSIFICATION_INDEX,
 			AMOUNT_INDEX, TAX_INDEX, TOTAL_INDEX, INVOICE_DATE_INDEX, DUE_DATE_INDEX, PAYMENT_DATE_INDEX };
 	protected String[] INVOICE_REPORT_FIELDS = { INVOICE_ID, SUPPLIER, PREMISES, CLASSIFICATION, AMOUNT, TAX, TOTAL,
@@ -102,11 +127,30 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 	protected String[] FE_REPORT_FIELDS = { FE_NAME, FE_CONTACT, FE_ADDRESS_LINE_1, FE_ADDRESS_LINE_2, FE_SUBURB,
 			FE_CITY, FE_STATE, FE_POSTCODE, FE_PHONE, FE_FAX, FE_EMAIL };
 
+	protected int[] PROJECT_HEADER_INDEXES = { PROJECT_ITEM_NAME_INDEX, PROJECT_START_INDEX, PROJECT_END_INDEX,
+			PROJECT_ITEM_BUDGET_INDEX + ONE, PROJECT_ITEM_ACTUAL_INDEX + ONE, PROJECT_ITEM_PAID_INDEX + ONE,
+			PROJECT_ITEM_BALANCE_INDEX + ONE, PROJECT_ITEM_COMPLETE_INDEX + ONE };
+	protected String[] PROJECT_HEADER_FIELDS = { PROJECT_ITEM_NAME, PROJECT_START, PROJECT_END, PROJECT_ITEM_BUDGET,
+			PROJECT_ITEM_ACTUAL, PROJECT_ITEM_PAID, PROJECT_ITEM_BALANCE, PROJECT_ITEM_COMPLETE };
+
 	protected int[] PROJECT_ITEM_HEADER_INDEXES = { PROJECT_ITEM_NAME_INDEX, PROJECT_ITEM_CONTRACTOR_INDEX,
 			PROJECT_ITEM_BUDGET_INDEX, PROJECT_ITEM_ACTUAL_INDEX, PROJECT_ITEM_PAID_INDEX, PROJECT_ITEM_BALANCE_INDEX,
 			PROJECT_ITEM_COMPLETE_INDEX };
 	protected String[] PROJECT_ITEM_HEADER_FIELDS = { PROJECT_ITEM_NAME, PROJECT_ITEM_CONTRACTOR, PROJECT_ITEM_BUDGET,
 			PROJECT_ITEM_ACTUAL, PROJECT_ITEM_PAID, PROJECT_ITEM_BALANCE, PROJECT_ITEM_COMPLETE };
+
+	protected int[] PROJECT_ITEM_DETAIL_HEADER_INDEXES = { PROJECT_ITEM_DETAIL_DESC_INDEX,
+			PROJECT_ITEM_DETAIL_TYPE_INDEX, PROJECT_ITEM_DETAIL_AMOUNT_INDEX, PROJECT_ITEM_DETAIL_TAX_INDEX,
+			PROJECT_ITEM_DETAIL_TOTAL_INDEX };
+	protected String[] PROJECT_ITEM_DETAIL_HEADER_FIELDS = { PROJECT_ITEM_DETAIL_DESC, PROJECT_ITEM_DETAIL_TYPE,
+			PROJECT_ITEM_DETAIL_AMOUNT, PROJECT_ITEM_DETAIL_TAX, PROJECT_ITEM_DETAIL_TOTAL };
+
+	protected int[] PROJECT_PMT_HEADER_INDEXES = { PROJECT_ITEM_DETAIL_DESC_INDEX, PROJECT_ITEM_DETAIL_TYPE_INDEX,
+			PROJECT_ITEM_DETAIL_AMOUNT_INDEX, PROJECT_ITEM_DETAIL_TAX_INDEX, PROJECT_ITEM_DETAIL_TOTAL_INDEX,
+			PROJECT_PMT_REF_INDEX, PROJECT_PMT_DATE_INDEX };
+	protected String[] PROJECT_PMT_HEADER_FIELDS = { PROJECT_ITEM_DETAIL_DESC, PROJECT_ITEM_DETAIL_TYPE,
+			PROJECT_ITEM_DETAIL_AMOUNT, PROJECT_ITEM_DETAIL_TAX, PROJECT_ITEM_DETAIL_TOTAL, PROJECT_PMT_REF,
+			PROJECT_PMT_DATE };
 
 	protected OutputStream createExcelFilenameResponseHeader(final HttpServletResponse resp, final String filename)
 			throws IOException {
@@ -127,7 +171,7 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 		Row header = sheet.createRow(currentRow);
 		CellStyle headerStyle = boldStyle(book, true);
 		for (int i = ZERO; i < indexes.length; i++) {
-			Cell cell = header.createCell(i, CELL_TYPE_STRING);
+			Cell cell = header.createCell(indexes[i], CELL_TYPE_STRING);
 			cell.setCellValue(fieldnames[i]);
 			cell.setCellStyle(headerStyle);
 		}
