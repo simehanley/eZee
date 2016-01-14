@@ -111,7 +111,7 @@ public abstract class EzeeProjectDataGrid<T extends EzeeDatabaseEntity> extends 
 		return null;
 	}
 
-	protected void setSelected(int index) {
+	public void setSelected(int index) {
 		if (index >= ZERO && model.getHandler().getList().size() > index) {
 			T entity = model.getHandler().getList().get(index);
 			getGrid().getSelectionModel().setSelected(entity, true);

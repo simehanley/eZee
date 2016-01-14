@@ -28,16 +28,16 @@ public class EzeeProjectItemDetailGrid extends EzeeProjectDataGrid<EzeeProjectIt
 	protected void loadEntities() {
 		EzeeProject project = projectDetail.getProject();
 		if (!isEmpty(project.getItems())) {
-			loadDetails(project.getItems().iterator().next());
+			loadDetails(project.getItems().iterator().next(), ZERO);
 		}
 	}
 
 	@Override
-	public void itemSelected(final EzeeProjectItem item) {
-		loadDetails(item);
+	public void itemSelected(final EzeeProjectItem item, final int selected) {
+		loadDetails(item, selected);
 	}
 
-	private void loadDetails(final EzeeProjectItem item) {
+	private void loadDetails(final EzeeProjectItem item, final int selected) {
 		model.getHandler().getList().clear();
 		if (item != null && item.getDetails() != null) {
 			if (!isEmpty(item.getDetails())) {
@@ -45,7 +45,7 @@ public class EzeeProjectItemDetailGrid extends EzeeProjectDataGrid<EzeeProjectIt
 			}
 		}
 		grid.redraw();
-		setSelected(ZERO);
+		setSelected(selected);
 	}
 
 	@Override

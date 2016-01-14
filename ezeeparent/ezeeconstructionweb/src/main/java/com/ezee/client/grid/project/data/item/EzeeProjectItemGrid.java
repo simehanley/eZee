@@ -63,7 +63,7 @@ public class EzeeProjectItemGrid extends EzeeProjectDataGrid<EzeeProjectItem> {
 
 	private void notifySelect(final EzeeProjectItem item) {
 		for (EzeeProjectItemGridListener listener : listeners) {
-			listener.itemSelected(item);
+			listener.itemSelected(item, ZERO);
 		}
 	}
 

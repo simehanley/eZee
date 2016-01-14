@@ -1,5 +1,6 @@
 package com.ezee.web.common.ui.grid;
 
+import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
 
 import java.util.Comparator;
@@ -10,6 +11,7 @@ import java.util.Map;
 import com.ezee.model.entity.EzeeFinancialEntity;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.googlecode.mgwt.ui.client.MGWT;
 
 public abstract class EzeeFinancialEntityGridModel<T extends EzeeFinancialEntity> extends EzeeGridModel<T> {
 
@@ -77,6 +79,9 @@ public abstract class EzeeFinancialEntityGridModel<T extends EzeeFinancialEntity
 	}
 
 	protected String resolveCellStyleNames(final T entity) {
-		return INSTANCE.css().black();
+		if (MGWT.getFormFactor().isDesktop()) {
+			return INSTANCE.css().black();
+		}
+		return EMPTY_STRING;
 	}
 }

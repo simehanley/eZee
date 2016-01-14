@@ -4,7 +4,6 @@
 	<inherits name='com.google.gwt.user.User' />
 	<inherits name="com.google.gwt.logging.Logging" />
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
-	<inherits name='com.googlecode.mgwt.MGWT' />
 
 	<inherits name="com.ezee.EzeeCommon" />
 	<inherits name="com.ezee.EzeeModel" />

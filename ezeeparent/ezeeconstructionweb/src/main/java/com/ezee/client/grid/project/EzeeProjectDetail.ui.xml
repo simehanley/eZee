@@ -5,27 +5,31 @@
 	<ui:with type="com.ezee.client.css.EzeeProjectResources" field="proj" />
 
 	<g:HTMLPanel styleName="{proj.css.projectMainBackGround}">
+		<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="100%">
+			<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="92%" height="100%">
+				<g:HorizontalPanel>
+					<g:Label text="Totals" styleName="{res.css.gwtLabelSmall}" ui:field="lblTotals" wordWrap="false" />
+					<g:Label text="Budget" styleName="{res.css.gwtLabelSmall}" ui:field="lblBudget" wordWrap="false" />
+					<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtBudget" enabled="false" />
+					<g:Label text="Actual" styleName="{res.css.gwtLabelSmall}" ui:field="lblActual" wordWrap="false" />
+					<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtActual" enabled="false" />
+					<g:Label text="Paid" styleName="{res.css.gwtLabelSmall}" ui:field="lblPaid" wordWrap="false" />
+					<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtPaid" enabled="false" />
+					<g:Label text="Balance" styleName="{res.css.gwtLabelSmall}" ui:field="lblBalance" wordWrap="false" />
+					<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtBalance" enabled="false" />
+					<g:Label text="% Complete" styleName="{res.css.gwtLabelSmall}" ui:field="lblPercent" wordWrap="false" />
+					<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtPercent" enabled="false" />
+				</g:HorizontalPanel>
+			</g:cell>
+		</g:HorizontalPanel>
 		<g:DockLayoutPanel height="40%" width="100%" unit="EM">
 			<g:south size="2.8">
 				<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="99.25%">
 					<g:cell horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" width="92%" height="100%">
-						<g:HorizontalPanel>
-							<g:Label text="Totals" styleName="{res.css.gwtLabelSmall}" ui:field="lblTotals" />
-							<g:Label text="Budget" styleName="{res.css.gwtLabelSmall}" ui:field="lblBudget" />
-							<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtBudget" enabled="false" />
-							<g:Label text="Actual" styleName="{res.css.gwtLabelSmall}" ui:field="lblActual" />
-							<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtActual" enabled="false" />
-							<g:Label text="Paid" styleName="{res.css.gwtLabelSmall}" ui:field="lblPaid" />
-							<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtPaid" enabled="false" />
-							<g:Label text="Balance" styleName="{res.css.gwtLabelSmall}" ui:field="lblBalance" />
-							<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtBalance" enabled="false" />
-							<g:Label text="% Complete" styleName="{res.css.gwtLabelSmall}" ui:field="lblPercent" />
-							<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtPercent" enabled="false" />
-						</g:HorizontalPanel>
+						<g:HTML />
 					</g:cell>
 					<g:cell horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" width="8%" height="100%">
 						<g:HorizontalPanel>
-							<g:Button text="Refresh" styleName="{res.css.gwtButton}" ui:field="btnRefresh" />
 							<g:Button text="Add" styleName="{res.css.gwtButton}" ui:field="btnAddItem" />
 							<g:Button text="Edit" styleName="{res.css.gwtButton}" ui:field="btnEditItem" />
 							<g:Button text="Delete" styleName="{res.css.gwtButton}" ui:field="btnDeleteItem" />

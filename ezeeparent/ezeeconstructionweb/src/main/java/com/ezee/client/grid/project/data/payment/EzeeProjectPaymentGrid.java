@@ -28,16 +28,16 @@ public class EzeeProjectPaymentGrid extends EzeeProjectDataGrid<EzeeProjectPayme
 	protected void loadEntities() {
 		EzeeProject project = projectDetail.getProject();
 		if (!isEmpty(project.getItems())) {
-			loadPayments(project.getItems().iterator().next());
+			loadPayments(project.getItems().iterator().next(), ZERO);
 		}
 	}
 
 	@Override
-	public void itemSelected(final EzeeProjectItem item) {
-		loadPayments(item);
+	public void itemSelected(final EzeeProjectItem item, final int selected) {
+		loadPayments(item, selected);
 	}
 
-	private void loadPayments(final EzeeProjectItem item) {
+	private void loadPayments(final EzeeProjectItem item, final int selected) {
 		model.getHandler().getList().clear();
 		if (item != null && item.getPayments() != null) {
 			if (!isEmpty(item.getPayments())) {
@@ -45,7 +45,7 @@ public class EzeeProjectPaymentGrid extends EzeeProjectDataGrid<EzeeProjectPayme
 			}
 		}
 		grid.redraw();
-		setSelected(ZERO);
+		setSelected(selected);
 	}
 
 	@Override

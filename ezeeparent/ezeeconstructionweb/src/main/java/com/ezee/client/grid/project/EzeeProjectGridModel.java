@@ -1,5 +1,6 @@
 package com.ezee.client.grid.project;
 
+import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getPercentFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
@@ -16,6 +17,7 @@ import com.ezee.web.common.ui.grid.EzeeGridModel;
 import com.ezee.web.common.ui.utils.EzeeDateComparator;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.googlecode.mgwt.ui.client.MGWT;
 
 public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 
@@ -135,6 +137,9 @@ public class EzeeProjectGridModel extends EzeeGridModel<EzeeProject> {
 	}
 
 	protected String resolveCellStyleNames(final EzeeProject project) {
-		return INSTANCE.css().black();
+		if (MGWT.getFormFactor().isDesktop()) {
+			return INSTANCE.css().black();
+		}
+		return EMPTY_STRING;
 	}
 }

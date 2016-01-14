@@ -161,12 +161,7 @@ public class EzeeProjectDetail extends Composite {
 	StackLayoutPanel panel;
 
 	@UiField
-	Button btnRefresh;
-
-	@UiField
 	Button btnReport;
-
-	private boolean modified = false;
 
 	public EzeeProjectDetail(final EzeeProject project, final EzeeEntityCache cache,
 			final EzeeProjectDetailListener listener) {
@@ -263,20 +258,11 @@ public class EzeeProjectDetail extends Composite {
 
 	@UiHandler("btnSave")
 	void onSaveClick(ClickEvent event) {
-		save(false);
+		save();
 	}
 
 	private void close() {
 		listener.detailClosed(project);
-	}
-
-	@UiHandler("btnRefresh")
-	void onRefreshClick(ClickEvent event) {
-		if (modified) {
-			save(true);
-		} else {
-			refresh();
-		}
 	}
 
 	@UiHandler("btnReport")
@@ -285,7 +271,7 @@ public class EzeeProjectDetail extends Composite {
 		Window.Location.assign(reportServiceUrl);
 	}
 
-	private void save(final boolean refresh) {
+	private void save() {
 		showWaitCursor();
 		ENTITY_SERVICE.saveEntity(EzeeProject.class.getName(), project, new AsyncCallback<EzeeProject>() {
 
@@ -302,57 +288,32 @@ public class EzeeProjectDetail extends Composite {
 			public void onSuccess(final EzeeProject result) {
 				showDefaultCursor();
 				reBindProject(result);
+				reloadUi();
 				unmodified();
 				log.log(Level.INFO, "Saved project '" + project + "'.");
-				if (refresh) {
-					refresh();
-				}
-			}
-		});
-	}
-
-	private void refresh() {
-		showWaitCursor();
-		ENTITY_SERVICE.getEntity(EzeeProject.class.getName(), project.getId(), new AsyncCallback<EzeeProject>() {
-
-			@Override
-			public void onFailure(final Throwable caught) {
-				showDefaultCursor();
-				String message = "Failed to retrieve persisted project '" + project + "'. See log for details.";
-				log.log(Level.SEVERE, message, caught);
-				showNew("Error", message);
-				error();
-			}
-
-			@Override
-			public void onSuccess(final EzeeProject result) {
-				showDefaultCursor();
-				reBindProject(result);
-				unmodified();
-				reloadUi();
-				log.log(Level.INFO, "Refreshed project '" + project + "'.");
 			}
 		});
 	}
 
 	private void reloadUi() {
+		int itemIndex = projectItemGrid.getIndex(projectItemGrid.getSelected());
+		int detailIndex = projectItemDetailGrid.getIndex(projectItemDetailGrid.getSelected());
+		int paymentIndex = projectPaymentGrid.getIndex(projectPaymentGrid.getSelected());
 		projectItemGrid.reloadEntities();
-		projectItemDetailGrid.reloadEntities();
-		projectPaymentGrid.reloadEntities();
-
+		projectItemGrid.setSelected(itemIndex);
+		projectItemDetailGrid.itemSelected(projectItemGrid.getSelected(), detailIndex);
+		projectPaymentGrid.itemSelected(projectItemGrid.getSelected(), paymentIndex);
 	}
 
 	public void modified() {
 		lblStatus.setStyleName(INSTANCE.css().gwtLabelProjectModifyMod());
 		lblStatus.setText(MODIFIED);
 		updateTotals();
-		modified = true;
 	}
 
 	public void unmodified() {
 		lblStatus.setStyleName(INSTANCE.css().gwtLabelProjectModifyUnmod());
 		lblStatus.setText(UNMODIFIED);
-		modified = false;
 	}
 
 	public void error() {

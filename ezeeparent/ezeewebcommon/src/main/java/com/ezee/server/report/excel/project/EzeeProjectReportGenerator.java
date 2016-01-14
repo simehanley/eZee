@@ -3,7 +3,6 @@ package com.ezee.server.report.excel.project;
 import static com.ezee.common.EzeeCommonConstants.ONE;
 import static com.ezee.common.EzeeCommonConstants.PERCENT_MULTIPLIER;
 import static com.ezee.common.EzeeCommonConstants.TWO;
-import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_PROJECT_ID;
 import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_NUMERIC;
@@ -22,6 +21,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +38,10 @@ import com.ezee.server.report.excel.AbstractExcelReportGenerator;
 public class EzeeProjectReportGenerator extends AbstractExcelReportGenerator implements EzeeReportGenerator {
 
 	private static final Logger log = LoggerFactory.getLogger(EzeeProjectReportGenerator.class);
+
+	private static final String PROJECT_TEMPLATE_NAME = "test.xls";
+
+	private static final int PROJECT_REPORT_START_ROW = 3;
 
 	@Autowired
 	private EzeeProjectDao dao;
@@ -69,8 +73,8 @@ public class EzeeProjectReportGenerator extends AbstractExcelReportGenerator imp
 	}
 
 	private byte[] generateEzeeProjectReport(final EzeeProject project) throws IOException {
-		Workbook book = new HSSFWorkbook();
-		Sheet sheet = book.createSheet(project.getName());
+		Workbook book = new HSSFWorkbook(getClass().getResourceAsStream("/excel/" + PROJECT_TEMPLATE_NAME));
+		Sheet sheet = book.getSheet("PROJECT");
 		generateEzeeProjectReport(book, sheet, project);
 		formatReport(sheet);
 		ByteArrayOutputStream result = new ByteArrayOutputStream();
@@ -80,19 +84,13 @@ public class EzeeProjectReportGenerator extends AbstractExcelReportGenerator imp
 	}
 
 	private void generateEzeeProjectReport(final Workbook book, final Sheet sheet, final EzeeProject project) {
-		int currentRow = ZERO;
-		generateEzeeProjectReportHeader(book, sheet, project, currentRow);
-		++currentRow;
+		int currentRow = PROJECT_REPORT_START_ROW;
 		generateEzeeProjectReportContent(book, sheet, project, currentRow);
 		currentRow += TWO;
-		for (EzeeProjectItem item : project.getItems()) {
-			currentRow += generateEzeeProjectItemReport(book, sheet, item, currentRow);
-		}
-	}
-
-	private void generateEzeeProjectReportHeader(final Workbook book, final Sheet sheet, final EzeeProject project,
-			final int currentRow) {
-		generateExcelReportHeader(book, sheet, PROJECT_HEADER_INDEXES, PROJECT_HEADER_FIELDS, currentRow);
+		// for (EzeeProjectItem item : project.getItems()) {
+		// currentRow += generateEzeeProjectItemReport(book, sheet, item,
+		// currentRow);
+		// }
 	}
 
 	private void generateEzeeProjectReportContent(final Workbook book, final Sheet sheet, final EzeeProject project,

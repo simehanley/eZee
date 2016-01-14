@@ -4,7 +4,7 @@ import com.ezee.model.entity.project.EzeeProjectItem;
 
 public interface EzeeProjectItemGridListener {
 
-	void itemSelected(EzeeProjectItem item);
+	void itemSelected(EzeeProjectItem item, int selected);
 
 	void itemDeleted(EzeeProjectItem item);
 }
