@@ -67,7 +67,6 @@
 					<include>**/*.properties</include>
 					<include>**/*.xls</include>
 				</includes>
-				<filtering>true</filtering>
 			</resource>
 		</resources>
 		<plugins>
