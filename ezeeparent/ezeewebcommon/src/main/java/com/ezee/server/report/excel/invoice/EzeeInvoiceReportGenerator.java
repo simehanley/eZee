@@ -121,8 +121,8 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 		double expenseamount = ZERO_DBL, expesetax = ZERO_DBL, expensetotal = ZERO_DBL;
 		double capitalamount = ZERO_DBL, capitaltax = ZERO_DBL, capitaltotal = ZERO_DBL;
 		double amount = ZERO_DBL, tax = ZERO_DBL, total = ZERO_DBL;
-		CellStyle boldStyle = boldStyle(book, false);
-		CellStyle boldCurrencyStyle = currencyStyle(book, true);
+		CellStyle boldStyle = boldStyle(book, false, false);
+		CellStyle boldCurrencyStyle = currencyStyle(book, true, false);
 		for (String key : supplierInvoices.keySet()) {
 			List<EzeeInvoice> invoices = supplierInvoices.get(key);
 			for (EzeeInvoice invoice : invoices) {
@@ -167,9 +167,9 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 		double capitalamount = ZERO_DBL, capitaltax = ZERO_DBL, capitaltotal = ZERO_DBL;
 		double amount = ZERO_DBL, tax = ZERO_DBL, total = ZERO_DBL;
 
-		CellStyle currencyStyle = currencyStyle(book, false);
-		CellStyle boldCurrencyStyle = currencyStyle(book, true);
-		CellStyle boldStyle = boldStyle(book, false);
+		CellStyle currencyStyle = currencyStyle(book, false, false);
+		CellStyle boldCurrencyStyle = currencyStyle(book, true, false);
+		CellStyle boldStyle = boldStyle(book, false, false);
 		int rowsAdded = ZERO;
 		String supplierName = invoices.get(EzeeCommonConstants.ZERO).getSupplier().getName();
 		Collections.sort(invoices, EZEE_INVOICE_DATE_COMPARATOR);

@@ -9,6 +9,7 @@ import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
 import org.apache.poi.ss.usermodel.Cell;
@@ -87,13 +88,13 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 	protected int PROJECT_CONTENT_NAME_INDEX = 0;
 	protected int PROJECT_CONTENT_CONTRACTOR_INDEX = 1;
 	protected int PROJECT_CONTENT_TYPE_INDEX = 2;
-	protected int PROJECT_CONTENT_BUDGET_INDEX = 4;
-	protected int PROJECT_CONTENT_ACTUAL_INDEX = 5;
-	protected int PROJECT_CONTENT_PAID_INDEX = 6;
-	protected int PROJECT_CONTENT_BALANCE_INDEX = 7;
-	protected int PROJECT_CONTENT_COMPLETE_INDEX = 8;
-	protected int PROJECT_CONTENT_REF_INDEX = 9;
-	protected int PROJECT_CONTENT_DESC_INDEX = 10;
+	protected int PROJECT_CONTENT_BUDGET_INDEX = 3;
+	protected int PROJECT_CONTENT_ACTUAL_INDEX = 4;
+	protected int PROJECT_CONTENT_PAID_INDEX = 5;
+	protected int PROJECT_CONTENT_BALANCE_INDEX = 6;
+	protected int PROJECT_CONTENT_COMPLETE_INDEX = 7;
+	protected int PROJECT_CONTENT_REF_INDEX = 8;
+	protected int PROJECT_CONTENT_DESC_INDEX = 9;
 
 	protected int[] INVOICE_REPORT_INDEXES = { INVOICE_ID_INDEX, SUPPLIER_INDEX, PREMISES_INDEX, CLASSIFICATION_INDEX,
 			AMOUNT_INDEX, TAX_INDEX, TOTAL_INDEX, INVOICE_DATE_INDEX, DUE_DATE_INDEX, PAYMENT_DATE_INDEX };
@@ -123,7 +124,7 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 	protected void generateExcelReportHeader(final Workbook book, final Sheet sheet, final int[] indexes,
 			final String[] fieldnames, int currentRow) {
 		Row header = sheet.createRow(currentRow);
-		CellStyle headerStyle = boldStyle(book, true);
+		CellStyle headerStyle = boldStyle(book, true, false);
 		for (int i = ZERO; i < indexes.length; i++) {
 			Cell cell = header.createCell(indexes[i], CELL_TYPE_STRING);
 			cell.setCellValue(fieldnames[i]);
@@ -131,31 +132,59 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 		}
 	}
 
-	protected CellStyle dateStyle(final Workbook book, final boolean bold) {
+	protected CellStyle borderStyle(final Workbook book, final boolean bold, final boolean centered) {
 		CellStyle style = book.createCellStyle();
-		DataFormat format = book.createDataFormat();
-		style.setDataFormat(format.getFormat("dd/MM/yyyy"));
+		setBorderStyle(style);
+		if (bold) {
+			style.setFont(boldFont(book));
+		}
+		if (centered) {
+			style.setAlignment(ALIGN_CENTER);
+		}
 		return style;
 	}
 
-	protected CellStyle currencyStyle(final Workbook book, final boolean bold) {
+	protected CellStyle dateStyle(final Workbook book, final boolean bold, final boolean border) {
+		CellStyle style = book.createCellStyle();
+		DataFormat format = book.createDataFormat();
+		style.setDataFormat(format.getFormat("dd/MM/yyyy"));
+		if (border) {
+			setBorderStyle(style);
+		}
+		return style;
+	}
+
+	protected CellStyle currencyStyle(final Workbook book, final boolean bold, final boolean border) {
 		CellStyle style = book.createCellStyle();
 		DataFormat format = book.createDataFormat();
 		style.setDataFormat(format.getFormat("$* #,##0.00"));
 		if (bold) {
 			style.setFont(boldFont(book));
 		}
+		if (border) {
+			setBorderStyle(style);
+		}
 		return style;
 	}
 
-	protected CellStyle boldStyle(final Workbook book, final boolean centered) {
+	protected CellStyle boldStyle(final Workbook book, final boolean centered, final boolean border) {
 		CellStyle style = book.createCellStyle();
 		style.setFont(boldFont(book));
 		if (centered) {
 			style.setAlignment(ALIGN_CENTER);
 		}
+		if (border) {
+			setBorderStyle(style);
+		}
 		style.setWrapText(false);
 		return style;
+	}
+
+	private void setBorderStyle(final CellStyle style) {
+		style.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);
+		style.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);
+		style.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
+		style.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);
 	}
 
 	protected Font boldFont(final Workbook book) {

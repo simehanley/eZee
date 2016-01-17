@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -31,7 +32,6 @@ import com.ezee.model.entity.project.EzeeProject;
 import com.ezee.model.entity.project.EzeeProjectItem;
 import com.ezee.model.entity.project.EzeeProjectItemDetail;
 import com.ezee.model.entity.project.EzeeProjectPayment;
-import com.ezee.model.entity.project.util.EzeeDatabaseEntityUtils;
 import com.ezee.server.report.EzeeReportGenerator;
 import com.ezee.server.report.excel.AbstractExcelReportGenerator;
 
@@ -77,7 +77,7 @@ public class EzeeProjectReportGenerator extends AbstractExcelReportGenerator imp
 		Workbook book = new HSSFWorkbook(getClass().getResourceAsStream("/excel/" + PROJECT_TEMPLATE_NAME));
 		Sheet sheet = book.getSheet("PROJECT");
 		generateEzeeProjectReport(book, sheet, project);
-		formatReport(sheet);
+		formatReport(sheet, PROJECT_CONTENT_NAME_INDEX, PROJECT_CONTENT_REF_INDEX);
 		ByteArrayOutputStream result = new ByteArrayOutputStream();
 		book.write(result);
 		result.close();
@@ -87,10 +87,12 @@ public class EzeeProjectReportGenerator extends AbstractExcelReportGenerator imp
 	private void generateEzeeProjectReport(final Workbook book, final Sheet sheet, final EzeeProject project) {
 		int currentRow = PROJECT_HEADER_START_ROW;
 		generateEzeeProjectReportContent(book, sheet, project, currentRow);
-		currentRow = PROJECT_CONTENT_START_ROW;
-		Set<EzeeProjectItem> sortedItems = sorted(project.getItems());
-		for (EzeeProjectItem item : sortedItems) {
-			currentRow += generateEzeeProjectItemReport(book, sheet, item, currentRow);
+		if (!isEmpty(project.getItems())) {
+			currentRow = PROJECT_CONTENT_START_ROW;
+			Set<EzeeProjectItem> sortedItems = sorted(project.getItems());
+			for (EzeeProjectItem item : sortedItems) {
+				currentRow += generateEzeeProjectItemReport(book, sheet, item, currentRow);
+			}
 		}
 	}
 
@@ -139,64 +141,110 @@ public class EzeeProjectReportGenerator extends AbstractExcelReportGenerator imp
 
 	private void generateEzeeProjectItemReportContent(final Workbook book, final Sheet sheet,
 			final EzeeProjectItem item, final int currentRow) {
+		CellStyle boldStyle = boldStyle(book, false, true);
+		CellStyle ccyStyle = currencyStyle(book, true, true);
+		CellStyle borderStyle = borderStyle(book, false, false);
 		Row itemSummary = sheet.getRow(currentRow);
 		Cell itemName = itemSummary.getCell(PROJECT_CONTENT_NAME_INDEX);
 		itemName.setCellValue(item.getName());
+		itemName.setCellStyle(boldStyle);
 		Cell itemContractor = itemSummary.getCell(PROJECT_CONTENT_CONTRACTOR_INDEX);
 		itemContractor.setCellValue(item.getContractor().getName());
+		itemContractor.setCellStyle(boldStyle);
+		Cell itemType = itemSummary.getCell(PROJECT_CONTENT_TYPE_INDEX);
+		itemType.setCellStyle(borderStyle);
 		Cell itemBudget = itemSummary.getCell(PROJECT_CONTENT_BUDGET_INDEX);
 		itemBudget.setCellValue(item.budgeted().getTotal());
+		itemBudget.setCellStyle(ccyStyle);
 		Cell itemActual = itemSummary.getCell(PROJECT_CONTENT_ACTUAL_INDEX);
 		itemActual.setCellValue(item.actual().getTotal());
+		itemActual.setCellStyle(ccyStyle);
 		Cell itemPaid = itemSummary.getCell(PROJECT_CONTENT_PAID_INDEX);
 		itemPaid.setCellValue(item.paid().getTotal());
+		itemPaid.setCellStyle(ccyStyle);
 		Cell itemBalance = itemSummary.getCell(PROJECT_CONTENT_BALANCE_INDEX);
 		itemBalance.setCellValue(item.balance().getTotal());
+		itemBalance.setCellStyle(ccyStyle);
+		CellStyle centeredBoldStyle = boldStyle(book, true, true);
 		Cell itemPercentComplete = itemSummary.getCell(PROJECT_CONTENT_COMPLETE_INDEX);
 		double percent = EzeeNumericUtils.round(item.percent() * PERCENT_MULTIPLIER);
 		itemPercentComplete.setCellValue(percent + "%");
+		itemPercentComplete.setCellStyle(centeredBoldStyle);
+		Cell itemRef = itemSummary.getCell(PROJECT_CONTENT_REF_INDEX);
+		itemRef.setCellStyle(borderStyle);
+		Cell itemDesc = itemSummary.getCell(PROJECT_CONTENT_DESC_INDEX);
+		itemDesc.setCellStyle(borderStyle);
 	}
 
 	private void generateEzeeProjectItemDetailContent(final Workbook book, final Sheet sheet, final int currentRow,
 			final EzeeProjectItemDetail detail) {
+		CellStyle borderStyle = borderStyle(book, false, false);
+		CellStyle ccyStyle = currencyStyle(book, false, true);
 		Row detailSummary = sheet.getRow(currentRow);
+		Cell detailName = detailSummary.getCell(PROJECT_CONTENT_NAME_INDEX);
+		detailName.setCellStyle(borderStyle);
+		Cell detailContractor = detailSummary.getCell(PROJECT_CONTENT_CONTRACTOR_INDEX);
+		detailContractor.setCellStyle(borderStyle);
 		Cell detailType = detailSummary.getCell(PROJECT_CONTENT_TYPE_INDEX);
 		detailType.setCellValue(detail.getType().toString());
+		detailType.setCellStyle(borderStyle);
 		if (detail.getType() == expense) {
 			Cell detailBudget = detailSummary.getCell(PROJECT_CONTENT_BUDGET_INDEX);
 			Cell detailActual = detailSummary.getCell(PROJECT_CONTENT_ACTUAL_INDEX);
 			detailBudget.setCellValue(detail.getTotal());
+			detailBudget.setCellStyle(ccyStyle);
 			detailActual.setCellValue(detail.getTotal());
+			detailActual.setCellStyle(ccyStyle);
 		} else {
+			Cell detailBudget = detailSummary.getCell(PROJECT_CONTENT_BUDGET_INDEX);
+			detailBudget.setCellStyle(borderStyle);
 			Cell detailActual = detailSummary.getCell(PROJECT_CONTENT_ACTUAL_INDEX);
 			detailActual.setCellValue(detail.getTotal());
+			detailActual.setCellStyle(ccyStyle);
 		}
+		Cell detailPaid = detailSummary.getCell(PROJECT_CONTENT_PAID_INDEX);
+		detailPaid.setCellStyle(borderStyle);
+		Cell detailBalance = detailSummary.getCell(PROJECT_CONTENT_BALANCE_INDEX);
+		detailBalance.setCellStyle(borderStyle);
+		Cell detailComplete = detailSummary.getCell(PROJECT_CONTENT_COMPLETE_INDEX);
+		detailComplete.setCellStyle(borderStyle);
+		Cell detailRef = detailSummary.getCell(PROJECT_CONTENT_REF_INDEX);
+		detailRef.setCellStyle(borderStyle);
 		Cell detailDesc = detailSummary.getCell(PROJECT_CONTENT_DESC_INDEX);
 		detailDesc.setCellValue(detail.getDescription());
+		detailDesc.setCellStyle(borderStyle);
 	}
 
 	private void generateEzeeProjectPaymentContent(final Workbook book, final Sheet sheet, final int currentRow,
 			final EzeeProjectPayment payment) {
+		CellStyle borderStyle = borderStyle(book, false, false);
+		CellStyle ccyStyle = currencyStyle(book, false, true);
 		Row paymentSummary = sheet.getRow(currentRow);
+		Cell paymentName = paymentSummary.getCell(PROJECT_CONTENT_NAME_INDEX);
+		paymentName.setCellStyle(borderStyle);
+		Cell paymentContractor = paymentSummary.getCell(PROJECT_CONTENT_CONTRACTOR_INDEX);
+		paymentContractor.setCellStyle(borderStyle);
 		Cell paymentType = paymentSummary.getCell(PROJECT_CONTENT_TYPE_INDEX);
 		paymentType.setCellValue(payment.getType().toString());
+		paymentType.setCellStyle(borderStyle);
+		Cell paymentBudget = paymentSummary.getCell(PROJECT_CONTENT_BUDGET_INDEX);
+		paymentBudget.setCellStyle(borderStyle);
+		Cell paymentActual = paymentSummary.getCell(PROJECT_CONTENT_ACTUAL_INDEX);
+		paymentActual.setCellStyle(borderStyle);
 		Cell paymentTotal = paymentSummary.getCell(PROJECT_CONTENT_PAID_INDEX);
 		paymentTotal.setCellValue(payment.getTotal());
+		paymentTotal.setCellStyle(ccyStyle);
+		Cell paymentBalance = paymentSummary.getCell(PROJECT_CONTENT_BALANCE_INDEX);
+		paymentBalance.setCellStyle(borderStyle);
+		Cell paymentComplete = paymentSummary.getCell(PROJECT_CONTENT_COMPLETE_INDEX);
+		paymentComplete.setCellStyle(borderStyle);
+		CellStyle centeredBorderStyle = borderStyle(book, false, true);
 		Cell paymentRef = paymentSummary.getCell(PROJECT_CONTENT_REF_INDEX);
 		paymentRef.setCellValue(payment.getInvoiceRef());
+		paymentRef.setCellStyle(centeredBorderStyle);
 		Cell paymentDesc = paymentSummary.getCell(PROJECT_CONTENT_DESC_INDEX);
 		paymentDesc.setCellValue(payment.getDescription());
-	}
-
-	private void formatReport(final Sheet sheet) {
-		sheet.autoSizeColumn(0);
-		sheet.autoSizeColumn(1);
-		sheet.autoSizeColumn(2);
-		sheet.autoSizeColumn(3);
-		sheet.autoSizeColumn(4);
-		sheet.autoSizeColumn(5);
-		sheet.autoSizeColumn(6);
-		sheet.autoSizeColumn(7);
+		paymentDesc.setCellStyle(borderStyle);
 	}
 
 	private EzeeProject getProject(final HttpServletRequest request) {
