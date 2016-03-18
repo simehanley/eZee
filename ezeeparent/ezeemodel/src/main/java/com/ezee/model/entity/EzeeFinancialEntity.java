@@ -187,5 +187,4 @@ public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity
 		}
 		return super.compareTo(entity);
 	}
-
 }

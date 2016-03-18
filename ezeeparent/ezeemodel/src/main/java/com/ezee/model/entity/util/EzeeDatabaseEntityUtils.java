@@ -1,4 +1,4 @@
-package com.ezee.model.entity.project.util;
+package com.ezee.model.entity.util;
 
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 

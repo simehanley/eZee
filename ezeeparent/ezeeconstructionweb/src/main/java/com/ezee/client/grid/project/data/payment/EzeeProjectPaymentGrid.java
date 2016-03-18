@@ -2,7 +2,7 @@ package com.ezee.client.grid.project.data.payment;
 
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
-import static com.ezee.model.entity.project.util.EzeeDatabaseEntityUtils.sorted;
+import static com.ezee.model.entity.util.EzeeDatabaseEntityUtils.sorted;
 
 import com.ezee.client.grid.project.EzeeProjectDetail;
 import com.ezee.client.grid.project.data.EzeeProjectDataGrid;

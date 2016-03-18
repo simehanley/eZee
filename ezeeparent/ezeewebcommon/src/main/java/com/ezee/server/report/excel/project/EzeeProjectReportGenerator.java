@@ -4,7 +4,7 @@ import static com.ezee.common.EzeeCommonConstants.ONE;
 import static com.ezee.common.EzeeCommonConstants.PERCENT_MULTIPLIER;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.model.entity.enums.EzeeProjectItemType.expense;
-import static com.ezee.model.entity.project.util.EzeeDatabaseEntityUtils.sorted;
+import static com.ezee.model.entity.util.EzeeDatabaseEntityUtils.sorted;
 import static com.ezee.web.common.EzeeWebCommonConstants.EXCEL_PROJECT_ID;
 
 import java.io.ByteArrayOutputStream;
