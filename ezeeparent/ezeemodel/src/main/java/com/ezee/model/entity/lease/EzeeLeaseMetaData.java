@@ -3,10 +3,14 @@ package com.ezee.model.entity.lease;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+@Entity
+@Table(name = "EZEE_LEASE_META_DATA")
 public class EzeeLeaseMetaData extends EzeeDatabaseEntity implements IsSerializable {
 
 	private static final long serialVersionUID = -6452618339448182219L;

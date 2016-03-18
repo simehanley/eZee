@@ -48,4 +48,12 @@
 
 	<bean id="passwordEncrypter" class="org.jasypt.util.password.StrongPasswordEncryptor" />
 
+	<bean id="leaseCategoryDao" class="com.ezee.dao.impl.EzeeLeaseCategoryDaoImpl" parent="baseDao" />
+
+	<bean id="leaseTenantDao" class="com.ezee.dao.impl.EzeeLeaseTenantDaoImpl" parent="baseDao" />
+
+	<bean id="leasePremisesDao" class="com.ezee.dao.impl.EzeeLeasePremisesDaoImpl" parent="baseDao" />
+
+	<bean id="leaseDao" class="com.ezee.dao.impl.EzeeLeaseDaoImpl" parent="baseDao" />
+
 </beans>

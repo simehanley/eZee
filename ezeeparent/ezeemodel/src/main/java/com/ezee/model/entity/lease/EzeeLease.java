@@ -4,6 +4,8 @@ import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.TOTAL;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
 import static org.hibernate.annotations.FetchMode.SUBSELECT;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -11,10 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
@@ -55,23 +55,23 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	private String leasedUnits;
 
 	/** incidentals **/
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = ALL, fetch = EAGER)
 	@JoinTable(name = "LEASE_TO_LEASE_INCIDENTAL_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "LEASE_INCIDENTAL_ID") )
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<EzeeLeaseIncidental> incidentals;
 
 	/** tenant **/
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = ALL, fetch = EAGER)
 	@JoinTable(name = "LEASE_TO_TENANT_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "TENANT_ID") )
 	private EzeeLeaseTenant tenant;
 
 	/** premises **/
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = ALL, fetch = EAGER)
 	@JoinTable(name = "LEASE_TO_PREMISES_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "PREMISES_ID") )
 	private EzeeLeasePremises premises;
 
 	/** category **/
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = ALL, fetch = EAGER)
 	@JoinTable(name = "LEASE_TO_CATEGORY_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID") )
 	private EzeeLeaseCategory category;
 
@@ -95,12 +95,12 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	@Column(name = "OPTION_END_DATE")
 	private Date optionEndDate;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = ALL, fetch = EAGER)
 	@JoinTable(name = "LEASE_TO_BOND_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "BOND_ID") )
 	private EzeeLeaseBond bond;
 
 	/** meta data **/
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = ALL, fetch = EAGER)
 	@JoinTable(name = "LEASE_TO_META_DATA_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "META_DATA_ID") )
 	@Fetch(value = SUBSELECT)
 	private List<EzeeLeaseMetaData> metaData;

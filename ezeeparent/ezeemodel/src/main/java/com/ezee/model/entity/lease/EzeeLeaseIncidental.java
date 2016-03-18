@@ -5,10 +5,14 @@ import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.MONTHS_PER_YEAR;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+@Entity
+@Table(name = "EZEE_LEASE_INCIDENTAL")
 public class EzeeLeaseIncidental extends EzeeDatabaseEntity implements IsSerializable {
 
 	private static final long serialVersionUID = 5895008407914823958L;

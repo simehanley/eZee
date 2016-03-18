@@ -4,11 +4,15 @@ import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import static javax.persistence.EnumType.STRING;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.Table;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+@Entity
+@Table(name = "EZEE_LEASE_BOND")
 public class EzeeLeaseBond extends EzeeDatabaseEntity implements IsSerializable {
 
 	private static final long serialVersionUID = 6130332338382084004L;
