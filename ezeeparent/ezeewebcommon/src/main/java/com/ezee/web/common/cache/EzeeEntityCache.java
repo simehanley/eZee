@@ -17,6 +17,9 @@ import com.ezee.model.entity.EzeeDebtAgeRule;
 import com.ezee.model.entity.EzeeHasName;
 import com.ezee.model.entity.EzeePayer;
 import com.ezee.model.entity.EzeeSupplier;
+import com.ezee.model.entity.lease.EzeeLeaseCategory;
+import com.ezee.model.entity.lease.EzeeLeasePremises;
+import com.ezee.model.entity.lease.EzeeLeaseTenant;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
@@ -42,6 +45,16 @@ public class EzeeEntityCache {
 		loadEntities(EzeeSupplier.class);
 		loadEntities(EzeePayer.class);
 		loadEntities(EzeeDebtAgeRule.class);
+		loadEntities(EzeeLeaseCategory.class);
+		loadEntities(EzeeLeaseTenant.class);
+		loadEntities(EzeeLeasePremises.class);
+		loadConfiguration();
+	}
+
+	public <T extends EzeeDatabaseEntity> void loadEntities(List<Class<T>> clazzes) {
+		for (Class<T> clazz : clazzes) {
+			loadEntities(clazz);
+		}
 		loadConfiguration();
 	}
 

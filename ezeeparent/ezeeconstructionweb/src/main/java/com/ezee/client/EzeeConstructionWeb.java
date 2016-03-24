@@ -54,7 +54,6 @@ public class EzeeConstructionWeb extends EzeeWebEntryPoint {
 	@Override
 	public void configurationLoaded() {
 		initMain();
-
 	}
 
 	@Override

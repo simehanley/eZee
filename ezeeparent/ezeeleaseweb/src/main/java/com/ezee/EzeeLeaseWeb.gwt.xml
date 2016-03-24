@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='EzeeLeaseWeb'>
+
+	<inherits name='com.google.gwt.user.User' />
+	<inherits name="com.google.gwt.logging.Logging" />
+	<inherits name='com.google.gwt.user.theme.standard.Standard' />
+
+	<inherits name="com.ezee.EzeeCommon" />
+	<inherits name="com.ezee.EzeeModel" />
+	<inherits name="com.ezee.EzeeWebCommon" />
+
+	<set-property name="gwt.logging.enabled" value="TRUE" />
+	<set-property name="gwt.logging.logLevel" value="INFO" />
+	<set-property name="gwt.logging.consoleHandler" value="ENABLED" />
+
+	<entry-point class='com.ezee.client.EzeeLeaseWeb' />
+
+	<source path='client' />
+
+</module>

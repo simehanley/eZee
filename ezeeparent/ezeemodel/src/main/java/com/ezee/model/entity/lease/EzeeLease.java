@@ -334,7 +334,7 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	@Override
 	public String toString() {
 		return "EzeeLease [tenant=" + tenant.getName() + ", premises=" + premises.getAddressLineOne() + ", category="
-				+ category.getCategory() + "]";
+				+ category.getName() + "]";
 	}
 
 	public double monthlyAmount(final String type) {

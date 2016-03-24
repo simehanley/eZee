@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/ezeeleaseweb-context.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>entityservice</servlet-name>
+		<servlet-class>com.ezee.server.EzeeEntityServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>entityservice</servlet-name>
+		<url-pattern>/EzeeConstructionWeb/entityservice</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>userservice</servlet-name>
+		<servlet-class>com.ezee.server.EzeeUserServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>userservice</servlet-name>
+		<url-pattern>/EzeeConstructionWeb/userservice</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>utilityservice</servlet-name>
+		<servlet-class>com.ezee.server.EzeeUtilityServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>utilityservice</servlet-name>
+		<url-pattern>/EzeeConstructionWeb/utilityservice</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>configservice</servlet-name>
+		<servlet-class>com.ezee.server.EzeeConfigurationServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>configservice</servlet-name>
+		<url-pattern>/EzeeConstructionWeb/configservice</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>gwtCacheControlFilter</filter-name>
+		<filter-class>com.ezee.server.filter.EzeeGwtCacheControlFilterNew</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>gwtCacheControlFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<welcome-file-list>
+		<welcome-file>EzeeLeaseWeb.jsp</welcome-file>
+	</welcome-file-list>
+
+</web-app>

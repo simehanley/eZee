@@ -2,15 +2,15 @@ package com.ezee.model.entity.lease;
 
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
-import com.ezee.model.entity.EzeeFinancialEntity;
+import com.ezee.model.entity.EzeePayee;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 @Entity
-@Table(name = "EZEE_LEASE_PREMISES")
-public class EzeeLeasePremises extends EzeeFinancialEntity implements IsSerializable {
+@DiscriminatorValue("LeasePremises")
+public class EzeeLeasePremises extends EzeePayee implements IsSerializable {
 
 	private static final long serialVersionUID = -6949411740001993790L;
 

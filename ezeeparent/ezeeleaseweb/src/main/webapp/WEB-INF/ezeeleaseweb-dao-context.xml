@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<bean id="ez_leaseTenantDao" class="com.ezee.server.dao.EzeeEntityDao">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.lease.EzeeLeaseTenant" />
+		<constructor-arg name="dao" ref="leaseTenantDao" />
+	</bean>
+
+	<bean id="ez_leasePremisesDao" class="com.ezee.server.dao.EzeeEntityDao">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.lease.EzeeLeasePremises" />
+		<constructor-arg name="dao" ref="leasePremisesDao" />
+	</bean>
+
+	<bean id="ez_leaseCategoryDao" class="com.ezee.server.dao.EzeeEntityDao">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.lease.EzeeLeaseCategory" />
+		<constructor-arg name="dao" ref="leaseCategoryDao" />
+	</bean>
+
+	<bean id="ez_leaseDao" class="com.ezee.server.dao.EzeeEntityDao">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.lease.EzeeLease" />
+		<constructor-arg name="dao" ref="leaseDao" />
+	</bean>
+
+	<util:list id="entityDaos">
+		<ref bean="ez_leaseTenantDao" />
+		<ref bean="ez_leasePremisesDao" />
+		<ref bean="ez_leaseCategoryDao" />
+		<ref bean="ez_leaseDao" />
+
+	</util:list>
+
+	<bean id="entitiesDao" class="com.ezee.server.dao.EzeeEntitiesDao">
+		<constructor-arg name="entityDaos" ref="entityDaos" />
+	</bean>
+
+</beans>
