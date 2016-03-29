@@ -8,12 +8,15 @@ import static com.ezee.client.EzeeConstructionWebConstants.PROJECT_CRUD_HEADERS;
 import static com.ezee.client.EzeeConstructionWebConstants.REGISTER_USER;
 import static java.util.logging.Level.SEVERE;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ezee.client.css.EzeeProjectResources;
 import com.ezee.client.grid.project.EzeeProjectGrid;
 import com.ezee.client.main.EzeeConstructionMain;
+import com.ezee.model.entity.EzeeContractor;
 import com.ezee.web.common.ui.entrypoint.EzeeWebEntryPoint;
 import com.ezee.web.common.ui.grid.contractor.EzeeContractorGrid;
 import com.ezee.web.common.ui.main.EzeeWebMain;
@@ -60,5 +63,12 @@ public class EzeeConstructionWeb extends EzeeWebEntryPoint {
 	public void configurationLoadFailed() {
 		log.log(SEVERE, "Configuration failed to load.  Will start application without defaults.");
 		initMain();
+	}
+
+	@Override
+	public List<Class<?>> resolveCacheEntityTypes() {
+		List<Class<?>> types = new ArrayList<>();
+		types.add(EzeeContractor.class);
+		return types;
 	}
 }

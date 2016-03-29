@@ -10,13 +10,13 @@
 
 	<bean id="supplierReportGenerator" class="com.ezee.server.report.excel.supplier.EzeeSupplierReportGenerator" />
 
-	<bean id="premisesReportGenerator" class="com.ezee.server.report.excel.payer.EzeePayerReportGenerator" />
+	<bean id="premisesReportGenerator" class="com.ezee.server.report.excel.premises.EzeePremisesReportGenerator" />
 
 	<util:map key-type="com.ezee.web.common.enums.EzeeReportType" value-type="com.ezee.server.report.EzeeReportGenerator"
 		id="Report_Generators">
 		<entry key="detailed_payee_invoice_excel" value-ref="invoiceReportGenerator" />
 		<entry key="supplier_report_excel" value-ref="supplierReportGenerator" />
-		<entry key="payer_report_excel" value-ref="premisesReportGenerator" />
+		<entry key="premises_report_excel" value-ref="premisesReportGenerator" />
 	</util:map>
 
 </beans>

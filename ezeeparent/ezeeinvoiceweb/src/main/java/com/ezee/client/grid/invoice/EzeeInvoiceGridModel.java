@@ -87,7 +87,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		case SUPPLIER:
 			return invoice.getSupplier().getName();
 		case PREMISES:
-			return invoice.getPayer().getName();
+			return invoice.getPremises().getName();
 		case TOTAL:
 			return getAmountFormat().format(invoice.getInvoiceAmount());
 		case FILE:
@@ -156,7 +156,7 @@ public class EzeeInvoiceGridModel extends EzeeGridModel<EzeeInvoice> {
 		handler.setComparator(columns.get(PREMISES), new Comparator<EzeeInvoice>() {
 			@Override
 			public int compare(final EzeeInvoice one, final EzeeInvoice two) {
-				return one.getPayer().getName().compareTo(two.getPayer().getName());
+				return one.getPremises().getName().compareTo(two.getPremises().getName());
 			}
 		});
 		handler.setComparator(columns.get(INVOICE_DATE), new Comparator<EzeeInvoice>() {

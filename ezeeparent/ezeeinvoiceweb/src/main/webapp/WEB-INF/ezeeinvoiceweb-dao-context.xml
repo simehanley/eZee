@@ -12,9 +12,9 @@
 		<constructor-arg name="dao" ref="supplierDao" />
 	</bean>
 
-	<bean id="ez_payerDao" class="com.ezee.server.dao.EzeeEntityDao">
-		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeePayer" />
-		<constructor-arg name="dao" ref="payerDao" />
+	<bean id="ez_premisesDao" class="com.ezee.server.dao.EzeeEntityDao">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeePremises" />
+		<constructor-arg name="dao" ref="premisesDao" />
 	</bean>
 
 	<bean id="ez_debtAgeDao" class="com.ezee.server.dao.EzeeEntityDao">
@@ -39,7 +39,7 @@
 
 	<util:list id="entityDaos">
 		<ref bean="ez_supplierDao" />
-		<ref bean="ez_payerDao" />
+		<ref bean="ez_premisesDao" />
 		<ref bean="ez_debtAgeDao" />
 		<ref bean="ez_configDao" />
 		<ref bean="ez_invoiceDao" />

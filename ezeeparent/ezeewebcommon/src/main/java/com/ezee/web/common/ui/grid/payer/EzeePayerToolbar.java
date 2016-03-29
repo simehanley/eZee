@@ -1,19 +1,11 @@
 package com.ezee.web.common.ui.grid.payer;
 
-import static com.ezee.web.common.enums.EzeeReportType.payer_report_excel;
-
 import com.ezee.model.entity.EzeePayer;
-import com.ezee.web.common.enums.EzeeReportType;
 import com.ezee.web.common.ui.grid.EzeeFinancialEntityToolbar;
 
-public class EzeePayerToolbar extends EzeeFinancialEntityToolbar<EzeePayer> {
+public abstract class EzeePayerToolbar<T extends EzeePayer> extends EzeeFinancialEntityToolbar<T> {
 
-	public EzeePayerToolbar(EzeePayerGrid grid) {
+	public EzeePayerToolbar(EzeePayerGrid<T> grid) {
 		super(grid);
-	}
-
-	@Override
-	protected EzeeReportType getReportType() {
-		return payer_report_excel;
 	}
 }

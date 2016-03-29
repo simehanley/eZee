@@ -5,7 +5,7 @@ import java.util.List;
 import com.ezee.dao.EzeeLeasePremisesDao;
 import com.ezee.model.entity.lease.EzeeLeasePremises;
 
-public class EzeeLeasePremisesDaoImpl extends EzeeBaseDaoImpl<EzeeLeasePremises> implements EzeeLeasePremisesDao {
+public class EzeeLeasePremisesDaoImpl extends EzeePayeeDaoImpl<EzeeLeasePremises> implements EzeeLeasePremisesDao {
 
 	@Override
 	public EzeeLeasePremises get(long id) {

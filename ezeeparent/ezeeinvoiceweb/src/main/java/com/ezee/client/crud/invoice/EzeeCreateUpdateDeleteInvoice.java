@@ -22,7 +22,7 @@ import com.ezee.client.grid.invoice.EzeeCreateUpdateDeleteInvoiceHandler;
 import com.ezee.model.entity.EzeeConfiguration;
 import com.ezee.model.entity.EzeeDebtAgeRule;
 import com.ezee.model.entity.EzeeInvoice;
-import com.ezee.model.entity.EzeePayer;
+import com.ezee.model.entity.EzeePremises;
 import com.ezee.model.entity.EzeeSupplier;
 import com.ezee.model.entity.enums.EzeeInvoiceClassification;
 import com.ezee.web.common.cache.EzeeEntityCache;
@@ -159,7 +159,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteTaxable
 	protected void initialise() {
 		super.initialise();
 		txtInvoiceNumber.setValue(entity.getInvoiceId());
-		lstPremises.setItemSelected(getItemIndex(entity.getPayer().getName(), lstPremises), true);
+		lstPremises.setItemSelected(getItemIndex(entity.getPremises().getName(), lstPremises), true);
 		lstSupplier.setItemSelected(getItemIndex(entity.getSupplier().getName(), lstSupplier), true);
 		if (entity.getAgeRule() == null) {
 			lstDebtAge.setItemSelected(ZERO, true);
@@ -203,7 +203,7 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteTaxable
 			entity.setUpdated(DATE_UTILS.toString(new Date()));
 		}
 		entity.setInvoiceId(txtInvoiceNumber.getText());
-		entity.setPayer(getPremises());
+		entity.setPremises(getPremises());
 		entity.setSupplier(getSupplier());
 		entity.setAgeRule(getAgeRule());
 		entity.setInvoiceDate(DATE_UTILS.toString(dtInvoice.getValue()));
@@ -248,13 +248,13 @@ public class EzeeCreateUpdateDeleteInvoice extends EzeeCreateUpdateDeleteTaxable
 		return EzeeListBoxUtils.getEntity(EzeeSupplier.class, lstSupplier, cache);
 	}
 
-	private EzeePayer getPremises() {
-		return EzeeListBoxUtils.getEntity(EzeePayer.class, lstPremises, cache);
+	private EzeePremises getPremises() {
+		return EzeeListBoxUtils.getEntity(EzeePremises.class, lstPremises, cache);
 	}
 
 	private void loadEntities() {
 		EzeeListBoxUtils.loadEntities(EzeeSupplier.class, lstSupplier, cache);
-		EzeeListBoxUtils.loadEntities(EzeePayer.class, lstPremises, cache);
+		EzeeListBoxUtils.loadEntities(EzeePremises.class, lstPremises, cache);
 		EzeeListBoxUtils.loadEntities(EzeeDebtAgeRule.class, lstDebtAge, cache);
 		EzeeListBoxUtils.loadEnums(EzeeInvoiceClassification.values(), lstClassification);
 	}

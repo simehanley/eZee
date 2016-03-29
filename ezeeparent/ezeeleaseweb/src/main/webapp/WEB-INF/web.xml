@@ -21,7 +21,7 @@
 
 	<servlet-mapping>
 		<servlet-name>entityservice</servlet-name>
-		<url-pattern>/EzeeConstructionWeb/entityservice</url-pattern>
+		<url-pattern>/EzeeLeaseWeb/entityservice</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -31,7 +31,7 @@
 
 	<servlet-mapping>
 		<servlet-name>userservice</servlet-name>
-		<url-pattern>/EzeeConstructionWeb/userservice</url-pattern>
+		<url-pattern>/EzeeLeaseWeb/userservice</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -41,7 +41,7 @@
 
 	<servlet-mapping>
 		<servlet-name>utilityservice</servlet-name>
-		<url-pattern>/EzeeConstructionWeb/utilityservice</url-pattern>
+		<url-pattern>/EzeeLeaseWeb/utilityservice</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -51,7 +51,7 @@
 
 	<servlet-mapping>
 		<servlet-name>configservice</servlet-name>
-		<url-pattern>/EzeeConstructionWeb/configservice</url-pattern>
+		<url-pattern>/EzeeLeaseWeb/configservice</url-pattern>
 	</servlet-mapping>
 
 	<filter>

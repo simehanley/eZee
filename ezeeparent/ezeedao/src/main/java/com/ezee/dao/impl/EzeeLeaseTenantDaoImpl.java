@@ -5,7 +5,7 @@ import java.util.List;
 import com.ezee.dao.EzeeLeaseTenantDao;
 import com.ezee.model.entity.lease.EzeeLeaseTenant;
 
-public class EzeeLeaseTenantDaoImpl extends EzeeBaseDaoImpl<EzeeLeaseTenant> implements EzeeLeaseTenantDao {
+public class EzeeLeaseTenantDaoImpl extends EzeePayerDaoImpl<EzeeLeaseTenant> implements EzeeLeaseTenantDao {
 
 	@Override
 	public EzeeLeaseTenant get(long id) {

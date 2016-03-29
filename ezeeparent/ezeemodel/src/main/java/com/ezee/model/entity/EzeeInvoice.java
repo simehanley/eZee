@@ -26,7 +26,6 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * @author siborg
  *
  */
-
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "deletePayeeMappingsSql", query = "delete from EZEE_INVOICE_TO_SUPPLIER_MAPPING where INVOICE_ID = :id"),
 		@NamedNativeQuery(name = "deletePayerMappingsSql", query = "delete from EZEE_INVOICE_TO_PAYER_MAPPING where INVOICE_ID = :id"),
@@ -46,7 +45,7 @@ public class EzeeInvoice extends EzeeTaxableEntity implements IsSerializable, Ez
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "EZEE_INVOICE_TO_PAYER_MAPPING", joinColumns = @JoinColumn(name = "INVOICE_ID") , inverseJoinColumns = @JoinColumn(name = "PAYER_ID") )
-	private EzeePayer payer;
+	private EzeePremises premises;
 
 	@Column(name = "AMOUNT")
 	private double amount;
@@ -94,22 +93,22 @@ public class EzeeInvoice extends EzeeTaxableEntity implements IsSerializable, Ez
 		super();
 	}
 
-	public EzeeInvoice(final String invoiceId, final EzeeSupplier supplier, final EzeePayer payer, final double amount,
-			final double tax, final String description, final boolean manualtax, final String invoiceDate,
-			final String dateDue, final String datePaid, final String created, final String updated,
-			final EzeeInvoiceClassification classification) {
-		this(NULL_ID, invoiceId, supplier, payer, amount, tax, description, manualtax, invoiceDate, dateDue, datePaid,
-				created, updated, classification);
+	public EzeeInvoice(final String invoiceId, final EzeeSupplier supplier, final EzeePremises premises,
+			final double amount, final double tax, final String description, final boolean manualtax,
+			final String invoiceDate, final String dateDue, final String datePaid, final String created,
+			final String updated, final EzeeInvoiceClassification classification) {
+		this(NULL_ID, invoiceId, supplier, premises, amount, tax, description, manualtax, invoiceDate, dateDue,
+				datePaid, created, updated, classification);
 	}
 
-	public EzeeInvoice(final Long id, final String invoiceId, final EzeeSupplier supplier, final EzeePayer payer,
+	public EzeeInvoice(final Long id, final String invoiceId, final EzeeSupplier supplier, final EzeePremises premises,
 			final double amount, final double tax, final String description, final boolean manualtax,
 			final String invoiceDate, final String dateDue, final String datePaid, final String created,
 			final String updated, final EzeeInvoiceClassification classification) {
 		super(id, created, updated);
 		this.invoiceId = invoiceId;
 		this.supplier = supplier;
-		this.payer = payer;
+		this.premises = premises;
 		this.amount = amount;
 		this.tax = tax;
 		this.description = description;
@@ -133,8 +132,8 @@ public class EzeeInvoice extends EzeeTaxableEntity implements IsSerializable, Ez
 		return supplier;
 	}
 
-	public final EzeePayer getPayer() {
-		return payer;
+	public final EzeePremises getPremises() {
+		return premises;
 	}
 
 	public final double getAmount() {
@@ -169,8 +168,8 @@ public class EzeeInvoice extends EzeeTaxableEntity implements IsSerializable, Ez
 		this.supplier = supplier;
 	}
 
-	public void setPayer(EzeePayer payer) {
-		this.payer = payer;
+	public void setPremises(EzeePremises premises) {
+		this.premises = premises;
 	}
 
 	public void setAmount(double amount) {

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="tenantReportGenerator" class="com.ezee.server.report.excel.leasetenant.EzeeLeaseTenantReportGenerator" />
+
+	<bean id="premisesReportGenerator" class="com.ezee.server.report.excel.leasepremises.EzeeLeasePremisesReportGenerator" />
+
+	<util:map key-type="com.ezee.web.common.enums.EzeeReportType" value-type="com.ezee.server.report.EzeeReportGenerator"
+		id="Report_Generators">
+		<entry key="lease_tenant_report_excel" value-ref="tenantReportGenerator" />
+		<entry key="lease_premises_report_excel" value-ref="premisesReportGenerator" />
+	</util:map>
+
+</beans>

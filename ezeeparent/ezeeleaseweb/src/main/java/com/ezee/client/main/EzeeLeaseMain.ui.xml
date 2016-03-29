@@ -13,7 +13,7 @@
 					</g:VerticalPanel>
 				</g:cell>
 				<g:cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="50%" height="100%">
-					<g:HTML text="eZee Invoices" styleName="{res.css.headerLabel}" />
+					<g:HTML text="eZee Leases" styleName="{res.css.headerLabel}" />
 				</g:cell>
 				<g:cell horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" width="25%" height="100%">
 					<g:VerticalPanel height="100%">
@@ -39,26 +39,11 @@
 		</g:south>
 		<g:west size="10">
 			<g:StackPanel width="100%" height="100%" ui:field="menu">
-				<g:VerticalPanel g:StackPanel-text="INVOICES">
+				<g:VerticalPanel g:StackPanel-text="TENANTS">
 					<g:VerticalPanel>
-						<g:HTML text="New Invoice" styleName="{res.css.gwtStackPanelLink}" ui:field="newInvoice" />
-						<g:HTML text="Edit Invoice" styleName="{res.css.gwtStackPanelLink}" ui:field="editInvoice" />
-						<g:HTML text="Delete Invoice" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteInvoice" />
-						<g:HTML text="Make Payment" styleName="{res.css.gwtStackPanelLink}" ui:field="makePayment" />
-					</g:VerticalPanel>
-				</g:VerticalPanel>
-				<g:VerticalPanel g:StackPanel-text="PAYMENTS">
-					<g:VerticalPanel>
-						<g:HTML text="Edit Payment" styleName="{res.css.gwtStackPanelLink}" ui:field="editPayment" />
-						<g:HTML text="Delete Payment" styleName="{res.css.gwtStackPanelLink}" ui:field="deletePayment" />
-					</g:VerticalPanel>
-				</g:VerticalPanel>
-				<g:VerticalPanel g:StackPanel-text="SUPPLIERS">
-					<g:VerticalPanel>
-						<g:HTML text="New Supplier" styleName="{res.css.gwtStackPanelLink}" ui:field="newSupplier" />
-						<g:HTML text="Edit Supplier" styleName="{res.css.gwtStackPanelLink}" ui:field="editSupplier" />
-						<g:HTML text="Delete Supplier" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteSupplier" />
-						<g:HTML text="Raise Invoice" styleName="{res.css.gwtStackPanelLink}" ui:field="raiseSupplierInvoice" />
+						<g:HTML text="New Tenant" styleName="{res.css.gwtStackPanelLink}" ui:field="newTenant" />
+						<g:HTML text="Edit Tenant" styleName="{res.css.gwtStackPanelLink}" ui:field="editTenant" />
+						<g:HTML text="Delete Tenant" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteTenant" />
 					</g:VerticalPanel>
 				</g:VerticalPanel>
 				<g:VerticalPanel g:StackPanel-text="PREMISES">

@@ -11,15 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ezee.model.entity.EzeeConfiguration;
-import com.ezee.model.entity.EzeeContractor;
 import com.ezee.model.entity.EzeeDatabaseEntity;
-import com.ezee.model.entity.EzeeDebtAgeRule;
 import com.ezee.model.entity.EzeeHasName;
-import com.ezee.model.entity.EzeePayer;
-import com.ezee.model.entity.EzeeSupplier;
-import com.ezee.model.entity.lease.EzeeLeaseCategory;
-import com.ezee.model.entity.lease.EzeeLeasePremises;
-import com.ezee.model.entity.lease.EzeeLeaseTenant;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
@@ -40,20 +33,21 @@ public class EzeeEntityCache {
 	public EzeeEntityCache() {
 	}
 
-	public void loadEntities() {
-		loadEntities(EzeeContractor.class);
-		loadEntities(EzeeSupplier.class);
-		loadEntities(EzeePayer.class);
-		loadEntities(EzeeDebtAgeRule.class);
-		loadEntities(EzeeLeaseCategory.class);
-		loadEntities(EzeeLeaseTenant.class);
-		loadEntities(EzeeLeasePremises.class);
-		loadConfiguration();
-	}
+	// public void loadEntities() {
+	// loadEntities(EzeeContractor.class);
+	// loadEntities(EzeeSupplier.class);
+	// loadEntities(EzeePayer.class);
+	// loadEntities(EzeeDebtAgeRule.class);
+	// loadEntities(EzeeLeaseCategory.class);
+	// loadEntities(EzeeLeaseTenant.class);
+	// loadEntities(EzeeLeasePremises.class);
+	// loadConfiguration();
+	// }
 
-	public <T extends EzeeDatabaseEntity> void loadEntities(List<Class<T>> clazzes) {
-		for (Class<T> clazz : clazzes) {
-			loadEntities(clazz);
+	@SuppressWarnings("unchecked")
+	public <T extends EzeeDatabaseEntity> void loadEntities(List<Class<?>> clazzes) {
+		for (Class<?> clazz : clazzes) {
+			loadEntities((Class<T>) clazz);
 		}
 		loadConfiguration();
 	}

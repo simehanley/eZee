@@ -180,7 +180,7 @@ public class EzeeInvoiceReportGenerator extends AbstractExcelReportGenerator imp
 			Cell supplier = newrow.createCell(SUPPLIER_INDEX, CELL_TYPE_STRING);
 			supplier.setCellValue(invoice.getSupplier().getName());
 			Cell premises = newrow.createCell(PREMISES_INDEX, CELL_TYPE_STRING);
-			premises.setCellValue(invoice.getPayer().getName());
+			premises.setCellValue(invoice.getPremises().getName());
 			Cell classification = newrow.createCell(CLASSIFICATION_INDEX, CELL_TYPE_STRING);
 			classification.setCellValue(invoice.getClassification().toString());
 			Cell invoiceAmount = newrow.createCell(AMOUNT_INDEX, CELL_TYPE_NUMERIC);

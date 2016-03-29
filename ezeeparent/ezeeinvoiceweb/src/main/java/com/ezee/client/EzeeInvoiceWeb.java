@@ -11,26 +11,19 @@ import static com.ezee.client.EzeeInvoiceWebConstants.SUPPLIER_CRUD_HEADERS;
 import static java.util.logging.Level.SEVERE;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.poi.ss.formula.functions.T;
 
 import com.ezee.client.grid.invoice.EzeeInvoiceGrid;
 import com.ezee.client.grid.payment.EzeePaymentGrid;
 import com.ezee.client.grid.supplier.EzeeInvoiceSupplierGrid;
 import com.ezee.client.main.EzeeInvoiceMain;
-import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.EzeeDebtAgeRule;
-import com.ezee.model.entity.EzeePayer;
+import com.ezee.model.entity.EzeePremises;
 import com.ezee.model.entity.EzeeSupplier;
-import com.ezee.model.entity.lease.EzeeLeaseCategory;
-import com.ezee.model.entity.lease.EzeeLeasePremises;
-import com.ezee.model.entity.lease.EzeeLeaseTenant;
 import com.ezee.web.common.ui.entrypoint.EzeeWebEntryPoint;
-import com.ezee.web.common.ui.grid.payer.EzeePayerGrid;
+import com.ezee.web.common.ui.grid.premises.EzeePremisesGrid;
 import com.ezee.web.common.ui.main.EzeeWebMain;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
@@ -71,8 +64,8 @@ public class EzeeInvoiceWeb extends EzeeWebEntryPoint {
 		return new EzeeInvoiceSupplierGrid(cache, SUPPLIER_CRUD_HEADERS, invoice);
 	}
 
-	private EzeePayerGrid createPremisesGrid() {
-		return new EzeePayerGrid(cache, PREMISES_CRUD_HEADERS);
+	private EzeePremisesGrid createPremisesGrid() {
+		return new EzeePremisesGrid(cache, PREMISES_CRUD_HEADERS);
 	}
 
 	private EzeeInvoiceGrid createInvoiceGrid() {
@@ -93,5 +86,14 @@ public class EzeeInvoiceWeb extends EzeeWebEntryPoint {
 	public void configurationLoadFailed() {
 		log.log(SEVERE, "Configuration failed to load.  Will start application without defaults.");
 		initMain();
+	}
+
+	@Override
+	public List<Class<?>> resolveCacheEntityTypes() {
+		List<Class<?>> types = new ArrayList<>();
+		types.add(EzeePremises.class);
+		types.add(EzeeSupplier.class);
+		types.add(EzeeDebtAgeRule.class);
+		return types;
 	}
 }

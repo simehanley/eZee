@@ -8,7 +8,7 @@ import com.ezee.web.common.ui.grid.payee.EzeePayeeToolbar;
 
 public class EzeeContractorToolbar extends EzeePayeeToolbar<EzeeContractor> {
 
-	public EzeeContractorToolbar(EzeeContractorGrid grid) {
+	public EzeeContractorToolbar(final EzeeContractorGrid grid) {
 		super(grid);
 	}
 

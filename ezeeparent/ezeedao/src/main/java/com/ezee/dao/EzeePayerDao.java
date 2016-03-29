@@ -10,6 +10,6 @@ import com.ezee.model.entity.filter.EzeeStringFilter;
  * @author siborg
  *
  */
-public interface EzeePayerDao extends EzeeBaseDao<EzeePayer> {
-	List<EzeePayer> get(EzeeStringFilter<EzeePayer> filter);
+public interface EzeePayerDao<T extends EzeePayer> extends EzeeBaseDao<T> {
+	List<T> get(EzeeStringFilter<T> filter);
 }

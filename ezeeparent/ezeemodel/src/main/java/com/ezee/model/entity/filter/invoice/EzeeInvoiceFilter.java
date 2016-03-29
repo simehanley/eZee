@@ -41,7 +41,7 @@ public class EzeeInvoiceFilter implements EzeeEntityFilter<EzeeInvoice> {
 	public boolean include(final EzeeInvoice invoice) {
 		if (!supplierFilter.include(invoice.getSupplier())) {
 			return false;
-		} else if (!premisesFilter.include(invoice.getPayer())) {
+		} else if (!premisesFilter.include(invoice.getPremises())) {
 			return false;
 		} else if (!invoiceIdFilter.include(invoice)) {
 			return false;

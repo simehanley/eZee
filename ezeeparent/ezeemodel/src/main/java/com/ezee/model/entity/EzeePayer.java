@@ -20,7 +20,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 @Inheritance(strategy = SINGLE_TABLE)
 @DiscriminatorColumn(name = "PAYER_TYPE", discriminatorType = STRING)
 @Table(name = "EZEE_PAYER")
-public class EzeePayer extends EzeeFinancialEntity implements IsSerializable {
+public abstract class EzeePayer extends EzeeFinancialEntity implements IsSerializable {
 
 	private static final long serialVersionUID = 7366220270189922626L;
 

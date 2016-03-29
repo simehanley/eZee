@@ -26,13 +26,18 @@
 		<constructor-arg name="clazz" value="com.ezee.model.entity.lease.EzeeLease" />
 		<constructor-arg name="dao" ref="leaseDao" />
 	</bean>
+	
+	<bean id="ez_configDao" class="com.ezee.server.dao.EzeeEntityDao">
+		<constructor-arg name="clazz" value="com.ezee.model.entity.EzeeConfiguration" />
+		<constructor-arg name="dao" ref="configDao" />
+	</bean>
 
 	<util:list id="entityDaos">
 		<ref bean="ez_leaseTenantDao" />
 		<ref bean="ez_leasePremisesDao" />
 		<ref bean="ez_leaseCategoryDao" />
 		<ref bean="ez_leaseDao" />
-
+		<ref bean="ez_configDao" />
 	</util:list>
 
 	<bean id="entitiesDao" class="com.ezee.server.dao.EzeeEntitiesDao">

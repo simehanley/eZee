@@ -4,6 +4,7 @@ import static com.ezee.web.common.EzeeWebCommonConstants.AUTO_LOGIN_HELPER;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,7 +58,7 @@ public abstract class EzeeWebEntryPoint
 	protected void initCache() {
 		cache = new EzeeEntityCache();
 		cache.addListener(this);
-		cache.loadEntities();
+		cache.loadEntities(resolveCacheEntityTypes());
 	}
 
 	protected void initResources() {
@@ -100,4 +101,6 @@ public abstract class EzeeWebEntryPoint
 		initApplication();
 		showDefaultCursor();
 	}
+
+	public abstract List<Class<?>> resolveCacheEntityTypes();
 }
