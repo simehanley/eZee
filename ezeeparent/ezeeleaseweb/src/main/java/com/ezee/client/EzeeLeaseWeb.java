@@ -1,5 +1,7 @@
 package com.ezee.client;
 
+import static com.ezee.client.EzeeLeaseWebConstants.CATEGORIES;
+import static com.ezee.client.EzeeLeaseWebConstants.LEASE_CATEGORY_CRUD_HEADERS;
 import static com.ezee.client.EzeeLeaseWebConstants.LEASE_PREMISES_CRUD_HEADERS;
 import static com.ezee.client.EzeeLeaseWebConstants.LEASE_TENANT_CRUD_HEADERS;
 import static com.ezee.client.EzeeLeaseWebConstants.LOGIN_USER;
@@ -18,6 +20,7 @@ import com.ezee.model.entity.lease.EzeeLeaseCategory;
 import com.ezee.model.entity.lease.EzeeLeasePremises;
 import com.ezee.model.entity.lease.EzeeLeaseTenant;
 import com.ezee.web.common.ui.entrypoint.EzeeWebEntryPoint;
+import com.ezee.web.common.ui.grid.leasecategory.EzeeLeaseCategoryGrid;
 import com.ezee.web.common.ui.grid.leasepremises.EzeeLeasePremisesGrid;
 import com.ezee.web.common.ui.grid.leasetenant.EzeeLeaseTenantGrid;
 import com.ezee.web.common.ui.main.EzeeWebMain;
@@ -52,6 +55,7 @@ public class EzeeLeaseWeb extends EzeeWebEntryPoint {
 		EzeeWebMain main = new EzeeLeaseMain(user, cache);
 		main.getTab().add(createTenantGrid(), TENANTS);
 		main.getTab().add(createPremisesGrid(), PREMISES);
+		main.getTab().add(createCategoriesGrid(), CATEGORIES);
 		RootLayoutPanel.get().add(main);
 		log.log(Level.INFO, "Application initialised.");
 	}
@@ -62,6 +66,10 @@ public class EzeeLeaseWeb extends EzeeWebEntryPoint {
 
 	private EzeeLeasePremisesGrid createPremisesGrid() {
 		return new EzeeLeasePremisesGrid(cache, LEASE_PREMISES_CRUD_HEADERS);
+	}
+
+	private EzeeLeaseCategoryGrid createCategoriesGrid() {
+		return new EzeeLeaseCategoryGrid(cache, LEASE_CATEGORY_CRUD_HEADERS);
 	}
 
 	@Override

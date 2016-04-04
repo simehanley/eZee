@@ -25,7 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ezee.common.collections.EzeeCollectionUtils;
 import com.ezee.common.numeric.EzeeNumericUtils;
 import com.ezee.dao.EzeeProjectDao;
 import com.ezee.model.entity.project.EzeeProject;
@@ -49,7 +48,6 @@ public class EzeeProjectReportGenerator extends AbstractExcelReportGenerator imp
 
 	@Override
 	public void generateReport(final HttpServletRequest request, final HttpServletResponse response) {
-
 		try {
 			generateEzeeProjectReport(request, response);
 		} catch (IOException exception) {

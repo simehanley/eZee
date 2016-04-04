@@ -59,6 +59,54 @@ public class EzeeLeaseCategory extends EzeeFinancialEntity implements IsSerializ
 				email, contact, bank, accountName, accountNumber, accountBsb, abn, created, updated);
 	}
 
+	public final String getCategoryCompany() {
+		return categoryCompany;
+	}
+
+	public final void setCategoryCompany(String categoryCompany) {
+		this.categoryCompany = categoryCompany;
+	}
+
+	public final String getBank() {
+		return bank;
+	}
+
+	public final void setBank(String bank) {
+		this.bank = bank;
+	}
+
+	public final String getAccountName() {
+		return accountName;
+	}
+
+	public final void setAccountName(String accountName) {
+		this.accountName = accountName;
+	}
+
+	public final String getAccountNumber() {
+		return accountNumber;
+	}
+
+	public final void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
+	public final String getAccountBsb() {
+		return accountBsb;
+	}
+
+	public final void setAccountBsb(String accountBsb) {
+		this.accountBsb = accountBsb;
+	}
+
+	public final String getAbn() {
+		return abn;
+	}
+
+	public final void setAbn(String abn) {
+		this.abn = abn;
+	}
+
 	@Override
 	public String toString() {
 		return "EzeeLeaseCategory [category=" + getName() + "]";

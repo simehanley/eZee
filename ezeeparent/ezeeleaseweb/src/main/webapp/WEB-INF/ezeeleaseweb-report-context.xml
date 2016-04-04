@@ -10,10 +10,13 @@
 
 	<bean id="premisesReportGenerator" class="com.ezee.server.report.excel.leasepremises.EzeeLeasePremisesReportGenerator" />
 
+	<bean id="categoryReportGenerator" class="com.ezee.server.report.excel.leasecategory.EzeeLeaseCategoryReportGenerator" />
+
 	<util:map key-type="com.ezee.web.common.enums.EzeeReportType" value-type="com.ezee.server.report.EzeeReportGenerator"
 		id="Report_Generators">
 		<entry key="lease_tenant_report_excel" value-ref="tenantReportGenerator" />
 		<entry key="lease_premises_report_excel" value-ref="premisesReportGenerator" />
+		<entry key="lease_category_report_excel" value-ref="categoryReportGenerator" />
 	</util:map>
 
 </beans>

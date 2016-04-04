@@ -142,13 +142,8 @@ public class EzeeCreateUpdateDeleteProject extends EzeeCreateUpdateDeleteFinanci
 		btnSave.setEnabled(false);
 	}
 
-	@UiHandler("btnClose")
-	void onCloseClick(ClickEvent event) {
-		close();
-	}
-
 	@UiHandler("btnSave")
-	void onSaveClick(ClickEvent event) {
+	public void onSaveClick(ClickEvent event) {
 		btnSave.setEnabled(false);
 		showWaitCursor();
 		bind();
@@ -174,7 +169,7 @@ public class EzeeCreateUpdateDeleteProject extends EzeeCreateUpdateDeleteFinanci
 	}
 
 	@UiHandler("btnDelete")
-	void onDeleteClick(ClickEvent event) {
+	public void onDeleteClick(ClickEvent event) {
 		btnDelete.setEnabled(false);
 		showWaitCursor();
 		ENTITY_SERVICE.deleteEntity(EzeeProject.class.getName(), entity, new AsyncCallback<EzeeProject>() {

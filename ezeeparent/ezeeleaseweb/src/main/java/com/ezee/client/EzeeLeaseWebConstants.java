@@ -7,6 +7,7 @@ public interface EzeeLeaseWebConstants {
 
 	String TENANTS = "TENANTS";
 	String PREMISES = "PREMISES";
+	String CATEGORIES = "CATEGORIES";
 
 	String EDIT_LEASE_TENANT = "Edit Tenant";
 	String NEW_LEASE_TENANT = "New Tenant";
@@ -18,4 +19,10 @@ public interface EzeeLeaseWebConstants {
 	String DELETE_LEASE_PREMISES = "Delete Premises";
 	String[] LEASE_PREMISES_CRUD_HEADERS = new String[] { NEW_LEASE_PREMISES, EDIT_LEASE_PREMISES,
 			DELETE_LEASE_PREMISES };
+
+	String EDIT_LEASE_CATEGORY = "Edit Category";
+	String NEW_LEASE_CATEGORY = "New Category";
+	String DELETE_LEASE_CATEGORY = "Delete Category";
+	String[] LEASE_CATEGORY_CRUD_HEADERS = new String[] { NEW_LEASE_CATEGORY, EDIT_LEASE_CATEGORY,
+			DELETE_LEASE_CATEGORY };
 }

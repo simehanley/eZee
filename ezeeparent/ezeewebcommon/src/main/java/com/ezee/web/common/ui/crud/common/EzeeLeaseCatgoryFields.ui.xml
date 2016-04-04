@@ -1,0 +1,45 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
+
+	<g:HTMLPanel>
+		<g:AbsolutePanel height="209px" width="327px">
+			<g:at top="10" left="10">
+				<g:Label text="Company" styleName="{res.css.gwtLabelSmall}" />
+			</g:at>
+			<g:at top="42" left="10">
+				<g:Label text="Abn" styleName="{res.css.gwtLabelSmall}" />
+			</g:at>
+			<g:at top="74" left="10">
+				<g:Label text="Bank" styleName="{res.css.gwtLabelSmall}" />
+			</g:at>
+			<g:at top="106" left="10">
+				<g:Label text="Acc. Name" styleName="{res.css.gwtLabelSmall}" />
+			</g:at>
+			<g:at top="138" left="10">
+				<g:Label text="Acc. Num" styleName="{res.css.gwtLabelSmall}" />
+			</g:at>
+			<g:at top="170" left="10">
+				<g:Label text="Bsb" styleName="{res.css.gwtLabelSmall}" />
+			</g:at>
+			<g:at top="10" left="102">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtCompany" />
+			</g:at>
+			<g:at top="42" left="102">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtAbn" />
+			</g:at>
+			<g:at top="74" left="102">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtBank" />
+			</g:at>
+			<g:at top="106" left="102">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtAccountName" />
+			</g:at>
+			<g:at top="138" left="102">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtAccountNumber" />
+			</g:at>
+			<g:at top="170" left="102">
+				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtBsb" />
+			</g:at>
+		</g:AbsolutePanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

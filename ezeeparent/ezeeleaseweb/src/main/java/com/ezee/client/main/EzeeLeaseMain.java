@@ -4,6 +4,7 @@ import static com.ezee.web.common.ui.utils.EzeeTabLayoutPanelUtils.getFirstInsta
 
 import com.ezee.model.entity.EzeeUser;
 import com.ezee.web.common.cache.EzeeEntityCache;
+import com.ezee.web.common.ui.grid.leasecategory.EzeeLeaseCategoryGrid;
 import com.ezee.web.common.ui.grid.leasepremises.EzeeLeasePremisesGrid;
 import com.ezee.web.common.ui.grid.leasetenant.EzeeLeaseTenantGrid;
 import com.ezee.web.common.ui.main.EzeeWebMain;
@@ -37,6 +38,15 @@ public class EzeeLeaseMain extends EzeeWebMain {
 	@UiField
 	HTML deletePremises;
 
+	@UiField
+	HTML newCategory;
+
+	@UiField
+	HTML editCategory;
+
+	@UiField
+	HTML deleteCategory;
+
 	interface EzeeLeaseMainUiBinder extends UiBinder<Widget, EzeeLeaseMain> {
 	}
 
@@ -57,6 +67,9 @@ public class EzeeLeaseMain extends EzeeWebMain {
 		newPremises.addClickHandler(mainClickHandler);
 		editPremises.addClickHandler(mainClickHandler);
 		deletePremises.addClickHandler(mainClickHandler);
+		newCategory.addClickHandler(mainClickHandler);
+		deleteCategory.addClickHandler(mainClickHandler);
+		editCategory.addClickHandler(mainClickHandler);
 		editUser.addClickHandler(mainClickHandler);
 		tab.addDomHandler(mainClickHandler, ClickEvent.getType());
 	}
@@ -77,6 +90,12 @@ public class EzeeLeaseMain extends EzeeWebMain {
 				getFirstInstanceOf(EzeeLeasePremisesGrid.class, tab).editEntity();
 			} else if (event.getSource().equals(deletePremises)) {
 				getFirstInstanceOf(EzeeLeasePremisesGrid.class, tab).deleteEntity();
+			} else if (event.getSource().equals(newCategory)) {
+				getFirstInstanceOf(EzeeLeaseCategoryGrid.class, tab).newEntity();
+			} else if (event.getSource().equals(editCategory)) {
+				getFirstInstanceOf(EzeeLeaseCategoryGrid.class, tab).editEntity();
+			} else if (event.getSource().equals(deleteCategory)) {
+				getFirstInstanceOf(EzeeLeaseCategoryGrid.class, tab).deleteEntity();
 			} else if (event.getSource().equals(editUser)) {
 				editUser();
 			} else if (event.getSource().equals(tab)) {

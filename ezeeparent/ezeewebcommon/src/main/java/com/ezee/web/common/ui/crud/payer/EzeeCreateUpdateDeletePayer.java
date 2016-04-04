@@ -30,8 +30,6 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class EzeeCreateUpdateDeletePayer<T extends EzeePayer>
 		extends EzeeCreateUpdateDeleteFinancialEntity<T> {
 
-	private static final Logger log = Logger.getLogger("EzeeCreateUpdateDeletePayer");
-
 	private static EzeeCreateUpdateDeletePayerUiBinder uiBinder = GWT.create(EzeeCreateUpdateDeletePayerUiBinder.class);
 
 	interface EzeeCreateUpdateDeletePayerUiBinder extends UiBinder<Widget, EzeeCreateUpdateDeletePayer<?>> {
@@ -39,15 +37,6 @@ public abstract class EzeeCreateUpdateDeletePayer<T extends EzeePayer>
 
 	@UiField
 	EzeePayerPayeeCommon payer;
-
-	@UiField
-	Button btnSave;
-
-	@UiField
-	Button btnClose;
-
-	@UiField
-	Button btnDelete;
 
 	public EzeeCreateUpdateDeletePayer(final EzeeEntityCache cache,
 			final EzeeCreateUpdateDeleteEntityHandler<T> handler, final String[] headers) {
@@ -124,63 +113,15 @@ public abstract class EzeeCreateUpdateDeletePayer<T extends EzeePayer>
 		payer.disable();
 		btnSave.setEnabled(false);
 	}
-
-	@UiHandler("btnClose")
-	void onCloseClick(ClickEvent event) {
-		close();
-	}
-
+	
 	@UiHandler("btnSave")
-	void onSaveClick(ClickEvent event) {
-		btnSave.setEnabled(false);
-		showWaitCursor();
-		bind();
-		ENTITY_SERVICE.saveEntity(entity.getClass().getName(), entity, new AsyncCallback<T>() {
-
-			@Override
-			public void onFailure(final Throwable caught) {
-				btnSave.setEnabled(true);
-				showDefaultCursor();
-				log.log(Level.SEVERE, "Error persisting entity '" + entity + "'.", caught);
-				showNew(ERROR, "Error persisting entity '" + entity + "'.  Please see log for details.");
-			}
-
-			@Override
-			public void onSuccess(final T result) {
-				log.log(Level.INFO, "Saved entity '" + entity + "' successfully");
-				handler.onSave(result);
-				updateCache(result, type);
-				btnSave.setEnabled(true);
-				showDefaultCursor();
-				close();
-			}
-		});
+	public void onSaveClick(ClickEvent event) {
+		super.onSaveClick(event);
 	}
 
 	@UiHandler("btnDelete")
-	void onDeleteClick(ClickEvent event) {
-		btnDelete.setEnabled(false);
-		showWaitCursor();
-		ENTITY_SERVICE.deleteEntity(entity.getClass().getName(), entity, new AsyncCallback<T>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				btnDelete.setEnabled(true);
-				showDefaultCursor();
-				log.log(Level.SEVERE, "Error deleting entity '" + entity + "'.", caught);
-				showNew(ERROR, "Error deleting entity '" + entity + "'.  Please see log for details.");
-			}
-
-			@Override
-			public void onSuccess(T result) {
-				log.log(Level.INFO, "Entity '" + entity + "' deleted successfully");
-				handler.onDelete(result);
-				updateCache(result, type);
-				btnDelete.setEnabled(true);
-				showDefaultCursor();
-				close();
-			}
-		});
+	public void onDeleteClick(ClickEvent event) {
+		super.onDeleteClick(event);
 	}
 
 	protected abstract T createEntity();

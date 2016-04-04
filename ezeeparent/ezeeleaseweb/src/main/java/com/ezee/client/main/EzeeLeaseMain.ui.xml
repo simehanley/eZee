@@ -53,6 +53,13 @@
 						<g:HTML text="Delete Premises" styleName="{res.css.gwtStackPanelLink}" ui:field="deletePremises" />
 					</g:VerticalPanel>
 				</g:VerticalPanel>
+				<g:VerticalPanel g:StackPanel-text="CATEGORIES">
+					<g:VerticalPanel>
+						<g:HTML text="New Category" styleName="{res.css.gwtStackPanelLink}" ui:field="newCategory" />
+						<g:HTML text="Edit Category" styleName="{res.css.gwtStackPanelLink}" ui:field="editCategory" />
+						<g:HTML text="Delete Category" styleName="{res.css.gwtStackPanelLink}" ui:field="deleteCategory" />
+					</g:VerticalPanel>
+				</g:VerticalPanel>
 				<g:VerticalPanel g:StackPanel-text="USER">
 					<g:VerticalPanel>
 						<g:HTML text="Edit User" styleName="{res.css.gwtStackPanelLink}" ui:field="editUser" />

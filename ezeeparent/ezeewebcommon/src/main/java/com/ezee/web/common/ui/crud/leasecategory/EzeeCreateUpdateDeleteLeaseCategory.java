@@ -1,45 +1,53 @@
-package com.ezee.web.common.ui.crud.payee;
+package com.ezee.web.common.ui.crud.leasecategory;
 
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
+import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
+import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.create;
+import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 
 import java.util.Date;
+import java.util.logging.Level;
 
-import com.ezee.model.entity.EzeePayee;
+import com.ezee.model.entity.lease.EzeeLeaseCategory;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.web.common.ui.crud.common.EzeeCreateUpdateDeleteFinancialEntity;
-import com.ezee.web.common.ui.crud.common.EzeePayeeBank;
+import com.ezee.web.common.ui.crud.common.EzeeLeaseCatgoryFields;
 import com.ezee.web.common.ui.crud.common.EzeePayerPayeeCommon;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class EzeeCreateUpdateDeletePayee<T extends EzeePayee>
-		extends EzeeCreateUpdateDeleteFinancialEntity<T> {
+public class EzeeCreateUpdateDeleteLeaseCategory extends EzeeCreateUpdateDeleteFinancialEntity<EzeeLeaseCategory> {
 
-	private static EzeeCreateUpdateDeletePayeeUiBinder uiBinder = GWT.create(EzeeCreateUpdateDeletePayeeUiBinder.class);
+	private static EzeeCreateUpdateDeleteLeaseCategoryUiBinder uiBinder = GWT
+			.create(EzeeCreateUpdateDeleteLeaseCategoryUiBinder.class);
 
-	interface EzeeCreateUpdateDeletePayeeUiBinder extends UiBinder<Widget, EzeeCreateUpdateDeletePayee<?>> {
+	interface EzeeCreateUpdateDeleteLeaseCategoryUiBinder
+			extends UiBinder<Widget, EzeeCreateUpdateDeleteLeaseCategory> {
 	}
 
 	@UiField
 	EzeePayerPayeeCommon payee;
 
 	@UiField
-	EzeePayeeBank payeebank;
+	EzeeLeaseCatgoryFields category;
 
-	public EzeeCreateUpdateDeletePayee(final EzeeEntityCache cache,
-			final EzeeCreateUpdateDeleteEntityHandler<T> handler, final String[] headers) {
+	public EzeeCreateUpdateDeleteLeaseCategory(final EzeeEntityCache cache,
+			final EzeeCreateUpdateDeleteEntityHandler<EzeeLeaseCategory> handler, final String[] headers) {
 		this(cache, handler, null, create, headers);
 	}
 
-	public EzeeCreateUpdateDeletePayee(final EzeeEntityCache cache,
-			final EzeeCreateUpdateDeleteEntityHandler<T> handler, final T entity,
+	public EzeeCreateUpdateDeleteLeaseCategory(final EzeeEntityCache cache,
+			final EzeeCreateUpdateDeleteEntityHandler<EzeeLeaseCategory> handler, final EzeeLeaseCategory entity,
 			final EzeeCreateUpdateDeleteEntityType type, final String[] headers) {
 		super(cache, handler, entity, type, headers);
 		setWidget(uiBinder.createAndBindUi(this));
@@ -81,16 +89,19 @@ public abstract class EzeeCreateUpdateDeletePayee<T extends EzeePayee>
 		payee.setPhone(entity.getPhone());
 		payee.setFax(entity.getFax());
 		payee.setEmail(entity.getEmail());
-		payeebank.setBank(entity.getBank());
-		payeebank.setAccountName(entity.getAccountName());
-		payeebank.setAccountNumber(entity.getAccountNumber());
-		payeebank.setAccountBsb(entity.getAccountBsb());
+		category.setCompany(entity.getCategoryCompany());
+		category.setAbn(entity.getAbn());
+		category.setBank(entity.getBank());
+		category.setAccountName(entity.getAccountName());
+		category.setAccountNumber(entity.getAccountNumber());
+		category.setBsb(entity.getAccountBsb());
+
 	}
 
 	@Override
 	protected void bind() {
 		if (entity == null) {
-			entity = createEntity();
+			entity = new EzeeLeaseCategory();
 			entity.setCreated(DATE_UTILS.toString(new Date()));
 			entity.setUpdated(null);
 		} else {
@@ -107,18 +118,14 @@ public abstract class EzeeCreateUpdateDeletePayee<T extends EzeePayee>
 		entity.setPhone(payee.getPhone());
 		entity.setFax(payee.getFax());
 		entity.setEmail(payee.getEmail());
-		entity.setBank(payeebank.getBank());
-		entity.setAccountName(payeebank.getAccountName());
-		entity.setAccountNumber(payeebank.getAccountNumber());
-		entity.setAccountBsb(payeebank.getAccountBsb());
+		entity.setCategoryCompany(category.getCompany());
+		entity.setAbn(category.getAbn());
+		entity.setBank(category.getBank());
+		entity.setAccountName(category.getAccountName());
+		entity.setAccountNumber(category.getAccountNumber());
+		entity.setAccountBsb(category.getBsb());
 	}
 
-	private void disable() {
-		payee.disable();
-		payeebank.disable();
-		btnSave.setEnabled(false);
-	}
-	
 	@UiHandler("btnSave")
 	public void onSaveClick(ClickEvent event) {
 		super.onSaveClick(event);
@@ -129,5 +136,9 @@ public abstract class EzeeCreateUpdateDeletePayee<T extends EzeePayee>
 		super.onDeleteClick(event);
 	}
 
-	protected abstract T createEntity();
+	private void disable() {
+		payee.disable();
+		category.disable();
+		btnSave.setEnabled(false);
+	}
 }
