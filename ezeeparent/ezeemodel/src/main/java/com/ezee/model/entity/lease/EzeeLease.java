@@ -1,13 +1,13 @@
 package com.ezee.model.entity.lease;
 
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
+import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.TOTAL;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static org.hibernate.annotations.FetchMode.SUBSELECT;
-import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.util.ArrayList;
 import java.util.Date;

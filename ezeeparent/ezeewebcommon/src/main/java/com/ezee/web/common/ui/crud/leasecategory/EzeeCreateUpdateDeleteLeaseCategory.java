@@ -1,15 +1,9 @@
 package com.ezee.web.common.ui.crud.leasecategory;
 
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
-import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
-import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.create;
-import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
-import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
-import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 
 import java.util.Date;
-import java.util.logging.Level;
 
 import com.ezee.model.entity.lease.EzeeLeaseCategory;
 import com.ezee.web.common.cache.EzeeEntityCache;
@@ -23,7 +17,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 
 public class EzeeCreateUpdateDeleteLeaseCategory extends EzeeCreateUpdateDeleteFinancialEntity<EzeeLeaseCategory> {

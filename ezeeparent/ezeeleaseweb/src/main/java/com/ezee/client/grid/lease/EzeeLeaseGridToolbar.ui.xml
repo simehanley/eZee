@@ -1,0 +1,19 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
+
+	<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE">
+		<g:Label text="Tenant" styleName="{res.css.gwtLabelSmall}" />
+		<g:TextBox styleName="{res.css.gwtDateBoxSmall}" ui:field="txtTenant" />
+		<g:Label text="Premises" styleName="{res.css.gwtLabelSmall}" />
+		<g:TextBox styleName="{res.css.gwtDateBoxSmall}" ui:field="txtPremises" />
+		<g:Label text="Category" styleName="{res.css.gwtLabelSmall}" />
+		<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtCategory" />
+		<g:Button text="Refresh" ui:field="btnRefresh" styleName="{res.css.gwtButton}" />
+		<g:Button text="Clear" ui:field="btnClear" styleName="{res.css.gwtButton}" />
+		<g:CheckBox text="Show Inactive" styleName="{res.css.gwtCheckBoxSmall}" ui:field="chkShowInactive"
+			wordWrap="false" />
+	</g:HorizontalPanel>
+
+</ui:UiBinder> 

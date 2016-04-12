@@ -29,7 +29,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -98,7 +97,7 @@ public class EzeeInvoiceGridToolBar extends EzeeGridToolbar<EzeeInvoice> {
 		btnRefresh.addClickHandler(refreshHandler);
 		ClickHandler clearHandler = new EzeeToolbarClearHandler();
 		btnClear.addClickHandler(clearHandler);
-		ValueChangeHandler<Boolean> valueChangeHandler = new EzeeShowPaidValueChangeHandler();
+		ValueChangeHandler<Boolean> valueChangeHandler = new EzeeLocalStorageValueChangeHandler(SHOW_PAID_INVOICES);
 		chkShowPaid.addValueChangeHandler(valueChangeHandler);
 		setShowPaid();
 	}
@@ -185,14 +184,5 @@ public class EzeeInvoiceGridToolBar extends EzeeGridToolbar<EzeeInvoice> {
 		}
 		builder.append("&" + EXCEL_INVOICE_INCLUDE_PAID_FILTER + "=" + Boolean.toString(getShowPaid()));
 		return builder.toString();
-	}
-
-	private class EzeeShowPaidValueChangeHandler extends EzeeToolbarValueChangeHandler {
-
-		@Override
-		public void onValueChange(ValueChangeEvent<Boolean> event) {
-			super.onValueChange(event);
-			LOCAL_STORAGE.setValue(SHOW_PAID_INVOICES, Boolean.toString(event.getValue()));
-		}
 	}
 }

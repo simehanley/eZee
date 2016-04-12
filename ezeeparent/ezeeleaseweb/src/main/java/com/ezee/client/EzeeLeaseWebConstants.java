@@ -5,6 +5,7 @@ public interface EzeeLeaseWebConstants {
 	String LOGIN_USER = "eZee Leases Login";
 	String REGISTER_USER = "eZee Leases Register User";
 
+	String LEASES = "LEASES";
 	String TENANTS = "TENANTS";
 	String PREMISES = "PREMISES";
 	String CATEGORIES = "CATEGORIES";
@@ -25,4 +26,6 @@ public interface EzeeLeaseWebConstants {
 	String DELETE_LEASE_CATEGORY = "Delete Category";
 	String[] LEASE_CATEGORY_CRUD_HEADERS = new String[] { NEW_LEASE_CATEGORY, EDIT_LEASE_CATEGORY,
 			DELETE_LEASE_CATEGORY };
+	
+	String SHOW_INACTIVE_LEASES = "SHOW_INACTIVE";
 }

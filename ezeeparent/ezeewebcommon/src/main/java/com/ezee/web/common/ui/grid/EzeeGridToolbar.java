@@ -1,5 +1,6 @@
 package com.ezee.web.common.ui.grid;
 
+import static com.ezee.web.common.EzeeWebCommonConstants.LOCAL_STORAGE;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_ENTER;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
@@ -57,6 +58,22 @@ public abstract class EzeeGridToolbar<T extends EzeeDatabaseEntity> extends Comp
 		@Override
 		public void onValueChange(ValueChangeEvent<Boolean> event) {
 			grid.loadEntities();
+		}
+	}
+
+	protected class EzeeLocalStorageValueChangeHandler extends EzeeToolbarValueChangeHandler {
+
+		private final String localStorageKey;
+
+		public EzeeLocalStorageValueChangeHandler(final String localStorageKey) {
+			super();
+			this.localStorageKey = localStorageKey;
+		}
+
+		@Override
+		public void onValueChange(ValueChangeEvent<Boolean> event) {
+			super.onValueChange(event);
+			LOCAL_STORAGE.setValue(localStorageKey, Boolean.toString(event.getValue()));
 		}
 	}
 

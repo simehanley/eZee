@@ -2,6 +2,7 @@ package com.ezee.client.main;
 
 import static com.ezee.web.common.ui.utils.EzeeTabLayoutPanelUtils.getFirstInstanceOf;
 
+import com.ezee.client.grid.lease.EzeeLeaseGrid;
 import com.ezee.model.entity.EzeeUser;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.grid.leasecategory.EzeeLeaseCategoryGrid;
@@ -19,6 +20,15 @@ import com.google.gwt.user.client.ui.Widget;
 public class EzeeLeaseMain extends EzeeWebMain {
 
 	private static EzeeLeaseMainUiBinder uiBinder = GWT.create(EzeeLeaseMainUiBinder.class);
+
+	@UiField
+	HTML newLease;
+
+	@UiField
+	HTML editLease;
+
+	@UiField
+	HTML deleteLease;
 
 	@UiField
 	HTML newTenant;
@@ -61,6 +71,9 @@ public class EzeeLeaseMain extends EzeeWebMain {
 	protected void initMain() {
 		super.initMain();
 		ClickHandler mainClickHandler = new EzeeLeaseMainStackPanelClickHandler();
+		newLease.addClickHandler(mainClickHandler);
+		editLease.addClickHandler(mainClickHandler);
+		deleteLease.addClickHandler(mainClickHandler);
 		newTenant.addClickHandler(mainClickHandler);
 		editTenant.addClickHandler(mainClickHandler);
 		deleteTenant.addClickHandler(mainClickHandler);
@@ -78,7 +91,13 @@ public class EzeeLeaseMain extends EzeeWebMain {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (event.getSource().equals(newTenant)) {
+			if (event.getSource().equals(newLease)) {
+				getFirstInstanceOf(EzeeLeaseGrid.class, tab).newEntity();
+			} else if (event.getSource().equals(editLease)) {
+				getFirstInstanceOf(EzeeLeaseGrid.class, tab).editEntity();
+			} else if (event.getSource().equals(deleteLease)) {
+				getFirstInstanceOf(EzeeLeaseGrid.class, tab).deleteEntity();
+			} else if (event.getSource().equals(newTenant)) {
 				getFirstInstanceOf(EzeeLeaseTenantGrid.class, tab).newEntity();
 			} else if (event.getSource().equals(editTenant)) {
 				getFirstInstanceOf(EzeeLeaseTenantGrid.class, tab).editEntity();
