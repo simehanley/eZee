@@ -1,5 +1,10 @@
 package com.ezee.client.grid.lease;
 
+import static com.ezee.client.EzeeLeaseWebConstants.LEASE_CRUD_HEADERS;
+import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.delete;
+import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.update;
+
+import com.ezee.client.crud.lease.EzeeCreateUpdateDeleteLease;
 import com.ezee.model.entity.lease.EzeeLease;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.grid.EzeeGrid;
@@ -29,14 +34,23 @@ public class EzeeLeaseGrid extends EzeeGrid<EzeeLease> {
 
 	@Override
 	public void deleteEntity() {
+		EzeeLease entity = getSelected();
+		if (entity != null) {
+			new EzeeCreateUpdateDeleteLease(cache, this, entity, delete, LEASE_CRUD_HEADERS).show();
+		}
 	}
 
 	@Override
 	public void newEntity() {
+		new EzeeCreateUpdateDeleteLease(cache, this, LEASE_CRUD_HEADERS).show();
 	}
 
 	@Override
 	public void editEntity() {
+		EzeeLease entity = getSelected();
+		if (entity != null) {
+			new EzeeCreateUpdateDeleteLease(cache, this, entity, update, LEASE_CRUD_HEADERS).show();
+		}
 	}
 
 	@Override

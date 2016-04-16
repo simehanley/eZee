@@ -69,4 +69,12 @@ public final class EzeeListBoxUtils {
 		}
 		return null;
 	}
+
+	public static <T extends Enum<T>> T getEnum(final Class<T> clazz, final ListBox listBox) {
+		String value = listBox.getSelectedValue();
+		if (value != null) {
+			return T.valueOf(clazz, value);
+		}
+		return null;
+	}
 }

@@ -1,5 +1,5 @@
 package com.ezee.model.entity.lease;
 
 public enum EzeeLeaseBondType {
-	deposit_held, bank_guarantee;
+	none, deposit_held, bank_guarantee;
 }

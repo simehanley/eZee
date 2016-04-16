@@ -17,5 +17,7 @@ public interface EzeeCommonConstants {
 	int MINUS_ONE = -ONE;
 	int TWO = 2;
 
+	int MONTHS_PER_YEAR = 12;
+
 	String EMPTY_STRING = "";
 }

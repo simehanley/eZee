@@ -1,0 +1,152 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:p1="urn:import:com.google.gwt.user.datepicker.client">
+
+	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
+
+	<g:HTMLPanel>
+		<g:AbsolutePanel height="539px" width="1045px">
+			<g:at top="0" left="5">
+				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+					<g:Label text="Tenant" styleName="{res.css.gwtLabelSmall}" />
+					<g:ListBox styleName="{res.css.gwtListBoxLarge}" ui:field="lstTenant" />
+					<g:Label text="Category" styleName="{res.css.gwtLabelSmall}" />
+					<g:ListBox styleName="{res.css.gwtListBoxLarge}" ui:field="lstCategory" />
+				</g:HorizontalPanel>
+			</g:at>
+			<g:at top="37" left="5">
+				<g:TabPanel width="1018px" height="462px" ui:field="tab">
+					<g:Tab text="Main">
+						<g:VerticalPanel verticalAlignment="ALIGN_MIDDLE">
+							<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE">
+								<g:VerticalPanel>
+									<g:HorizontalPanel>
+										<g:Label text="Location" styleName="{res.css.gwtLabelSmallNoBorder}" />
+									</g:HorizontalPanel>
+									<g:HorizontalPanel>
+										<g:Label text="Premises" styleName="{res.css.gwtLabelSmall}" />
+										<g:ListBox styleName="{res.css.gwtListBoxLarge}" ui:field="lstPremises" />
+									</g:HorizontalPanel>
+									<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+										<g:Label text="Units" styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtUnits" />
+										<g:Label text="Area" styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtArea" />
+									</g:HorizontalPanel>
+								</g:VerticalPanel>
+								<g:VerticalPanel>
+									<g:HorizontalPanel>
+										<g:Label text="Dates" styleName="{res.css.gwtLabelSmallNoBorder}" />
+									</g:HorizontalPanel>
+									<g:HorizontalPanel>
+										<g:Label text="Start" styleName="{res.css.gwtLabelSmall}" />
+										<p1:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtStart" />
+										<g:Label text="End" styleName="{res.css.gwtLabelSmall}" />
+										<p1:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtEnd" />
+										<g:Label text="Updated" styleName="{res.css.gwtLabelSmall}" />
+										<p1:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtUpdate" enabled="false" />
+									</g:HorizontalPanel>
+									<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+										<g:Label text="Start" styleName="{res.css.gwtLabelSmall}" />
+										<p1:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtOptionStart" enabled="false" />
+										<g:Label text="End" styleName="{res.css.gwtLabelSmall}" />
+										<p1:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtOptionEnd" enabled="false" />
+										<g:CheckBox text="Has Option" styleName="{res.css.gwtCheckBoxSmall}" wordWrap="false" ui:field="chkOption" />
+									</g:HorizontalPanel>
+								</g:VerticalPanel>
+							</g:HorizontalPanel>
+							<g:HorizontalPanel>
+								<g:VerticalPanel>
+									<g:HorizontalPanel>
+										<g:Label text="Details" styleName="{res.css.gwtLabelSmallNoBorder}" />
+									</g:HorizontalPanel>
+									<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+										<g:Label text="Rent(A)" styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtRent" />
+										<g:Label text="% Inc." styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtRentPercent" />
+										<g:Label text="Acc. No." styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtRentAccount" />
+									</g:HorizontalPanel>
+									<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+										<g:Label text="O/gng.(A)" styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtOutgoing" />
+										<g:Label text="% Inc." styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtOutgoingPercent" />
+										<g:Label text="Acc. No." styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtOutgoingAccount" />
+									</g:HorizontalPanel>
+									<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+										<g:Label text="Park.(A)" styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtParking" />
+										<g:Label text="% Inc." styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtParkingPercent" />
+										<g:Label text="Acc. No." styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtParkingAccount" />
+									</g:HorizontalPanel>
+									<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+										<g:Label text="Sign.(A)" styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtSignage" />
+										<g:Label text="% Inc." styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtSignagePercent" />
+										<g:Label text="Acc. No." styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtSignageAccount" />
+									</g:HorizontalPanel>
+								</g:VerticalPanel>
+								<g:VerticalPanel width="411px">
+									<g:HorizontalPanel>
+										<g:Label text="Bond" styleName="{res.css.gwtLabelSmallNoBorder}" />
+									</g:HorizontalPanel>
+									<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+										<g:Label text="Type" styleName="{res.css.gwtLabelSmall}" />
+										<g:ListBox styleName="{res.css.gwtListBoxSmall}" ui:field="lstBondType" />
+										<g:Label text="Amount" styleName="{res.css.gwtLabelSmall}" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtBondAmount" enabled="false" />
+									</g:HorizontalPanel>
+									<g:HorizontalPanel width="400px">
+										<g:Label text="Detail" styleName="{res.css.gwtLabelSmallNoBorder}" />
+										<g:RichTextArea width="310px" styleName="{res.css.gwtRichTextAreaMedium}" height="93px"
+											ui:field="txtBondDetail" enabled="false" />
+									</g:HorizontalPanel>
+								</g:VerticalPanel>
+							</g:HorizontalPanel>
+							<g:HorizontalPanel>
+								<g:VerticalPanel>
+									<g:HorizontalPanel>
+										<g:Label text="Notes" styleName="{res.css.gwtLabelSmall}" />
+									</g:HorizontalPanel>
+									<g:HorizontalPanel>
+										<g:RichTextArea styleName="{res.css.gwtRichTextAreaMedium}" width="1007px" height="99px"
+											ui:field="txtNotes" />
+									</g:HorizontalPanel>
+								</g:VerticalPanel>
+							</g:HorizontalPanel>
+						</g:VerticalPanel>
+					</g:Tab>
+					<g:Tab text="Meta Data">
+						<g:AbsolutePanel></g:AbsolutePanel>
+					</g:Tab>
+				</g:TabPanel>
+			</g:at>
+			<g:at top="495" left="5">
+				<g:HorizontalPanel width="1013px" height="47px">
+					<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" height="45px"
+						width="207px">
+						<g:Label text="Myob No." styleName="{res.css.gwtLabelSmall}" />
+						<g:TextBox ui:field="txtMyobJobNo" styleName="{res.css.gwtTextBoxSmall}" />
+					</g:HorizontalPanel>
+					<g:HorizontalPanel height="46px" width="373px" />
+					<g:HorizontalPanel horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" height="46px"
+						width="268px">
+						<g:CheckBox text="Inactive" ui:field="chkInactive" wordWrap="false" styleName="{res.css.gwtCheckBoxSmall}" />
+						<g:CheckBox text="Residential" ui:field="chkResidential" wordWrap="false" styleName="{res.css.gwtCheckBoxSmall}" />
+						<g:Button ui:field="btnUpdate" styleName="{res.css.gwtButton}">Update</g:Button>
+						<g:Button ui:field="btnSave" styleName="{res.css.gwtButton}">Save</g:Button>
+						<g:Button ui:field="btnClose" styleName="{res.css.gwtButton}">Close</g:Button>
+					</g:HorizontalPanel>
+				</g:HorizontalPanel>
+			</g:at>
+		</g:AbsolutePanel>
+	</g:HTMLPanel>
+
+</ui:UiBinder> 

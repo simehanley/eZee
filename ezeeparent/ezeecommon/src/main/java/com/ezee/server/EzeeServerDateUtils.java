@@ -36,4 +36,20 @@ public final class EzeeServerDateUtils implements EzeeDateUtilities {
 		}
 		return null;
 	}
+
+	public Date addDays(final Date date, final int days) {
+		if (date != null) {
+			LocalDate modified = new LocalDate(date);
+			return modified.plusDays(days).toDate();
+		}
+		return null;
+	}
+
+	public Date addYears(final Date date, final int years) {
+		if (date != null) {
+			LocalDate modified = new LocalDate(date);
+			return modified.plusYears(years).toDate();
+		}
+		return null;
+	}
 }

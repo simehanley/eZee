@@ -60,6 +60,8 @@ public interface EzeeDefaultResources extends ClientBundle {
 		String gwtLabelMedium();
 
 		String gwtLabelSmall();
+		
+		String gwtLabelSmallNoBorder();
 
 		String gwtTextBoxSmall();
 
