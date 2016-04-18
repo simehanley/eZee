@@ -3,6 +3,7 @@ package com.ezee.server.dao;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import com.ezee.dao.EzeePaymentDao;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayment;
+import com.ezee.model.entity.lease.EzeeLease;
 import com.ezee.model.entity.project.EzeeProject;
 import com.ezee.model.entity.project.EzeeProjectItem;
 
@@ -100,6 +102,8 @@ public class EzeeEntitiesDao {
 				postProcessInvoice((EzeeInvoice) entity);
 			} else if (entity instanceof EzeeProject) {
 				postProcessProject((EzeeProject) entity);
+			} else if (entity instanceof EzeeLease) {
+				postProcessLease((EzeeLease) entity);
 			}
 		}
 
@@ -107,7 +111,7 @@ public class EzeeEntitiesDao {
 		 * Post process {@link EzeePayment} to remove non serializable
 		 * {@link PersistentCollection}
 		 */
-		public void postProcessPayment(final EzeePayment payment) {
+		private void postProcessPayment(final EzeePayment payment) {
 			if (!isEmpty(payment.getInvoices())) {
 				payment.setInvoices(new LinkedHashSet<>(payment.getInvoices()));
 				for (EzeeInvoice invoice : payment.getInvoices()) {
@@ -120,7 +124,7 @@ public class EzeeEntitiesDao {
 		 * Post process {@link EzeeInvoice} to remove potentially large binary
 		 * file object
 		 */
-		public void postProcessInvoice(EzeeInvoice invoice) {
+		private void postProcessInvoice(EzeeInvoice invoice) {
 			invoice.setFile(null);
 		}
 
@@ -128,7 +132,7 @@ public class EzeeEntitiesDao {
 		 * Post process {@link EzeeProject} to remove non serializable
 		 * {@link PersistentCollection}
 		 */
-		public void postProcessProject(final EzeeProject project) {
+		private void postProcessProject(final EzeeProject project) {
 			if (project.getItems() != null) {
 				project.setItems(new LinkedHashSet<>(project.getItems()));
 				for (EzeeProjectItem item : project.getItems()) {
@@ -139,6 +143,15 @@ public class EzeeEntitiesDao {
 						item.setPayments(new LinkedHashSet<>(item.getPayments()));
 					}
 				}
+			}
+		}
+
+		private void postProcessLease(final EzeeLease lease) {
+			if (lease.getIncidentals() != null) {
+				lease.setIncidentals(new HashSet<>(lease.getIncidentals()));
+			}
+			if (lease.getMetaData() != null) {
+				lease.setMetaData(new HashSet<>(lease.getMetaData()));
 			}
 		}
 	}

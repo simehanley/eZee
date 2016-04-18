@@ -10,8 +10,9 @@ import static javax.persistence.FetchType.EAGER;
 import static org.hibernate.annotations.FetchMode.SUBSELECT;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,7 +59,7 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	@OneToMany(cascade = ALL, fetch = EAGER)
 	@JoinTable(name = "LEASE_TO_LEASE_INCIDENTAL_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "LEASE_INCIDENTAL_ID") )
 	@Fetch(value = FetchMode.SUBSELECT)
-	private List<EzeeLeaseIncidental> incidentals;
+	private Set<EzeeLeaseIncidental> incidentals;
 
 	/** tenant **/
 	@ManyToOne(cascade = ALL, fetch = EAGER)
@@ -89,11 +90,11 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 
 	/** lease option start date **/
 	@Column(name = "OPTION_START_DATE")
-	private Date optionStartDate;
+	private String optionStartDate;
 
 	/** lease option end date **/
 	@Column(name = "OPTION_END_DATE")
-	private Date optionEndDate;
+	private String optionEndDate;
 
 	@OneToOne(cascade = ALL, fetch = EAGER)
 	@JoinTable(name = "LEASE_TO_BOND_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "BOND_ID") )
@@ -103,7 +104,7 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	@OneToMany(cascade = ALL, fetch = EAGER)
 	@JoinTable(name = "LEASE_TO_META_DATA_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "META_DATA_ID") )
 	@Fetch(value = SUBSELECT)
-	private List<EzeeLeaseMetaData> metaData;
+	private Set<EzeeLeaseMetaData> metaData;
 
 	/** myob job number **/
 	@Column(name = "JOB_NUMBER")
@@ -114,8 +115,8 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	}
 
 	public EzeeLease(final String leaseStart, final String leaseEnd, final String notes, final Double leasedArea,
-			final String leasedUnits, final List<EzeeLeaseIncidental> incidentals, final EzeeLeaseTenant tenant,
-			final EzeeLeasePremises premises, final EzeeLeaseCategory category, final List<EzeeLeaseMetaData> metaData,
+			final String leasedUnits, final Set<EzeeLeaseIncidental> incidentals, final EzeeLeaseTenant tenant,
+			final EzeeLeasePremises premises, final EzeeLeaseCategory category, final Set<EzeeLeaseMetaData> metaData,
 			final boolean residential, final boolean inactive, final String jobNo, final String created,
 			final String updated) {
 		this(NULL_ID, leaseStart, leaseEnd, notes, leasedArea, leasedUnits, incidentals, tenant, premises, category,
@@ -123,9 +124,9 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	}
 
 	protected EzeeLease(final Long id, final String leaseStart, final String leaseEnd, final String notes,
-			final Double leasedArea, final String leasedUnits, final List<EzeeLeaseIncidental> incidentals,
+			final Double leasedArea, final String leasedUnits, final Set<EzeeLeaseIncidental> incidentals,
 			final EzeeLeaseTenant tenant, final EzeeLeasePremises premises, final EzeeLeaseCategory category,
-			final List<EzeeLeaseMetaData> metaData, final boolean residential, final boolean inactive,
+			final Set<EzeeLeaseMetaData> metaData, final boolean residential, final boolean inactive,
 			final String jobNo, final String created, final String updated) {
 		super(id, created, updated);
 		this.leaseStart = leaseStart;
@@ -239,19 +240,19 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 		this.hasOption = hasOption;
 	}
 
-	public final Date getOptionStartDate() {
+	public final String getOptionStartDate() {
 		return optionStartDate;
 	}
 
-	public void setOptionStartDate(final Date optionStartDate) {
+	public void setOptionStartDate(final String optionStartDate) {
 		this.optionStartDate = optionStartDate;
 	}
 
-	public final Date getOptionEndDate() {
+	public final String getOptionEndDate() {
 		return optionEndDate;
 	}
 
-	public void setOptionEndDate(final Date optionEndDate) {
+	public void setOptionEndDate(final String optionEndDate) {
 		this.optionEndDate = optionEndDate;
 	}
 
@@ -265,16 +266,16 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 
 	public void addIncidental(final EzeeLeaseIncidental incidental) {
 		if (isEmpty(incidentals)) {
-			incidentals = new ArrayList<EzeeLeaseIncidental>();
+			incidentals = new HashSet<EzeeLeaseIncidental>();
 		}
 		incidentals.add(incidental);
 	}
 
-	public final List<EzeeLeaseIncidental> getIncidentals() {
+	public final Set<EzeeLeaseIncidental> getIncidentals() {
 		return incidentals;
 	}
 
-	public void setIncidentals(final List<EzeeLeaseIncidental> incidentals) {
+	public void setIncidentals(final Set<EzeeLeaseIncidental> incidentals) {
 		this.incidentals = incidentals;
 	}
 
@@ -298,17 +299,17 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 		}
 	}
 
-	public List<EzeeLeaseMetaData> getMetaData() {
+	public Set<EzeeLeaseMetaData> getMetaData() {
 		return metaData;
 	}
 
-	public void setMetaData(List<EzeeLeaseMetaData> metaData) {
+	public void setMetaData(Set<EzeeLeaseMetaData> metaData) {
 		this.metaData = metaData;
 	}
 
 	public void addMetaData(final EzeeLeaseMetaData data) {
 		if (isEmpty(metaData)) {
-			metaData = new ArrayList<EzeeLeaseMetaData>();
+			metaData = new HashSet<EzeeLeaseMetaData>();
 		}
 		metaData.add(data);
 	}

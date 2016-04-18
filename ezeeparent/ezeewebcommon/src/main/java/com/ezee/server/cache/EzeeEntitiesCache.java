@@ -12,6 +12,7 @@ import org.hibernate.collection.spi.PersistentCollection;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.EzeePayment;
+import com.ezee.model.entity.lease.EzeeLease;
 
 /**
  * 
@@ -66,6 +67,8 @@ public class EzeeEntitiesCache {
 		public <T extends EzeeDatabaseEntity> void postProcessEntity(final T entity) {
 			if (entity instanceof EzeePayment) {
 				postProcessPayment((EzeePayment) entity);
+			} else if (entity instanceof EzeeLease) {
+				postProcessLease((EzeeLease) entity);
 			}
 		}
 
@@ -76,6 +79,19 @@ public class EzeeEntitiesCache {
 		public void postProcessPayment(final EzeePayment payment) {
 			if (!isEmpty(payment.getInvoices())) {
 				payment.setInvoices(new HashSet<>(payment.getInvoices()));
+			}
+		}
+
+		/**
+		 * Post process {@link EzeeLease} to remove non serializable
+		 * {@link PersistentCollection}
+		 */
+		public void postProcessLease(final EzeeLease lease) {
+			if (!isEmpty(lease.getIncidentals())) {
+				lease.setIncidentals(new HashSet<>(lease.getIncidentals()));
+			}
+			if (!isEmpty(lease.getMetaData())) {
+				lease.setMetaData(new HashSet<>(lease.getMetaData()));
 			}
 		}
 	}

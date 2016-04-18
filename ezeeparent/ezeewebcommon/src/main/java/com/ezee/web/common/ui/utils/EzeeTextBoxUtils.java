@@ -1,5 +1,6 @@
 package com.ezee.web.common.ui.utils;
 
+import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_BACKSPACE;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_DELETE;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_TAB;
@@ -10,6 +11,7 @@ import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 
 public final class EzeeTextBoxUtils {
@@ -40,6 +42,8 @@ public final class EzeeTextBoxUtils {
 		public void onFocus(FocusEvent event) {
 			if (event.getSource() instanceof TextBox) {
 				selectAll((TextBox) event.getSource());
+			} else if (event.getSource() instanceof ListBox) {
+				select((ListBox)event.getSource());
 			}
 		}
 
@@ -51,5 +55,17 @@ public final class EzeeTextBoxUtils {
 				}
 			});
 		}
+
+		public void select(final ListBox listBox) {
+			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+				@Override
+				public void execute() {
+					if (listBox.getItemCount() > ZERO) {
+						listBox.setSelectedIndex(ZERO);
+					}
+				}
+			});
+		}
 	}
+
 }

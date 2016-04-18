@@ -4,16 +4,32 @@ import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.EzeeCommonConstants.ONE;
 import static com.ezee.common.EzeeCommonConstants.TWO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
+import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getDateBoxFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getPercentFormat;
+import static com.ezee.model.entity.lease.EzeeLeaseBondType.none;
+import static com.ezee.model.entity.lease.EzeeLeaseConstants.OUTGOINGS;
+import static com.ezee.model.entity.lease.EzeeLeaseConstants.PARKING;
+import static com.ezee.model.entity.lease.EzeeLeaseConstants.RENT;
+import static com.ezee.model.entity.lease.EzeeLeaseConstants.SIGNAGE;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
+import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
+import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
+import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.getEnum;
 
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.ezee.common.web.EzeeFormatUtils;
 import com.ezee.model.entity.lease.EzeeLease;
+import com.ezee.model.entity.lease.EzeeLeaseBond;
 import com.ezee.model.entity.lease.EzeeLeaseBondType;
 import com.ezee.model.entity.lease.EzeeLeaseCategory;
+import com.ezee.model.entity.lease.EzeeLeaseIncidental;
 import com.ezee.model.entity.lease.EzeeLeasePremises;
 import com.ezee.model.entity.lease.EzeeLeaseTenant;
 import com.ezee.web.common.cache.EzeeEntityCache;
@@ -21,15 +37,20 @@ import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.web.common.ui.utils.EzeeListBoxUtils;
+import com.ezee.web.common.ui.utils.EzeeRichTextAreaUtils;
+import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ListBox;
@@ -40,6 +61,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<EzeeLease> {
+
+	private static final Logger log = Logger.getLogger("EzeeCreateUpdateDeleteLease");
 
 	private static EzeeCreateUpdateDeleteLeaseUiBinder uiBinder = GWT.create(EzeeCreateUpdateDeleteLeaseUiBinder.class);
 
@@ -167,14 +190,101 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	@Override
 	protected void bind() {
+		if (entity == null) {
+			entity = new EzeeLease();
+			entity.setCreated(DATE_UTILS.toString(new Date()));
+			entity.setUpdated(entity.getCreated());
+		} else {
+			entity.setUpdated(DATE_UTILS.toString(new Date()));
+		}
+		entity.setTenant(getTenant());
+		entity.setCategory(getCategory());
+		entity.setPremises(getPremises());
+		entity.setLeasedUnits(txtUnits.getText());
+		entity.setLeasedArea(getAmountFormat().parse(txtArea.getText()));
+		entity.setLeaseStart(DATE_UTILS.toString(dtStart.getValue()));
+		entity.setLeaseEnd(DATE_UTILS.toString(dtEnd.getValue()));
+		bindLeaseOption();
+		bindLeaseBond();
+		bindIncidental(RENT, txtRent, txtRentPercent, txtRentAccount);
+		bindIncidental(OUTGOINGS, txtOutgoing, txtOutgoingPercent, txtOutgoingAccount);
+		bindIncidental(PARKING, txtParking, txtParkingPercent, txtParkingAccount);
+		bindIncidental(SIGNAGE, txtSignage, txtSignagePercent, txtSignageAccount);
+		entity.setNotes(txtNotes.getText());
+		entity.setJobNo(txtMyobJobNo.getText());
+		entity.setInactive(chkInactive.getValue());
+		entity.setResidential(chkResidential.getValue());
+	}
+
+	private void bindIncidental(final String type, final TextBox amount, final TextBox percent, final TextBox account) {
+		double actual = getAmountFormat().parse(amount.getText());
+		if (actual != ZERO_DBL) {
+			EzeeLeaseIncidental incidental = null;
+			if (entity.getIncidental(type) == null) {
+				incidental = new EzeeLeaseIncidental();
+				incidental.setName(type);
+				incidental.setCreated(DATE_UTILS.toString(new Date()));
+				incidental.setUpdated(incidental.getCreated());
+				entity.addIncidental(incidental);
+			} else {
+				incidental = entity.getIncidental(type);
+				incidental.setUpdated(DATE_UTILS.toString(new Date()));
+			}
+			incidental.setAmount(actual);
+			incidental.setPercentage(getPercentFormat().parse(percent.getText()));
+			incidental.setTaxRate(cache.getConfiguration().getInvoiceTaxRate());
+			incidental.setAccount(account.getText());
+		} else {
+			if (entity.getIncidental(type) != null) {
+				entity.removeIncidental(type);
+			}
+		}
+	}
+
+	private void bindLeaseOption() {
+		if (chkOption.getValue()) {
+			entity.setOptionStartDate(DATE_UTILS.toString(dtOptionStart.getValue()));
+			entity.setOptionEndDate(DATE_UTILS.toString(dtOptionEnd.getValue()));
+		} else {
+			entity.setOptionStartDate(null);
+			entity.setOptionEndDate(null);
+		}
+	}
+
+	private void bindLeaseBond() {
+		if (getEnum(EzeeLeaseBondType.class, lstBondType) == none) {
+			if (entity.getBond() != null) {
+				entity.setBond(null);
+			}
+		} else {
+			EzeeLeaseBond bond = null;
+			if (entity.getBond() == null) {
+				bond = new EzeeLeaseBond();
+				bond.setCreated(DATE_UTILS.toString(new Date()));
+				bond.setUpdated(bond.getCreated());
+				entity.setBond(bond);
+			} else {
+				bond = entity.getBond();
+				bond.setUpdated(DATE_UTILS.toString(new Date()));
+			}
+			bond.setAmount(getAmountFormat().parse(txtBondAmount.getText()));
+			bond.setNotes(txtBondDetail.getText());
+			bond.setType(getEnum(EzeeLeaseBondType.class, lstBondType));
+		}
 	}
 
 	private void initialiseNew() {
-		txtRent.setValue(EzeeFormatUtils.getAmountFormat().format(ZERO_DBL));
-		txtOutgoing.setValue(EzeeFormatUtils.getAmountFormat().format(ZERO_DBL));
-		txtParking.setValue(EzeeFormatUtils.getAmountFormat().format(ZERO_DBL));
-		txtSignage.setValue(EzeeFormatUtils.getAmountFormat().format(ZERO_DBL));
-		txtBondAmount.setValue(EzeeFormatUtils.getAmountFormat().format(ZERO_DBL));
+		txtRent.setValue(getAmountFormat().format(ZERO_DBL));
+		txtOutgoing.setValue(getAmountFormat().format(ZERO_DBL));
+		txtParking.setValue(getAmountFormat().format(ZERO_DBL));
+		txtSignage.setValue(getAmountFormat().format(ZERO_DBL));
+		txtBondAmount.setValue(getAmountFormat().format(ZERO_DBL));
+		txtRentPercent.setValue(getPercentFormat().format(ZERO_DBL));
+		txtOutgoingPercent.setValue(getPercentFormat().format(ZERO_DBL));
+		txtParkingPercent.setValue(getPercentFormat().format(ZERO_DBL));
+		txtSignagePercent.setValue(getPercentFormat().format(ZERO_DBL));
+		txtArea.setValue(getAmountFormat().format(ZERO_DBL));
+		txtUnits.setValue(EMPTY_STRING);
 		Date start = new Date();
 		Date end = DATE_UTILS.addYears(start, TWO);
 		Date optionStart = DATE_UTILS.addDays(end, ONE);
@@ -187,6 +297,22 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	}
 
 	private void initForm() {
+		KeyPressHandler keyPressHandler = new EzeeTextBoxUtils.NumericKeyPressHandler();
+		FocusHandler focusHandler = new EzeeTextBoxUtils.TextBoxFocusHandler();
+		txtRent.addKeyPressHandler(keyPressHandler);
+		txtOutgoing.addKeyPressHandler(keyPressHandler);
+		txtParking.addKeyPressHandler(keyPressHandler);
+		txtSignage.addKeyPressHandler(keyPressHandler);
+		txtBondAmount.addKeyPressHandler(keyPressHandler);
+		txtArea.addKeyPressHandler(keyPressHandler);
+		txtRent.addFocusHandler(focusHandler);
+		txtOutgoing.addFocusHandler(focusHandler);
+		txtParking.addFocusHandler(focusHandler);
+		txtSignage.addFocusHandler(focusHandler);
+		txtBondAmount.addFocusHandler(focusHandler);
+		txtUnits.addFocusHandler(focusHandler);
+		txtArea.addFocusHandler(focusHandler);
+		txtMyobJobNo.addFocusHandler(focusHandler);
 		dtStart.setFormat(getDateBoxFormat());
 		dtEnd.setFormat(getDateBoxFormat());
 		dtUpdate.setFormat(getDateBoxFormat());
@@ -244,6 +370,24 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 				dtOptionEnd.setValue(optionEnd);
 			}
 		});
+		KeyPressHandler bondDetailHandler = new EzeeRichTextAreaUtils.TabKeyPressHandler(new Widget[] { txtBondAmount },
+				new Widget[] { txtNotes, txtMyobJobNo });
+		txtBondDetail.addKeyPressHandler(bondDetailHandler);
+		KeyPressHandler notesHandler = new EzeeRichTextAreaUtils.TabKeyPressHandler(
+				new Widget[] { txtNotes, txtSignageAccount }, new Widget[] { txtMyobJobNo });
+		txtNotes.addKeyPressHandler(notesHandler);
+		EzeeLeaseAmountChangeHandler amountChangeHandler = new EzeeLeaseAmountChangeHandler();
+		txtRent.addValueChangeHandler(amountChangeHandler);
+		txtOutgoing.addValueChangeHandler(amountChangeHandler);
+		txtParking.addValueChangeHandler(amountChangeHandler);
+		txtSignage.addValueChangeHandler(amountChangeHandler);
+		txtBondAmount.addValueChangeHandler(amountChangeHandler);
+		txtArea.addValueChangeHandler(amountChangeHandler);
+		EzeeLeasePerecntChangeHandler perecntChangeHandler = new EzeeLeasePerecntChangeHandler();
+		txtRentPercent.addValueChangeHandler(perecntChangeHandler);
+		txtOutgoingPercent.addValueChangeHandler(perecntChangeHandler);
+		txtParkingPercent.addValueChangeHandler(perecntChangeHandler);
+		txtSignagePercent.addValueChangeHandler(perecntChangeHandler);
 	}
 
 	@Override
@@ -270,10 +414,66 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		close();
 	}
 
+	@UiHandler("btnSave")
+	public void onSaveClick(ClickEvent event) {
+		btnSave.setEnabled(false);
+		showWaitCursor();
+		bind();
+		ENTITY_SERVICE.saveEntity(EzeeLease.class.getName(), entity, new AsyncCallback<EzeeLease>() {
+
+			@Override
+			public void onFailure(final Throwable caught) {
+				btnSave.setEnabled(true);
+				showDefaultCursor();
+				log.log(Level.SEVERE, "Error persisting invoice '" + entity + "'.", caught);
+				showNew(ERROR, "Error persisting invoice '" + entity + "'.  Please see log for details.");
+			}
+
+			@Override
+			public void onSuccess(final EzeeLease lease) {
+				log.log(Level.INFO, "Saved lease '" + entity + "' successfully");
+				// handler.onSave(result);
+				btnSave.setEnabled(true);
+				showDefaultCursor();
+				close();
+			}
+		});
+	}
+
+	private EzeeLeaseTenant getTenant() {
+		return EzeeListBoxUtils.getEntity(EzeeLeaseTenant.class, lstTenant, cache);
+	}
+
+	private EzeeLeaseCategory getCategory() {
+		return EzeeListBoxUtils.getEntity(EzeeLeaseCategory.class, lstCategory, cache);
+	}
+
+	private EzeeLeasePremises getPremises() {
+		return EzeeListBoxUtils.getEntity(EzeeLeasePremises.class, lstPremises, cache);
+	}
+
 	private void loadEntities() {
 		EzeeListBoxUtils.loadEntities(EzeeLeaseTenant.class, lstTenant, cache);
 		EzeeListBoxUtils.loadEntities(EzeeLeaseCategory.class, lstCategory, cache);
 		EzeeListBoxUtils.loadEntities(EzeeLeasePremises.class, lstPremises, cache);
 		EzeeListBoxUtils.loadEnums(EzeeLeaseBondType.values(), lstBondType);
+	}
+
+	private final class EzeeLeaseAmountChangeHandler implements ValueChangeHandler<String> {
+
+		@Override
+		public void onValueChange(ValueChangeEvent<String> event) {
+			TextBox textBox = (TextBox) event.getSource();
+			textBox.setValue(getAmountFormat().format(getAmountFormat().parse(textBox.getText())));
+		}
+	}
+
+	private final class EzeeLeasePerecntChangeHandler implements ValueChangeHandler<String> {
+
+		@Override
+		public void onValueChange(ValueChangeEvent<String> event) {
+			TextBox textBox = (TextBox) event.getSource();
+			textBox.setValue(getPercentFormat().format(Double.valueOf(textBox.getText())));
+		}
 	}
 }
