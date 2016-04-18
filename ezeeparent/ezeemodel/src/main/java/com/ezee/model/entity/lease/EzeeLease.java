@@ -7,7 +7,6 @@ import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.TOTAL;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
-import static org.hibernate.annotations.FetchMode.SUBSELECT;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,9 +21,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -58,7 +54,6 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	/** incidentals **/
 	@OneToMany(cascade = ALL, fetch = EAGER)
 	@JoinTable(name = "LEASE_TO_LEASE_INCIDENTAL_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "LEASE_INCIDENTAL_ID") )
-	@Fetch(value = FetchMode.SUBSELECT)
 	private Set<EzeeLeaseIncidental> incidentals;
 
 	/** tenant **/
@@ -103,7 +98,6 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	/** meta data **/
 	@OneToMany(cascade = ALL, fetch = EAGER)
 	@JoinTable(name = "LEASE_TO_META_DATA_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "META_DATA_ID") )
-	@Fetch(value = SUBSELECT)
 	private Set<EzeeLeaseMetaData> metaData;
 
 	/** myob job number **/
