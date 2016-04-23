@@ -3,6 +3,7 @@ package com.ezee.client.crud.lease;
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.EzeeCommonConstants.ONE;
 import static com.ezee.common.EzeeCommonConstants.TWO;
+import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getDateBoxFormat;
@@ -16,40 +17,52 @@ import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
+import static com.ezee.web.common.ui.grid.EzeeGrid.DEFAULT_GRID_SIZE;
+import static com.ezee.web.common.ui.grid.EzeeGrid.DEFAULT_PAGE_SIZE;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.getEnum;
+import static com.google.gwt.event.dom.client.KeyCodes.KEY_ENTER;
 
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.ezee.client.crud.lease.metadata.EzeeCreateUpdateDeleteLeaseMetaDataGridModel;
 import com.ezee.common.web.EzeeFormatUtils;
 import com.ezee.model.entity.lease.EzeeLease;
 import com.ezee.model.entity.lease.EzeeLeaseBond;
 import com.ezee.model.entity.lease.EzeeLeaseBondType;
 import com.ezee.model.entity.lease.EzeeLeaseCategory;
 import com.ezee.model.entity.lease.EzeeLeaseIncidental;
+import com.ezee.model.entity.lease.EzeeLeaseMetaData;
 import com.ezee.model.entity.lease.EzeeLeasePremises;
 import com.ezee.model.entity.lease.EzeeLeaseTenant;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
+import com.ezee.web.common.ui.css.EzeeGwtOverridesResources;
+import com.ezee.web.common.ui.grid.EzeeGridModel;
 import com.ezee.web.common.ui.utils.EzeeListBoxUtils;
 import com.ezee.web.common.ui.utils.EzeeRichTextAreaUtils;
 import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -59,6 +72,7 @@ import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<EzeeLease> {
 
@@ -171,6 +185,14 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	@UiField
 	Button btnClose;
 
+	@UiField
+	Button btnDelete;
+
+	@UiField(provided = true)
+	DataGrid<EzeeLeaseMetaData> metaData;
+
+	private EzeeCreateUpdateDeleteLeaseMetaDataGridModel metaDataModel;
+
 	public EzeeCreateUpdateDeleteLease(EzeeEntityCache cache, EzeeCreateUpdateDeleteEntityHandler<EzeeLease> handler,
 			String[] headers) {
 		this(cache, handler, null, EzeeCreateUpdateDeleteEntityType.create, headers);
@@ -180,8 +202,25 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			final EzeeCreateUpdateDeleteEntityHandler<EzeeLease> handler, final EzeeLease entity,
 			final EzeeCreateUpdateDeleteEntityType type, final String[] headers) {
 		super(cache, handler, entity, type, headers);
+		initMetaDataGrid();
 		setWidget(uiBinder.createAndBindUi(this));
 		setModal(true);
+	}
+
+	private void initMetaDataGrid() {
+		metaData = new DataGrid<EzeeLeaseMetaData>(DEFAULT_PAGE_SIZE, EzeeGwtOverridesResources.INSTANCE);
+		metaData.setMinimumTableWidth(DEFAULT_GRID_SIZE, Style.Unit.PX);
+		metaData.addDomHandler(new EzeeLeaseMetaDataGridDoubleClickHandler(), DoubleClickEvent.getType());
+		metaData.addDomHandler(new EzeeLeaseMetaDataKeyPressHandler(), KeyPressEvent.getType());
+		SingleSelectionModel<EzeeLeaseMetaData> model = new SingleSelectionModel<>();
+		metaData.setSelectionModel(model);
+		metaDataModel = new EzeeCreateUpdateDeleteLeaseMetaDataGridModel();
+		metaDataModel.bind(metaData);
+
+		metaDataModel.addMetaData(new EzeeLeaseMetaData("FIRST", "TEST", "123456677", 0, null, null));
+		metaDataModel.addMetaData(new EzeeLeaseMetaData("SECOND", "TEST", "123456656", 2, null, null));
+
+		metaData.redraw();
 	}
 
 	@Override
@@ -388,6 +427,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		txtOutgoingPercent.addValueChangeHandler(perecntChangeHandler);
 		txtParkingPercent.addValueChangeHandler(perecntChangeHandler);
 		txtSignagePercent.addValueChangeHandler(perecntChangeHandler);
+		tab.selectTab(ZERO);
 	}
 
 	@Override
@@ -474,6 +514,24 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		public void onValueChange(ValueChangeEvent<String> event) {
 			TextBox textBox = (TextBox) event.getSource();
 			textBox.setValue(getPercentFormat().format(Double.valueOf(textBox.getText())));
+		}
+	}
+
+	private class EzeeLeaseMetaDataGridDoubleClickHandler implements DoubleClickHandler {
+
+		@Override
+		public void onDoubleClick(DoubleClickEvent event) {
+			// do something
+		}
+	}
+
+	private class EzeeLeaseMetaDataKeyPressHandler implements KeyPressHandler {
+
+		@Override
+		public void onKeyPress(KeyPressEvent event) {
+			if (event.getNativeEvent().getKeyCode() == KEY_ENTER) {
+				// do something
+			}
 		}
 	}
 }

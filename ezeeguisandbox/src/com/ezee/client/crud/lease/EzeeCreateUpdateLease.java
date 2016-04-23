@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.cellview.client.DataGrid;
 
 public class EzeeCreateUpdateLease extends Composite {
 
@@ -33,6 +34,8 @@ public class EzeeCreateUpdateLease extends Composite {
 	Button btnCancel;
 	@UiField TextBox txtUnits;
 	@UiField Label txtArea;
+	@UiField Button btnDelete;
+	@UiField(provided=true) DataGrid<Object> dataGrid = new DataGrid<Object>();
 
 	interface EzeeCreateUpdateLeaseUiBinder extends UiBinder<Widget, EzeeCreateUpdateLease> {
 	}

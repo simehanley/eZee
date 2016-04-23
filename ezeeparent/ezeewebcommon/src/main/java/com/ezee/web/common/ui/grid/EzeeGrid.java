@@ -48,8 +48,8 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 
 	private static final Logger log = Logger.getLogger("EzeeGrid");
 
-	protected static final int DEFAULT_PAGE_SIZE = 40;
-	protected static final int DEFAULT_GRID_SIZE = 600;
+	public static final int DEFAULT_PAGE_SIZE = 40;
+	public static final int DEFAULT_GRID_SIZE = 600;
 
 	private static EzeeGridUiBinder uiBinder = GWT.create(EzeeGridUiBinder.class);
 
