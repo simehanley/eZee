@@ -1,4 +1,4 @@
-package com.ezee.client.crud.lease.metadata;
+package com.ezee.client.grid.leasemetadata;
 
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 
@@ -13,7 +13,7 @@ import com.ezee.web.common.ui.grid.EzeeGridModel;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 
-public class EzeeCreateUpdateDeleteLeaseMetaDataGridModel extends EzeeGridModel<EzeeLeaseMetaData> {
+public class EzeeLeaseMetaDataGridModel extends EzeeGridModel<EzeeLeaseMetaData> {
 
 	public static final String META_DATA_TYPE = "Type";
 	public static final String META_DATA_DESC = "Description";

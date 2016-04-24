@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.filter.EzeeEmptyFilter;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
@@ -36,6 +37,7 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -52,6 +54,9 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	public static final int DEFAULT_GRID_SIZE = 600;
 
 	private static EzeeGridUiBinder uiBinder = GWT.create(EzeeGridUiBinder.class);
+
+	@UiField
+	protected DockLayoutPanel main;
 
 	@UiField(provided = true)
 	protected DataGrid<T> grid;
@@ -117,7 +122,7 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		}
 	}
 
-	private void init() {
+	protected void init() {
 		initFilter();
 		initGrid();
 		loadEntities();
@@ -140,7 +145,7 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		filterpanel = new HorizontalPanel();
 	}
 
-	private void setEntities(final List<T> entities) {
+	protected void setEntities(final List<T> entities) {
 		model.getHandler().getList().clear();
 		EzeeEntityFilter<T> filter = resolveFilter();
 		for (T entity : entities) {
@@ -170,7 +175,7 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		});
 	}
 
-	private void initContextMenu() {
+	protected void initContextMenu() {
 		contextMenu = new PopupPanel(true);
 		contextMenu.add(createContextMenu());
 		contextMenu.hide();
@@ -250,7 +255,10 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	}
 
 	protected EzeeEntityFilter<T> resolveFilter() {
-		return toolBar.resolveFilter();
+		if (toolBar != null) {
+			return toolBar.resolveFilter();
+		}
+		return new EzeeEmptyFilter<T>();
 	}
 
 	private class EzeeGridDoubleClickHandler implements DoubleClickHandler {
@@ -269,6 +277,10 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 				editEntity();
 			}
 		}
+	}
+
+	public final DockLayoutPanel getMain() {
+		return main;
 	}
 
 	public abstract void deleteEntity();

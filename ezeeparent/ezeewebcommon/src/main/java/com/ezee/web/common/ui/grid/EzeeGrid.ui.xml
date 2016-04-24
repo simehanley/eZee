@@ -4,7 +4,7 @@
 
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
 
-	<g:DockLayoutPanel unit="EM">
+	<g:DockLayoutPanel unit="EM" ui:field="main">
 		<g:north size="3.2">
 			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE" height="100%"
 				width="100%" styleName="{res.css.toolbar}" ui:field="filterpanel">
