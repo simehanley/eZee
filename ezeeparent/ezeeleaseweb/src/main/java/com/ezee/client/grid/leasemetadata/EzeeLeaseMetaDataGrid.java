@@ -13,8 +13,8 @@ import com.ezee.web.common.ui.grid.EzeeGrid;
 
 public class EzeeLeaseMetaDataGrid extends EzeeGrid<EzeeLeaseMetaData> {
 
-	public EzeeLeaseMetaDataGrid(final EzeeEntityCache cache) {
-		super(cache);
+	public EzeeLeaseMetaDataGrid(final EzeeEntityCache cache, final int pageSize, final boolean disableContextMenu) {
+		super(cache, pageSize, disableContextMenu);
 		initMetaDataGrid();
 	}
 
@@ -23,15 +23,15 @@ public class EzeeLeaseMetaDataGrid extends EzeeGrid<EzeeLeaseMetaData> {
 	}
 
 	@Override
-	protected void init() {
+	protected void init(final int pageSize, final boolean disableContextMenu) {
 		initFilter();
-		initGrid();
-		initContextMenu();
+		initGrid(pageSize);
+		initContextMenu(disableContextMenu);
 	}
 
 	@Override
-	protected void initGrid() {
-		super.initGrid();
+	protected void initGrid(final int pageSize) {
+		super.initGrid(pageSize);
 		model = new EzeeLeaseMetaDataGridModel();
 		model.bind(grid);
 	}

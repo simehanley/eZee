@@ -14,8 +14,9 @@ public class EzeeLeaseCategoryGrid extends EzeeFinancialEntityGrid<EzeeLeaseCate
 		super(cache, crudHeaders);
 	}
 
-	protected void initGrid() {
-		super.initGrid();
+	@Override
+	protected void initGrid(final int pageSize) {
+		super.initGrid(pageSize);
 		model = new EzeeLeaseCategoryGridModel();
 		model.bind(grid);
 	}

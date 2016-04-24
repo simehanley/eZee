@@ -15,8 +15,9 @@ public abstract class EzeePayeeGrid<T extends EzeePayee> extends EzeeFinancialEn
 		super(cache, crudHeaders);
 	}
 
-	protected void initGrid() {
-		super.initGrid();
+	@Override
+	protected void initGrid(final int pageSize) {
+		super.initGrid(pageSize);
 		model = new EzeePayeeGridModel<T>();
 		model.bind(grid);
 	}

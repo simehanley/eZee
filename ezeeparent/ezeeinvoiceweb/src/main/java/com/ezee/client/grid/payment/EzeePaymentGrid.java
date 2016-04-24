@@ -30,8 +30,8 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 		super(cache);
 	}
 
-	protected void initGrid() {
-		super.initGrid();
+	protected void initGrid(final int pageSize) {
+		super.initGrid(pageSize);
 		model = new EzeePaymentGridModel();
 		model.bind(grid);
 	}

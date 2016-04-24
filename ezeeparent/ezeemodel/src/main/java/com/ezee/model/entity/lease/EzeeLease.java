@@ -18,6 +18,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,6 +27,13 @@ import javax.persistence.Table;
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+@NamedNativeQueries({
+		@NamedNativeQuery(name = "deleteIncidentalMappingsSql", query = "delete from EZEE_LEASE_TO_LEASE_INCIDENTAL_MAPPING where LEASE_ID = :id"),
+		@NamedNativeQuery(name = "deleteTenantMappingsSql", query = "delete from EZEE_LEASE_TO_TENANT_MAPPING where LEASE_ID = :id"),
+		@NamedNativeQuery(name = "deletePremisesMappingsSql", query = "delete from EZEE_LEASE_TO_PREMISES_MAPPING where LEASE_ID = :id"),
+		@NamedNativeQuery(name = "deleteBondMappingsSql", query = "delete from EZEE_LEASE_TO_BOND_MAPPING where LEASE_ID = :id"),
+		@NamedNativeQuery(name = "deleteMetaDataMappingsSql", query = "delete from EZEE_LEASE_TO_META_DATA_MAPPING where LEASE_ID = :id"),
+		@NamedNativeQuery(name = "deleteCategoryMappingsSql", query = "delete from EZEE_LEASE_TO_CATEGORY_MAPPING where LEASE_ID = :id") })
 @Entity
 @Table(name = "EZEE_LEASE")
 public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
@@ -53,22 +62,22 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 
 	/** incidentals **/
 	@OneToMany(cascade = ALL, fetch = EAGER)
-	@JoinTable(name = "LEASE_TO_LEASE_INCIDENTAL_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "LEASE_INCIDENTAL_ID") )
+	@JoinTable(name = "EZEE_LEASE_TO_LEASE_INCIDENTAL_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "LEASE_INCIDENTAL_ID") )
 	private Set<EzeeLeaseIncidental> incidentals;
 
 	/** tenant **/
 	@ManyToOne(cascade = ALL, fetch = EAGER)
-	@JoinTable(name = "LEASE_TO_TENANT_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "TENANT_ID") )
+	@JoinTable(name = "EZEE_LEASE_TO_TENANT_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "TENANT_ID") )
 	private EzeeLeaseTenant tenant;
 
 	/** premises **/
 	@ManyToOne(cascade = ALL, fetch = EAGER)
-	@JoinTable(name = "LEASE_TO_PREMISES_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "PREMISES_ID") )
+	@JoinTable(name = "EZEE_LEASE_TO_PREMISES_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "PREMISES_ID") )
 	private EzeeLeasePremises premises;
 
 	/** category **/
 	@ManyToOne(cascade = ALL, fetch = EAGER)
-	@JoinTable(name = "LEASE_TO_CATEGORY_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID") )
+	@JoinTable(name = "EZEE_LEASE_TO_CATEGORY_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID") )
 	private EzeeLeaseCategory category;
 
 	/** indicator for a residential (GST free) lease **/
@@ -92,12 +101,12 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	private String optionEndDate;
 
 	@OneToOne(cascade = ALL, fetch = EAGER)
-	@JoinTable(name = "LEASE_TO_BOND_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "BOND_ID") )
+	@JoinTable(name = "EZEE_LEASE_TO_BOND_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "BOND_ID") )
 	private EzeeLeaseBond bond;
 
 	/** meta data **/
 	@OneToMany(cascade = ALL, fetch = EAGER)
-	@JoinTable(name = "LEASE_TO_META_DATA_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "META_DATA_ID") )
+	@JoinTable(name = "EZEE_LEASE_TO_META_DATA_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "META_DATA_ID") )
 	private Set<EzeeLeaseMetaData> metaData;
 
 	/** myob job number **/

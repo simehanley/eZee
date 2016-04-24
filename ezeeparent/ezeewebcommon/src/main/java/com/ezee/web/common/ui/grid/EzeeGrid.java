@@ -83,8 +83,16 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	}
 
 	public EzeeGrid(final EzeeEntityCache cache) {
+		this(cache, false);
+	}
+
+	public EzeeGrid(final EzeeEntityCache cache, final boolean disableContextMenu) {
+		this(cache, DEFAULT_PAGE_SIZE, disableContextMenu);
+	}
+
+	public EzeeGrid(final EzeeEntityCache cache, final int pageSize, final boolean disableContextMenu) {
 		this.cache = cache;
-		init();
+		init(pageSize, disableContextMenu);
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -122,15 +130,15 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		}
 	}
 
-	protected void init() {
+	protected void init(final int pageSize, final boolean disableContextMenu) {
 		initFilter();
-		initGrid();
+		initGrid(pageSize);
 		loadEntities();
-		initContextMenu();
+		initContextMenu(disableContextMenu);
 	}
 
-	protected void initGrid() {
-		grid = new DataGrid<T>(DEFAULT_PAGE_SIZE, EzeeGwtOverridesResources.INSTANCE);
+	protected void initGrid(final int pageSize) {
+		grid = new DataGrid<T>(pageSize, EzeeGwtOverridesResources.INSTANCE);
 		grid.setMinimumTableWidth(DEFAULT_GRID_SIZE, Style.Unit.PX);
 		grid.addDomHandler(new EzeeGridDoubleClickHandler(), DoubleClickEvent.getType());
 		grid.addDomHandler(new EzeeGridKeyPressHandler(), KeyPressEvent.getType());
@@ -175,21 +183,23 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		});
 	}
 
-	protected void initContextMenu() {
-		contextMenu = new PopupPanel(true);
-		contextMenu.add(createContextMenu());
-		contextMenu.hide();
-		grid.sinkEvents(ONCONTEXTMENU);
-		grid.addHandler(new ContextMenuHandler() {
-			@Override
-			public void onContextMenu(final ContextMenuEvent event) {
-				event.preventDefault();
-				event.stopPropagation();
-				contextMenu.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
-				contextMenu.show();
-			}
-		}, ContextMenuEvent.getType());
-
+	protected void initContextMenu(final boolean disableContextMenu) {
+		if (!disableContextMenu) {
+			contextMenu = new PopupPanel(true);
+			contextMenu.add(createContextMenu());
+			contextMenu.hide();
+			grid.sinkEvents(ONCONTEXTMENU);
+			grid.addHandler(new ContextMenuHandler() {
+				@Override
+				public void onContextMenu(final ContextMenuEvent event) {
+					event.preventDefault();
+					event.stopPropagation();
+					contextMenu.setPopupPosition(event.getNativeEvent().getClientX(),
+							event.getNativeEvent().getClientY());
+					contextMenu.show();
+				}
+			}, ContextMenuEvent.getType());
+		}
 	}
 
 	protected MenuBar createContextMenu() {
@@ -281,6 +291,10 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 
 	public final DockLayoutPanel getMain() {
 		return main;
+	}
+
+	public final EzeeGridModel<T> getModel() {
+		return model;
 	}
 
 	public abstract void deleteEntity();

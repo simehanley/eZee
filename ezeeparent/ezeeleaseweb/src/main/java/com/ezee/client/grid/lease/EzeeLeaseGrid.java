@@ -17,8 +17,8 @@ public class EzeeLeaseGrid extends EzeeGrid<EzeeLease> {
 	}
 
 	@Override
-	protected void initGrid() {
-		super.initGrid();
+	protected void initGrid(final int pageSize) {
+		super.initGrid(pageSize);
 		SingleSelectionModel<EzeeLease> selectModel = new SingleSelectionModel<>();
 		grid.setSelectionModel(selectModel);
 		model = new EzeeLeaseGridModel();

@@ -146,7 +146,7 @@
 						<g:CheckBox text="Inactive" ui:field="chkInactive" wordWrap="false" styleName="{res.css.gwtCheckBoxSmall}" />
 						<g:CheckBox text="Residential" ui:field="chkResidential" wordWrap="false" styleName="{res.css.gwtCheckBoxSmall}" />
 						<g:Button ui:field="btnUpdate" styleName="{res.css.gwtButton}">Update</g:Button>
-						<g:Button ui:field="btnDelete" styleName="{res.css.gwtButton}">Delete</g:Button>
+						<g:Button ui:field="btnDelete" styleName="{res.css.gwtButton}" enabled="false">Delete</g:Button>
 						<g:Button ui:field="btnSave" styleName="{res.css.gwtButton}">Save</g:Button>
 						<g:Button ui:field="btnClose" styleName="{res.css.gwtButton}">Close</g:Button>
 					</g:HorizontalPanel>

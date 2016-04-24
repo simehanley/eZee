@@ -46,8 +46,8 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 	}
 
 	@Override
-	protected void initGrid() {
-		super.initGrid();
+	protected void initGrid(final int pageSize) {
+		super.initGrid(pageSize);
 		MultiSelectionModel<EzeeInvoice> selectModel = new MultiSelectionModel<>();
 		grid.setSelectionModel(selectModel);
 		model = new EzeeInvoiceGridModel();
