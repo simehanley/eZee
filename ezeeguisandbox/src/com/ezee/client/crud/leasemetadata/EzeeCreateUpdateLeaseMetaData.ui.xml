@@ -1,0 +1,25 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	</ui:style>
+	<g:HTMLPanel>
+		<g:VerticalPanel>
+			<g:HorizontalPanel>
+				<g:ListBox styleName="gwt-ListBox-Medium"/>
+				<g:TextBox styleName="gwt-TextBox-Medium"/>
+			</g:HorizontalPanel>
+			<g:HorizontalPanel>
+				<g:RichTextArea styleName="gwt-RichTextArea-Medium" width="422px" height="79px"/>
+			</g:HorizontalPanel>
+			<g:HorizontalPanel>
+				<g:HorizontalPanel width="141px"/>
+				<g:HorizontalPanel>
+					<g:Button/>
+					<g:Button/>
+					<g:Button/>
+				</g:HorizontalPanel>
+			</g:HorizontalPanel>
+		</g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
