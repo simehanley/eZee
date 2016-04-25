@@ -32,5 +32,11 @@ public interface EzeeLeaseWebConstants {
 	String DELETE_LEASE = "Delete Lease";
 	String[] LEASE_CRUD_HEADERS = new String[] { NEW_LEASE, EDIT_LEASE, DELETE_LEASE };
 
+	String EDIT_LEASE_META_DATA = "Edit Lease Meta Data";
+	String NEW_LEASE_META_DATA = "New Lease Meta Data";
+	String DELETE_LEASE_META_DATA = "Delete Lease Meta Data";
+	String[] LEASE_META_DATA_CRUD_HEADERS = new String[] { NEW_LEASE_META_DATA, EDIT_LEASE_META_DATA,
+			DELETE_LEASE_META_DATA };
+
 	String SHOW_INACTIVE_LEASES = "SHOW_INACTIVE";
 }

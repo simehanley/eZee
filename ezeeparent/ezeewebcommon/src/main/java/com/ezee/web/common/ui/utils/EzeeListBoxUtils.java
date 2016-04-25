@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ezee.model.entity.EzeeHasName;
+import com.ezee.model.entity.enums.EzeeKeyedEnum;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.google.gwt.user.client.ui.ListBox;
 
@@ -26,6 +27,14 @@ public final class EzeeListBoxUtils {
 		if (ezeeEnum != null && ezeeEnum.length > ZERO) {
 			for (Enum<K> e : ezeeEnum) {
 				listBox.addItem(e.name());
+			}
+		}
+	}
+
+	public static <K extends EzeeKeyedEnum> void loadKeyedEnums(final K[] keyedEnum, final ListBox listBox) {
+		if (keyedEnum != null && keyedEnum.length > ZERO) {
+			for (K k : keyedEnum) {
+				listBox.addItem(k.key());
 			}
 		}
 	}

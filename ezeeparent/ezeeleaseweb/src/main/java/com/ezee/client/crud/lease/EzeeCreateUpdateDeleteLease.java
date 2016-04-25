@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.ezee.client.grid.leasemetadata.EzeeLeaseMetaDataChangeListener;
 import com.ezee.client.grid.leasemetadata.EzeeLeaseMetaDataGrid;
 import com.ezee.common.web.EzeeFormatUtils;
 import com.ezee.model.entity.lease.EzeeLease;
@@ -71,11 +72,12 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
 
-public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<EzeeLease> {
+public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<EzeeLease>
+		implements EzeeLeaseMetaDataChangeListener {
 
 	private static final Logger log = Logger.getLogger("EzeeCreateUpdateDeleteLease");
 
-	private static final int META_DATA_PAGE_SIZE = 10;
+	private static final int META_DATA_PAGE_SIZE = 15;
 
 	private static EzeeCreateUpdateDeleteLeaseUiBinder uiBinder = GWT.create(EzeeCreateUpdateDeleteLeaseUiBinder.class);
 
@@ -206,7 +208,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	private void initMetaDataGrid() {
 		boolean disableContextMenu = (type == delete) ? true : false;
-		metaDataGrid = new EzeeLeaseMetaDataGrid(cache, META_DATA_PAGE_SIZE, disableContextMenu);
+		metaDataGrid = new EzeeLeaseMetaDataGrid(cache, META_DATA_PAGE_SIZE, disableContextMenu, this);
 	}
 
 	private void initMetaData() {
@@ -298,6 +300,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		bindIncidental(OUTGOINGS, txtOutgoing, txtOutgoingPercent, txtOutgoingAccount);
 		bindIncidental(PARKING, txtParking, txtParkingPercent, txtParkingAccount);
 		bindIncidental(SIGNAGE, txtSignage, txtSignagePercent, txtSignageAccount);
+
 		bindMetaData();
 		entity.setNotes(txtNotes.getText());
 		entity.setJobNo(txtMyobJobNo.getText());
@@ -363,9 +366,11 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	}
 
 	private void bindMetaData() {
-		List<EzeeLeaseMetaData> metaData = metaDataGrid.getModel().getHandler().getList();
-		if (!isEmpty(metaData)) {
-			entity.setMetaData(new HashSet<>(metaData));
+		if (type == create) {
+			List<EzeeLeaseMetaData> metaData = metaDataGrid.getModel().getHandler().getList();
+			if (!isEmpty(metaData)) {
+				entity.setMetaData(new HashSet<>(metaData));
+			}
 		}
 	}
 
@@ -647,6 +652,21 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		public void onValueChange(ValueChangeEvent<String> event) {
 			TextBox textBox = (TextBox) event.getSource();
 			textBox.setValue(getPercentFormat().format(Double.valueOf(textBox.getText())));
+		}
+	}
+
+	@Override
+	public void metaDataSaved(final EzeeLeaseMetaData metaData) {
+		if (entity != null) {
+			entity.removeMetaData(metaData);
+			entity.addMetaData(metaData);
+		}
+	}
+
+	@Override
+	public void metaDataDeleted(final EzeeLeaseMetaData metaData) {
+		if (entity != null) {
+			entity.removeMetaData(metaData);
 		}
 	}
 }

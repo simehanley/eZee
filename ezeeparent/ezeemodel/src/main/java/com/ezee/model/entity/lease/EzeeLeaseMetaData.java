@@ -27,25 +27,21 @@ public class EzeeLeaseMetaData extends EzeeDatabaseEntity implements IsSerializa
 	@Column(name = "META_DATA_VALUE")
 	private String value;
 
-	@Column(name = "META_DATA_ORDER")
-	private Integer order;
-
 	public EzeeLeaseMetaData() {
 		super();
 	}
 
-	public EzeeLeaseMetaData(final String type, final String description, final String value, final Integer order,
-			final String created, final String updated) {
-		this(NULL_ID, type, description, value, order, created, updated);
+	public EzeeLeaseMetaData(final String type, final String description, final String value, final String created,
+			final String updated) {
+		this(NULL_ID, type, description, value, created, updated);
 	}
 
 	public EzeeLeaseMetaData(final Long id, final String type, final String description, final String value,
-			final Integer order, final String created, final String updated) {
+			final String created, final String updated) {
 		super(id, created, updated);
 		this.type = type;
 		this.description = description;
 		this.value = value;
-		this.order = order;
 	}
 
 	public String getType() {
@@ -70,14 +66,6 @@ public class EzeeLeaseMetaData extends EzeeDatabaseEntity implements IsSerializa
 
 	public void setValue(String value) {
 		this.value = value;
-	}
-
-	public Integer getOrder() {
-		return order;
-	}
-
-	public void setOrder(Integer order) {
-		this.order = order;
 	}
 
 	@Override
