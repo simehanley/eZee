@@ -14,6 +14,7 @@
 		<g:Button text="Clear" ui:field="btnClear" styleName="{res.css.gwtButton}" />
 		<g:CheckBox text="Show Inactive" styleName="{res.css.gwtCheckBoxSmall}" ui:field="chkShowInactive"
 			wordWrap="false" />
+		<g:CheckBox text="Summary" styleName="{res.css.gwtCheckBoxSmall}" ui:field="chkSummary" wordWrap="false" />
 	</g:HorizontalPanel>
 
 </ui:UiBinder> 

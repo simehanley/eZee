@@ -20,4 +20,7 @@ public interface EzeeCommonConstants {
 	int MONTHS_PER_YEAR = 12;
 
 	String EMPTY_STRING = "";
+	String SPACE = "";
+	String RETURN = "\r";
+	String TAB = "\t";
 }

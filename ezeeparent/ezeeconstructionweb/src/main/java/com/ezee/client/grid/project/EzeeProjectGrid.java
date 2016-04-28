@@ -34,8 +34,8 @@ public class EzeeProjectGrid extends EzeeFinancialEntityGrid<EzeeProject> implem
 	}
 
 	@Override
-	protected void initGrid(final int pageSize) {
-		super.initGrid(pageSize);
+	protected void initGrid() {
+		super.initGrid();
 		grid.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 		model = new EzeeProjectGridModel();
 		model.bind(grid);

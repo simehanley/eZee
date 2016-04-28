@@ -10,8 +10,8 @@ public abstract class EzeePayerGrid<T extends EzeePayer> extends EzeeFinancialEn
 		super(cache, crudHeaders);
 	}
 
-	protected void initGrid(final int pageSize) {
-		super.initGrid(pageSize);
+	protected void initGrid() {
+		super.initGrid();
 		model = new EzeePayerGridModel<T>();
 		model.bind(grid);
 	}

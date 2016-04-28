@@ -31,15 +31,15 @@ public class EzeeLeaseMetaDataGrid extends EzeeGrid<EzeeLeaseMetaData> {
 	}
 
 	@Override
-	protected void init(final int pageSize, final boolean disableContextMenu) {
+	protected void init(final boolean disableContextMenu) {
 		initFilter();
-		initGrid(pageSize);
+		initGrid();
 		initContextMenu(disableContextMenu);
 	}
 
 	@Override
-	protected void initGrid(final int pageSize) {
-		super.initGrid(pageSize);
+	protected void initGrid() {
+		super.initGrid();
 		model = new EzeeLeaseMetaDataGridModel();
 		model.bind(grid);
 	}

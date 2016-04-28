@@ -1,6 +1,7 @@
 package com.ezee.web.common.ui.grid;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
+import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.web.EzeeFormatUtils.getDateFormat;
@@ -8,6 +9,7 @@ import static com.google.gwt.dom.client.Style.Unit.PX;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_LEFT;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +85,16 @@ public abstract class EzeeGridModel<T extends EzeeDatabaseEntity> {
 		addComparators(columns);
 		grid.addColumnSortHandler(handler);
 		addSortColumns(grid, columns);
+	}
+
+	public void removeColumns(final DataGrid<T> grid) {
+		List<Column<T, ?>> columns = new ArrayList<>();
+		for (int i = ZERO; i < grid.getColumnCount(); i++) {
+			columns.add(grid.getColumn(i));
+		}
+		for (Column<T, ?> column : columns) {
+			grid.removeColumn(column);
+		}
 	}
 
 	protected abstract Map<String, Column<T, ?>> createColumns(DataGrid<T> grid);

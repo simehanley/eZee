@@ -1,6 +1,49 @@
 package com.ezee.client.grid.lease;
 
 import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.ANNUAL_OUTGOINGS_GST;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.ANNUAL_PARKING_GST;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.ANNUAL_RENT_GST;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.ANNUAL_SIGNAGE_GST;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.ANNUAL_TOTAL_GST;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.AREA;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.CATEGORY;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.END_DATE;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.GROSS_ANNUAL_OUTGOINGS;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.GROSS_ANNUAL_PARKING;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.GROSS_ANNUAL_RENT;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.GROSS_ANNUAL_SIGNAGE;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.GROSS_ANNUAL_TOTAL;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.GROSS_MONTHLY_OUTGOINGS;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.GROSS_MONTHLY_PARKING;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.GROSS_MONTHLY_RENT;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.GROSS_MONTHLY_SIGNAGE;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.GROSS_MONTHLY_TOTAL;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.MONTHLY_OUTGOINGS_GST;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.MONTHLY_PARKING_GST;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.MONTHLY_RENT_GST;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.MONTHLY_SIGNAGE_GST;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.MONTHLY_TOTAL_GST;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.NET_ANNUAL_OUTGOINGS;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.NET_ANNUAL_PARKING;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.NET_ANNUAL_RENT;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.NET_ANNUAL_SIGNAGE;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.NET_ANNUAL_TOTAL;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.NET_MONTHLY_OUTGOINGS;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.NET_MONTHLY_PARKING;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.NET_MONTHLY_RENT;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.NET_MONTHLY_SIGNAGE;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.NET_MONTHLY_TOTAL;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.OUTGOINGS;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.PARKING;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.PREMISES;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.RENT;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.SIGNAGE;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.START_DATE;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.TENANT;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.TOTAL;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.UNITS;
+import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.UPDATE_DATE;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_RIGHT;
@@ -19,71 +62,25 @@ import com.google.gwt.user.cellview.client.DataGrid;
 
 public class EzeeLeaseGridModel extends EzeeGridModel<EzeeLease> {
 
-	private static final String START_DATE = "Start";
-	private static final String END_DATE = "End";
-	private static final String UPDATE_DATE = "Update";
-	private static final String TENANT = "Tenant";
-	private static final String PREMISES = "Premises";
-	private static final String UNITS = "Units";
-	private static final String AREA = "Area";
-	private static final String CATEGORY = "Category";
-	private static final String RENT = "Rent";
-	private static final String OUTGOINGS = "Outgoings";
-	private static final String SIGNAGE = "Signage";
-	private static final String PARKING = "Parking";
-	private static final String TOTAL = "Total";
-
-	private static final String NET_ANNUAL_RENT = "Net Rent (A)";
-	private static final String ANNUAL_RENT_GST = "Rent Gst (A)";
-	private static final String GROSS_ANNUAL_RENT = "Gross Rent (A)";
-	private static final String NET_MONTHLY_RENT = "Net Rent (M)";
-	private static final String MONTHLY_RENT_GST = "Rent Gst (M)";
-	private static final String GROSS_MONTHLY_RENT = "Gross Rent (M)";
-
-	private static final String NET_ANNUAL_OUTGOINGS = "Net Outgoings (A)";
-	private static final String ANNUAL_OUTGOINGS_GST = "Outgoings Gst (A)";
-	private static final String GROSS_ANNUAL_OUTGOINGS = "Gross Outgoings (A)";
-	private static final String NET_MONTHLY_OUTGOINGS = "Net Outgoings (M)";
-	private static final String MONTHLY_OUTGOINGS_GST = "Outgoings Gst (M)";
-	private static final String GROSS_MONTHLY_OUTGOINGS = "Gross Outgoings (M)";
-
-	private static final String NET_ANNUAL_PARKING = "Net Parking (A)";
-	private static final String ANNUAL_PARKING_GST = "Parking Gst (A)";
-	private static final String GROSS_ANNUAL_PARKING = "Gross Parking (A)";
-	private static final String NET_MONTHLY_PARKING = "Net Parking (M)";
-	private static final String MONTHLY_PARKING_GST = "Parking Gst (M)";
-	private static final String GROSS_MONTHLY_PARKING = "Gross Parking (M)";
-
-	private static final String NET_ANNUAL_SIGNAGE = "Net Signage (A)";
-	private static final String ANNUAL_SIGNAGE_GST = "Signage Gst (A)";
-	private static final String GROSS_ANNUAL_SIGNAGE = "Gross Signage (A)";
-	private static final String NET_MONTHLY_SIGNAGE = "Net Signage (M)";
-	private static final String MONTHLY_SIGNAGE_GST = "Signage Gst (M)";
-	private static final String GROSS_MONTHLY_SIGNAGE = "Gross Signage (M)";
-
-	private static final String NET_ANNUAL_TOTAL = "Net Total (A)";
-	private static final String ANNUAL_TOTAL_GST = "Total Gst (A)";
-	private static final String GROSS_ANNUAL_TOTAL = "Gross Total (A)";
-	private static final String NET_MONTHLY_TOTAL = "Net Total (M)";
-	private static final String MONTHLY_TOTAL_GST = "Total Gst (M)";
-	private static final String GROSS_MONTHLY_TOTAL = "Gross Total (M)";
-
-	private static final double TENANT_COLUMN_WIDTH = 400.;
-	private static final double PREMISES_COLUMN_WIDTH = 400.;
-	private static final double UNITS_COLUMN_WIDTH = 200;
+	private static final double TENANT_COLUMN_WIDTH = 300.;
+	private static final double PREMISES_COLUMN_WIDTH = 300.;
+	private static final double UNITS_COLUMN_WIDTH = 150;
 	private static final double AREA_COLUMN_WIDTH = 100;
 	private static final double CATEGORY_COLUMN_WIDTH = 200;
-	
+
 	private static final double LEASE_NUMERIC_FIELD_WIDTH = 140.;
 
 	private final EzeeDateComparator dateComparator = new EzeeDateComparator();
 
-	public EzeeLeaseGridModel() {
-		super();
+	private boolean summary = true;
+
+	public EzeeLeaseGridModel(final boolean summary) {
+		this(null, summary);
 	}
 
-	public EzeeLeaseGridModel(final Set<String> hiddenColumns) {
+	public EzeeLeaseGridModel(final Set<String> hiddenColumns, final boolean summary) {
 		super(null, hiddenColumns);
+		this.summary = summary;
 	}
 
 	@Override
@@ -96,39 +93,47 @@ public class EzeeLeaseGridModel extends EzeeGridModel<EzeeLease> {
 		createDateColumn(columns, grid, START_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, END_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, UPDATE_DATE, DATE_FIELD_WIDTH, true);
-		createTextColumn(columns, grid, NET_ANNUAL_RENT, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, ANNUAL_RENT_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, GROSS_ANNUAL_RENT, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, NET_MONTHLY_RENT, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, MONTHLY_RENT_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, GROSS_MONTHLY_RENT, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, NET_ANNUAL_OUTGOINGS, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, ANNUAL_OUTGOINGS_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, GROSS_ANNUAL_OUTGOINGS, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, NET_MONTHLY_OUTGOINGS, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, MONTHLY_OUTGOINGS_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, GROSS_MONTHLY_OUTGOINGS, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, NET_ANNUAL_PARKING, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, ANNUAL_PARKING_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, GROSS_ANNUAL_PARKING, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, NET_MONTHLY_PARKING, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, MONTHLY_PARKING_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, GROSS_MONTHLY_PARKING, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, NET_ANNUAL_SIGNAGE, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, ANNUAL_SIGNAGE_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, GROSS_ANNUAL_SIGNAGE, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, NET_MONTHLY_SIGNAGE, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, MONTHLY_SIGNAGE_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, GROSS_MONTHLY_SIGNAGE, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, NET_ANNUAL_TOTAL, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, ANNUAL_TOTAL_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, GROSS_ANNUAL_TOTAL, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, NET_MONTHLY_TOTAL, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, MONTHLY_TOTAL_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, GROSS_MONTHLY_TOTAL, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-		createTextColumn(columns, grid, CATEGORY, CATEGORY_COLUMN_WIDTH, true);
+		if (summary) {
+			createTextColumn(columns, grid, ANNUAL_RENT_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_ANNUAL_OUTGOINGS, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_ANNUAL_PARKING, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_ANNUAL_SIGNAGE, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_ANNUAL_TOTAL, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, CATEGORY, CATEGORY_COLUMN_WIDTH, true);
+		} else {
+			createTextColumn(columns, grid, NET_ANNUAL_RENT, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, ANNUAL_RENT_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_ANNUAL_RENT, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, NET_MONTHLY_RENT, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, MONTHLY_RENT_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_MONTHLY_RENT, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, NET_ANNUAL_OUTGOINGS, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, ANNUAL_OUTGOINGS_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_ANNUAL_OUTGOINGS, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, NET_MONTHLY_OUTGOINGS, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, MONTHLY_OUTGOINGS_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_MONTHLY_OUTGOINGS, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, NET_ANNUAL_PARKING, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, ANNUAL_PARKING_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_ANNUAL_PARKING, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, NET_MONTHLY_PARKING, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, MONTHLY_PARKING_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_MONTHLY_PARKING, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, NET_ANNUAL_SIGNAGE, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, ANNUAL_SIGNAGE_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_ANNUAL_SIGNAGE, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, NET_MONTHLY_SIGNAGE, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, MONTHLY_SIGNAGE_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_MONTHLY_SIGNAGE, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, NET_ANNUAL_TOTAL, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, ANNUAL_TOTAL_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_ANNUAL_TOTAL, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, NET_MONTHLY_TOTAL, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, MONTHLY_TOTAL_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_MONTHLY_TOTAL, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, CATEGORY, CATEGORY_COLUMN_WIDTH, true);
+		}
 		return columns;
-
 	}
 
 	@Override
@@ -287,5 +292,13 @@ public class EzeeLeaseGridModel extends EzeeGridModel<EzeeLease> {
 
 	@Override
 	protected void setBooleanFieldValue(final String fieldName, final boolean fieldValue, final EzeeLease entity) {
+	}
+
+	public final boolean isSummary() {
+		return summary;
+	}
+
+	public final void setSummary(boolean summary) {
+		this.summary = summary;
 	}
 }

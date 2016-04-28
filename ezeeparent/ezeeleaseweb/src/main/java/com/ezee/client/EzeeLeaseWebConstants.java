@@ -39,4 +39,5 @@ public interface EzeeLeaseWebConstants {
 			DELETE_LEASE_META_DATA };
 
 	String SHOW_INACTIVE_LEASES = "SHOW_INACTIVE";
+	String SHOW_LEASE_SUMMARY = "SHOW_SUMMARY";
 }

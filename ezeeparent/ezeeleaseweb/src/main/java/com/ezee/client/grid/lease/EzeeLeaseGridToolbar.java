@@ -1,6 +1,7 @@
 package com.ezee.client.grid.lease;
 
 import static com.ezee.client.EzeeLeaseWebConstants.SHOW_INACTIVE_LEASES;
+import static com.ezee.client.EzeeLeaseWebConstants.SHOW_LEASE_SUMMARY;
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.web.common.EzeeWebCommonConstants.LOCAL_STORAGE;
@@ -13,6 +14,7 @@ import com.ezee.web.common.ui.grid.EzeeGridToolbar;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -43,13 +45,19 @@ public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
 	@UiField
 	CheckBox chkShowInactive;
 
+	@UiField
+	CheckBox chkSummary;
+
+	private final EzeeLeaseSummaryHandler handler;
+
 	interface EzeeLeaseGridToolbarUiBinder extends UiBinder<Widget, EzeeLeaseGridToolbar> {
 	}
 
-	public EzeeLeaseGridToolbar(final EzeeLeaseGrid grid) {
+	public EzeeLeaseGridToolbar(final EzeeLeaseGrid grid, final EzeeLeaseSummaryHandler handler) {
 		super(grid);
 		initWidget(uiBinder.createAndBindUi(this));
 		init();
+		this.handler = handler;
 	}
 
 	@Override
@@ -62,18 +70,32 @@ public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
 		btnRefresh.addClickHandler(refreshHandler);
 		ClickHandler clearHandler = new EzeeToolbarClearHandler();
 		btnClear.addClickHandler(clearHandler);
-		ValueChangeHandler<Boolean> valueChangeHandler = new EzeeLocalStorageValueChangeHandler(SHOW_INACTIVE_LEASES);
-		chkShowInactive.addValueChangeHandler(valueChangeHandler);
-		setShowInactive();
+		ValueChangeHandler<Boolean> inactiveChangeHandler = new EzeeLocalStorageValueChangeHandler(
+				SHOW_INACTIVE_LEASES);
+		chkShowInactive.addValueChangeHandler(inactiveChangeHandler);
+		ValueChangeHandler<Boolean> summaryChangeHandler = new EzeeLocalStorageValueChangeHandler(SHOW_LEASE_SUMMARY);
+		chkSummary.addValueChangeHandler(summaryChangeHandler);
+		chkSummary.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				handler.summaryValueChanged(event.getValue());
+			}
+		});
+		setLeaseCheckBoxes();
 	}
 
-	private void setShowInactive() {
-		boolean showPaid = false;
+	private void setLeaseCheckBoxes() {
 		EzeeLocalStroage localStroage = LOCAL_STORAGE;
+		boolean showPaid = false;
 		if (localStroage.isSupported() && localStroage.isSet(SHOW_INACTIVE_LEASES)) {
 			showPaid = Boolean.valueOf(localStroage.getValue(SHOW_INACTIVE_LEASES));
 		}
 		chkShowInactive.setValue(showPaid);
+		boolean summary = false;
+		if (localStroage.isSupported() && localStroage.isSet(SHOW_LEASE_SUMMARY)) {
+			summary = Boolean.valueOf(localStroage.getValue(SHOW_LEASE_SUMMARY));
+		}
+		chkSummary.setValue(summary);
 	}
 
 	@Override
@@ -106,6 +128,10 @@ public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
 
 	public boolean getShowInactive() {
 		return chkShowInactive.getValue();
+	}
+
+	public boolean getShowSummary() {
+		return chkSummary.getValue();
 	}
 
 	@Override

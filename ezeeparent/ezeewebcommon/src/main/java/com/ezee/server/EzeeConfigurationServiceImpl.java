@@ -28,5 +28,4 @@ public class EzeeConfigurationServiceImpl extends AbstractRemoteService implemen
 	private EzeeConfigurationDao getDao() {
 		return getSpringBean(EzeeConfigurationDao.class);
 	}
-
 }

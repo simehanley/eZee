@@ -247,6 +247,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		txtMyobJobNo.setText(entity.getJobNo());
 		chkInactive.setValue(entity.isInactive());
 		chkResidential.setValue(entity.isResidential());
+		if (entity.isInactive()) {
+			disable(false);
+		}
 	}
 
 	private void initialiseLeaseIncideantal(final String type, final TextBox amount, final TextBox percent,

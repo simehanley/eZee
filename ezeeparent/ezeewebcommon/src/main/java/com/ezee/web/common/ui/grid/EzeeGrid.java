@@ -79,6 +79,8 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 
 	protected PopupPanel contextMenu;
 
+	protected int pageSize;
+
 	interface EzeeGridUiBinder extends UiBinder<Widget, EzeeGrid<?>> {
 	}
 
@@ -92,7 +94,8 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 
 	public EzeeGrid(final EzeeEntityCache cache, final int pageSize, final boolean disableContextMenu) {
 		this.cache = cache;
-		init(pageSize, disableContextMenu);
+		this.pageSize = pageSize;
+		init(disableContextMenu);
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -130,14 +133,14 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		}
 	}
 
-	protected void init(final int pageSize, final boolean disableContextMenu) {
+	protected void init(final boolean disableContextMenu) {
 		initFilter();
-		initGrid(pageSize);
+		initGrid();
 		loadEntities();
 		initContextMenu(disableContextMenu);
 	}
 
-	protected void initGrid(final int pageSize) {
+	protected void initGrid() {
 		grid = new DataGrid<T>(pageSize, EzeeGwtOverridesResources.INSTANCE);
 		grid.setMinimumTableWidth(DEFAULT_GRID_SIZE, Style.Unit.PX);
 		grid.addDomHandler(new EzeeGridDoubleClickHandler(), DoubleClickEvent.getType());

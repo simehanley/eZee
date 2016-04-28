@@ -96,6 +96,55 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 	protected int PROJECT_CONTENT_REF_INDEX = 8;
 	protected int PROJECT_CONTENT_DESC_INDEX = 9;
 
+	protected int LEASE_EXCEL_REPORT_HEADER_ROW = 0;
+
+	protected int LEASE_EXCEL_REPORT_TENANT_INDEX = 0;
+	protected int LEASE_EXCEL_REPORT_UNIT_INDEX = 1;
+	protected int LEASE_EXCEL_REPORT_AREA_INDEX = 2;
+	protected int LEASE_EXCEL_REPORT_START_INDEX = 3;
+	protected int LEASE_EXCEL_REPORT_END_INDEX = 4;
+	protected int LEASE_EXCEL_REPORT_UPDATE_INDEX = 5;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_RENT_INDEX = 6;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_RENT_GST_INDEX = 7;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_GROSS_RENT_INDEX = 8;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_RENT_INDEX = 9;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_RENT_GST_INDEX = 10;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_GROSS_RENT_INDEX = 11;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_OUTGOINGS_INDEX = 12;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_OUTGOINGS_GST_INDEX = 13;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_GROSS_OUTGOINGS_INDEX = 14;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_OUTGOINGS_INDEX = 15;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_OUTGOINGS_GST_INDEX = 16;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_GROSS_OUTGOINGS_INDEX = 17;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_PARKING_INDEX = 18;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_PARKING_GST_INDEX = 19;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_GROSS_PARKING_INDEX = 20;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_PARKING_INDEX = 21;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_PARKING_GST_INDEX = 22;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_GROSS_PARKING_INDEX = 23;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_SIGNAGE_INDEX = 24;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_SIGNAGE_GST_INDEX = 25;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_GROSS_SIGNAGE_INDEX = 26;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_SIGNAGE_INDEX = 27;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_SIGNAGE_GST_INDEX = 28;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_GROSS_SIGNAGE_INDEX = 29;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_TOTAL_INDEX = 30;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_TOTAL_GST_INDEX = 31;
+	protected int LEASE_EXCEL_REPORT_ANNUAL_GROSS_TOTAL_INDEX = 32;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_TOTAL_INDEX = 33;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_TOTAL_GST_INDEX = 34;
+	protected int LEASE_EXCEL_REPORT_MONTHLY_GROSS_TOTAL_INDEX = 35;
+
+	protected int LEASE_EXCEL_REPORT_TENANT_WIDTH = 40 * 256;
+	protected int LEASE_EXCEL_REPORT_UNIT_WIDTH = 11 * 256;
+	protected int LEASE_EXCEL_REPORT_AREA_WIDTH = 6 * 256;
+	protected int LEASE_EXCEL_REPORT_DATE_WIDTH = 11 * 256;
+	protected int LEASE_EXCEL_REPORT_NUMBER_WIDTH = 13 * 256;
+
+	protected int LEASE_EXCEL_REPORT_MAX_INDEX = LEASE_EXCEL_REPORT_MONTHLY_GROSS_TOTAL_INDEX;
+
+	protected String LEASE_EXCEL_GRAND_TOTAL = "Grand Total";
+
 	protected int[] INVOICE_REPORT_INDEXES = { INVOICE_ID_INDEX, SUPPLIER_INDEX, PREMISES_INDEX, CLASSIFICATION_INDEX,
 			AMOUNT_INDEX, TAX_INDEX, TOTAL_INDEX, INVOICE_DATE_INDEX, DUE_DATE_INDEX, PAYMENT_DATE_INDEX };
 	protected String[] INVOICE_REPORT_FIELDS = { INVOICE_ID, SUPPLIER, PREMISES, CLASSIFICATION, AMOUNT, TAX, TOTAL,
@@ -177,6 +226,21 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 			setBorderStyle(style);
 		}
 		style.setWrapText(false);
+		return style;
+	}
+
+	protected CellStyle headerStyle(final Workbook book, final boolean centered) {
+		CellStyle style = boldStyle(book, centered, false);
+		style.setWrapText(true);
+		return style;
+	}
+
+	public static CellStyle formattedStyle(final Workbook book, boolean centered, boolean wrapped) {
+		CellStyle style = book.createCellStyle();
+		if (centered) {
+			style.setAlignment(ALIGN_CENTER);
+		}
+		style.setWrapText(wrapped);
 		return style;
 	}
 

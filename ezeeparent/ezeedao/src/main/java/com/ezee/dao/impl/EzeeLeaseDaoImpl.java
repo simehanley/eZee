@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ezee.dao.EzeeLeaseDao;
+import com.ezee.model.entity.filter.lease.EzeeLeaseFilter;
 import com.ezee.model.entity.lease.EzeeLease;
 
 public class EzeeLeaseDaoImpl extends EzeeBaseDaoImpl<EzeeLease> implements EzeeLeaseDao {
@@ -35,5 +36,10 @@ public class EzeeLeaseDaoImpl extends EzeeBaseDaoImpl<EzeeLease> implements Ezee
 	@Override
 	public List<EzeeLease> get() {
 		return get(EzeeLease.class);
+	}
+
+	@Override
+	public List<EzeeLease> get(final EzeeLeaseFilter filter) {
+		return get(filter, EzeeLease.class);
 	}
 }
