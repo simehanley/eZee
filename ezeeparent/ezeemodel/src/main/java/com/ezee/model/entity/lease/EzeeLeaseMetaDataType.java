@@ -4,7 +4,7 @@ import com.ezee.model.entity.enums.EzeeKeyedEnum;
 
 public enum EzeeLeaseMetaDataType implements EzeeKeyedEnum {
 
-	historic_rents("Rent"), notices("Notice"), special_conditions("Special Condition"), options("Option");
+	historic_rents("Historical Rent"), notices("Notice"), special_conditions("Special Condition"), options("Option");
 
 	private final String key;
 

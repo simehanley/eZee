@@ -18,6 +18,10 @@
 
 	<bean id="leaseListReportGenerator" class="com.ezee.server.report.excel.lease.EzeeLeaseListReportGenerator" />
 
+	<bean id="leaseInvoiceReportGenerator" class="com.ezee.server.report.excel.lease.EzeeLeaseInvoiceGenerator" />
+
+	<bean id="leaseScheduleReportGenerator" class="com.ezee.server.report.excel.lease.EzeeLeaselScheduleGenerator" />
+
 	<bean id="leaseMyobScheduleGenerator" class="com.ezee.server.report.myob.lease.EzeeLeaseMyobScheduleGenerator" />
 
 	<util:map key-type="com.ezee.web.common.enums.EzeeReportType" value-type="com.ezee.server.report.EzeeReportGenerator"
@@ -26,6 +30,8 @@
 		<entry key="lease_premises_report_excel" value-ref="premisesReportGenerator" />
 		<entry key="lease_category_report_excel" value-ref="categoryReportGenerator" />
 		<entry key="lease_list_report_excel" value-ref="leaseListReportGenerator" />
+		<entry key="lease_invoice_report_excel" value-ref="leaseInvoiceReportGenerator" />
+		<entry key="lease_schedule_report_excel" value-ref="leaseScheduleReportGenerator" />
 		<entry key="lease_myob_schedule" value-ref="leaseMyobScheduleGenerator" />
 	</util:map>
 

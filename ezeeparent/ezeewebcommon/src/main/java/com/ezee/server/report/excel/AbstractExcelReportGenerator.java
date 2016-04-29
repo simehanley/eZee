@@ -22,6 +22,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import com.ezee.server.report.AbstractReportGenerator;
+import com.ezee.web.common.datastructures.EzeePair;
 
 /**
  * 
@@ -144,6 +145,79 @@ public abstract class AbstractExcelReportGenerator extends AbstractReportGenerat
 	protected int LEASE_EXCEL_REPORT_MAX_INDEX = LEASE_EXCEL_REPORT_MONTHLY_GROSS_TOTAL_INDEX;
 
 	protected String LEASE_EXCEL_GRAND_TOTAL = "Grand Total";
+
+	protected EzeePair<Integer, Integer> CATEGORY_COMPANY_INDEX = new EzeePair<Integer, Integer>(0, 0);
+	protected EzeePair<Integer, Integer> CATEGORY_ABN_INDEX = new EzeePair<Integer, Integer>(1, 0);
+	protected EzeePair<Integer, Integer> CATEGORY_ADDRESS_INDEX = new EzeePair<Integer, Integer>(2, 0);
+	protected EzeePair<Integer, Integer> CATEGORY_PHONE_INDEX = new EzeePair<Integer, Integer>(3, 0);
+	protected EzeePair<Integer, Integer> CURRENT_DATE_INDEX = new EzeePair<Integer, Integer>(10, 4);
+
+	protected EzeePair<Integer, Integer> TENANT_INDEX = new EzeePair<Integer, Integer>(14, 0);
+	protected EzeePair<Integer, Integer> PREMISES_ADDRESS_1_INDEX = new EzeePair<Integer, Integer>(15, 0);
+	protected EzeePair<Integer, Integer> PREMISES_ADDRESS_2_INDEX = new EzeePair<Integer, Integer>(16, 0);
+
+	protected EzeePair<Integer, Integer> RENTAL_LINE_1_INDEX = new EzeePair<Integer, Integer>(20, 1);
+	protected EzeePair<Integer, Integer> RENTAL_LINE_2_INDEX = new EzeePair<Integer, Integer>(21, 1);
+
+	protected EzeePair<Integer, Integer> YEARLY_RENT_INDEX = new EzeePair<Integer, Integer>(26, 3);
+	protected EzeePair<Integer, Integer> YEARLY_RENT_GST_INDEX = new EzeePair<Integer, Integer>(27, 3);
+	protected EzeePair<Integer, Integer> MONTHLY_RENT_INDEX = new EzeePair<Integer, Integer>(26, 4);
+	protected EzeePair<Integer, Integer> MONTHLY_RENT_GST_INDEX = new EzeePair<Integer, Integer>(27, 4);
+	protected EzeePair<Integer, Integer> YEARLY_OUTGOINGS_INDEX = new EzeePair<Integer, Integer>(30, 3);
+	protected EzeePair<Integer, Integer> YEARLY_OUTGOINGS_GST_INDEX = new EzeePair<Integer, Integer>(31, 3);
+	protected EzeePair<Integer, Integer> MONTHLY_OUTGOINGS_INDEX = new EzeePair<Integer, Integer>(30, 4);
+	protected EzeePair<Integer, Integer> MONTHLY_OUTGOINGS_GST_INDEX = new EzeePair<Integer, Integer>(31, 4);
+	protected EzeePair<Integer, Integer> YEARLY_PARKING_INDEX = new EzeePair<Integer, Integer>(34, 3);
+	protected EzeePair<Integer, Integer> YEARLY_PARKING_GST_INDEX = new EzeePair<Integer, Integer>(35, 3);
+	protected EzeePair<Integer, Integer> MONTHLY_PARKING_INDEX = new EzeePair<Integer, Integer>(34, 4);
+	protected EzeePair<Integer, Integer> MONTHLY_PARKING_GST_INDEX = new EzeePair<Integer, Integer>(35, 4);
+	protected EzeePair<Integer, Integer> YEARLY_SIGNAGE_INDEX = new EzeePair<Integer, Integer>(38, 3);
+	protected EzeePair<Integer, Integer> YEARLY_SIGNAGE_GST_INDEX = new EzeePair<Integer, Integer>(39, 3);
+	protected EzeePair<Integer, Integer> MONTHLY_SIGNAGE_INDEX = new EzeePair<Integer, Integer>(38, 4);
+	protected EzeePair<Integer, Integer> MONTHLY_SIGNAGE_GST_INDEX = new EzeePair<Integer, Integer>(39, 4);
+
+	protected EzeePair<Integer, Integer> BANK_ACCOUNT_NAME_INDEX = new EzeePair<Integer, Integer>(51, 2);
+	protected EzeePair<Integer, Integer> BANK_ACCOUNT_LOCATION_INDEX = new EzeePair<Integer, Integer>(52, 2);
+	protected EzeePair<Integer, Integer> BANK_ACCOUNT_BSB_INDEX = new EzeePair<Integer, Integer>(53, 2);
+	protected EzeePair<Integer, Integer> BANK_ACCOUNT_NUMBER_INDEX = new EzeePair<Integer, Integer>(54, 2);
+
+	protected EzeePair<Integer, Integer> SCHEDULE_TITLE_1_INDEX = new EzeePair<Integer, Integer>(0, 0);
+	protected EzeePair<Integer, Integer> SCHEDULE_TITLE_2_INDEX = new EzeePair<Integer, Integer>(1, 0);
+	protected EzeePair<Integer, Integer> SCHEDULE_ADDRESS_INDEX = new EzeePair<Integer, Integer>(4, 0);
+
+	protected EzeePair<Integer, Integer> SCHEDULE_DEVELOPMENT_INDEX = new EzeePair<Integer, Integer>(5, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_UNIT_INDEX = new EzeePair<Integer, Integer>(6, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_LESSEE_INDEX = new EzeePair<Integer, Integer>(7, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_YEARLY_RENT_INDEX = new EzeePair<Integer, Integer>(12, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_YEARLY_RENT_GST_INDEX = new EzeePair<Integer, Integer>(13, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_MONTHLY_RENT_INDEX = new EzeePair<Integer, Integer>(16, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_MONTHLY_RENT_GST_INDEX = new EzeePair<Integer, Integer>(17, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_YEARLY_OUTGOINGS_INDEX = new EzeePair<Integer, Integer>(21, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_YEARLY_OUTGOINGS_GST_INDEX = new EzeePair<Integer, Integer>(22, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_MONTHLY_OUTGOINGS_INDEX = new EzeePair<Integer, Integer>(25, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_MONTHLY_OUTGOINGS_GST_INDEX = new EzeePair<Integer, Integer>(26, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_YEARLY_PARKING_INDEX = new EzeePair<Integer, Integer>(30, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_YEARLY_PARKING_GST_INDEX = new EzeePair<Integer, Integer>(31, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_MONTHLY_PARKING_INDEX = new EzeePair<Integer, Integer>(34, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_MONTHLY_PARKING_GST_INDEX = new EzeePair<Integer, Integer>(35, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_YEARLY_SIGNAGE_INDEX = new EzeePair<Integer, Integer>(39, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_YEARLY_SIGNAGE_GST_INDEX = new EzeePair<Integer, Integer>(40, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_MONTHLY_SIGNAGE_INDEX = new EzeePair<Integer, Integer>(43, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_MONTHLY_SIGNAGE_GST_INDEX = new EzeePair<Integer, Integer>(44, 1);
+	protected EzeePair<Integer, Integer> SCHEDULE_LEASE_START_INDEX = new EzeePair<Integer, Integer>(5, 4);
+	protected EzeePair<Integer, Integer> SCHEDULE_LEASE_END_INDEX = new EzeePair<Integer, Integer>(6, 4);
+	protected EzeePair<Integer, Integer> SCHEDULE_RENT_FREE_PERIOD_INDEX = new EzeePair<Integer, Integer>(7, 4);
+	protected EzeePair<Integer, Integer> SCHEDULE_RENT_INCREASE_INDEX = new EzeePair<Integer, Integer>(8, 4);
+	protected EzeePair<Integer, Integer> SCHEDULE_LEASE_OPTION_START_INDEX = new EzeePair<Integer, Integer>(9, 4);
+	protected EzeePair<Integer, Integer> SCHEDULE_LEASE_OPTION_END_INDEX = new EzeePair<Integer, Integer>(10, 4);
+	protected EzeePair<Integer, Integer> SCHEDULE_OUTGOINGS_PRECENT_INDEX = new EzeePair<Integer, Integer>(11, 4);
+	protected EzeePair<Integer, Integer> SCHEDULE_BOND_BANK_GUARANTEE_INDEX = new EzeePair<Integer, Integer>(12, 4);
+	protected EzeePair<Integer, Integer> SCHEDULE_AREA_INDEX = new EzeePair<Integer, Integer>(13, 4);
+
+	protected EzeePair<Integer, Integer> HISTORIC_RENTS_START_INDEX = new EzeePair<Integer, Integer>(15, 3);
+	protected EzeePair<Integer, Integer> NOTICES_START_INDEX = new EzeePair<Integer, Integer>(29, 3);
+	protected EzeePair<Integer, Integer> SPECIAL_CONDITIONS_START_INDEX = new EzeePair<Integer, Integer>(38, 3);
+	protected EzeePair<Integer, Integer> OPTIONS_START_INDEX = new EzeePair<Integer, Integer>(47, 3);
 
 	protected int[] INVOICE_REPORT_INDEXES = { INVOICE_ID_INDEX, SUPPLIER_INDEX, PREMISES_INDEX, CLASSIFICATION_INDEX,
 			AMOUNT_INDEX, TAX_INDEX, TOTAL_INDEX, INVOICE_DATE_INDEX, DUE_DATE_INDEX, PAYMENT_DATE_INDEX };

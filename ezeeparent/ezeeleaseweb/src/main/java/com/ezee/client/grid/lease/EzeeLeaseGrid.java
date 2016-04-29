@@ -8,8 +8,10 @@ import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.SHOW_I
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.TENANT;
 import static com.ezee.web.common.EzeeWebCommonConstants.REPORT_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.REPORT_TYPE;
+import static com.ezee.web.common.enums.EzeeReportType.lease_invoice_report_excel;
 import static com.ezee.web.common.enums.EzeeReportType.lease_list_report_excel;
 import static com.ezee.web.common.enums.EzeeReportType.lease_myob_schedule;
+import static com.ezee.web.common.enums.EzeeReportType.lease_schedule_report_excel;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.delete;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.update;
 
@@ -102,14 +104,14 @@ public class EzeeLeaseGrid extends EzeeGrid<EzeeLease> implements EzeeLeaseSumma
 		menu.addItem("Invoice", new Command() {
 			@Override
 			public void execute() {
-				// createSingleLeaseReport(lease_excel_invoice);
+				createExcelLeaseReport(lease_invoice_report_excel);
 				contextMenu.hide();
 			}
 		});
 		menu.addItem("Schedule", new Command() {
 			@Override
 			public void execute() {
-				// createSingleLeaseReport(lease_excel_schedule);
+				createExcelLeaseReport(lease_schedule_report_excel);
 				contextMenu.hide();
 			}
 		});
