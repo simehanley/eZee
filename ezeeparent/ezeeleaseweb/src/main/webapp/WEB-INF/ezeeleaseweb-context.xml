@@ -12,6 +12,7 @@
 	<import resource="classpath:ezeedao-context.xml" />
 	<import resource="ezeeleaseweb-dao-context.xml" />
 	<import resource="ezeeleaseweb-report-context.xml" />
+	<import resource="ezeeleaseweb-schedule-context.xml"/>
 
 	<bean id="ezeeinvoice-web-properties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="ignoreResourceNotFound" value="true" />

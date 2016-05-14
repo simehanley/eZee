@@ -10,11 +10,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 import com.ezee.common.EzeeDateUtilities;
 
-/**
- * 
- * @author siborg
- *
- */
 public final class EzeeServerDateUtils implements EzeeDateUtilities {
 
 	public static final EzeeServerDateUtils SERVER_DATE_UTILS = new EzeeServerDateUtils();

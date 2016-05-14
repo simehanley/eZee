@@ -7,7 +7,7 @@ import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.OUTGOI
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.PARKING;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.RENT;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.SIGNAGE;
-import static com.ezee.server.util.EzeeLocalDateUtilities.formatFullDate;
+import static com.ezee.server.util.lease.EzeeLeaseDateUtils.formatFullDate;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

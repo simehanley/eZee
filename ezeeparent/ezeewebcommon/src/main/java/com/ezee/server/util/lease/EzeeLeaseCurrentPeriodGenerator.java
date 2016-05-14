@@ -2,8 +2,8 @@ package com.ezee.server.util.lease;
 
 import static com.ezee.common.EzeeCommonConstants.ONE;
 import static com.ezee.server.EzeeServerDateUtils.SERVER_DATE_UTILS;
-import static com.ezee.server.util.EzeeLocalDateUtilities.isGreaterThan;
-import static com.ezee.server.util.EzeeLocalDateUtilities.isGreaterThanOrEqualTo;
+import static com.ezee.server.util.lease.EzeeLeaseDateUtils.isGreaterThan;
+import static com.ezee.server.util.lease.EzeeLeaseDateUtils.isGreaterThanOrEqualTo;
 
 import java.util.ArrayList;
 import java.util.List;

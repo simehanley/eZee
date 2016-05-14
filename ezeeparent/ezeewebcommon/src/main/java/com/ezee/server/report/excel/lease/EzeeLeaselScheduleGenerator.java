@@ -7,13 +7,11 @@ import static com.ezee.model.entity.lease.EzeeLeaseConstants.HISTORICAL_RENT;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.NOTICE;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.OPTION;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.SPECIAL_CONDITION;
-import static com.ezee.server.EzeeServerDateUtils.SERVER_DATE_UTILS;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.LEASE_ID;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.OUTGOINGS;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.PARKING;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.RENT;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.SIGNAGE;
-import static com.ezee.server.util.EzeeLocalDateUtilities.format;
 import static java.util.Collections.sort;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -30,7 +28,6 @@ import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,9 +141,9 @@ public class EzeeLeaselScheduleGenerator extends AbstractExcelReportGenerator im
 		sheet.getRow(SCHEDULE_MONTHLY_SIGNAGE_GST_INDEX.getFirst())
 				.getCell(SCHEDULE_MONTHLY_SIGNAGE_GST_INDEX.getSecond()).setCellValue(lease.monthlyGst(SIGNAGE));
 		sheet.getRow(SCHEDULE_LEASE_START_INDEX.getFirst()).getCell(SCHEDULE_LEASE_START_INDEX.getSecond())
-				.setCellValue(format(new LocalDate(SERVER_DATE_UTILS.fromString(lease.getLeaseStart()))));
+				.setCellValue(lease.getLeaseStart());
 		sheet.getRow(SCHEDULE_LEASE_END_INDEX.getFirst()).getCell(SCHEDULE_LEASE_END_INDEX.getSecond())
-				.setCellValue(format(new LocalDate(SERVER_DATE_UTILS.fromString(lease.getLeaseEnd()))));
+				.setCellValue(lease.getLeaseEnd());
 		sheet.getRow(SCHEDULE_RENT_FREE_PERIOD_INDEX.getFirst()).getCell(SCHEDULE_RENT_FREE_PERIOD_INDEX.getSecond())
 				.setCellValue("TODO");
 		sheet.getRow(SCHEDULE_RENT_INCREASE_INDEX.getFirst()).getCell(SCHEDULE_RENT_INCREASE_INDEX.getSecond())
@@ -192,8 +189,7 @@ public class EzeeLeaselScheduleGenerator extends AbstractExcelReportGenerator im
 	}
 
 	private String resolveTitleLineTwo(final EzeeLease lease) {
-		return "UNIT " + lease.getLeasedUnits() + " - " + lease.getTenant().getName() + " @ "
-				+ format(new LocalDate(SERVER_DATE_UTILS.fromString(lease.getUpdated())));
+		return "UNIT " + lease.getLeasedUnits() + " - " + lease.getTenant().getName() + " @ " + lease.getUpdated();
 	}
 
 	private String resolveAddress(final EzeeLease lease) {
@@ -202,13 +198,11 @@ public class EzeeLeaselScheduleGenerator extends AbstractExcelReportGenerator im
 	}
 
 	private String resolveOptionStart(final EzeeLease lease) {
-		return lease.getOptionStartDate() == null ? "None"
-				: format(new LocalDate(SERVER_DATE_UTILS.fromString(lease.getOptionStartDate())));
+		return lease.getOptionStartDate() == null ? "None" : lease.getOptionStartDate();
 	}
 
 	private String resolveOptionEnd(final EzeeLease lease) {
-		return lease.getOptionEndDate() == null ? "None"
-				: format(new LocalDate(SERVER_DATE_UTILS.fromString(lease.getOptionEndDate())));
+		return lease.getOptionEndDate() == null ? "None" : lease.getOptionEndDate();
 	}
 
 	private double resolveRentPercentage(final EzeeLease lease) {

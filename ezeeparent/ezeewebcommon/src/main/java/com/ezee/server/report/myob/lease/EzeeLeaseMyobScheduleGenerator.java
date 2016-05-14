@@ -12,9 +12,9 @@ import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.OUTGOI
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.PARKING;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.RENT;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.SIGNAGE;
-import static com.ezee.server.util.EzeeLocalDateUtilities.format;
-import static com.ezee.server.util.EzeeLocalDateUtilities.formatInvoiceDate;
-import static com.ezee.server.util.EzeeLocalDateUtilities.formatShortDate;
+import static com.ezee.server.util.lease.EzeeLeaseDateUtils.format;
+import static com.ezee.server.util.lease.EzeeLeaseDateUtils.formatInvoiceDate;
+import static com.ezee.server.util.lease.EzeeLeaseDateUtils.formatShortDate;
 
 import java.io.BufferedWriter;
 import java.io.File;
