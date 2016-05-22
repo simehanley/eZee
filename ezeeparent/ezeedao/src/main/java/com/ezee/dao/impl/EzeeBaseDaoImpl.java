@@ -6,15 +6,12 @@ import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.hql.internal.CollectionSubqueryFactory;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import com.ezee.dao.EzeeBaseDao;
 import com.ezee.model.entity.EzeeDatabaseEntity;

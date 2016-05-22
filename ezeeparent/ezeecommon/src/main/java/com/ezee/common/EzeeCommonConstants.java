@@ -9,6 +9,7 @@ public interface EzeeCommonConstants {
 
 	double ZERO_DBL = 0.;
 	double ONE_DBL = 1.;
+	double ONE_HUNDRED_DBL = 100.;
 
 	double PERCENT_MULTIPLIER = 100.;
 

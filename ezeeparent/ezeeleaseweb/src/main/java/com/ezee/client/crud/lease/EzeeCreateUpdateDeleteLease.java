@@ -2,10 +2,13 @@ package com.ezee.client.crud.lease;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.EzeeCommonConstants.ONE;
+import static com.ezee.common.EzeeCommonConstants.ONE_HUNDRED_DBL;
 import static com.ezee.common.EzeeCommonConstants.TWO;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
+import static com.ezee.common.numeric.EzeeNumericUtils.isCloseToZero;
+import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getDateBoxFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getPercentFormat;
@@ -59,6 +62,7 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -303,7 +307,6 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		bindIncidental(OUTGOINGS, txtOutgoing, txtOutgoingPercent, txtOutgoingAccount);
 		bindIncidental(PARKING, txtParking, txtParkingPercent, txtParkingAccount);
 		bindIncidental(SIGNAGE, txtSignage, txtSignagePercent, txtSignageAccount);
-
 		bindMetaData();
 		entity.setNotes(txtNotes.getText());
 		entity.setJobNo(txtMyobJobNo.getText());
@@ -326,7 +329,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 				incidental.setUpdated(DATE_UTILS.toString(new Date()));
 			}
 			incidental.setAmount(actual);
-			incidental.setPercentage(getPercentFormat().parse(percent.getText()));
+			incidental.setPercentage(getPercentFormat().parse(percent.getText()) / ONE_HUNDRED_DBL);
 			incidental.setTaxRate(cache.getConfiguration().getInvoiceTaxRate());
 			incidental.setAccount(account.getText());
 		} else {
@@ -563,6 +566,51 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		amount.setEnabled(enable);
 		percent.setEnabled(enable);
 		account.setEnabled(enable);
+	}
+
+	private void updateDates() {
+		if (entity != null) {
+			Date date = DATE_UTILS.fromString(entity.getLeaseEnd());
+			Date newEnd = DATE_UTILS.addYears(date, ONE);
+			dtEnd.setValue(newEnd);
+			ValueChangeEvent.fire(dtEnd, newEnd);
+		}
+	}
+
+	private void updateIncidental(final String type) {
+		if (entity != null) {
+			EzeeLeaseIncidental incidental = entity.getIncidental(type);
+			if (incidental != null) {
+				double amount = incidental.getAmount();
+				double percent = incidental.getPercentage();
+				double newAmount = round(amount * (ONE + percent));
+				if (!isCloseToZero(newAmount - amount)) {
+					switch (type) {
+					case OUTGOINGS:
+						txtOutgoing.setValue(getAmountFormat().format(newAmount));
+						break;
+					case PARKING:
+						txtParking.setValue(getAmountFormat().format(newAmount));
+						break;
+					case SIGNAGE:
+						txtSignage.setValue(getAmountFormat().format(newAmount));
+						break;
+					default:
+						txtRent.setValue(getAmountFormat().format(newAmount));
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	@UiHandler("btnUpdate")
+	void onBtnUpdateClick(final ClickEvent event) {
+		updateIncidental(RENT);
+		updateIncidental(OUTGOINGS);
+		updateIncidental(PARKING);
+		updateIncidental(SIGNAGE);
+		updateDates();
 	}
 
 	@UiHandler("btnClose")

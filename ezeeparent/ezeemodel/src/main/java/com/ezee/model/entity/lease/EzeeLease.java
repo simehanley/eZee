@@ -135,7 +135,7 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 		this.leaseStart = leaseStart;
 		this.leaseEnd = leaseEnd;
 		this.notes = notes;
-		this.leasedArea = leasedArea;
+		this.leasedArea = (leasedArea == null) ? ZERO_DBL : leasedArea;
 		this.leasedUnits = leasedUnits;
 		this.incidentals = incidentals;
 		this.tenant = tenant;

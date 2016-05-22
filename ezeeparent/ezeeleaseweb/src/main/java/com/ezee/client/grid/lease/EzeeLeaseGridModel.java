@@ -94,7 +94,7 @@ public class EzeeLeaseGridModel extends EzeeGridModel<EzeeLease> {
 		createDateColumn(columns, grid, END_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, UPDATE_DATE, DATE_FIELD_WIDTH, true);
 		if (summary) {
-			createTextColumn(columns, grid, ANNUAL_RENT_GST, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			createTextColumn(columns, grid, GROSS_ANNUAL_RENT, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
 			createTextColumn(columns, grid, GROSS_ANNUAL_OUTGOINGS, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
 			createTextColumn(columns, grid, GROSS_ANNUAL_PARKING, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
 			createTextColumn(columns, grid, GROSS_ANNUAL_SIGNAGE, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);

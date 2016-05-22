@@ -28,6 +28,7 @@
 		<module>ezeeinvoiceweb</module>
 		<module>ezeeconstructionweb</module>
 		<module>ezeeleaseweb</module>
+		<module>ezeeleaseconverter</module>
 	</modules>
 
 	<dependencyManagement>
