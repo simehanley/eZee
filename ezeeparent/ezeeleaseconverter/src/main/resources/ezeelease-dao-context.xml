@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="ezeeLeaseDataSource" parent="dataSource" lazy-init="true">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/EZEE" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+
+	<bean id="ezeeLeaseSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="ezeeLeaseDataSource" />
+		<property name="hibernateProperties" ref="properties" />
+		<property name="packagesToScan">
+			<array>
+				<value>com.ezee.model.entity</value>
+			</array>
+		</property>
+	</bean>
+
+	<bean id="ezeeLeaseTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="ezeeLeaseSessionFactory" />
+	</bean>
+
+	<bean id="ezeeLeaseBaseDao" class="com.ezee.dao.impl.EzeeBaseDaoImpl" abstract="true">
+		<property name="sessionFactory" ref="ezeeLeaseSessionFactory" />
+	</bean>
+
+	<bean id="ezeeLeaseDao" class="com.ezee.dao.impl.EzeeLeaseDaoImpl" parent="ezeeLeaseBaseDao" />
+
+</beans>

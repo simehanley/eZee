@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="leaseMaintenanceEmailHelper" class="com.ezee.server.EzeeLeaseMaintenanceEmailHelper">
+		<constructor-arg name="username" value="${ezee.lease.maintenance.email.user}" />
+		<constructor-arg name="password" value="${ezee.lease.maintenance.email.password}" />
+		<constructor-arg name="emailFrom" value="${ezee.lease.maintenance.email.from}" />
+		<constructor-arg name="emailTo" value="${ezee.lease.maintenance.email.to}" />
+		<constructor-arg name="emailCc" value="${ezee.lease.maintenance.email.cc}" />
+	</bean>
+
+	<bean id="leaseMaintenanceService" class="com.ezee.server.EzeeLeaseMaintenanceService">
+		<constructor-arg name="monthlyUpdateInterval" value="${ezee.lease.maintenance.update.interval.months}" />
+	</bean>
+
+	<bean id="leaseMaintenanceServiceJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="leaseMaintenanceService" />
+		<property name="targetMethod" value="run" />
+	</bean>
+
+	<bean id="leaseMaintenanceServiceTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="leaseMaintenanceServiceJob" />
+		<property name="cronExpression" value="${ezee.lease.maintenance.email.cron}" />
+	</bean>
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="leaseMaintenanceServiceTrigger" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="leaseCurrentPeriodGenerator" class="com.ezee.server.util.lease.EzeeLeaseCurrentPeriodGenerator">
+		<constructor-arg name="minimumToleranceInMonths" value="${ezee.lease.period.tolerance.months}" />
+	</bean>
+
+</beans>
