@@ -62,7 +62,6 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -241,6 +240,8 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			dtOptionStart.setValue(optionStart);
 			dtOptionEnd.setValue(optionEnd);
 		}
+		dtOptionStart.setEnabled(chkOption.getValue());
+		dtOptionEnd.setEnabled(chkOption.getValue());
 		initialiseLeaseIncideantal(RENT, txtRent, txtRentPercent, txtRentAccount);
 		initialiseLeaseIncideantal(OUTGOINGS, txtOutgoing, txtOutgoingPercent, txtOutgoingAccount);
 		initialiseLeaseIncideantal(PARKING, txtParking, txtParkingPercent, txtParkingAccount);
@@ -340,6 +341,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	}
 
 	private void bindLeaseOption() {
+		entity.setHasOption(chkOption.getValue());
 		if (chkOption.getValue()) {
 			entity.setOptionStartDate(DATE_UTILS.toString(dtOptionStart.getValue()));
 			entity.setOptionEndDate(DATE_UTILS.toString(dtOptionEnd.getValue()));
@@ -446,6 +448,8 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		chkOption.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				dtOptionStart.setEnabled(chkOption.getValue());
+				dtOptionEnd.setEnabled(chkOption.getValue());
 				dtOptionStart.setEnabled(chkOption.getValue());
 				dtOptionEnd.setEnabled(chkOption.getValue());
 			}

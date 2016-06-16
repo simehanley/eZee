@@ -165,7 +165,7 @@ public class EzeeLeaseInvoiceGenerator extends AbstractExcelReportGenerator impl
 	private String resolveRentalLineTwo(final EzeeLease lease) {
 		EzeePair<LocalDate, LocalDate> dates = generator.resolveCurrentPeriod(lease);
 		StringBuilder builder = new StringBuilder(
-				"For the period " + formatFullDate(dates.getFirst()) + "-" + formatFullDate(dates.getFirst()) + ".");
+				"For the period " + formatFullDate(dates.getFirst()) + "-" + formatFullDate(dates.getSecond()) + ".");
 		return builder.toString();
 	}
 }
