@@ -362,7 +362,7 @@ public class EzeeLeaseListReportGenerator extends AbstractExcelReportGenerator i
 		start.setCellValue(lease.getLeaseStart());
 		start.setCellStyle(dateStyle);
 		Cell end = row.createCell(indices[1], CELL_TYPE_NUMERIC);
-		end.setCellValue(lease.getLeaseEnd());
+		end.setCellValue(lease.getEffectiveLeaseEnd());
 		end.setCellStyle(dateStyle);
 		Cell update = row.createCell(indices[2], CELL_TYPE_NUMERIC);
 		update.setCellValue(lease.getUpdated());

@@ -143,7 +143,7 @@ public class EzeeLeaselScheduleGenerator extends AbstractExcelReportGenerator im
 		sheet.getRow(SCHEDULE_LEASE_START_INDEX.getFirst()).getCell(SCHEDULE_LEASE_START_INDEX.getSecond())
 				.setCellValue(lease.getLeaseStart());
 		sheet.getRow(SCHEDULE_LEASE_END_INDEX.getFirst()).getCell(SCHEDULE_LEASE_END_INDEX.getSecond())
-				.setCellValue(lease.getLeaseEnd());
+				.setCellValue(lease.getEffectiveLeaseEnd());
 		sheet.getRow(SCHEDULE_RENT_FREE_PERIOD_INDEX.getFirst()).getCell(SCHEDULE_RENT_FREE_PERIOD_INDEX.getSecond())
 				.setCellValue("TODO");
 		sheet.getRow(SCHEDULE_RENT_INCREASE_INDEX.getFirst()).getCell(SCHEDULE_RENT_INCREASE_INDEX.getSecond())

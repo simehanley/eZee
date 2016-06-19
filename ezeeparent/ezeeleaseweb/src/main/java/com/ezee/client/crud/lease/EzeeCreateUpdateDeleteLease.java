@@ -9,6 +9,7 @@ import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.numeric.EzeeNumericUtils.isCloseToZero;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
+import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getDateBoxFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getPercentFormat;
@@ -36,7 +37,6 @@ import java.util.logging.Logger;
 
 import com.ezee.client.grid.leasemetadata.EzeeLeaseMetaDataChangeListener;
 import com.ezee.client.grid.leasemetadata.EzeeLeaseMetaDataGrid;
-import com.ezee.common.web.EzeeFormatUtils;
 import com.ezee.model.entity.lease.EzeeLease;
 import com.ezee.model.entity.lease.EzeeLeaseBond;
 import com.ezee.model.entity.lease.EzeeLeaseBondType;
@@ -68,6 +68,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TabPanel;
@@ -124,6 +125,12 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	CheckBox chkOption;
 
 	@UiField
+	CheckBox chkExecised;
+
+	@UiField
+	Label lblRent;
+
+	@UiField
 	TextBox txtRent;
 
 	@UiField
@@ -131,6 +138,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	@UiField
 	TextBox txtRentAccount;
+
+	@UiField
+	Label lblOutgoing;
 
 	@UiField
 	TextBox txtOutgoing;
@@ -142,6 +152,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	TextBox txtOutgoingAccount;
 
 	@UiField
+	Label lblParking;
+
+	@UiField
 	TextBox txtParking;
 
 	@UiField
@@ -149,6 +162,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	@UiField
 	TextBox txtParkingAccount;
+
+	@UiField
+	Label lblSignage;
 
 	@UiField
 	TextBox txtSignage;
@@ -170,6 +186,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	@UiField
 	RichTextArea txtNotes;
+
+	@UiField
+	CheckBox chkToggleMonthly;
 
 	@UiField
 	CheckBox chkResidential;
@@ -231,7 +250,11 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		dtEnd.setValue(DATE_UTILS.fromString(entity.getLeaseEnd()));
 		dtUpdate.setValue(DATE_UTILS.fromString(entity.getUpdated()));
 		chkOption.setValue(entity.hasOption());
-		if (chkOption.getValue()) {
+		chkExecised.setEnabled(entity.hasOption());
+		chkExecised.setValue(entity.isOptionExercised());
+		dtEnd.setEnabled(!entity.isOptionExercised());
+		dtOptionEnd.setEnabled(entity.hasOption());
+		if (entity.hasOption()) {
 			dtOptionStart.setValue(DATE_UTILS.fromString(entity.getOptionStartDate()));
 			dtOptionEnd.setValue(DATE_UTILS.fromString(entity.getOptionEndDate()));
 		} else {
@@ -240,34 +263,41 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			dtOptionStart.setValue(optionStart);
 			dtOptionEnd.setValue(optionEnd);
 		}
-		dtOptionStart.setEnabled(chkOption.getValue());
-		dtOptionEnd.setEnabled(chkOption.getValue());
-		initialiseLeaseIncideantal(RENT, txtRent, txtRentPercent, txtRentAccount);
-		initialiseLeaseIncideantal(OUTGOINGS, txtOutgoing, txtOutgoingPercent, txtOutgoingAccount);
-		initialiseLeaseIncideantal(PARKING, txtParking, txtParkingPercent, txtParkingAccount);
-		initialiseLeaseIncideantal(SIGNAGE, txtSignage, txtSignagePercent, txtSignageAccount);
+		initialiseLeaseIncideantal(RENT, txtRent, txtRentPercent, txtRentAccount, false);
+		initialiseLeaseIncideantal(OUTGOINGS, txtOutgoing, txtOutgoingPercent, txtOutgoingAccount, false);
+		initialiseLeaseIncideantal(PARKING, txtParking, txtParkingPercent, txtParkingAccount, false);
+		initialiseLeaseIncideantal(SIGNAGE, txtSignage, txtSignagePercent, txtSignageAccount, false);
 		initialiseLeaseBond();
 		initialiseLeaseMetaData();
 		txtNotes.setText(entity.getNotes());
 		txtMyobJobNo.setText(entity.getJobNo());
 		chkInactive.setValue(entity.isInactive());
 		chkResidential.setValue(entity.isResidential());
-		if (entity.isInactive()) {
-			disable(false);
-		}
+		inactive(entity.isInactive());
 	}
 
 	private void initialiseLeaseIncideantal(final String type, final TextBox amount, final TextBox percent,
-			final TextBox account) {
-		EzeeLeaseIncidental incidental = entity.getIncidental(type);
-		if (incidental != null) {
-			amount.setValue(getAmountFormat().format(incidental.getAmount()));
-			percent.setValue(getPercentFormat().format(incidental.getPercentage()));
-			account.setValue(incidental.getAccount());
+			final TextBox account, final boolean monthly) {
+		if (monthly) {
+			amount.setEnabled(false);
 		} else {
-			amount.setValue(getAmountFormat().format(ZERO_DBL));
-			percent.setValue(getPercentFormat().format(ZERO_DBL));
-			account.setValue(EMPTY_STRING);
+			amount.setEnabled(true);
+		}
+		if (entity != null) {
+			EzeeLeaseIncidental incidental = entity.getIncidental(type);
+			if (incidental != null) {
+				if (monthly) {
+					amount.setValue(getAmountFormat().format(entity.monthlyTotal(type)));
+				} else {
+					amount.setValue(getAmountFormat().format(entity.yearlyTotal(type)));
+				}
+				percent.setValue(getPercentFormat().format(incidental.getPercentage()));
+				account.setValue(incidental.getAccount());
+			} else {
+				amount.setValue(getAmountFormat().format(ZERO_DBL));
+				percent.setValue(getPercentFormat().format(ZERO_DBL));
+				account.setValue(EMPTY_STRING);
+			}
 		}
 	}
 
@@ -277,6 +307,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			lstBondType.setItemSelected(getItemIndex(bond.getType().toString(), lstBondType), true);
 			txtBondAmount.setValue(getAmountFormat().format(bond.getAmount()));
 			txtBondDetail.setText(bond.getNotes());
+		} else {
+			txtBondAmount.setEnabled(false);
+			txtBondDetail.setEnabled(false);
 		}
 	}
 
@@ -342,6 +375,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	private void bindLeaseOption() {
 		entity.setHasOption(chkOption.getValue());
+		entity.setOptionExercised(chkExecised.getValue());
 		if (chkOption.getValue()) {
 			entity.setOptionStartDate(DATE_UTILS.toString(dtOptionStart.getValue()));
 			entity.setOptionEndDate(DATE_UTILS.toString(dtOptionEnd.getValue()));
@@ -367,7 +401,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 				bond = entity.getBond();
 				bond.setUpdated(DATE_UTILS.toString(new Date()));
 			}
-			bond.setAmount(getAmountFormat().parse(txtBondAmount.getText()));
+			double amount = hasLength(txtBondAmount.getText()) ? getAmountFormat().parse(txtBondAmount.getText())
+					: ZERO_DBL;
+			bond.setAmount(amount);
 			bond.setNotes(txtBondDetail.getText());
 			bond.setType(getEnum(EzeeLeaseBondType.class, lstBondType));
 		}
@@ -396,7 +432,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		txtUnits.setValue(EMPTY_STRING);
 		Date start = new Date();
 		Date end = DATE_UTILS.addYears(start, TWO);
-		Date optionStart = DATE_UTILS.addDays(end, ONE);
+		Date optionStart = DATE_UTILS.addYears(start, TWO);
 		Date optionEnd = DATE_UTILS.addYears(optionStart, TWO);
 		dtStart.setValue(start);
 		dtEnd.setValue(end);
@@ -427,6 +463,8 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		dtUpdate.setFormat(getDateBoxFormat());
 		dtOptionStart.setFormat(getDateBoxFormat());
 		dtOptionEnd.setFormat(getDateBoxFormat());
+		txtBondAmount.setValue(getAmountFormat().format(ZERO_DBL));
+		txtBondDetail.setText(EMPTY_STRING);
 		lstBondType.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
@@ -434,13 +472,15 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 				switch (type) {
 				case none:
 					txtBondAmount.setEnabled(false);
-					txtBondAmount.setValue(EzeeFormatUtils.getAmountFormat().format(ZERO_DBL));
+					txtBondAmount.setValue(getAmountFormat().format(ZERO_DBL));
 					txtBondDetail.setEnabled(false);
 					txtBondDetail.setText(EMPTY_STRING);
 					break;
 				default:
 					txtBondAmount.setEnabled(true);
 					txtBondDetail.setEnabled(true);
+					txtBondAmount.setValue(getAmountFormat().format(ZERO_DBL));
+					txtBondDetail.setText(EMPTY_STRING);
 					break;
 				}
 			}
@@ -448,16 +488,21 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		chkOption.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
-				dtOptionStart.setEnabled(chkOption.getValue());
-				dtOptionEnd.setEnabled(chkOption.getValue());
-				dtOptionStart.setEnabled(chkOption.getValue());
-				dtOptionEnd.setEnabled(chkOption.getValue());
+				dtOptionEnd.setEnabled(event.getValue());
+				chkExecised.setEnabled(event.getValue());
+			}
+		});
+		chkExecised.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				dtEnd.setEnabled(!event.getValue());
+				dtOptionEnd.setEnabled(event.getValue());
 			}
 		});
 		chkInactive.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
-				disable(!event.getValue());
+				inactive(event.getValue());
 			}
 		});
 		dtStart.addValueChangeHandler(new ValueChangeHandler<Date>() {
@@ -487,6 +532,12 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 				dtOptionEnd.setValue(optionEnd);
 			}
 		});
+		chkToggleMonthly.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				toggleMonthly(event.getValue());
+			}
+		});
 		KeyPressHandler bondDetailHandler = new EzeeRichTextAreaUtils.TabKeyPressHandler(new Widget[] { txtBondAmount },
 				new Widget[] { txtNotes, txtMyobJobNo });
 		txtBondDetail.addKeyPressHandler(bondDetailHandler);
@@ -513,7 +564,6 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 				}
 			}
 		});
-		disable(!chkInactive.getValue());
 		tab.selectTab(ZERO);
 	}
 
@@ -534,35 +584,64 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			setText(headers[EDIT_HEADER_INDEX]);
 			initialise();
 			btnDelete.setEnabled(true);
-			disable(false);
+			disable();
 			break;
 		}
 		super.show();
 	}
 
-	private void disable(final boolean enable) {
-		lstTenant.setEnabled(enable);
-		lstCategory.setEnabled(enable);
-		lstPremises.setEnabled(enable);
-		txtUnits.setEnabled(enable);
-		txtArea.setEnabled(enable);
-		dtStart.setEnabled(enable);
-		dtEnd.setEnabled(enable);
-		dtUpdate.setEnabled(enable);
-		dtOptionStart.setEnabled(enable);
-		dtOptionEnd.setEnabled(enable);
-		chkOption.setEnabled(enable);
-		disableIncidental(txtRent, txtRentPercent, txtRentAccount, enable);
-		disableIncidental(txtOutgoing, txtOutgoingPercent, txtOutgoingAccount, enable);
-		disableIncidental(txtSignage, txtSignagePercent, txtSignageAccount, enable);
-		disableIncidental(txtParking, txtParkingPercent, txtParkingAccount, enable);
-		lstBondType.setEnabled(enable);
-		txtBondAmount.setEnabled(enable);
-		txtBondDetail.setEnabled(enable);
-		txtNotes.setEnabled(enable);
-		txtMyobJobNo.setEnabled(enable);
-		btnUpdate.setEnabled(enable);
-		chkResidential.setEnabled(enable);
+	private void disable() {
+		lstTenant.setEnabled(false);
+		lstCategory.setEnabled(false);
+		lstPremises.setEnabled(false);
+		txtUnits.setEnabled(false);
+		txtArea.setEnabled(false);
+		dtStart.setEnabled(false);
+		dtEnd.setEnabled(false);
+		dtOptionStart.setEnabled(false);
+		dtOptionEnd.setEnabled(false);
+		chkOption.setEnabled(false);
+		chkExecised.setEnabled(false);
+		disableIncidental(txtRent, txtRentPercent, txtRentAccount, false);
+		disableIncidental(txtOutgoing, txtOutgoingPercent, txtOutgoingAccount, false);
+		disableIncidental(txtSignage, txtSignagePercent, txtSignageAccount, false);
+		disableIncidental(txtParking, txtParkingPercent, txtParkingAccount, false);
+		lstBondType.setEnabled(false);
+		txtBondAmount.setEnabled(false);
+		txtBondDetail.setEnabled(false);
+		txtNotes.setEnabled(false);
+		txtMyobJobNo.setEnabled(false);
+		btnUpdate.setEnabled(false);
+		chkResidential.setEnabled(false);
+		chkInactive.setEnabled(false);
+	}
+
+	private void inactive(boolean inactive) {
+		lstTenant.setEnabled(!inactive);
+		lstCategory.setEnabled(!inactive);
+		lstPremises.setEnabled(!inactive);
+		txtUnits.setEnabled(!inactive);
+		txtArea.setEnabled(!inactive);
+		dtStart.setEnabled(!inactive);
+		dtEnd.setEnabled(!inactive);
+		chkOption.setEnabled(!inactive);
+		if (entity != null) {
+			if (chkOption.getValue()) {
+				dtOptionEnd.setEnabled(!inactive);
+				chkExecised.setEnabled(!inactive);
+			}
+		}
+		disableIncidental(txtRent, txtRentPercent, txtRentAccount, !inactive);
+		disableIncidental(txtOutgoing, txtOutgoingPercent, txtOutgoingAccount, !inactive);
+		disableIncidental(txtSignage, txtSignagePercent, txtSignageAccount, !inactive);
+		disableIncidental(txtParking, txtParkingPercent, txtParkingAccount, !inactive);
+		lstBondType.setEnabled(!inactive);
+		txtBondAmount.setEnabled(!inactive);
+		txtBondDetail.setEnabled(!inactive);
+		txtNotes.setEnabled(!inactive);
+		txtMyobJobNo.setEnabled(!inactive);
+		btnUpdate.setEnabled(!inactive);
+		chkResidential.setEnabled(!inactive);
 	}
 
 	private void disableIncidental(final TextBox amount, final TextBox percent, final TextBox account,
@@ -572,16 +651,8 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		account.setEnabled(enable);
 	}
 
-	private void updateDates() {
-		if (entity != null) {
-			Date date = DATE_UTILS.fromString(entity.getLeaseEnd());
-			Date newEnd = DATE_UTILS.addYears(date, ONE);
-			dtEnd.setValue(newEnd);
-			ValueChangeEvent.fire(dtEnd, newEnd);
-		}
-	}
-
 	private void updateIncidental(final String type) {
+		toggleMonthly(false);
 		if (entity != null) {
 			EzeeLeaseIncidental incidental = entity.getIncidental(type);
 			if (incidental != null) {
@@ -589,6 +660,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 				double percent = incidental.getPercentage();
 				double newAmount = round(amount * (ONE + percent));
 				if (!isCloseToZero(newAmount - amount)) {
+					incidental.setAmount(newAmount);
 					switch (type) {
 					case OUTGOINGS:
 						txtOutgoing.setValue(getAmountFormat().format(newAmount));
@@ -614,7 +686,6 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		updateIncidental(OUTGOINGS);
 		updateIncidental(PARKING);
 		updateIncidental(SIGNAGE);
-		updateDates();
 	}
 
 	@UiHandler("btnClose")
@@ -653,7 +724,6 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		btnDelete.setEnabled(false);
 		showWaitCursor();
 		ENTITY_SERVICE.deleteEntity(EzeeLease.class.getName(), entity, new AsyncCallback<EzeeLease>() {
-
 			@Override
 			public void onFailure(Throwable caught) {
 				btnDelete.setEnabled(true);
@@ -723,5 +793,23 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		if (entity != null) {
 			entity.removeMetaData(metaData);
 		}
+	}
+
+	private void toggleMonthly(boolean monthly) {
+		if (monthly) {
+			lblRent.setText("Rent(M)");
+			lblOutgoing.setText("O/gng.(M)");
+			lblParking.setText("Park.(M)");
+			lblSignage.setText("Sign.(M)");
+		} else {
+			lblRent.setText("Rent(A)");
+			lblOutgoing.setText("O/gng.(A)");
+			lblParking.setText("Park.(A)");
+			lblSignage.setText("Sign.(A)");
+		}
+		initialiseLeaseIncideantal(RENT, txtRent, txtRentPercent, txtRentAccount, monthly);
+		initialiseLeaseIncideantal(OUTGOINGS, txtOutgoing, txtOutgoingPercent, txtOutgoingAccount, monthly);
+		initialiseLeaseIncideantal(PARKING, txtParking, txtParkingPercent, txtParkingAccount, monthly);
+		initialiseLeaseIncideantal(SIGNAGE, txtSignage, txtSignagePercent, txtSignageAccount, monthly);
 	}
 }

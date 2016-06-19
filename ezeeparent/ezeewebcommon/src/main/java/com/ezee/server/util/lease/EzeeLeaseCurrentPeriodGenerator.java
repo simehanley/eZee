@@ -23,7 +23,7 @@ public class EzeeLeaseCurrentPeriodGenerator {
 	}
 
 	public EzeePair<LocalDate, LocalDate> resolveCurrentPeriod(final EzeeLease lease) {
-		LocalDate proposedEnd = new LocalDate(SERVER_DATE_UTILS.fromString(lease.getLeaseEnd()));
+		LocalDate proposedEnd = new LocalDate(SERVER_DATE_UTILS.fromString(lease.getEffectiveLeaseEnd()));
 		LocalDate proposedStart = proposedEnd.minusYears(ONE).plusDays(ONE);
 		while (isGreaterThan(proposedStart, new LocalDate(SERVER_DATE_UTILS.fromString(lease.getLeaseStart())))) {
 			if (updatedInSameYear(proposedStart, new LocalDate(SERVER_DATE_UTILS.fromString(lease.getUpdated())))

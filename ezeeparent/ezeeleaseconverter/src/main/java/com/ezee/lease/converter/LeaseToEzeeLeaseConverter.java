@@ -13,17 +13,21 @@ import java.util.Map;
 import java.util.Set;
 
 import com.ezee.model.entity.lease.EzeeLease;
+import com.ezee.model.entity.lease.EzeeLeaseBond;
+import com.ezee.model.entity.lease.EzeeLeaseBondType;
 import com.ezee.model.entity.lease.EzeeLeaseCategory;
 import com.ezee.model.entity.lease.EzeeLeaseIncidental;
 import com.ezee.model.entity.lease.EzeeLeaseMetaData;
 import com.ezee.model.entity.lease.EzeeLeasePremises;
 import com.ezee.model.entity.lease.EzeeLeaseTenant;
 import com.hg.leases.model.Lease;
+import com.hg.leases.model.LeaseBond;
 import com.hg.leases.model.LeaseCategory;
 import com.hg.leases.model.LeaseIncidental;
 import com.hg.leases.model.LeaseMetaData;
 import com.hg.leases.model.LeasePremises;
 import com.hg.leases.model.LeaseTenant;
+import com.hg.leases.model.enums.LeaseBondType;
 
 public class LeaseToEzeeLeaseConverter {
 
@@ -47,8 +51,29 @@ public class LeaseToEzeeLeaseConverter {
 		EzeeLease ezeeLease = new EzeeLease(start, end, lease.getNotes(), lease.getLeasedArea(), lease.getLeasedUnits(),
 				incidentals, tenant, premises, category, metaData, lease.isResidential(), lease.isInactive(),
 				lease.getJobNo(), created, updated);
+		if (lease.hasOption()) {
+			ezeeLease.setHasOption(true);
+			ezeeLease.setOptionStartDate(SERVER_DATE_UTILS.toString(lease.getOptionStartDate().toDate()));
+			ezeeLease.setOptionEndDate(SERVER_DATE_UTILS.toString(lease.getOptionEndDate().toDate()));
+		} else {
+			ezeeLease.setHasOption(false);
+		}
+		if (lease.getBond() != null) {
+			ezeeLease.setBond(convertBond(lease.getBond()));
+		}
 		return ezeeLease;
 
+	}
+
+	private EzeeLeaseBond convertBond(final LeaseBond bond) {
+		String created = SERVER_DATE_UTILS.toString(new Date());
+		EzeeLeaseBond leaseBond = new EzeeLeaseBond();
+		leaseBond.setAmount(bond.getAmount());
+		leaseBond.setNotes(bond.getNotes());
+		leaseBond.setCreated(created);
+		leaseBond.setUpdated(created);
+		leaseBond.setType(convert(bond.getType()));
+		return leaseBond;
 	}
 
 	private Set<EzeeLeaseIncidental> convertIncidentals(final List<LeaseIncidental> incidentals) {
@@ -116,5 +141,14 @@ public class LeaseToEzeeLeaseConverter {
 
 	public final Map<String, EzeeLeaseTenant> getTenantCache() {
 		return tenantCache;
+	}
+
+	private EzeeLeaseBondType convert(final LeaseBondType type) {
+		switch (type) {
+		case deposit_held:
+			return EzeeLeaseBondType.deposit_held;
+		default:
+			return EzeeLeaseBondType.bank_guarantee;
+		}
 	}
 }

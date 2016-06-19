@@ -92,6 +92,10 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	@Column(name = "HAS_OPTION")
 	private boolean hasOption;
 
+	/** indicates if the option to renew has been exercised **/
+	@Column(name = "OPTION_EXERCISED")
+	private boolean optionExercised;
+
 	/** lease option start date **/
 	@Column(name = "OPTION_START_DATE")
 	private String optionStartDate;
@@ -157,6 +161,13 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 
 	public final String getLeaseEnd() {
 		return leaseEnd;
+	}
+
+	public final String getEffectiveLeaseEnd() {
+		if (hasOption && optionExercised) {
+			return getOptionEndDate();
+		}
+		return getLeaseEnd();
 	}
 
 	public void setLeaseEnd(final String leaseEnd) {
@@ -241,6 +252,14 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 
 	public void setHasOption(boolean hasOption) {
 		this.hasOption = hasOption;
+	}
+
+	public boolean isOptionExercised() {
+		return optionExercised;
+	}
+
+	public void setOptionExercised(boolean optionExercised) {
+		this.optionExercised = optionExercised;
 	}
 
 	public final String getOptionStartDate() {

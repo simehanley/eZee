@@ -72,7 +72,7 @@ public class EzeeLeaseMaintenanceService {
 	}
 
 	private void checkExpired(final LocalDate now, final EzeeLease lease, final List<EzeeLease> expired) {
-		if (isBeforeOrEqual(toDate(lease.getLeaseEnd()), now)) {
+		if (isBeforeOrEqual(toDate(lease.getEffectiveLeaseEnd()), now)) {
 			expired.add(lease);
 		}
 		if (!isEmpty(expired)) {
@@ -81,10 +81,10 @@ public class EzeeLeaseMaintenanceService {
 	}
 
 	private void checkRenew(final LocalDate now, final EzeeLease lease, final List<EzeeLease> renew) {
-		if (toDate(lease.getLeaseEnd()).isAfter(now)) {
+		if (toDate(lease.getEffectiveLeaseEnd()).isAfter(now)) {
 			LocalDate minimalRenewDate = now.plusMonths(monthlyUpdateInterval);
-			if (isBeforeOrEqual(toDate(lease.getLeaseEnd()), minimalRenewDate)) {
-				LocalDate minimalUpdateDate = toDate(lease.getLeaseEnd()).minusMonths(monthlyUpdateInterval);
+			if (isBeforeOrEqual(toDate(lease.getEffectiveLeaseEnd()), minimalRenewDate)) {
+				LocalDate minimalUpdateDate = toDate(lease.getEffectiveLeaseEnd()).minusMonths(monthlyUpdateInterval);
 				if (isBeforeOrEqual(toDate(lease.getUpdated()), minimalUpdateDate)) {
 					renew.add(lease);
 				}
@@ -96,9 +96,9 @@ public class EzeeLeaseMaintenanceService {
 	}
 
 	private void checkReprice(final LocalDate now, final EzeeLease lease, final List<EzeeLease> reprice) {
-		if (toDate(lease.getLeaseEnd()).isAfter(now)) {
+		if (toDate(lease.getEffectiveLeaseEnd()).isAfter(now)) {
 			LocalDate minimalRenewDate = now.plusMonths(monthlyUpdateInterval);
-			if (!isBeforeOrEqual(toDate(lease.getLeaseEnd()), minimalRenewDate)) {
+			if (!isBeforeOrEqual(toDate(lease.getEffectiveLeaseEnd()), minimalRenewDate)) {
 				LocalDate resolvedRepriceDate = resolveRepriceDate(now, lease);
 				LocalDate minimalUpdateDate = resolvedRepriceDate.minusMonths(monthlyUpdateInterval);
 				if (isBeforeOrEqual(minimalUpdateDate, now)
@@ -166,8 +166,8 @@ public class EzeeLeaseMaintenanceService {
 
 	private void draftDefaultAction(final EzeeLease lease, final List<String> actions) {
 		actions.add("<tr><td>" + lease.getTenant().getName() + "</td><td>" + lease.getPremises().getAddressLineOne()
-				+ "</td><td>" + lease.getLeasedUnits() + "</td><td>" + format(toDate(lease.getLeaseEnd())) + "</td><td>"
-				+ format(toDate(lease.getUpdated())) + "</td></tr>");
+				+ "</td><td>" + lease.getLeasedUnits() + "</td><td>" + format(toDate(lease.getEffectiveLeaseEnd()))
+				+ "</td><td>" + format(toDate(lease.getUpdated())) + "</td></tr>");
 	}
 
 	private void draftRepriceAction(final EzeeLease reprice, final List<String> actions, final LocalDate now) {
@@ -178,7 +178,7 @@ public class EzeeLeaseMaintenanceService {
 	}
 
 	private LocalDate resolveRepriceDate(final LocalDate now, final EzeeLease lease) {
-		LocalDate candidate = toDate(lease.getLeaseEnd());
+		LocalDate candidate = toDate(lease.getEffectiveLeaseEnd());
 		while (candidate.isAfter(now)) {
 			candidate = candidate.minusYears(ONE);
 		}

@@ -222,7 +222,7 @@ public class EzeeLeaseGridModel extends EzeeGridModel<EzeeLease> {
 		case START_DATE:
 			return DATE_UTILS.fromString(lease.getLeaseStart());
 		case END_DATE:
-			return DATE_UTILS.fromString(lease.getLeaseEnd());
+			return DATE_UTILS.fromString(lease.getEffectiveLeaseEnd());
 		default:
 			return DATE_UTILS.fromString(lease.getUpdated());
 		}
@@ -256,8 +256,8 @@ public class EzeeLeaseGridModel extends EzeeGridModel<EzeeLease> {
 		handler.setComparator(columns.get(END_DATE), new Comparator<EzeeLease>() {
 			@Override
 			public int compare(final EzeeLease one, final EzeeLease two) {
-				return dateComparator.compare(DATE_UTILS.fromString(one.getLeaseEnd()),
-						DATE_UTILS.fromString(two.getLeaseEnd()));
+				return dateComparator.compare(DATE_UTILS.fromString(one.getEffectiveLeaseEnd()),
+						DATE_UTILS.fromString(two.getEffectiveLeaseEnd()));
 			}
 		});
 		handler.setComparator(columns.get(UPDATE_DATE), new Comparator<EzeeLease>() {
