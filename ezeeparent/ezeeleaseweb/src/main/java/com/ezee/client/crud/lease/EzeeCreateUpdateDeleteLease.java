@@ -496,7 +496,6 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
 				dtEnd.setEnabled(!event.getValue());
-				dtOptionEnd.setEnabled(event.getValue());
 			}
 		});
 		chkInactive.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
