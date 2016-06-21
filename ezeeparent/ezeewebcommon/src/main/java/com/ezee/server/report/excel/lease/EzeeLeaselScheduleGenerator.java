@@ -12,13 +12,12 @@ import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.OUTGOI
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.PARKING;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.RENT;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.SIGNAGE;
-import static java.util.Collections.sort;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
+import java.util.SortedSet;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -170,9 +169,8 @@ public class EzeeLeaselScheduleGenerator extends AbstractExcelReportGenerator im
 
 	private void resolveMetaData(final EzeeLease lease, final Sheet sheet, final String type,
 			final EzeePair<Integer, Integer> metaDataIndex) {
-		List<EzeeLeaseMetaData> metaData = lease.getMetaData(type);
+		SortedSet<EzeeLeaseMetaData> metaData = lease.getMetaData(type);
 		if (!isEmpty(metaData)) {
-			sort(metaData);
 			int row = metaDataIndex.getFirst();
 			int columnTypeIndex = metaDataIndex.getSecond();
 			int columnValueIndex = columnTypeIndex + ONE;

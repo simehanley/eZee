@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.hibernate.collection.spi.PersistentCollection;
@@ -151,7 +152,7 @@ public class EzeeEntitiesDao {
 				lease.setIncidentals(new HashSet<>(lease.getIncidentals()));
 			}
 			if (lease.getMetaData() != null) {
-				lease.setMetaData(new HashSet<>(lease.getMetaData()));
+				lease.setMetaData(new TreeSet<>(lease.getMetaData()));
 			}
 		}
 	}

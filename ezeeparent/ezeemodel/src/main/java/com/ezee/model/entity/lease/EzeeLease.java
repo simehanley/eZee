@@ -8,10 +8,10 @@ import static com.ezee.model.entity.lease.EzeeLeaseConstants.TOTAL;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +23,9 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.SortType;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -111,7 +114,8 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	/** meta data **/
 	@OneToMany(cascade = ALL, fetch = EAGER)
 	@JoinTable(name = "EZEE_LEASE_TO_META_DATA_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "META_DATA_ID") )
-	private Set<EzeeLeaseMetaData> metaData;
+	@Sort(type = SortType.NATURAL)
+	private SortedSet<EzeeLeaseMetaData> metaData;
 
 	/** myob job number **/
 	@Column(name = "JOB_NUMBER")
@@ -123,9 +127,9 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 
 	public EzeeLease(final String leaseStart, final String leaseEnd, final String notes, final Double leasedArea,
 			final String leasedUnits, final Set<EzeeLeaseIncidental> incidentals, final EzeeLeaseTenant tenant,
-			final EzeeLeasePremises premises, final EzeeLeaseCategory category, final Set<EzeeLeaseMetaData> metaData,
-			final boolean residential, final boolean inactive, final String jobNo, final String created,
-			final String updated) {
+			final EzeeLeasePremises premises, final EzeeLeaseCategory category,
+			final SortedSet<EzeeLeaseMetaData> metaData, final boolean residential, final boolean inactive,
+			final String jobNo, final String created, final String updated) {
 		this(NULL_ID, leaseStart, leaseEnd, notes, leasedArea, leasedUnits, incidentals, tenant, premises, category,
 				metaData, residential, inactive, jobNo, created, updated);
 	}
@@ -133,7 +137,7 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	protected EzeeLease(final Long id, final String leaseStart, final String leaseEnd, final String notes,
 			final Double leasedArea, final String leasedUnits, final Set<EzeeLeaseIncidental> incidentals,
 			final EzeeLeaseTenant tenant, final EzeeLeasePremises premises, final EzeeLeaseCategory category,
-			final Set<EzeeLeaseMetaData> metaData, final boolean residential, final boolean inactive,
+			final SortedSet<EzeeLeaseMetaData> metaData, final boolean residential, final boolean inactive,
 			final String jobNo, final String created, final String updated) {
 		super(id, created, updated);
 		this.leaseStart = leaseStart;
@@ -321,23 +325,23 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 		}
 	}
 
-	public Set<EzeeLeaseMetaData> getMetaData() {
+	public SortedSet<EzeeLeaseMetaData> getMetaData() {
 		return metaData;
 	}
 
-	public void setMetaData(Set<EzeeLeaseMetaData> metaData) {
+	public void setMetaData(SortedSet<EzeeLeaseMetaData> metaData) {
 		this.metaData = metaData;
 	}
 
 	public void addMetaData(final EzeeLeaseMetaData data) {
 		if (isEmpty(metaData)) {
-			metaData = new HashSet<EzeeLeaseMetaData>();
+			metaData = new TreeSet<>();
 		}
 		metaData.add(data);
 	}
 
-	public final List<EzeeLeaseMetaData> getMetaData(final String type) {
-		List<EzeeLeaseMetaData> data = new ArrayList<EzeeLeaseMetaData>();
+	public final SortedSet<EzeeLeaseMetaData> getMetaData(final String type) {
+		SortedSet<EzeeLeaseMetaData> data = new TreeSet<EzeeLeaseMetaData>();
 		if (!isEmpty(metaData)) {
 			for (EzeeLeaseMetaData md : metaData) {
 				if (type.equals(md.getType())) {

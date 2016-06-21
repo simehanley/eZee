@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.hibernate.collection.spi.PersistentCollection;
@@ -91,7 +92,7 @@ public class EzeeEntitiesCache {
 				lease.setIncidentals(new HashSet<>(lease.getIncidentals()));
 			}
 			if (!isEmpty(lease.getMetaData())) {
-				lease.setMetaData(new HashSet<>(lease.getMetaData()));
+				lease.setMetaData(new TreeSet<>(lease.getMetaData()));
 			}
 		}
 	}

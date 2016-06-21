@@ -3,6 +3,7 @@ package com.ezee.lease.converter;
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.server.EzeeServerDateUtils.SERVER_DATE_UTILS;
 import static com.hg.leases.model.LeaseConstants.GST_PERCENTAGE;
+import static java.util.Collections.sort;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.util.Date;
@@ -11,6 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import com.ezee.model.entity.lease.EzeeLease;
 import com.ezee.model.entity.lease.EzeeLeaseBond;
@@ -46,7 +49,7 @@ public class LeaseToEzeeLeaseConverter {
 				? premisesCache.get(lease.getPremises().getAddressLineOne()) : convert(lease.getPremises());
 		EzeeLeaseCategory category = categoriesCache.containsKey(lease.getCategory().getCategory())
 				? categoriesCache.get(lease.getCategory().getCategory()) : convert(lease.getCategory());
-		Set<EzeeLeaseMetaData> metaData = convertMetaData(lease.getMetaData());
+		SortedSet<EzeeLeaseMetaData> metaData = convertMetaData(lease.getMetaData());
 		Set<EzeeLeaseIncidental> incidentals = convertIncidentals(lease.getIncidentals());
 		EzeeLease ezeeLease = new EzeeLease(start, end, lease.getNotes(), lease.getLeasedArea(), lease.getLeasedUnits(),
 				incidentals, tenant, premises, category, metaData, lease.isResidential(), lease.isInactive(),
@@ -89,10 +92,11 @@ public class LeaseToEzeeLeaseConverter {
 		return null;
 	}
 
-	private Set<EzeeLeaseMetaData> convertMetaData(final List<LeaseMetaData> metaData) {
+	private SortedSet<EzeeLeaseMetaData> convertMetaData(final List<LeaseMetaData> metaData) {
 		String created = SERVER_DATE_UTILS.toString(new Date());
 		if (!isEmpty(metaData)) {
-			Set<EzeeLeaseMetaData> ezeeLeaseMetaData = new HashSet<>();
+			sort(metaData);
+			SortedSet<EzeeLeaseMetaData> ezeeLeaseMetaData = new TreeSet<>();
 			for (LeaseMetaData md : metaData) {
 				ezeeLeaseMetaData
 						.add(new EzeeLeaseMetaData(md.getType(), md.getDescription(), md.getValue(), created, created));

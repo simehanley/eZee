@@ -30,8 +30,8 @@ import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.getEnum;
 import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.getItemIndex;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -411,9 +411,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	private void bindMetaData() {
 		if (type == create) {
-			List<EzeeLeaseMetaData> metaData = metaDataGrid.getModel().getHandler().getList();
+			SortedSet<EzeeLeaseMetaData> metaData = new TreeSet<>(metaDataGrid.getModel().getHandler().getList());
 			if (!isEmpty(metaData)) {
-				entity.setMetaData(new HashSet<>(metaData));
+				entity.setMetaData(metaData);
 			}
 		}
 	}
@@ -782,7 +782,6 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	@Override
 	public void metaDataSaved(final EzeeLeaseMetaData metaData) {
 		if (entity != null) {
-			entity.removeMetaData(metaData);
 			entity.addMetaData(metaData);
 		}
 	}
