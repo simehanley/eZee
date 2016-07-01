@@ -45,6 +45,7 @@ import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.TOTAL;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.UNITS;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.UPDATE_DATE;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
+import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_RIGHT;
 
@@ -73,14 +74,16 @@ public class EzeeLeaseGridModel extends EzeeGridModel<EzeeLease> {
 	private final EzeeDateComparator dateComparator = new EzeeDateComparator();
 
 	private boolean summary = true;
+	private boolean monthly = false;
 
-	public EzeeLeaseGridModel(final boolean summary) {
-		this(null, summary);
+	public EzeeLeaseGridModel(final boolean summary, final boolean monthly) {
+		this(null, summary, monthly);
 	}
 
-	public EzeeLeaseGridModel(final Set<String> hiddenColumns, final boolean summary) {
+	public EzeeLeaseGridModel(final Set<String> hiddenColumns, final boolean summary, final boolean monthly) {
 		super(null, hiddenColumns);
 		this.summary = summary;
+		this.monthly = monthly;
 	}
 
 	@Override
@@ -94,11 +97,19 @@ public class EzeeLeaseGridModel extends EzeeGridModel<EzeeLease> {
 		createDateColumn(columns, grid, END_DATE, DATE_FIELD_WIDTH, true);
 		createDateColumn(columns, grid, UPDATE_DATE, DATE_FIELD_WIDTH, true);
 		if (summary) {
-			createTextColumn(columns, grid, GROSS_ANNUAL_RENT, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-			createTextColumn(columns, grid, GROSS_ANNUAL_OUTGOINGS, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-			createTextColumn(columns, grid, GROSS_ANNUAL_PARKING, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-			createTextColumn(columns, grid, GROSS_ANNUAL_SIGNAGE, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
-			createTextColumn(columns, grid, GROSS_ANNUAL_TOTAL, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			if (monthly) {
+				createTextColumn(columns, grid, GROSS_MONTHLY_RENT, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+				createTextColumn(columns, grid, GROSS_MONTHLY_OUTGOINGS, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+				createTextColumn(columns, grid, GROSS_MONTHLY_PARKING, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+				createTextColumn(columns, grid, GROSS_MONTHLY_SIGNAGE, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+				createTextColumn(columns, grid, GROSS_MONTHLY_TOTAL, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			} else {
+				createTextColumn(columns, grid, GROSS_ANNUAL_RENT, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+				createTextColumn(columns, grid, GROSS_ANNUAL_OUTGOINGS, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+				createTextColumn(columns, grid, GROSS_ANNUAL_PARKING, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+				createTextColumn(columns, grid, GROSS_ANNUAL_SIGNAGE, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+				createTextColumn(columns, grid, GROSS_ANNUAL_TOTAL, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
+			}
 			createTextColumn(columns, grid, CATEGORY, CATEGORY_COLUMN_WIDTH, true);
 		} else {
 			createTextColumn(columns, grid, NET_ANNUAL_RENT, LEASE_NUMERIC_FIELD_WIDTH, false, ALIGN_RIGHT);
@@ -300,5 +311,21 @@ public class EzeeLeaseGridModel extends EzeeGridModel<EzeeLease> {
 
 	public final void setSummary(boolean summary) {
 		this.summary = summary;
+	}
+
+	public boolean isMonthly() {
+		return monthly;
+	}
+
+	public void setMonthly(boolean monthly) {
+		this.monthly = monthly;
+	}
+
+	@Override
+	protected String resolveCellStyleNames(final EzeeLease lease) {
+		if (lease.isInactive()) {
+			return INSTANCE.css().redforeground();
+		}
+		return INSTANCE.css().black();
 	}
 }

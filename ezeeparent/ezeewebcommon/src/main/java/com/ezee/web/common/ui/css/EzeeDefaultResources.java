@@ -28,6 +28,8 @@ public interface EzeeDefaultResources extends ClientBundle {
 		String lightorange();
 
 		String lightorangeforeground();
+		
+		String redforeground();
 
 		String white();
 

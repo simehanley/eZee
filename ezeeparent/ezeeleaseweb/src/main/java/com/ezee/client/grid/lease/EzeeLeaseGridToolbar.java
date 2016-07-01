@@ -1,5 +1,6 @@
 package com.ezee.client.grid.lease;
 
+import static com.ezee.client.EzeeLeaseWebConstants.LEASE_SUMMARY_IN_MONTHS;
 import static com.ezee.client.EzeeLeaseWebConstants.SHOW_INACTIVE_LEASES;
 import static com.ezee.client.EzeeLeaseWebConstants.SHOW_LEASE_SUMMARY;
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
@@ -48,6 +49,9 @@ public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
 	@UiField
 	CheckBox chkSummary;
 
+	@UiField
+	CheckBox chkMonthly;
+
 	private final EzeeLeaseSummaryHandler handler;
 
 	interface EzeeLeaseGridToolbarUiBinder extends UiBinder<Widget, EzeeLeaseGridToolbar> {
@@ -79,6 +83,16 @@ public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
 				handler.summaryValueChanged(event.getValue());
+				chkMonthly.setEnabled(event.getValue());
+			}
+		});
+		ValueChangeHandler<Boolean> monthlyChangeHandler = new EzeeLocalStorageValueChangeHandler(
+				LEASE_SUMMARY_IN_MONTHS);
+		chkMonthly.addValueChangeHandler(monthlyChangeHandler);
+		chkMonthly.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				handler.monthlyValueChanged(event.getValue());
 			}
 		});
 		setLeaseCheckBoxes();
@@ -96,6 +110,12 @@ public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
 			summary = Boolean.valueOf(localStroage.getValue(SHOW_LEASE_SUMMARY));
 		}
 		chkSummary.setValue(summary);
+		boolean monthly = false;
+		if (localStroage.isSupported() && localStroage.isSet(LEASE_SUMMARY_IN_MONTHS)) {
+			monthly = Boolean.valueOf(localStroage.getValue(LEASE_SUMMARY_IN_MONTHS));
+		}
+		chkMonthly.setEnabled(summary);
+		chkMonthly.setValue(monthly);
 	}
 
 	@Override
@@ -132,6 +152,10 @@ public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
 
 	public boolean getShowSummary() {
 		return chkSummary.getValue();
+	}
+
+	public boolean getShowMonthly() {
+		return chkMonthly.getValue();
 	}
 
 	@Override

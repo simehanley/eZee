@@ -85,7 +85,7 @@ public class EzeeLeaseMetaDataGrid extends EzeeGrid<EzeeLeaseMetaData> {
 
 	@Override
 	public void onSave(final EzeeLeaseMetaData entity) {
-		if (entity.getId()==null) {
+		if (entity.getOrder() != null) {
 			++maxSortOrder;
 			entity.setOrder(maxSortOrder);
 		}

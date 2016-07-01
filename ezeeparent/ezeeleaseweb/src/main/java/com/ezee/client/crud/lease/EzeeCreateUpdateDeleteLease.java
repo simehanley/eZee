@@ -18,6 +18,7 @@ import static com.ezee.model.entity.lease.EzeeLeaseConstants.OUTGOINGS;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.PARKING;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.RENT;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.SIGNAGE;
+import static com.ezee.model.entity.lease.EzeeLeaseConstants.TOTAL;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
@@ -50,7 +51,6 @@ import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.web.common.ui.utils.EzeeListBoxUtils;
-import com.ezee.web.common.ui.utils.EzeeRichTextAreaUtils;
 import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -176,6 +176,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	TextBox txtSignageAccount;
 
 	@UiField
+	TextBox txtTotal;
+
+	@UiField
 	ListBox lstBondType;
 
 	@UiField
@@ -183,9 +186,6 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	@UiField
 	RichTextArea txtBondDetail;
-
-	@UiField
-	RichTextArea txtNotes;
 
 	@UiField
 	CheckBox chkToggleMonthly;
@@ -267,9 +267,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		initialiseLeaseIncideantal(OUTGOINGS, txtOutgoing, txtOutgoingPercent, txtOutgoingAccount, false);
 		initialiseLeaseIncideantal(PARKING, txtParking, txtParkingPercent, txtParkingAccount, false);
 		initialiseLeaseIncideantal(SIGNAGE, txtSignage, txtSignagePercent, txtSignageAccount, false);
+		txtTotal.setValue(getAmountFormat().format(entity.yearlyTotal(TOTAL)));
 		initialiseLeaseBond();
 		initialiseLeaseMetaData();
-		txtNotes.setText(entity.getNotes());
 		txtMyobJobNo.setText(entity.getJobNo());
 		chkInactive.setValue(entity.isInactive());
 		chkResidential.setValue(entity.isResidential());
@@ -342,7 +342,6 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		bindIncidental(PARKING, txtParking, txtParkingPercent, txtParkingAccount);
 		bindIncidental(SIGNAGE, txtSignage, txtSignagePercent, txtSignageAccount);
 		bindMetaData();
-		entity.setNotes(txtNotes.getText());
 		entity.setJobNo(txtMyobJobNo.getText());
 		entity.setInactive(chkInactive.getValue());
 		entity.setResidential(chkResidential.getValue());
@@ -428,6 +427,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		txtOutgoingPercent.setValue(getPercentFormat().format(ZERO_DBL));
 		txtParkingPercent.setValue(getPercentFormat().format(ZERO_DBL));
 		txtSignagePercent.setValue(getPercentFormat().format(ZERO_DBL));
+		txtTotal.setValue(getPercentFormat().format(ZERO_DBL));
 		txtArea.setValue(getAmountFormat().format(ZERO_DBL));
 		txtUnits.setValue(EMPTY_STRING);
 		Date start = new Date();
@@ -537,12 +537,6 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 				toggleMonthly(event.getValue());
 			}
 		});
-		KeyPressHandler bondDetailHandler = new EzeeRichTextAreaUtils.TabKeyPressHandler(new Widget[] { txtBondAmount },
-				new Widget[] { txtNotes, txtMyobJobNo });
-		txtBondDetail.addKeyPressHandler(bondDetailHandler);
-		KeyPressHandler notesHandler = new EzeeRichTextAreaUtils.TabKeyPressHandler(
-				new Widget[] { txtNotes, txtSignageAccount }, new Widget[] { txtMyobJobNo });
-		txtNotes.addKeyPressHandler(notesHandler);
 		EzeeLeaseAmountChangeHandler amountChangeHandler = new EzeeLeaseAmountChangeHandler();
 		txtRent.addValueChangeHandler(amountChangeHandler);
 		txtOutgoing.addValueChangeHandler(amountChangeHandler);
@@ -608,7 +602,6 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		lstBondType.setEnabled(false);
 		txtBondAmount.setEnabled(false);
 		txtBondDetail.setEnabled(false);
-		txtNotes.setEnabled(false);
 		txtMyobJobNo.setEnabled(false);
 		btnUpdate.setEnabled(false);
 		chkResidential.setEnabled(false);
@@ -637,7 +630,6 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		lstBondType.setEnabled(!inactive);
 		txtBondAmount.setEnabled(!inactive);
 		txtBondDetail.setEnabled(!inactive);
-		txtNotes.setEnabled(!inactive);
 		txtMyobJobNo.setEnabled(!inactive);
 		btnUpdate.setEnabled(!inactive);
 		chkResidential.setEnabled(!inactive);

@@ -28,6 +28,11 @@
 	font-weight: bold;
 }
 
+.redforeground {
+	color: red;
+	font-weight: bold;
+}
+
 .white {
 	color: white;
 	font-weight: bold;

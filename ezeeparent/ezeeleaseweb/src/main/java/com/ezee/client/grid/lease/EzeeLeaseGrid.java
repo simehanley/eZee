@@ -37,7 +37,7 @@ public class EzeeLeaseGrid extends EzeeGrid<EzeeLease> implements EzeeLeaseSumma
 		super.initGrid();
 		SingleSelectionModel<EzeeLease> selectModel = new SingleSelectionModel<>();
 		grid.setSelectionModel(selectModel);
-		model = new EzeeLeaseGridModel(gridToolbar().getShowSummary());
+		model = new EzeeLeaseGridModel(gridToolbar().getShowSummary(), gridToolbar().getShowMonthly());
 		model.bind(grid);
 	}
 
@@ -77,6 +77,16 @@ public class EzeeLeaseGrid extends EzeeGrid<EzeeLease> implements EzeeLeaseSumma
 	@Override
 	public void summaryValueChanged(boolean summary) {
 		gridModel().setSummary(summary);
+		redrawGrid();
+	}
+
+	@Override
+	public void monthlyValueChanged(boolean monthly) {
+		gridModel().setMonthly(monthly);
+		redrawGrid();
+	}
+
+	private void redrawGrid() {
 		gridModel().removeColumns(grid);
 		gridModel().bind(grid);
 		grid.redraw();

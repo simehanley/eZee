@@ -40,4 +40,6 @@ public interface EzeeLeaseWebConstants {
 
 	String SHOW_INACTIVE_LEASES = "SHOW_INACTIVE";
 	String SHOW_LEASE_SUMMARY = "SHOW_SUMMARY";
+	String LEASE_SUMMARY_IN_MONTHS = "LEASE_SUMMARY_IN_MONTHS";
+	
 }
