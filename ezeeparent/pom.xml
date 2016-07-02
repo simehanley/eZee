@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ezee</groupId>
 	<artifactId>ezeeparent</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
 	<properties>
