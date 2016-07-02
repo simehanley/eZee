@@ -20,8 +20,7 @@
 		<property name="locations">
 			<list>
 				<value>classpath:ezee-web-default.properties</value>
-				<value>classpath:ezeeinvoice-web-default.properties</value>
-				<!-- add production properties file here when configured -->
+				<value>classpath:override.properties</value>
 			</list>
 		</property>
 	</bean>

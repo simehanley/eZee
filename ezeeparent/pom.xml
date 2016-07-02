@@ -29,6 +29,7 @@
 		<module>ezeeconstructionweb</module>
 		<module>ezeeleaseweb</module>
 		<module>ezeeleaseconverter</module>
+		<module>ezeeconfig</module>
 	</modules>
 
 	<dependencyManagement>
