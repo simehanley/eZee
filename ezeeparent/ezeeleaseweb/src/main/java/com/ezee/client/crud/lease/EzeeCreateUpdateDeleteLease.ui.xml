@@ -6,7 +6,7 @@
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
 
 	<g:HTMLPanel>
-		<g:AbsolutePanel height="539px" width="1045px">
+		<g:AbsolutePanel height="425px" width="1045px">
 			<g:at top="0" left="5">
 				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
 					<g:Label text="Tenant" styleName="{res.css.gwtLabelSmall}" />
@@ -16,7 +16,7 @@
 				</g:HorizontalPanel>
 			</g:at>
 			<g:at top="37" left="5">
-				<g:TabPanel width="1018px" height="462px" ui:field="tab">
+				<g:TabPanel ui:field="tab">
 					<g:Tab text="Main">
 						<g:VerticalPanel verticalAlignment="ALIGN_MIDDLE">
 							<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE">
@@ -124,32 +124,38 @@
 						</g:VerticalPanel>
 					</g:Tab>
 					<g:Tab text="Meta Data">
-						<g:AbsolutePanel width="1018px" height="417px">
+						<g:AbsolutePanel width="1018px" height="305px">
 							<g:ResizeLayoutPanel height="98%" width="99%" styleName="{res.css.gwtPanelBorder}">
 								<p3:EzeeLeaseMetaDataGrid ui:field="metaDataGrid" />
 							</g:ResizeLayoutPanel>
 						</g:AbsolutePanel>
 					</g:Tab>
 					<g:Tab text="Notes">
-						<g:HTML text="TO DO" />
+						<g:AbsolutePanel width="1018px" height="305px">
+							<g:HTML text="TO DO" />
+						</g:AbsolutePanel>
 					</g:Tab>
 					<g:Tab text="Documents">
-						<g:HTML text="TO DO" />
+						<g:AbsolutePanel width="1018px" height="305px">
+							<g:HTML text="TO DO" />
+						</g:AbsolutePanel>
 					</g:Tab>
 				</g:TabPanel>
 			</g:at>
-			<g:at top="495" left="5">
-				<g:HorizontalPanel width="100%" height="100%" horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE">
-					<g:CheckBox text="Monthly" ui:field="chkToggleMonthly" wordWrap="false" styleName="{res.css.gwtCheckBoxSmall}" />
-					<g:CheckBox text="Inactive" ui:field="chkInactive" wordWrap="false" styleName="{res.css.gwtCheckBoxSmall}" />
-					<g:CheckBox text="Residential" ui:field="chkResidential" wordWrap="false" styleName="{res.css.gwtCheckBoxSmall}" />
-					<g:Button ui:field="btnUpdate" styleName="{res.css.gwtButton}">Update</g:Button>
-					<g:Button ui:field="btnDelete" styleName="{res.css.gwtButton}" enabled="false">Delete</g:Button>
-					<g:Button ui:field="btnSave" styleName="{res.css.gwtButton}">Save</g:Button>
-					<g:Button ui:field="btnClose" styleName="{res.css.gwtButton}">Close</g:Button>
+			<g:at top="385" left="5">
+				<g:HorizontalPanel width="99%" horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE">
+					<g:HorizontalPanel width="40%"></g:HorizontalPanel>
+					<g:HorizontalPanel width="60%" horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE">
+						<g:CheckBox text="Monthly" ui:field="chkToggleMonthly" wordWrap="false" styleName="{res.css.gwtCheckBoxSmall}" />
+						<g:CheckBox text="Inactive" ui:field="chkInactive" wordWrap="false" styleName="{res.css.gwtCheckBoxSmall}" />
+						<g:CheckBox text="Residential" ui:field="chkResidential" wordWrap="false" styleName="{res.css.gwtCheckBoxSmall}" />
+						<g:Button ui:field="btnUpdate" styleName="{res.css.gwtButton}">Update</g:Button>
+						<g:Button ui:field="btnDelete" styleName="{res.css.gwtButton}" enabled="false">Delete</g:Button>
+						<g:Button ui:field="btnSave" styleName="{res.css.gwtButton}">Save</g:Button>
+						<g:Button ui:field="btnClose" styleName="{res.css.gwtButton}">Close</g:Button>
+					</g:HorizontalPanel>
 				</g:HorizontalPanel>
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>
-
 </ui:UiBinder> 
