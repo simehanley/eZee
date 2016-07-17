@@ -16,7 +16,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 @Entity
 @Table(name = "EZEE_DEBT_AGE_RULE")
-public class EzeeDebtAgeRule extends EzeeDatabaseEntity implements EzeeHasName, IsSerializable {
+public class EzeeDebtAgeRule extends EzeeAuditableDatabaseEntity implements EzeeHasName, IsSerializable {
 
 	private static final long serialVersionUID = 1967457003204614100L;
 

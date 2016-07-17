@@ -10,7 +10,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 @Entity
 @Table(name = "EZEE_USER")
-public class EzeeUser extends EzeeDatabaseEntity implements EzeeHasName, IsSerializable {
+public class EzeeUser extends EzeeAuditableDatabaseEntity implements EzeeHasName, IsSerializable {
 
 	private static final long serialVersionUID = -6217125456081902517L;
 

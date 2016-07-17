@@ -6,11 +6,11 @@ import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeAuditableDatabaseEntity;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.google.gwt.regexp.shared.RegExp;
 
-public abstract class EzeeInvoiceNumberFilter<T extends EzeeDatabaseEntity> implements EzeeEntityFilter<T> {
+public abstract class EzeeInvoiceNumberFilter<T extends EzeeAuditableDatabaseEntity> implements EzeeEntityFilter<T> {
 
 	protected List<RegExp> invoiceRegExp;
 

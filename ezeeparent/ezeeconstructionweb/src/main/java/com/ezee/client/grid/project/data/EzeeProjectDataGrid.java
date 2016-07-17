@@ -6,7 +6,7 @@ import static com.google.gwt.event.dom.client.KeyCodes.KEY_ENTER;
 import static com.google.gwt.user.client.Event.ONCONTEXTMENU;
 
 import com.ezee.client.grid.project.EzeeProjectDetail;
-import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeAuditableDatabaseEntity;
 import com.ezee.web.common.ui.css.EzeeGwtOverridesResources;
 import com.ezee.web.common.ui.grid.EzeeGridModel;
 import com.google.gwt.core.client.GWT;
@@ -27,7 +27,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SingleSelectionModel;
 
-public abstract class EzeeProjectDataGrid<T extends EzeeDatabaseEntity> extends Composite {
+public abstract class EzeeProjectDataGrid<T extends EzeeAuditableDatabaseEntity> extends Composite {
 
 	protected static final int DEFAULT_PAGE_SIZE = 40;
 	protected static final int DEFAULT_GRID_SIZE = 600;

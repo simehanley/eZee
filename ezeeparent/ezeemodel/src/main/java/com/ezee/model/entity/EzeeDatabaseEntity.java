@@ -14,68 +14,29 @@ import javax.persistence.MappedSuperclass;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-/**
- * 
- * @author siborg
- *
- */
 @MappedSuperclass
 public abstract class EzeeDatabaseEntity implements Serializable, IsSerializable, Comparable<EzeeDatabaseEntity> {
 
-	private static final long serialVersionUID = -1523917928877244252L;
+	private static final long serialVersionUID = -273464647432397798L;
 
 	/** unique identifier **/
 	@Id
 	@GeneratedValue
 	@Column(name = "ID")
 	private Long id;
-
-	/** date entity was created **/
-	@Column(name = "CREATED")
-	private String created;
-
-	/** date entity was updated **/
-	@Column(name = "UPDATED")
-	private String updated;
-
+	
 	public EzeeDatabaseEntity() {
-		this(null, null);
+		this(NULL_ID);
 	}
 
-	public EzeeDatabaseEntity(final String created, final String updated) {
-		this(NULL_ID, created, updated);
-	}
-
-	public EzeeDatabaseEntity(final Long id, final String created, final String updated) {
+	public EzeeDatabaseEntity(final Long id) {
 		this.id = id;
-		this.created = created;
-		this.updated = updated;
 	}
-
+	
 	public final Long getId() {
 		return id;
 	}
-
-	public final String getCreated() {
-		return created;
-	}
-
-	public final String getUpdated() {
-		return updated;
-	}
-
-	public void setCreated(String created) {
-		this.created = created;
-	}
-
-	public void setUpdated(String updated) {
-		this.updated = updated;
-	}
-
-	public String filterDate() {
-		return getCreated();
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

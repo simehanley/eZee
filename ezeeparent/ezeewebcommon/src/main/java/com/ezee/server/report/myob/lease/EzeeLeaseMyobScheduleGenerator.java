@@ -15,6 +15,7 @@ import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.SIGNAG
 import static com.ezee.server.util.lease.EzeeLeaseDateUtils.format;
 import static com.ezee.server.util.lease.EzeeLeaseDateUtils.formatInvoiceDate;
 import static com.ezee.server.util.lease.EzeeLeaseDateUtils.formatShortDate;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -193,8 +194,10 @@ public class EzeeLeaseMyobScheduleGenerator extends AbstractMyobReportGenerator 
 	}
 
 	private String resolveNotes(final EzeeLease lease) {
-		return (lease.getNotes() != null) ? lease.getNotes().replace(RETURN, SPACE).replace(RETURN, SPACE)
-				: EMPTY_STRING;
+		if (isEmpty(lease.getNotes())) {
+			return EMPTY_STRING;
+		}
+		return lease.getNotes().last().getNote().replace(RETURN, SPACE).replace(RETURN, SPACE);
 	}
 
 	private String resolveInvoiceNumber(final EzeeLease lease, final LocalDate date) {

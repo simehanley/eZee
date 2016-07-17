@@ -37,7 +37,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 		@NamedNativeQuery(name = "selectOutstandingChequesSql", query = "select * from EZEE_PAYMENT where PAYMENT_TYPE = 'cheque' AND CHEQUE_PRESENTED = false", resultClass = EzeePayment.class) })
 @Entity
 @Table(name = "EZEE_PAYMENT")
-public class EzeePayment extends EzeeDatabaseEntity
+public class EzeePayment extends EzeeAuditableDatabaseEntity
 		implements IsSerializable, EzeeStringFilterable, EzeeDateFilterable {
 
 	private static final long serialVersionUID = 607584929798342009L;

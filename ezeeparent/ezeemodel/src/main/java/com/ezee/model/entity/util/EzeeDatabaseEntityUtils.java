@@ -8,14 +8,14 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeAuditableDatabaseEntity;
 
 public final class EzeeDatabaseEntityUtils {
 
 	private EzeeDatabaseEntityUtils() {
 	}
 
-	public static <T extends EzeeDatabaseEntity> Set<T> sorted(Set<T> unsorted) {
+	public static <T extends EzeeAuditableDatabaseEntity> Set<T> sorted(Set<T> unsorted) {
 		if (!isEmpty(unsorted)) {
 			List<T> sorted = new ArrayList<>(unsorted);
 			Collections.sort(sorted);

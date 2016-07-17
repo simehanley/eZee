@@ -1,7 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:p1="urn:import:com.google.gwt.user.datepicker.client" xmlns:p2="urn:import:com.google.gwt.user.cellview.client"
-	xmlns:p3="urn:import:com.ezee.client.grid.leasemetadata">
+	xmlns:p3="urn:import:com.ezee.client.grid.leasemetadata" xmlns:p4="urn:import:com.ezee.client.grid.leasenote">
 
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
 
@@ -96,7 +96,7 @@
 										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtSignageAccount" />
 									</g:HorizontalPanel>
 									<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
-										<g:Label text="Total.(A)" styleName="{res.css.gwtLabelSmall}" ui:field="lblTotal" />
+										<g:Label text="Total(A)" styleName="{res.css.gwtLabelSmall}" ui:field="lblTotal" />
 										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtTotal" enabled="false" />
 									</g:HorizontalPanel>
 								</g:VerticalPanel>
@@ -132,7 +132,9 @@
 					</g:Tab>
 					<g:Tab text="Notes">
 						<g:AbsolutePanel width="1018px" height="305px">
-							<g:HTML text="TO DO" />
+							<g:ResizeLayoutPanel height="98%" width="99%" styleName="{res.css.gwtPanelBorder}">
+								<p4:EzeeLeaseNoteGrid ui:field="noteGrid" />
+							</g:ResizeLayoutPanel>
 						</g:AbsolutePanel>
 					</g:Tab>
 					<g:Tab text="Documents">

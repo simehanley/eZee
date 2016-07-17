@@ -11,6 +11,8 @@ import java.util.Date;
 import com.ezee.common.EzeeDateUtilities;
 
 public final class EzeeClientDateUtils implements EzeeDateUtilities {
+	
+	public static final EzeeClientDateUtils INSTANCE = new EzeeClientDateUtils();
 
 	public final Date fromString(final String date) {
 		if (hasLength(date)) {

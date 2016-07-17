@@ -36,14 +36,18 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ezee.client.grid.leasemetadata.EzeeLeaseMetaDataChangeListener;
+import com.ezee.client.grid.lease.EzeeLeaseSubComponentChangeListener;
 import com.ezee.client.grid.leasemetadata.EzeeLeaseMetaDataGrid;
+import com.ezee.client.grid.leasenote.EzeeLeaseNoteGrid;
+import com.ezee.model.entity.EzeeDateSortableDatabaseEntity;
 import com.ezee.model.entity.lease.EzeeLease;
 import com.ezee.model.entity.lease.EzeeLeaseBond;
 import com.ezee.model.entity.lease.EzeeLeaseBondType;
 import com.ezee.model.entity.lease.EzeeLeaseCategory;
+import com.ezee.model.entity.lease.EzeeLeaseFile;
 import com.ezee.model.entity.lease.EzeeLeaseIncidental;
 import com.ezee.model.entity.lease.EzeeLeaseMetaData;
+import com.ezee.model.entity.lease.EzeeLeaseNote;
 import com.ezee.model.entity.lease.EzeeLeasePremises;
 import com.ezee.model.entity.lease.EzeeLeaseTenant;
 import com.ezee.web.common.cache.EzeeEntityCache;
@@ -53,6 +57,8 @@ import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.web.common.ui.utils.EzeeListBoxUtils;
 import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -77,11 +83,16 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<EzeeLease>
-		implements EzeeLeaseMetaDataChangeListener {
+		implements EzeeLeaseSubComponentChangeListener {
 
 	private static final Logger log = Logger.getLogger("EzeeCreateUpdateDeleteLease");
 
 	private static final int META_DATA_PAGE_SIZE = 15;
+	private static final int NOTE_PAGE_SIZE = 15;
+
+	private static final int META_DATA_INDEX = 1;
+	private static final int NOTE_INDEX = 2;
+	private static final int FILE_INDEX = 3;
 
 	private static EzeeCreateUpdateDeleteLeaseUiBinder uiBinder = GWT.create(EzeeCreateUpdateDeleteLeaseUiBinder.class);
 
@@ -176,6 +187,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	TextBox txtSignageAccount;
 
 	@UiField
+	Label lblTotal;
+
+	@UiField
 	TextBox txtTotal;
 
 	@UiField
@@ -214,6 +228,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	@UiField(provided = true)
 	EzeeLeaseMetaDataGrid metaDataGrid;
 
+	@UiField(provided = true)
+	EzeeLeaseNoteGrid noteGrid;
+
 	public EzeeCreateUpdateDeleteLease(EzeeEntityCache cache, EzeeCreateUpdateDeleteEntityHandler<EzeeLease> handler,
 			String[] headers) {
 		this(cache, handler, null, create, headers);
@@ -223,19 +240,26 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			final EzeeCreateUpdateDeleteEntityHandler<EzeeLease> handler, final EzeeLease entity,
 			final EzeeCreateUpdateDeleteEntityType type, final String[] headers) {
 		super(cache, handler, entity, type, headers);
-		initMetaDataGrid();
+		initGrids();
 		setWidget(uiBinder.createAndBindUi(this));
 		setModal(true);
 	}
 
-	private void initMetaDataGrid() {
+	private void initGrids() {
 		boolean disableContextMenu = (type == delete) ? true : false;
 		metaDataGrid = new EzeeLeaseMetaDataGrid(cache, META_DATA_PAGE_SIZE, disableContextMenu, this);
+		noteGrid = new EzeeLeaseNoteGrid(cache, NOTE_PAGE_SIZE, disableContextMenu, this);
 	}
 
 	private void initMetaData() {
 		if (entity != null) {
-			metaDataGrid.setMetaData(entity.getMetaData());
+			metaDataGrid.setData(entity.getMetaData());
+		}
+	}
+
+	private void initNotes() {
+		if (entity != null) {
+			noteGrid.setData(entity.getNotes());
 		}
 	}
 
@@ -267,7 +291,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		initialiseLeaseIncideantal(OUTGOINGS, txtOutgoing, txtOutgoingPercent, txtOutgoingAccount, false);
 		initialiseLeaseIncideantal(PARKING, txtParking, txtParkingPercent, txtParkingAccount, false);
 		initialiseLeaseIncideantal(SIGNAGE, txtSignage, txtSignagePercent, txtSignageAccount, false);
-		txtTotal.setValue(getAmountFormat().format(entity.yearlyTotal(TOTAL)));
+		initialiseLeaseIncideantal(TOTAL, txtTotal, null, null, false);
 		initialiseLeaseBond();
 		initialiseLeaseMetaData();
 		txtMyobJobNo.setText(entity.getJobNo());
@@ -278,25 +302,31 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	private void initialiseLeaseIncideantal(final String type, final TextBox amount, final TextBox percent,
 			final TextBox account, final boolean monthly) {
-		if (monthly) {
-			amount.setEnabled(false);
-		} else {
-			amount.setEnabled(true);
+		if (!TOTAL.equals(type)) {
+			if (monthly) {
+				amount.setEnabled(false);
+			} else {
+				amount.setEnabled(true);
+			}
 		}
 		if (entity != null) {
 			EzeeLeaseIncidental incidental = entity.getIncidental(type);
-			if (incidental != null) {
+			if (incidental != null || TOTAL.equals(type)) {
 				if (monthly) {
-					amount.setValue(getAmountFormat().format(entity.monthlyTotal(type)));
+					amount.setValue(getAmountFormat().format(entity.monthlyAmount(type)));
 				} else {
-					amount.setValue(getAmountFormat().format(entity.yearlyTotal(type)));
+					amount.setValue(getAmountFormat().format(entity.yearlyAmount(type)));
 				}
-				percent.setValue(getPercentFormat().format(incidental.getPercentage()));
-				account.setValue(incidental.getAccount());
+				if (!TOTAL.equals(type)) {
+					percent.setValue(getPercentFormat().format(incidental.getPercentage()));
+					account.setValue(incidental.getAccount());
+				}
 			} else {
 				amount.setValue(getAmountFormat().format(ZERO_DBL));
-				percent.setValue(getPercentFormat().format(ZERO_DBL));
-				account.setValue(EMPTY_STRING);
+				if (!TOTAL.equals(type)) {
+					percent.setValue(getPercentFormat().format(ZERO_DBL));
+					account.setValue(EMPTY_STRING);
+				}
 			}
 		}
 	}
@@ -342,6 +372,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		bindIncidental(PARKING, txtParking, txtParkingPercent, txtParkingAccount);
 		bindIncidental(SIGNAGE, txtSignage, txtSignagePercent, txtSignageAccount);
 		bindMetaData();
+		bindNotes();
 		entity.setJobNo(txtMyobJobNo.getText());
 		entity.setInactive(chkInactive.getValue());
 		entity.setResidential(chkResidential.getValue());
@@ -354,12 +385,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			if (entity.getIncidental(type) == null) {
 				incidental = new EzeeLeaseIncidental();
 				incidental.setName(type);
-				incidental.setCreated(DATE_UTILS.toString(new Date()));
-				incidental.setUpdated(incidental.getCreated());
 				entity.addIncidental(incidental);
 			} else {
 				incidental = entity.getIncidental(type);
-				incidental.setUpdated(DATE_UTILS.toString(new Date()));
 			}
 			incidental.setAmount(actual);
 			incidental.setPercentage(getPercentFormat().parse(percent.getText()) / ONE_HUNDRED_DBL);
@@ -393,12 +421,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			EzeeLeaseBond bond = null;
 			if (entity.getBond() == null) {
 				bond = new EzeeLeaseBond();
-				bond.setCreated(DATE_UTILS.toString(new Date()));
-				bond.setUpdated(bond.getCreated());
 				entity.setBond(bond);
 			} else {
 				bond = entity.getBond();
-				bond.setUpdated(DATE_UTILS.toString(new Date()));
 			}
 			double amount = hasLength(txtBondAmount.getText()) ? getAmountFormat().parse(txtBondAmount.getText())
 					: ZERO_DBL;
@@ -409,11 +434,16 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	}
 
 	private void bindMetaData() {
-		if (type == create) {
-			SortedSet<EzeeLeaseMetaData> metaData = new TreeSet<>(metaDataGrid.getModel().getHandler().getList());
-			if (!isEmpty(metaData)) {
-				entity.setMetaData(metaData);
-			}
+		SortedSet<EzeeLeaseMetaData> metaData = new TreeSet<>(metaDataGrid.getModel().getHandler().getList());
+		if (!isEmpty(metaData)) {
+			entity.setMetaData(metaData);
+		}
+	}
+
+	private void bindNotes() {
+		SortedSet<EzeeLeaseNote> notes = new TreeSet<>(noteGrid.getModel().getHandler().getList());
+		if (!isEmpty(notes)) {
+			entity.setNotes(notes);
 		}
 	}
 
@@ -427,7 +457,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		txtOutgoingPercent.setValue(getPercentFormat().format(ZERO_DBL));
 		txtParkingPercent.setValue(getPercentFormat().format(ZERO_DBL));
 		txtSignagePercent.setValue(getPercentFormat().format(ZERO_DBL));
-		txtTotal.setValue(getPercentFormat().format(ZERO_DBL));
+		txtTotal.setValue(getAmountFormat().format(ZERO_DBL));
 		txtArea.setValue(getAmountFormat().format(ZERO_DBL));
 		txtUnits.setValue(EMPTY_STRING);
 		Date start = new Date();
@@ -444,10 +474,15 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	private void initForm() {
 		KeyPressHandler keyPressHandler = new EzeeTextBoxUtils.NumericKeyPressHandler();
 		FocusHandler focusHandler = new EzeeTextBoxUtils.TextBoxFocusHandler();
+		BlurHandler ezeeUpdateLeaseTotalHandler = new EzeeUpdateLeaseTotalHandler();
 		txtRent.addKeyPressHandler(keyPressHandler);
+		txtRent.addBlurHandler(ezeeUpdateLeaseTotalHandler);
 		txtOutgoing.addKeyPressHandler(keyPressHandler);
+		txtOutgoing.addBlurHandler(ezeeUpdateLeaseTotalHandler);
 		txtParking.addKeyPressHandler(keyPressHandler);
+		txtParking.addBlurHandler(ezeeUpdateLeaseTotalHandler);
 		txtSignage.addKeyPressHandler(keyPressHandler);
+		txtSignage.addBlurHandler(ezeeUpdateLeaseTotalHandler);
 		txtBondAmount.addKeyPressHandler(keyPressHandler);
 		txtArea.addKeyPressHandler(keyPressHandler);
 		txtRent.addFocusHandler(focusHandler);
@@ -552,8 +587,11 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		tab.addSelectionHandler(new SelectionHandler<Integer>() {
 			@Override
 			public void onSelection(SelectionEvent<Integer> event) {
-				if (event.getSelectedItem() == ONE) {
+				switch (event.getSelectedItem()) {
+				case META_DATA_INDEX:
 					initMetaData();
+				case NOTE_INDEX:
+					initNotes();
 				}
 			}
 		});
@@ -673,10 +711,16 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	@UiHandler("btnUpdate")
 	void onBtnUpdateClick(final ClickEvent event) {
+		/* TODO */
+		// confirm that user wants to update
+		bind();
 		updateIncidental(RENT);
 		updateIncidental(OUTGOINGS);
 		updateIncidental(PARKING);
 		updateIncidental(SIGNAGE);
+		/* TODO */
+		// insert new meta data item for last rental period
+		// save entity to db
 	}
 
 	@UiHandler("btnClose")
@@ -772,16 +816,28 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	}
 
 	@Override
-	public void metaDataSaved(final EzeeLeaseMetaData metaData) {
+	public void subComponentSaved(final EzeeDateSortableDatabaseEntity entity) {
 		if (entity != null) {
-			entity.addMetaData(metaData);
+			if (entity instanceof EzeeLeaseMetaData) {
+				this.entity.addMetaData((EzeeLeaseMetaData) entity);
+			} else if (entity instanceof EzeeLeaseNote) {
+				this.entity.addNote((EzeeLeaseNote) entity);
+			} else if (entity instanceof EzeeLeaseFile) {
+				this.entity.addFile((EzeeLeaseFile) entity);
+			}
 		}
 	}
 
 	@Override
-	public void metaDataDeleted(final EzeeLeaseMetaData metaData) {
+	public void subComponentDeleted(final EzeeDateSortableDatabaseEntity entity) {
 		if (entity != null) {
-			entity.removeMetaData(metaData);
+			if (entity instanceof EzeeLeaseMetaData) {
+				this.entity.removeMetaData((EzeeLeaseMetaData) entity);
+			} else if (entity instanceof EzeeLeaseNote) {
+				this.entity.removeNote((EzeeLeaseNote) entity);
+			} else if (entity instanceof EzeeLeaseFile) {
+				this.entity.removeFile((EzeeLeaseFile) entity);
+			}
 		}
 	}
 
@@ -791,15 +847,27 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			lblOutgoing.setText("O/gng.(M)");
 			lblParking.setText("Park.(M)");
 			lblSignage.setText("Sign.(M)");
+			lblTotal.setText("Total(M)");
 		} else {
 			lblRent.setText("Rent(A)");
 			lblOutgoing.setText("O/gng.(A)");
 			lblParking.setText("Park.(A)");
 			lblSignage.setText("Sign.(A)");
+			lblTotal.setText("Total(A)");
 		}
 		initialiseLeaseIncideantal(RENT, txtRent, txtRentPercent, txtRentAccount, monthly);
 		initialiseLeaseIncideantal(OUTGOINGS, txtOutgoing, txtOutgoingPercent, txtOutgoingAccount, monthly);
 		initialiseLeaseIncideantal(PARKING, txtParking, txtParkingPercent, txtParkingAccount, monthly);
 		initialiseLeaseIncideantal(SIGNAGE, txtSignage, txtSignagePercent, txtSignageAccount, monthly);
+		initialiseLeaseIncideantal(TOTAL, txtTotal, null, null, monthly);
+	}
+
+	private class EzeeUpdateLeaseTotalHandler implements BlurHandler {
+		@Override
+		public void onBlur(BlurEvent event) {
+			bind();
+			boolean monthly = chkToggleMonthly.getValue();
+			initialiseLeaseIncideantal(TOTAL, txtTotal, null, null, monthly);
+		}
 	}
 }

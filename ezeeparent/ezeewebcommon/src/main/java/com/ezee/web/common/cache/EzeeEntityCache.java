@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ezee.model.entity.EzeeConfiguration;
-import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeAuditableDatabaseEntity;
 import com.ezee.model.entity.EzeeHasName;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -45,14 +45,14 @@ public class EzeeEntityCache {
 	// }
 
 	@SuppressWarnings("unchecked")
-	public <T extends EzeeDatabaseEntity> void loadEntities(List<Class<?>> clazzes) {
+	public <T extends EzeeAuditableDatabaseEntity> void loadEntities(List<Class<?>> clazzes) {
 		for (Class<?> clazz : clazzes) {
 			loadEntities((Class<T>) clazz);
 		}
 		loadConfiguration();
 	}
 
-	private <T extends EzeeDatabaseEntity> void loadEntities(final Class<T> clazz) {
+	private <T extends EzeeAuditableDatabaseEntity> void loadEntities(final Class<T> clazz) {
 
 		ENTITY_SERVICE.getEntities(clazz.getName(), new AsyncCallback<List<T>>() {
 

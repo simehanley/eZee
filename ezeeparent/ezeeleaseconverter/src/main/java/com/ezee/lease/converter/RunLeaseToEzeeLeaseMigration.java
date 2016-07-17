@@ -4,7 +4,6 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.util.Set;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ezee.dao.EzeeLeaseDao;
@@ -26,10 +25,12 @@ public class RunLeaseToEzeeLeaseMigration {
 	}
 
 	public static void main(String[] args) {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("ezeelease-migration-context.xml");
-		RunLeaseToEzeeLeaseMigration migration = new RunLeaseToEzeeLeaseMigration(ctx.getBean(LeaseDao.class),
-				ctx.getBean(EzeeLeaseDao.class));
-		migration.migrate();
+		try (ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"ezeelease-migration-context.xml")) {
+			RunLeaseToEzeeLeaseMigration migration = new RunLeaseToEzeeLeaseMigration(ctx.getBean(LeaseDao.class),
+					ctx.getBean(EzeeLeaseDao.class));
+			migration.migrate();
+		}
 	}
 
 	public void migrate() {

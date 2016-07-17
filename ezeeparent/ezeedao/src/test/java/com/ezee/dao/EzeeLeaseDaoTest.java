@@ -32,7 +32,7 @@ public class EzeeLeaseDaoTest extends AbstractEzeeDaoTest<EzeeLease> {
 	@Test
 	@Override
 	public void canPersist() {
-		EzeeLease lease = new EzeeLease("23/10/2016", "23/10/2018", EMPTY_STRING, 100.0, "1,2,15", null, tenant,
+		EzeeLease lease = new EzeeLease("23/10/2016", "23/10/2018", 100.0, "1,2,15", null, tenant,
 				premises, category, null, false, false, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING);
 		TestCase.assertNull(lease.getId());
 		dao.save(lease);
@@ -45,7 +45,7 @@ public class EzeeLeaseDaoTest extends AbstractEzeeDaoTest<EzeeLease> {
 	@Test
 	@Override
 	public void canEdit() {
-		EzeeLease lease = new EzeeLease("23/10/2016", "23/10/2018", EMPTY_STRING, 100.0, "1,2,15", null, tenant,
+		EzeeLease lease = new EzeeLease("23/10/2016", "23/10/2018", 100.0, "1,2,15", null, tenant,
 				premises, category, null, false, false, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING);
 		TestCase.assertNull(lease.getId());
 		dao.save(lease);
@@ -59,7 +59,7 @@ public class EzeeLeaseDaoTest extends AbstractEzeeDaoTest<EzeeLease> {
 	@Test
 	@Override
 	public void canDelete() {
-		EzeeLease lease = new EzeeLease("23/10/2016", "23/10/2018", EMPTY_STRING, 100.0, "1,2,15", null, tenant,
+		EzeeLease lease = new EzeeLease("23/10/2016", "23/10/2018", 100.0, "1,2,15", null, tenant,
 				premises, category, null, false, false, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING);
 		TestCase.assertNull(lease.getId());
 		dao.save(lease);

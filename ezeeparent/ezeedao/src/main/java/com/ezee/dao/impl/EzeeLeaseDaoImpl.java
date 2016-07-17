@@ -21,6 +21,8 @@ public class EzeeLeaseDaoImpl extends EzeeBaseDaoImpl<EzeeLease> implements Ezee
 		deleteMappings(entity, "deletePremisesMappingsSql");
 		deleteMappings(entity, "deleteBondMappingsSql");
 		deleteMappings(entity, "deleteMetaDataMappingsSql");
+		deleteMappings(entity, "deleteNotesSql");
+		deleteMappings(entity, "deleteFilesSql");
 		entity.setCategory(null);
 		entity.setTenant(null);
 		entity.setPremises(null);

@@ -27,7 +27,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
 
-import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeAuditableDatabaseEntity;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 @NamedNativeQueries({
@@ -36,10 +36,12 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 		@NamedNativeQuery(name = "deletePremisesMappingsSql", query = "delete from EZEE_LEASE_TO_PREMISES_MAPPING where LEASE_ID = :id"),
 		@NamedNativeQuery(name = "deleteBondMappingsSql", query = "delete from EZEE_LEASE_TO_BOND_MAPPING where LEASE_ID = :id"),
 		@NamedNativeQuery(name = "deleteMetaDataMappingsSql", query = "delete from EZEE_LEASE_TO_META_DATA_MAPPING where LEASE_ID = :id"),
-		@NamedNativeQuery(name = "deleteCategoryMappingsSql", query = "delete from EZEE_LEASE_TO_CATEGORY_MAPPING where LEASE_ID = :id") })
+		@NamedNativeQuery(name = "deleteCategoryMappingsSql", query = "delete from EZEE_LEASE_TO_CATEGORY_MAPPING where LEASE_ID = :id"),
+		@NamedNativeQuery(name = "deleteNotesSql", query = "delete from EZEE_LEASE_TO_NOTES_MAPPING where LEASE_ID = :id"),
+		@NamedNativeQuery(name = "deleteFilesSql", query = "delete from EZEE_LEASE_TO_FILES_MAPPING where LEASE_ID = :id") })
 @Entity
 @Table(name = "EZEE_LEASE")
-public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
+public class EzeeLease extends EzeeAuditableDatabaseEntity implements IsSerializable {
 
 	private static final long serialVersionUID = 5862291052151418408L;
 
@@ -51,10 +53,6 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	@Column(name = "LEASE_END")
 	private String leaseEnd;
 
-	/** any pertinent notes on the lease record **/
-	@Column(name = "NOTES")
-	private String notes;
-
 	/** leased area if applicable **/
 	@Column(name = "AREA")
 	private double leasedArea;
@@ -65,22 +63,22 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 
 	/** incidentals **/
 	@OneToMany(cascade = ALL, fetch = EAGER)
-	@JoinTable(name = "EZEE_LEASE_TO_LEASE_INCIDENTAL_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "LEASE_INCIDENTAL_ID") )
+	@JoinTable(name = "EZEE_LEASE_TO_LEASE_INCIDENTAL_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID"), inverseJoinColumns = @JoinColumn(name = "LEASE_INCIDENTAL_ID"))
 	private Set<EzeeLeaseIncidental> incidentals;
 
 	/** tenant **/
 	@ManyToOne(cascade = ALL, fetch = EAGER)
-	@JoinTable(name = "EZEE_LEASE_TO_TENANT_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "TENANT_ID") )
+	@JoinTable(name = "EZEE_LEASE_TO_TENANT_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID"), inverseJoinColumns = @JoinColumn(name = "TENANT_ID"))
 	private EzeeLeaseTenant tenant;
 
 	/** premises **/
 	@ManyToOne(cascade = ALL, fetch = EAGER)
-	@JoinTable(name = "EZEE_LEASE_TO_PREMISES_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "PREMISES_ID") )
+	@JoinTable(name = "EZEE_LEASE_TO_PREMISES_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID"), inverseJoinColumns = @JoinColumn(name = "PREMISES_ID"))
 	private EzeeLeasePremises premises;
 
 	/** category **/
 	@ManyToOne(cascade = ALL, fetch = EAGER)
-	@JoinTable(name = "EZEE_LEASE_TO_CATEGORY_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID") )
+	@JoinTable(name = "EZEE_LEASE_TO_CATEGORY_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID"), inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID"))
 	private EzeeLeaseCategory category;
 
 	/** indicator for a residential (GST free) lease **/
@@ -108,14 +106,26 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 	private String optionEndDate;
 
 	@OneToOne(cascade = ALL, fetch = EAGER)
-	@JoinTable(name = "EZEE_LEASE_TO_BOND_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "BOND_ID") )
+	@JoinTable(name = "EZEE_LEASE_TO_BOND_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID"), inverseJoinColumns = @JoinColumn(name = "BOND_ID"))
 	private EzeeLeaseBond bond;
 
 	/** meta data **/
 	@OneToMany(cascade = ALL, fetch = EAGER)
-	@JoinTable(name = "EZEE_LEASE_TO_META_DATA_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID") , inverseJoinColumns = @JoinColumn(name = "META_DATA_ID") )
+	@JoinTable(name = "EZEE_LEASE_TO_META_DATA_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID"), inverseJoinColumns = @JoinColumn(name = "META_DATA_ID"))
 	@Sort(type = SortType.NATURAL)
 	private SortedSet<EzeeLeaseMetaData> metaData;
+
+	/** notes **/
+	@OneToMany(cascade = ALL, fetch = EAGER)
+	@JoinTable(name = "EZEE_LEASE_TO_NOTES_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID"), inverseJoinColumns = @JoinColumn(name = "NOTE_ID"))
+	@Sort(type = SortType.NATURAL)
+	private SortedSet<EzeeLeaseNote> notes;
+
+	/** files **/
+	@OneToMany(cascade = ALL, fetch = EAGER)
+	@JoinTable(name = "EZEE_LEASE_TO_FILES_MAPPING", joinColumns = @JoinColumn(name = "LEASE_ID"), inverseJoinColumns = @JoinColumn(name = "FILE_ID"))
+	@Sort(type = SortType.NATURAL)
+	private SortedSet<EzeeLeaseFile> files;
 
 	/** myob job number **/
 	@Column(name = "JOB_NUMBER")
@@ -125,24 +135,22 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 		super();
 	}
 
-	public EzeeLease(final String leaseStart, final String leaseEnd, final String notes, final Double leasedArea,
-			final String leasedUnits, final Set<EzeeLeaseIncidental> incidentals, final EzeeLeaseTenant tenant,
-			final EzeeLeasePremises premises, final EzeeLeaseCategory category,
-			final SortedSet<EzeeLeaseMetaData> metaData, final boolean residential, final boolean inactive,
-			final String jobNo, final String created, final String updated) {
-		this(NULL_ID, leaseStart, leaseEnd, notes, leasedArea, leasedUnits, incidentals, tenant, premises, category,
-				metaData, residential, inactive, jobNo, created, updated);
+	public EzeeLease(final String leaseStart, final String leaseEnd, final Double leasedArea, final String leasedUnits,
+			final Set<EzeeLeaseIncidental> incidentals, final EzeeLeaseTenant tenant, final EzeeLeasePremises premises,
+			final EzeeLeaseCategory category, final SortedSet<EzeeLeaseMetaData> metaData, final boolean residential,
+			final boolean inactive, final String jobNo, final String created, final String updated) {
+		this(NULL_ID, leaseStart, leaseEnd, leasedArea, leasedUnits, incidentals, tenant, premises, category, metaData,
+				residential, inactive, jobNo, created, updated);
 	}
 
-	protected EzeeLease(final Long id, final String leaseStart, final String leaseEnd, final String notes,
-			final Double leasedArea, final String leasedUnits, final Set<EzeeLeaseIncidental> incidentals,
-			final EzeeLeaseTenant tenant, final EzeeLeasePremises premises, final EzeeLeaseCategory category,
+	protected EzeeLease(final Long id, final String leaseStart, final String leaseEnd, final Double leasedArea,
+			final String leasedUnits, final Set<EzeeLeaseIncidental> incidentals, final EzeeLeaseTenant tenant,
+			final EzeeLeasePremises premises, final EzeeLeaseCategory category,
 			final SortedSet<EzeeLeaseMetaData> metaData, final boolean residential, final boolean inactive,
 			final String jobNo, final String created, final String updated) {
 		super(id, created, updated);
 		this.leaseStart = leaseStart;
 		this.leaseEnd = leaseEnd;
-		this.notes = notes;
 		this.leasedArea = (leasedArea == null) ? ZERO_DBL : leasedArea;
 		this.leasedUnits = leasedUnits;
 		this.incidentals = incidentals;
@@ -200,14 +208,6 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 
 	public void setCategory(EzeeLeaseCategory category) {
 		this.category = category;
-	}
-
-	public String getNotes() {
-		return notes;
-	}
-
-	public void setNotes(String notes) {
-		this.notes = notes;
 	}
 
 	public Double getLeasedArea() {
@@ -360,7 +360,7 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 
 	@Override
 	public String toString() {
-		return "EzeeLease [tenant=" + tenant.getName() + ", premises=" + premises.getAddressLineOne() + ", category="
+		return "EzeeLease [tenant=" + tenant.getName() + ", premises=" + premises.getName() + ", category="
 				+ category.getName() + "]";
 	}
 
@@ -432,5 +432,47 @@ public class EzeeLease extends EzeeDatabaseEntity implements IsSerializable {
 
 	public double yearlyTotal(final String type) {
 		return round(yearlyAmount(type) + yearlyGst(type));
+	}
+
+	public SortedSet<EzeeLeaseNote> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(SortedSet<EzeeLeaseNote> notes) {
+		this.notes = notes;
+	}
+
+	public SortedSet<EzeeLeaseFile> getFiles() {
+		return files;
+	}
+
+	public void setFiles(SortedSet<EzeeLeaseFile> files) {
+		this.files = files;
+	}
+
+	public void addNote(final EzeeLeaseNote note) {
+		if (isEmpty(notes)) {
+			notes = new TreeSet<>();
+		}
+		notes.add(note);
+	}
+
+	public void removeNote(final EzeeLeaseNote note) {
+		if (!isEmpty(notes)) {
+			notes.remove(note);
+		}
+	}
+
+	public void addFile(final EzeeLeaseFile file) {
+		if (isEmpty(files)) {
+			files = new TreeSet<>();
+		}
+		files.add(file);
+	}
+
+	public void removeFile(final EzeeLeaseFile file) {
+		if (!isEmpty(files)) {
+			files.remove(file);
+		}
 	}
 }

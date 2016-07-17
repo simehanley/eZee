@@ -14,7 +14,7 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ezee.dao.EzeeBaseDao;
-import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeAuditableDatabaseEntity;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 
 /**
@@ -22,7 +22,7 @@ import com.ezee.model.entity.filter.EzeeEntityFilter;
  * @author siborg
  *
  */
-public abstract class EzeeBaseDaoImpl<T extends EzeeDatabaseEntity> extends HibernateDaoSupport
+public abstract class EzeeBaseDaoImpl<T extends EzeeAuditableDatabaseEntity> extends HibernateDaoSupport
 		implements EzeeBaseDao<T> {
 
 	@Transactional(propagation = REQUIRED, readOnly = false)

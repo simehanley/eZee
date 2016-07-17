@@ -154,6 +154,12 @@ public class EzeeEntitiesDao {
 			if (lease.getMetaData() != null) {
 				lease.setMetaData(new TreeSet<>(lease.getMetaData()));
 			}
+			if (lease.getNotes() != null) {
+				lease.setNotes(new TreeSet<>(lease.getNotes()));
+			}
+			if (lease.getFiles() != null) {
+				lease.setFiles(new TreeSet<>(lease.getFiles()));
+			}
 		}
 	}
 }

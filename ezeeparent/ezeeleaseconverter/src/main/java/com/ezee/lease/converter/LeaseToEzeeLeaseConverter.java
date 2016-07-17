@@ -52,9 +52,9 @@ public class LeaseToEzeeLeaseConverter {
 				? categoriesCache.get(lease.getCategory().getCategory()) : convert(lease.getCategory());
 		SortedSet<EzeeLeaseMetaData> metaData = convertMetaData(lease.getMetaData());
 		Set<EzeeLeaseIncidental> incidentals = convertIncidentals(lease.getIncidentals());
-		EzeeLease ezeeLease = new EzeeLease(start, end, lease.getNotes(), lease.getLeasedArea(), lease.getLeasedUnits(),
-				incidentals, tenant, premises, category, metaData, lease.isResidential(), lease.isInactive(),
-				lease.getJobNo(), created, updated);
+		EzeeLease ezeeLease = new EzeeLease(start, end, lease.getLeasedArea(), lease.getLeasedUnits(), incidentals,
+				tenant, premises, category, metaData, lease.isResidential(), lease.isInactive(), lease.getJobNo(),
+				created, updated);
 		if (lease.hasOption()) {
 			ezeeLease.setHasOption(true);
 			if (lease.getOptionStartDate() != null) {
@@ -74,23 +74,19 @@ public class LeaseToEzeeLeaseConverter {
 	}
 
 	private EzeeLeaseBond convertBond(final LeaseBond bond) {
-		String created = SERVER_DATE_UTILS.toString(new Date());
 		EzeeLeaseBond leaseBond = new EzeeLeaseBond();
 		leaseBond.setAmount(bond.getAmount());
 		leaseBond.setNotes(bond.getNotes());
-		leaseBond.setCreated(created);
-		leaseBond.setUpdated(created);
 		leaseBond.setType(convert(bond.getType()));
 		return leaseBond;
 	}
 
 	private Set<EzeeLeaseIncidental> convertIncidentals(final List<LeaseIncidental> incidentals) {
-		String created = SERVER_DATE_UTILS.toString(new Date());
 		if (!isEmpty(incidentals)) {
 			Set<EzeeLeaseIncidental> ezeeLeaseIncidentals = new HashSet<>();
 			for (LeaseIncidental incidental : incidentals) {
 				ezeeLeaseIncidentals.add(new EzeeLeaseIncidental(incidental.getName(), incidental.getAmount(),
-						GST_PERCENTAGE, incidental.getPercentage(), incidental.getAccount(), created, created));
+						GST_PERCENTAGE, incidental.getPercentage(), incidental.getAccount()));
 			}
 			return ezeeLeaseIncidentals;
 		}
@@ -98,16 +94,12 @@ public class LeaseToEzeeLeaseConverter {
 	}
 
 	private SortedSet<EzeeLeaseMetaData> convertMetaData(final List<LeaseMetaData> metaData) {
-		String created = SERVER_DATE_UTILS.toString(new Date());
 		if (!isEmpty(metaData)) {
 			sort(metaData);
 			SortedSet<EzeeLeaseMetaData> ezeeLeaseMetaData = new TreeSet<>();
 			int order = ZERO;
 			for (LeaseMetaData md : metaData) {
-				EzeeLeaseMetaData data = new EzeeLeaseMetaData(md.getType(), md.getDescription(), md.getValue(),
-						created, created);
-				data.setOrder(order);
-				++order;
+				EzeeLeaseMetaData data = new EzeeLeaseMetaData(md.getType(), md.getDescription(), md.getValue());
 				ezeeLeaseMetaData.add(data);
 			}
 			return ezeeLeaseMetaData;

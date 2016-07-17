@@ -9,7 +9,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeAuditableDatabaseEntity;
 
 /**
  * 
@@ -19,7 +19,7 @@ import com.ezee.model.entity.EzeeDatabaseEntity;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:ezeedao-test-context.xml")
 @DirtiesContext(classMode = AFTER_CLASS)
-public abstract class AbstractEzeeDaoTest<T extends EzeeDatabaseEntity> {
+public abstract class AbstractEzeeDaoTest<T extends EzeeAuditableDatabaseEntity> {
 
 	@Autowired
 	private ApplicationContext ctx;

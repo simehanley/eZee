@@ -31,14 +31,12 @@ public class EzeeLeaseBond extends EzeeDatabaseEntity implements IsSerializable 
 		super();
 	}
 
-	public EzeeLeaseBond(final EzeeLeaseBondType type, final double amount, final String notes, final String created,
-			final String updated) {
-		this(NULL_ID, type, amount, notes, created, updated);
+	public EzeeLeaseBond(final EzeeLeaseBondType type, final double amount, final String notes) {
+		this(NULL_ID, type, amount, notes);
 	}
 
-	public EzeeLeaseBond(final Long id, final EzeeLeaseBondType type, final double amount, final String notes,
-			final String created, final String updated) {
-		super(id, created, updated);
+	public EzeeLeaseBond(final Long id, final EzeeLeaseBondType type, final double amount, final String notes) {
+		super(id);
 		this.type = type;
 		this.amount = amount;
 		this.notes = notes;

@@ -1,0 +1,26 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:p1="urn:import:com.google.gwt.user.datepicker.client">
+	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
+
+	<g:HTMLPanel>
+		<g:VerticalPanel>
+			<g:HorizontalPanel>
+				<g:Label text="Date" styleName="{res.css.gwtLabelSmall}" />
+				<p1:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtNoteDate" enabled="false" />
+			</g:HorizontalPanel>
+			<g:HorizontalPanel>
+				<g:RichTextArea styleName="{res.css.gwtRichTextAreaMedium}" ui:field="txtNoteValue" height="100px"
+					width="500px" />
+			</g:HorizontalPanel>
+			<g:HorizontalPanel>
+				<g:HorizontalPanel width="217px" />
+				<g:HorizontalPanel>
+					<g:Button styleName="{res.css.gwtButton}" text="Delete" enabled="false" ui:field="btnDelete" />
+					<g:Button styleName="{res.css.gwtButton}" text="Save" ui:field="btnSave" />
+					<g:Button styleName="{res.css.gwtButton}" text="Close" ui:field="btnClose" />
+				</g:HorizontalPanel>
+			</g:HorizontalPanel>
+		</g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

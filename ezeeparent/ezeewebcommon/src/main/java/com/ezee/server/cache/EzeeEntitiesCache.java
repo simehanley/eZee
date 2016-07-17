@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.hibernate.collection.spi.PersistentCollection;
 
-import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeAuditableDatabaseEntity;
 import com.ezee.model.entity.EzeePayment;
 import com.ezee.model.entity.lease.EzeeLease;
 
@@ -32,7 +32,7 @@ public class EzeeEntitiesCache {
 		}
 	}
 
-	public final <T extends EzeeDatabaseEntity> List<T> get(final Class<T> clazz) {
+	public final <T extends EzeeAuditableDatabaseEntity> List<T> get(final Class<T> clazz) {
 		List<T> entities = new ArrayList<T>(getCache(clazz).values());
 		if (!isEmpty(entities)) {
 			for (T entity : entities) {
@@ -42,7 +42,7 @@ public class EzeeEntitiesCache {
 		return entities;
 	}
 
-	public final <T extends EzeeDatabaseEntity> T get(final long id, final Class<T> clazz) {
+	public final <T extends EzeeAuditableDatabaseEntity> T get(final long id, final Class<T> clazz) {
 		T entity = getCache(clazz).get(id);
 		if (entity != null) {
 			postprocessor.postProcessEntity(entity);
@@ -50,22 +50,22 @@ public class EzeeEntitiesCache {
 		return entity;
 	}
 
-	public <T extends EzeeDatabaseEntity> void put(final Class<T> clazz, final T entity) {
+	public <T extends EzeeAuditableDatabaseEntity> void put(final Class<T> clazz, final T entity) {
 		getCache(clazz).put(entity.getId(), entity);
 	}
 
-	public <T extends EzeeDatabaseEntity> T remove(final long id, final Class<T> clazz) {
+	public <T extends EzeeAuditableDatabaseEntity> T remove(final long id, final Class<T> clazz) {
 		return getCache(clazz).remove(id);
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends EzeeDatabaseEntity> EzeeEntityCache<T> getCache(final Class<T> clazz) {
+	public <T extends EzeeAuditableDatabaseEntity> EzeeEntityCache<T> getCache(final Class<T> clazz) {
 		return (EzeeEntityCache<T>) cache.get(clazz);
 	}
 
 	private static class EzeeEntitiesCachePostProcessor {
 
-		public <T extends EzeeDatabaseEntity> void postProcessEntity(final T entity) {
+		public <T extends EzeeAuditableDatabaseEntity> void postProcessEntity(final T entity) {
 			if (entity instanceof EzeePayment) {
 				postProcessPayment((EzeePayment) entity);
 			} else if (entity instanceof EzeeLease) {

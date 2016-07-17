@@ -8,14 +8,14 @@ import javax.annotation.PostConstruct;
 import org.springframework.util.CollectionUtils;
 
 import com.ezee.dao.EzeeBaseDao;
-import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeAuditableDatabaseEntity;
 
 /**
  * 
  * @author siborg
  *
  */
-public class EzeeEntityCache<T extends EzeeDatabaseEntity> extends HashMap<Long, T> {
+public class EzeeEntityCache<T extends EzeeAuditableDatabaseEntity> extends HashMap<Long, T> {
 
 	private static final long serialVersionUID = 5433230624742772044L;
 

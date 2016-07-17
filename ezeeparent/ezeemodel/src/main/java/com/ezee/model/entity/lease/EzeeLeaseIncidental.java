@@ -42,13 +42,13 @@ public class EzeeLeaseIncidental extends EzeeDatabaseEntity implements IsSeriali
 	}
 
 	public EzeeLeaseIncidental(final String name, final double amount, final double taxRate, final double percentage,
-			final String account, final String created, final String updated) {
-		this(NULL_ID, name, amount, taxRate, percentage, account, created, updated);
+			final String account) {
+		this(NULL_ID, name, amount, taxRate, percentage, account);
 	}
 
 	public EzeeLeaseIncidental(final Long id, final String name, final double amount, final double taxRate,
-			final double percentage, final String account, final String created, final String updated) {
-		super(id, created, updated);
+			final double percentage, final String account) {
+		super(id);
 		this.name = name;
 		this.amount = amount;
 		this.taxRate = taxRate;

@@ -14,7 +14,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  *
  */
 @MappedSuperclass
-public abstract class EzeeFinancialEntity extends EzeeDatabaseEntity
+public abstract class EzeeFinancialEntity extends EzeeAuditableDatabaseEntity
 		implements EzeeHasName, IsSerializable, EzeeStringFilterable {
 
 	private static final long serialVersionUID = -6079993940796041714L;

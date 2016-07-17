@@ -1,46 +1,39 @@
-package com.ezee.client.crud.leasemetadata;
+package com.ezee.client.crud.leasenote;
 
+import static com.ezee.common.web.EzeeFormatUtils.getDateBoxFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.create;
-import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.getItemIndex;
 
 import java.util.Date;
 
-import com.ezee.model.entity.lease.EzeeLeaseMetaData;
-import com.ezee.model.entity.lease.EzeeLeaseMetaDataType;
+import com.ezee.model.entity.lease.EzeeLeaseNote;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
-import com.ezee.web.common.ui.utils.EzeeListBoxUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RichTextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.datepicker.client.DateBox;
 
-public class EzeeCreateUpdateDeleteLeaseMetaData extends EzeeCreateUpdateDeleteEntity<EzeeLeaseMetaData> {
+public class EzeeCreateUpdateDeleteLeaseNote extends EzeeCreateUpdateDeleteEntity<EzeeLeaseNote> {
 
-	private static EzeeCreateUpdateDeleteLeaseMetaDataUiBinder uiBinder = GWT
-			.create(EzeeCreateUpdateDeleteLeaseMetaDataUiBinder.class);
+	private static EzeeCreateUpdateDeleteLeaseNoteUiBinder uiBinder = GWT
+			.create(EzeeCreateUpdateDeleteLeaseNoteUiBinder.class);
 
-	interface EzeeCreateUpdateDeleteLeaseMetaDataUiBinder
-			extends UiBinder<Widget, EzeeCreateUpdateDeleteLeaseMetaData> {
+	interface EzeeCreateUpdateDeleteLeaseNoteUiBinder extends UiBinder<Widget, EzeeCreateUpdateDeleteLeaseNote> {
 	}
 
 	@UiField
-	ListBox lstType;
+	DateBox dtNoteDate;
 
 	@UiField
-	TextBox txtValue;
-
-	@UiField
-	RichTextArea txtDescription;
+	RichTextArea txtNoteValue;
 
 	@UiField
 	Button btnClose;
@@ -51,13 +44,13 @@ public class EzeeCreateUpdateDeleteLeaseMetaData extends EzeeCreateUpdateDeleteE
 	@UiField
 	Button btnDelete;
 
-	public EzeeCreateUpdateDeleteLeaseMetaData(EzeeEntityCache cache,
-			EzeeCreateUpdateDeleteEntityHandler<EzeeLeaseMetaData> handler, String[] headers) {
+	public EzeeCreateUpdateDeleteLeaseNote(final EzeeEntityCache cache,
+			final EzeeCreateUpdateDeleteEntityHandler<EzeeLeaseNote> handler, final String[] headers) {
 		this(cache, handler, null, create, headers);
 	}
 
-	public EzeeCreateUpdateDeleteLeaseMetaData(final EzeeEntityCache cache,
-			final EzeeCreateUpdateDeleteEntityHandler<EzeeLeaseMetaData> handler, final EzeeLeaseMetaData entity,
+	public EzeeCreateUpdateDeleteLeaseNote(final EzeeEntityCache cache,
+			final EzeeCreateUpdateDeleteEntityHandler<EzeeLeaseNote> handler, final EzeeLeaseNote entity,
 			final EzeeCreateUpdateDeleteEntityType type, final String[] headers) {
 		super(cache, handler, entity, type, headers);
 		setWidget(uiBinder.createAndBindUi(this));
@@ -66,28 +59,26 @@ public class EzeeCreateUpdateDeleteLeaseMetaData extends EzeeCreateUpdateDeleteE
 
 	@Override
 	protected void initialise() {
-		lstType.setItemSelected(getItemIndex(entity.getType(), lstType), true);
-		txtValue.setText(entity.getValue());
-		txtDescription.setText(entity.getDescription());
+		dtNoteDate.setValue(DATE_UTILS.fromString(entity.getDate()));
+		txtNoteValue.setText(entity.getNote());
 	}
 
 	@Override
 	protected void bind() {
 		if (entity == null) {
-			entity = new EzeeLeaseMetaData();
+			entity = new EzeeLeaseNote();
 		}
-		entity.setDate(DATE_UTILS.toString(new Date()));
-		entity.setType(lstType.getSelectedValue());
-		entity.setValue(txtValue.getText());
-		entity.setDescription(txtDescription.getText());
+		entity.setDate(DATE_UTILS.toString(dtNoteDate.getValue()));
+		entity.setNote(txtNoteValue.getText());
 	}
 
 	@Override
 	public void show() {
-		loadEntities();
+		initForm();
 		switch (type) {
 		case create:
 			setText(headers[NEW_HEADER_INDEX]);
+			initialiseNew();
 			break;
 		case update:
 			setText(headers[EDIT_HEADER_INDEX]);
@@ -103,15 +94,18 @@ public class EzeeCreateUpdateDeleteLeaseMetaData extends EzeeCreateUpdateDeleteE
 		super.show();
 	}
 
-	private void disable() {
-		lstType.setEnabled(false);
-		txtValue.setEnabled(false);
-		txtDescription.setEnabled(false);
-		btnSave.setEnabled(false);
+	private void initialiseNew() {
+		dtNoteDate.setValue(new Date());
 	}
 
-	private void loadEntities() {
-		EzeeListBoxUtils.loadKeyedEnums(EzeeLeaseMetaDataType.values(), lstType);
+	private void initForm() {
+		dtNoteDate.setFormat(getDateBoxFormat());
+	}
+
+	private void disable() {
+		dtNoteDate.setEnabled(false);
+		txtNoteValue.setEnabled(false);
+		btnSave.setEnabled(false);
 	}
 
 	@UiHandler("btnClose")
