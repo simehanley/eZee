@@ -13,6 +13,7 @@
 		<g:TextBox styleName="{res.css.gwtDateBoxSmall}" ui:field="txtPremises" />
 		<g:Label text="Category" styleName="{res.css.gwtLabelSmall}" />
 		<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtCategory" />
+		<g:Button text="Save" ui:field="btnSave" styleName="{res.css.gwtButton}" />
 		<g:Button text="Refresh" ui:field="btnRefresh" styleName="{res.css.gwtButton}" />
 		<g:Button text="Clear" ui:field="btnClear" styleName="{res.css.gwtButton}" />
 		<g:CheckBox text="Show Inactive" styleName="{res.css.gwtCheckBoxSmall}"

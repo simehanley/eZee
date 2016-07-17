@@ -4,27 +4,41 @@ import static com.ezee.client.EzeeLeaseWebConstants.LEASE_SUMMARY_IN_MONTHS;
 import static com.ezee.client.EzeeLeaseWebConstants.SHOW_INACTIVE_LEASES;
 import static com.ezee.client.EzeeLeaseWebConstants.SHOW_LEASE_SUMMARY;
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
+import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
 import static com.ezee.web.common.EzeeWebCommonConstants.LOCAL_STORAGE;
+import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.ezee.model.entity.filter.lease.EzeeLeaseFilter;
 import com.ezee.model.entity.lease.EzeeLease;
+import com.ezee.web.common.EzeeWebCommonConstants;
 import com.ezee.web.common.localstorage.EzeeLocalStroage;
 import com.ezee.web.common.ui.grid.EzeeGridToolbar;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
+
+	private static final Logger log = Logger.getLogger("EzeeLeaseGridToolbar");
 
 	private static EzeeLeaseGridToolbarUiBinder uiBinder = GWT.create(EzeeLeaseGridToolbarUiBinder.class);
 
@@ -36,6 +50,9 @@ public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
 
 	@UiField
 	TextBox txtCategory;
+
+	@UiField
+	Button btnSave;
 
 	@UiField
 	Button btnRefresh;
@@ -161,5 +178,40 @@ public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
 	@Override
 	public EzeeEntityFilter<EzeeLease> resolveFilter() {
 		return new EzeeLeaseFilter(getTenant(), getPremises(), getCategory(), getShowInactive());
+	}
+
+	@UiHandler("btnSave")
+	public void onSaveClick(final ClickEvent event) {
+		List<EzeeLease> edited = ((EzeeLeaseGrid) grid).getEdited();
+		if (!isEmpty(edited)) {
+			btnSave.setEnabled(false);
+			EzeeWebCommonConstants.ENTITY_SERVICE.saveEntities(EzeeLease.class.getName(), edited,
+					new AsyncCallback<List<EzeeLease>>() {
+						@Override
+						public void onFailure(final Throwable caught) {
+							btnSave.setEnabled(true);
+							showDefaultCursor();
+							log.log(Level.SEVERE, "Error saving leases.", caught);
+							showNew(ERROR, "Error saving leases. Please see log for details.");
+						}
+
+						@Override
+						public void onSuccess(final List<EzeeLease> result) {
+							if (!isEmpty(result)) {
+								refreshLeases(result);
+							}
+							btnSave.setEnabled(true);
+							showDefaultCursor();
+							log.log(Level.INFO, "Leases asved successfully.");
+						}
+					});
+		}
+	}
+
+	private void refreshLeases(final List<EzeeLease> result) {
+		for (EzeeLease lease : result) {
+			grid.onSave(lease, false);
+		}
+		grid.getGrid().redraw();
 	}
 }

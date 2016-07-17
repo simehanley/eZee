@@ -16,6 +16,8 @@ public interface EzeeEntityServiceAsync {
 
 	<T extends EzeeDatabaseEntity> void saveEntity(String clazz, T entity, AsyncCallback<T> result);
 
+	<T extends EzeeDatabaseEntity> void saveEntities(String clazz, List<T> entities, AsyncCallback<List<T>> result);
+
 	<T extends EzeeDatabaseEntity> void deleteEntity(String clazz, T entity, AsyncCallback<T> result);
 
 	<T extends EzeeDatabaseEntity> void getEntities(String clazz, AsyncCallback<List<T>> entities);

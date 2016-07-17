@@ -1,6 +1,7 @@
 package com.ezee.client.grid.lease;
 
 import static com.ezee.client.EzeeLeaseWebConstants.LEASE_CRUD_HEADERS;
+import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.CATEGORY;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.LEASE_ID;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.PREMISES;
@@ -14,6 +15,9 @@ import static com.ezee.web.common.enums.EzeeReportType.lease_myob_schedule;
 import static com.ezee.web.common.enums.EzeeReportType.lease_schedule_report_excel;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.delete;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.update;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.ezee.client.crud.lease.EzeeCreateUpdateDeleteLease;
 import com.ezee.model.entity.lease.EzeeLease;
@@ -161,5 +165,18 @@ public class EzeeLeaseGrid extends EzeeGrid<EzeeLease> implements EzeeLeaseSumma
 				}
 			}
 		}
+	}
+
+	public List<EzeeLease> getEdited() {
+		List<EzeeLease> all = model.getHandler().getList();
+		List<EzeeLease> edited = new ArrayList<>();
+		if (!isEmpty(all)) {
+			for (EzeeLease lease : all) {
+				if (lease.isEdited()) {
+					edited.add(lease);
+				}
+			}
+		}
+		return edited;
 	}
 }

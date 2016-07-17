@@ -720,7 +720,8 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		updateIncidental(SIGNAGE);
 		/* TODO */
 		// insert new meta data item for last rental period
-		// save entity to db
+		bind();
+		setEdited();
 	}
 
 	@UiHandler("btnClose")
@@ -730,28 +731,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	@UiHandler("btnSave")
 	public void onSaveClick(ClickEvent event) {
-		btnSave.setEnabled(false);
-		showWaitCursor();
 		bind();
-		ENTITY_SERVICE.saveEntity(EzeeLease.class.getName(), entity, new AsyncCallback<EzeeLease>() {
-
-			@Override
-			public void onFailure(final Throwable caught) {
-				btnSave.setEnabled(true);
-				showDefaultCursor();
-				log.log(Level.SEVERE, "Error persisting invoice '" + entity + "'.", caught);
-				showNew(ERROR, "Error persisting invoice '" + entity + "'.  Please see log for details.");
-			}
-
-			@Override
-			public void onSuccess(final EzeeLease lease) {
-				log.log(Level.INFO, "Saved lease '" + entity + "' successfully");
-				handler.onSave(lease);
-				btnSave.setEnabled(true);
-				showDefaultCursor();
-				close();
-			}
-		});
+		setEdited();
+		close();
 	}
 
 	@UiHandler("btnDelete")
@@ -776,6 +758,13 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 				close();
 			}
 		});
+	}
+
+	private void setEdited() {
+		if (entity != null) {
+			entity.setEdited(true);
+			handler.onSave(entity);
+		}
 	}
 
 	private EzeeLeaseTenant getTenant() {

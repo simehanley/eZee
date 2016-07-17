@@ -325,6 +325,8 @@ public class EzeeLeaseGridModel extends EzeeGridModel<EzeeLease> {
 	protected String resolveCellStyleNames(final EzeeLease lease) {
 		if (lease.isInactive()) {
 			return INSTANCE.css().redforeground();
+		} else if (lease.isEdited()) {
+			return INSTANCE.css().lightorangeforeground();
 		}
 		return INSTANCE.css().black();
 	}

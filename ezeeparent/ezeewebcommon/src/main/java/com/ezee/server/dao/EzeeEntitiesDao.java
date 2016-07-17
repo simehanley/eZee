@@ -160,6 +160,7 @@ public class EzeeEntitiesDao {
 			if (lease.getFiles() != null) {
 				lease.setFiles(new TreeSet<>(lease.getFiles()));
 			}
+			lease.setEdited(false);
 		}
 	}
 }

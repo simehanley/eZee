@@ -1,5 +1,9 @@
 package com.ezee.server;
 
+import static java.util.Collections.emptyList;
+import static org.springframework.util.CollectionUtils.isEmpty;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -75,5 +79,23 @@ public class EzeeEntityServiceImpl extends AbstractRemoteService implements Ezee
 			log.error("Error getting entity for id " + id + ".", t);
 			throw new EzeeException("Error getting entity for id " + id + ".", t);
 		}
+	}
+
+	@Override
+	public <T extends EzeeDatabaseEntity> List<T> saveEntities(final String clazz, final List<T> entities) {
+		if (!isEmpty(entities)) {
+			List<T> saved = new ArrayList<>();
+			for (T entity : entities) {
+				try {
+					T savedEntity = saveEntity(clazz, entity);
+					saved.add(savedEntity);
+				} catch (EzeeException ex) {
+					log.error("Error saving entity " + entity + ".", ex);
+					continue;
+				}
+			}
+			return saved;
+		}
+		return emptyList();
 	}
 }

@@ -234,6 +234,10 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 
 	@Override
 	public void onSave(T entity) {
+		onSave(entity, true);
+	}
+
+	public void onSave(T entity, boolean select) {
 		if (entity != null) {
 			List<T> entities = model.getHandler().getList();
 			if (entities.contains(entity)) {
@@ -243,7 +247,9 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 			} else {
 				entities.add(ZERO, entity);
 			}
-			getGrid().getSelectionModel().setSelected(entity, true);
+			if (select) {
+				getGrid().getSelectionModel().setSelected(entity, true);
+			}
 		}
 	}
 
