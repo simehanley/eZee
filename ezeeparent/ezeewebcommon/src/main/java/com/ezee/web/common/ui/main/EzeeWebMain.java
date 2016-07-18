@@ -68,7 +68,7 @@ public class EzeeWebMain extends Composite {
 
 	protected void initMain() {
 		if (cache.getConfiguration() != null) {
-			version.setText(cache.getConfiguration().getVersion());
+			version.setText("Version : " + cache.getConfiguration().getVersion());
 		}
 		email.addClickHandler(new ClickHandler() {
 			@Override

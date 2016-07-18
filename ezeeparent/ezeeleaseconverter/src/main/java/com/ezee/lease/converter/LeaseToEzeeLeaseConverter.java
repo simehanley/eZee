@@ -1,11 +1,13 @@
 package com.ezee.lease.converter;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
+import static com.ezee.common.EzeeCommonConstants.TWO;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
+import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
+import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.server.EzeeServerDateUtils.SERVER_DATE_UTILS;
 import static com.hg.leases.model.LeaseConstants.GST_PERCENTAGE;
 import static java.util.Collections.sort;
-import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -22,6 +24,7 @@ import com.ezee.model.entity.lease.EzeeLeaseBondType;
 import com.ezee.model.entity.lease.EzeeLeaseCategory;
 import com.ezee.model.entity.lease.EzeeLeaseIncidental;
 import com.ezee.model.entity.lease.EzeeLeaseMetaData;
+import com.ezee.model.entity.lease.EzeeLeaseNote;
 import com.ezee.model.entity.lease.EzeeLeasePremises;
 import com.ezee.model.entity.lease.EzeeLeaseTenant;
 import com.hg.leases.model.Lease;
@@ -52,16 +55,24 @@ public class LeaseToEzeeLeaseConverter {
 				? categoriesCache.get(lease.getCategory().getCategory()) : convert(lease.getCategory());
 		SortedSet<EzeeLeaseMetaData> metaData = convertMetaData(lease.getMetaData());
 		Set<EzeeLeaseIncidental> incidentals = convertIncidentals(lease.getIncidentals());
+		SortedSet<EzeeLeaseNote> notes = convertNotes(lease.getNotes());
 		EzeeLease ezeeLease = new EzeeLease(start, end, lease.getLeasedArea(), lease.getLeasedUnits(), incidentals,
 				tenant, premises, category, metaData, lease.isResidential(), lease.isInactive(), lease.getJobNo(),
 				created, updated);
+		if (!isEmpty(notes)) {
+			ezeeLease.setNotes(notes);
+		}
 		if (lease.hasOption()) {
 			ezeeLease.setHasOption(true);
 			if (lease.getOptionStartDate() != null) {
 				ezeeLease.setOptionStartDate(SERVER_DATE_UTILS.toString(lease.getOptionStartDate().toDate()));
+			} else {
+				ezeeLease.setOptionStartDate(SERVER_DATE_UTILS.toString(lease.getLeaseEnd().toDate()));
 			}
 			if (lease.getOptionEndDate() != null) {
 				ezeeLease.setOptionEndDate(SERVER_DATE_UTILS.toString(lease.getOptionEndDate().toDate()));
+			} else {
+				ezeeLease.setOptionEndDate(SERVER_DATE_UTILS.toString(lease.getLeaseEnd().plusYears(TWO).toDate()));
 			}
 		} else {
 			ezeeLease.setHasOption(false);
@@ -71,6 +82,16 @@ public class LeaseToEzeeLeaseConverter {
 		}
 		return ezeeLease;
 
+	}
+
+	private SortedSet<EzeeLeaseNote> convertNotes(final String notes) {
+		if (hasLength(notes)) {
+			SortedSet<EzeeLeaseNote> note = new TreeSet<>();
+			String creationDate = SERVER_DATE_UTILS.toString(new Date());
+			note.add(new EzeeLeaseNote(ZERO, creationDate, notes));
+			return note;
+		}
+		return null;
 	}
 
 	private EzeeLeaseBond convertBond(final LeaseBond bond) {
@@ -98,8 +119,11 @@ public class LeaseToEzeeLeaseConverter {
 			sort(metaData);
 			SortedSet<EzeeLeaseMetaData> ezeeLeaseMetaData = new TreeSet<>();
 			int order = ZERO;
+			String creationDate = SERVER_DATE_UTILS.toString(new Date());
 			for (LeaseMetaData md : metaData) {
-				EzeeLeaseMetaData data = new EzeeLeaseMetaData(md.getType(), md.getDescription(), md.getValue());
+				EzeeLeaseMetaData data = new EzeeLeaseMetaData(order, creationDate, md.getType(), md.getDescription(),
+						md.getValue());
+				++order;
 				ezeeLeaseMetaData.add(data);
 			}
 			return ezeeLeaseMetaData;

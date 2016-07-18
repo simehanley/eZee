@@ -45,4 +45,10 @@ public abstract class EzeeDateSortableDatabaseEntity extends EzeeDatabaseEntity 
 	public void setDate(String date) {
 		this.date = date;
 	}
+
+	@Override
+	public int compareTo(final EzeeDatabaseEntity entity) {
+		EzeeDateSortableDatabaseEntity sortable = (EzeeDateSortableDatabaseEntity) entity;
+		return order.compareTo(sortable.order);
+	}
 }
