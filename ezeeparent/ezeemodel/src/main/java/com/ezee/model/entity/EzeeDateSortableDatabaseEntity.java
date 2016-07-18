@@ -5,10 +5,8 @@ import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-
 @MappedSuperclass
-public abstract class EzeeDateSortableDatabaseEntity extends EzeeDatabaseEntity implements IsSerializable {
+public abstract class EzeeDateSortableDatabaseEntity extends EzeeDatabaseEntity {
 
 	private static final long serialVersionUID = 8161380026337084145L;
 
@@ -46,42 +44,5 @@ public abstract class EzeeDateSortableDatabaseEntity extends EzeeDatabaseEntity 
 
 	public void setDate(String date) {
 		this.date = date;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((order == null) ? 0 : order.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		EzeeDateSortableDatabaseEntity other = (EzeeDateSortableDatabaseEntity) obj;
-		if (date == null) {
-			if (other.date != null)
-				return false;
-		} else if (!date.equals(other.date))
-			return false;
-		if (order == null) {
-			if (other.order != null)
-				return false;
-		} else if (!order.equals(other.order))
-			return false;
-		return true;
-	}
-
-	@Override
-	public int compareTo(final EzeeDatabaseEntity entity) {
-		EzeeDateSortableDatabaseEntity sortable = (EzeeDateSortableDatabaseEntity) entity;
-		return this.order.compareTo(sortable.order);
 	}
 }

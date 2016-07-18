@@ -49,6 +49,7 @@ public abstract class EzeeGridToolbar<T extends EzeeDatabaseEntity> extends Comp
 
 		@Override
 		public void onClick(ClickEvent event) {
+			grid.clearSelected();
 			grid.loadEntities();
 		}
 	}

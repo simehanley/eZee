@@ -13,6 +13,7 @@ import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getDateBoxFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getPercentFormat;
+import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 import static com.ezee.model.entity.lease.EzeeLeaseBondType.none;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.OUTGOINGS;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.PARKING;
@@ -24,6 +25,7 @@ import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.create;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.delete;
+import static com.ezee.web.common.ui.dialog.EzeeConfirmDialog.showNew;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
@@ -36,6 +38,7 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.ezee.client.crud.lease.util.EzeeLeaseUtils;
 import com.ezee.client.grid.lease.EzeeLeaseSubComponentChangeListener;
 import com.ezee.client.grid.leasemetadata.EzeeLeaseMetaDataGrid;
 import com.ezee.client.grid.leasenote.EzeeLeaseNoteGrid;
@@ -54,6 +57,8 @@ import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
+import com.ezee.web.common.ui.dialog.EzeeConfirmDialogResult;
+import com.ezee.web.common.ui.dialog.EzeeConfirmDialogResultHandler;
 import com.ezee.web.common.ui.utils.EzeeListBoxUtils;
 import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.core.client.GWT;
@@ -230,6 +235,8 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	@UiField(provided = true)
 	EzeeLeaseNoteGrid noteGrid;
+
+	private final EzeeLeaseUtils leaseUtils = new EzeeLeaseUtils();
 
 	public EzeeCreateUpdateDeleteLease(EzeeEntityCache cache, EzeeCreateUpdateDeleteEntityHandler<EzeeLease> handler,
 			String[] headers) {
@@ -536,6 +543,27 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		chkInactive.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				if (entity != null && entity.getId() != NULL_ID) {
+					if (event.getValue()) {
+						showNew("Comfirm Create Vacancy",
+								"Would you like to create a 'vacant lease' for this premises? ",
+								new EzeeConfirmDialogResultHandler() {
+							@Override
+							public void confrimResult(EzeeConfirmDialogResult result) {
+								switch (result) {
+								case ok:
+									leaseUtils.createVacantLease(cache, entity, handler);
+									break;
+								default:
+									/* do nothing */
+								}
+
+							}
+						});
+					}
+					bind();
+					setEdited();
+				}
 				inactive(event.getValue());
 			}
 		});
@@ -642,6 +670,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		txtBondDetail.setEnabled(false);
 		txtMyobJobNo.setEnabled(false);
 		btnUpdate.setEnabled(false);
+		btnSave.setEnabled(false);
 		chkResidential.setEnabled(false);
 		chkInactive.setEnabled(false);
 	}

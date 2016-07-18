@@ -3,12 +3,12 @@ package com.ezee.web.common.ui.dialog;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.Widget;
 
 public class EzeeMessageDialog extends DialogBox {
 
@@ -18,7 +18,7 @@ public class EzeeMessageDialog extends DialogBox {
 	Button btnClose;
 
 	@UiField
-	Label lblMessage;
+	RichTextArea txtMessage;
 
 	interface EzeeMessageDialogUiBinder extends UiBinder<Widget, EzeeMessageDialog> {
 	}
@@ -27,7 +27,7 @@ public class EzeeMessageDialog extends DialogBox {
 		super(false, true);
 		setWidget(uiBinder.createAndBindUi(this));
 		setText(heading);
-		lblMessage.setText(message);
+		txtMessage.setText(message);
 	}
 
 	@UiHandler("btnClose")

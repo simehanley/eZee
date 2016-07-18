@@ -33,17 +33,6 @@ public class EzeeEntityCache {
 	public EzeeEntityCache() {
 	}
 
-	// public void loadEntities() {
-	// loadEntities(EzeeContractor.class);
-	// loadEntities(EzeeSupplier.class);
-	// loadEntities(EzeePayer.class);
-	// loadEntities(EzeeDebtAgeRule.class);
-	// loadEntities(EzeeLeaseCategory.class);
-	// loadEntities(EzeeLeaseTenant.class);
-	// loadEntities(EzeeLeasePremises.class);
-	// loadConfiguration();
-	// }
-
 	@SuppressWarnings("unchecked")
 	public <T extends EzeeAuditableDatabaseEntity> void loadEntities(List<Class<?>> clazzes) {
 		for (Class<?> clazz : clazzes) {

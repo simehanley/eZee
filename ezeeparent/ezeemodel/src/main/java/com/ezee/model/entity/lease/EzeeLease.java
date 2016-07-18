@@ -487,45 +487,4 @@ public class EzeeLease extends EzeeAuditableDatabaseEntity implements IsSerializ
 	public void setEdited(boolean edited) {
 		this.edited = edited;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((category == null) ? 0 : category.hashCode());
-		result = prime * result + ((leasedUnits == null) ? 0 : leasedUnits.hashCode());
-		result = prime * result + ((premises == null) ? 0 : premises.hashCode());
-		result = prime * result + ((tenant == null) ? 0 : tenant.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (getClass() != obj.getClass())
-			return false;
-		EzeeLease other = (EzeeLease) obj;
-		if (category == null) {
-			if (other.category != null)
-				return false;
-		} else if (!category.equals(other.category))
-			return false;
-		if (leasedUnits == null) {
-			if (other.leasedUnits != null)
-				return false;
-		} else if (!leasedUnits.equals(other.leasedUnits))
-			return false;
-		if (premises == null) {
-			if (other.premises != null)
-				return false;
-		} else if (!premises.equals(other.premises))
-			return false;
-		if (tenant == null) {
-			if (other.tenant != null)
-				return false;
-		} else if (!tenant.equals(other.tenant))
-			return false;
-		return true;
-	}
 }

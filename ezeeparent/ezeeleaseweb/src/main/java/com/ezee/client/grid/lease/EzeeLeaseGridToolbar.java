@@ -4,17 +4,23 @@ import static com.ezee.client.EzeeLeaseWebConstants.LEASE_SUMMARY_IN_MONTHS;
 import static com.ezee.client.EzeeLeaseWebConstants.SHOW_INACTIVE_LEASES;
 import static com.ezee.client.EzeeLeaseWebConstants.SHOW_LEASE_SUMMARY;
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
+import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
 import static com.ezee.web.common.EzeeWebCommonConstants.LOCAL_STORAGE;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
+import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.ezee.common.EzeeCommonConstants;
+import com.ezee.common.collections.EzeeCollectionUtils;
+import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.ezee.model.entity.filter.lease.EzeeLeaseFilter;
 import com.ezee.model.entity.lease.EzeeLease;
@@ -185,6 +191,7 @@ public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
 		List<EzeeLease> edited = ((EzeeLeaseGrid) grid).getEdited();
 		if (!isEmpty(edited)) {
 			btnSave.setEnabled(false);
+			showWaitCursor();
 			EzeeWebCommonConstants.ENTITY_SERVICE.saveEntities(EzeeLease.class.getName(), edited,
 					new AsyncCallback<List<EzeeLease>>() {
 						@Override
@@ -209,8 +216,8 @@ public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
 	}
 
 	private void refreshLeases(final List<EzeeLease> result) {
-		for (EzeeLease lease : result) {
-			grid.onSave(lease, false);
+		for (int i = ZERO; i < result.size(); i++) {
+			grid.onSave(result.get(i), false);
 		}
 		grid.getGrid().redraw();
 	}

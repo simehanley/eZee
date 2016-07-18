@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import com.ezee.common.uuid.EzeeUuidGenerator;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 @MappedSuperclass
@@ -24,7 +25,10 @@ public abstract class EzeeDatabaseEntity implements Serializable, IsSerializable
 	@GeneratedValue
 	@Column(name = "ID")
 	private Long id;
-	
+
+	@Column(name = "GRIDID")
+	private String gridId = EzeeUuidGenerator.uuid();
+
 	public EzeeDatabaseEntity() {
 		this(NULL_ID);
 	}
@@ -32,16 +36,20 @@ public abstract class EzeeDatabaseEntity implements Serializable, IsSerializable
 	public EzeeDatabaseEntity(final Long id) {
 		this.id = id;
 	}
-	
+
 	public final Long getId() {
 		return id;
 	}
-	
+
+	public String getGridId() {
+		return gridId;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((gridId == null) ? 0 : gridId.hashCode());
 		return result;
 	}
 
@@ -54,10 +62,10 @@ public abstract class EzeeDatabaseEntity implements Serializable, IsSerializable
 		if (getClass() != obj.getClass())
 			return false;
 		EzeeDatabaseEntity other = (EzeeDatabaseEntity) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (gridId == null) {
+			if (other.gridId != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!gridId.equals(other.gridId))
 			return false;
 		return true;
 	}

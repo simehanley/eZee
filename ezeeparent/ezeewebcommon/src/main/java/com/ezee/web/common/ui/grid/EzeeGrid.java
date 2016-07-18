@@ -67,10 +67,6 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	@UiField(provided = true)
 	protected HorizontalPanel filterpanel;
 
-	protected Button btnRefresh;
-
-	protected Button btnClear;
-
 	protected EzeeGridModel<T> model;
 
 	protected EzeeGridToolbar<T> toolBar;

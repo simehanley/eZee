@@ -1,5 +1,6 @@
 package com.ezee.client.grid.lease;
 
+import static com.ezee.client.EzeeLeaseWebConstants.VACANT_TENANT_NAME;
 import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.ANNUAL_OUTGOINGS_GST;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.ANNUAL_PARKING_GST;
@@ -323,10 +324,12 @@ public class EzeeLeaseGridModel extends EzeeGridModel<EzeeLease> {
 
 	@Override
 	protected String resolveCellStyleNames(final EzeeLease lease) {
-		if (lease.isInactive()) {
-			return INSTANCE.css().redforeground();
-		} else if (lease.isEdited()) {
+		if (lease.isEdited()) {
 			return INSTANCE.css().lightorangeforeground();
+		} else if (lease.isInactive()) {
+			return INSTANCE.css().redforeground();
+		} else if (VACANT_TENANT_NAME.equals(lease.getTenant().getName())) {
+			return INSTANCE.css().greenforeground();
 		}
 		return INSTANCE.css().black();
 	}

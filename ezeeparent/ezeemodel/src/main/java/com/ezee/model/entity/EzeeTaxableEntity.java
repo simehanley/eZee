@@ -2,6 +2,9 @@ package com.ezee.model.entity;
 
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public abstract class EzeeTaxableEntity extends EzeeAuditableDatabaseEntity {
 
 	private static final long serialVersionUID = -5617273934977186455L;

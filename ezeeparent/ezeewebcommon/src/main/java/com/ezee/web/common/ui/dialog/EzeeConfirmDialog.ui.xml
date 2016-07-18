@@ -1,21 +1,21 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
-
 	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
 
 	<g:HTMLPanel>
 		<g:VerticalPanel>
 			<g:HorizontalPanel>
 				<g:RichTextArea styleName="{res.css.gwtRichTextAreaMedium}" enabled="false" ui:field="txtMessage"
-					height="75px" width="500px" />
+					height="50px" width="500px" />
 			</g:HorizontalPanel>
 			<g:HorizontalPanel verticalAlignment="ALIGN_TOP">
-				<g:HorizontalPanel width="410px" />
+				<g:HorizontalPanel width="310px" />
 				<g:HorizontalPanel>
-					<g:Button text="Close" ui:field="btnClose" styleName="{res.css.gwtButton}" />
+					<g:Button text="Ok" ui:field="btnOk" styleName="{res.css.gwtButton}" />
+					<g:Button text="Cancel" ui:field="btnCancel" styleName="{res.css.gwtButton}" />
 				</g:HorizontalPanel>
 			</g:HorizontalPanel>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
-	
+
 </ui:UiBinder> 
