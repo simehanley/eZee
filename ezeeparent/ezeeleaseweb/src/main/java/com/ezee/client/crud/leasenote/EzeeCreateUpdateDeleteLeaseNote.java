@@ -29,9 +29,6 @@ public class EzeeCreateUpdateDeleteLeaseNote extends EzeeCreateUpdateDeleteEntit
 	interface EzeeCreateUpdateDeleteLeaseNoteUiBinder extends UiBinder<Widget, EzeeCreateUpdateDeleteLeaseNote> {
 	}
 
-	// @UiField
-	// DateBox dtNoteDate;
-
 	@UiField
 	RichTextArea txtNoteValue;
 

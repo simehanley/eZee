@@ -786,26 +786,31 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	@UiHandler("btnDelete")
 	public void onDeleteClick(ClickEvent event) {
-		btnDelete.setEnabled(false);
-		showWaitCursor();
-		ENTITY_SERVICE.deleteEntity(EzeeLease.class.getName(), entity, new AsyncCallback<EzeeLease>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				btnDelete.setEnabled(true);
-				showDefaultCursor();
-				log.log(Level.SEVERE, "Error deleting lease '" + entity + "'.", caught);
-				showNew(ERROR, "Error deleting lease '" + entity + "'.  Please see log for details.");
-			}
+		if (entity.getId() != NULL_ID) {
+			btnDelete.setEnabled(false);
+			showWaitCursor();
+			ENTITY_SERVICE.deleteEntity(EzeeLease.class.getName(), entity, new AsyncCallback<EzeeLease>() {
+				@Override
+				public void onFailure(Throwable caught) {
+					btnDelete.setEnabled(true);
+					showDefaultCursor();
+					log.log(Level.SEVERE, "Error deleting lease '" + entity + "'.", caught);
+					showNew(ERROR, "Error deleting lease '" + entity + "'.  Please see log for details.");
+				}
 
-			@Override
-			public void onSuccess(EzeeLease result) {
-				log.log(Level.INFO, "Lease '" + entity + "' deleted successfully");
-				handler.onDelete(result);
-				btnDelete.setEnabled(true);
-				showDefaultCursor();
-				close();
-			}
-		});
+				@Override
+				public void onSuccess(EzeeLease result) {
+					log.log(Level.INFO, "Lease '" + entity + "' deleted successfully");
+					handler.onDelete(result);
+					btnDelete.setEnabled(true);
+					showDefaultCursor();
+					close();
+				}
+			});
+		} else {
+			handler.onDelete(entity);
+			close();
+		}
 	}
 
 	private void setEdited() {
