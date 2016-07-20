@@ -13,7 +13,6 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<gwtupload.version>1.0.3</gwtupload.version>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
@@ -44,11 +43,6 @@
 			<version>${project.version}</version>
 			<classifier>sources</classifier>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.googlecode.gwtupload</groupId>
-			<artifactId>gwtupload</artifactId>
-			<version>${gwtupload.version}</version>
 		</dependency>
 	</dependencies>
 

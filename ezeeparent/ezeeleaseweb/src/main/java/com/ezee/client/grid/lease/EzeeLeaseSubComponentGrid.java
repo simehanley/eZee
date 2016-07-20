@@ -16,7 +16,7 @@ public abstract class EzeeLeaseSubComponentGrid<T extends EzeeDateSortableDataba
 
 	private int maxSortOrder;
 
-	private EzeeLeaseSubComponentChangeListener listener;
+	protected EzeeLeaseSubComponentChangeListener listener;
 
 	public EzeeLeaseSubComponentGrid(final EzeeEntityCache cache, final int pageSize, final boolean disableContextMenu,
 			final EzeeLeaseSubComponentChangeListener listener) {

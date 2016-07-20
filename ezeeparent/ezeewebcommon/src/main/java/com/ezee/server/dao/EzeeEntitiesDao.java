@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,6 +18,7 @@ import com.ezee.model.entity.EzeeDatabaseEntity;
 import com.ezee.model.entity.EzeeInvoice;
 import com.ezee.model.entity.EzeePayment;
 import com.ezee.model.entity.lease.EzeeLease;
+import com.ezee.model.entity.lease.EzeeLeaseFile;
 import com.ezee.model.entity.project.EzeeProject;
 import com.ezee.model.entity.project.EzeeProjectItem;
 
@@ -147,6 +149,10 @@ public class EzeeEntitiesDao {
 			}
 		}
 
+		/**
+		 * Post process {@link EzeeLease} to remove non serializable
+		 * {@link PersistentCollection}
+		 */
 		private void postProcessLease(final EzeeLease lease) {
 			if (lease.getIncidentals() != null) {
 				lease.setIncidentals(new HashSet<>(lease.getIncidentals()));
@@ -158,7 +164,12 @@ public class EzeeEntitiesDao {
 				lease.setNotes(new TreeSet<>(lease.getNotes()));
 			}
 			if (lease.getFiles() != null) {
-				lease.setFiles(new TreeSet<>(lease.getFiles()));
+				SortedSet<EzeeLeaseFile> files = new TreeSet<>();
+				for (EzeeLeaseFile file : lease.getFiles()) {
+					file.setFile(null);
+					files.add(file);
+				}
+				lease.setFiles(files);
 			}
 			lease.setEdited(false);
 		}

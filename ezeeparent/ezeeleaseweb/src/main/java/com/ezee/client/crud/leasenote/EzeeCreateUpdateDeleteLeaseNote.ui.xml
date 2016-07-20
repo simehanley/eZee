@@ -5,10 +5,10 @@
 
 	<g:HTMLPanel>
 		<g:VerticalPanel>
-			<g:HorizontalPanel>
+			<!--g:HorizontalPanel>
 				<g:Label text="Date" styleName="{res.css.gwtLabelSmall}" />
 				<p1:DateBox styleName="{res.css.gwtDateBoxSmall}" ui:field="dtNoteDate" enabled="false" />
-			</g:HorizontalPanel>
+			</g:HorizontalPanel-->
 			<g:HorizontalPanel>
 				<g:RichTextArea styleName="{res.css.gwtRichTextAreaMedium}" ui:field="txtNoteValue" height="100px"
 					width="500px" />

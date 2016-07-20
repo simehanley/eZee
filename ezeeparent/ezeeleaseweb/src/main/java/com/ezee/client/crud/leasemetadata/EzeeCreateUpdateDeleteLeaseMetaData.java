@@ -13,8 +13,10 @@ import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.web.common.ui.utils.EzeeListBoxUtils;
+import com.ezee.web.common.ui.utils.EzeeRichTextAreaUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -75,8 +77,8 @@ public class EzeeCreateUpdateDeleteLeaseMetaData extends EzeeCreateUpdateDeleteE
 	protected void bind() {
 		if (entity == null) {
 			entity = new EzeeLeaseMetaData();
+			entity.setDate(DATE_UTILS.toString(new Date()));
 		}
-		entity.setDate(DATE_UTILS.toString(new Date()));
 		entity.setType(lstType.getSelectedValue());
 		entity.setValue(txtValue.getText());
 		entity.setDescription(txtDescription.getText());
@@ -84,14 +86,17 @@ public class EzeeCreateUpdateDeleteLeaseMetaData extends EzeeCreateUpdateDeleteE
 
 	@Override
 	public void show() {
+		initForm();
 		loadEntities();
 		switch (type) {
 		case create:
 			setText(headers[NEW_HEADER_INDEX]);
+			setFocus(lstType);
 			break;
 		case update:
 			setText(headers[EDIT_HEADER_INDEX]);
 			initialise();
+			setFocus(lstType);
 			break;
 		case delete:
 			setText(headers[EDIT_HEADER_INDEX]);
@@ -101,6 +106,13 @@ public class EzeeCreateUpdateDeleteLeaseMetaData extends EzeeCreateUpdateDeleteE
 			break;
 		}
 		super.show();
+	}
+
+	private void initForm() {
+		KeyPressHandler handler = new EzeeRichTextAreaUtils.TabKeyPressHandler(new Widget[] { txtValue },
+				new Widget[] { btnSave });
+		txtDescription.addKeyPressHandler(handler);
+
 	}
 
 	private void disable() {

@@ -52,6 +52,12 @@ public interface EzeeWebCommonConstants {
 	String EZEE_VERSION_PROPERTIES = "ezee.version.properties";
 	String EZEE_WEB_VERSION = "ezee.web.version";
 
+	String FILE_UPLOAD_SUCCESS = "File Upload Succeeded";
+	String FILE_UPLOAD_FAIL = "File Upload Failed";
+	String FILE_UPLOAD_CANCELLED = "File Upload Cancelled";
+
+	String FILE_DOWNLOAD_SERVICE = "downloadservice";
+
 	EzeeDateUtilities DATE_UTILS = new EzeeClientDateUtils();
 	EzeeLocalStroage LOCAL_STORAGE = new EzeeLocalStroage();
 

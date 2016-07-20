@@ -1,9 +1,9 @@
 package com.ezee.server.upload;
 
-import static com.ezee.client.EzeeInvoiceWebConstants.FILE_UPLOAD_FAIL;
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_ID;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
+import static com.ezee.web.common.EzeeWebCommonConstants.FILE_UPLOAD_FAIL;
 import static org.springframework.web.context.support.WebApplicationContextUtils.getWebApplicationContext;
 
 import java.util.List;
@@ -47,7 +47,6 @@ public class EzeeFileUploadService extends UploadAction {
 					getInvoiceDao().save(invoice);
 					log.info("Successfully saved file '" + filename + "' against invoice '" + invoice.getInvoiceId()
 							+ "'.");
-
 					removeSessionFileItems(request);
 					return filename;
 				} catch (Throwable t) {

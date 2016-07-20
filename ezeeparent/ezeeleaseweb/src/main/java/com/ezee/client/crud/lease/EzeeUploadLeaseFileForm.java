@@ -1,14 +1,15 @@
-package com.ezee.client.crud.invoice;
+package com.ezee.client.crud.lease;
 
-import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_ID;
+import static com.ezee.client.EzeeLeaseWebConstants.LEASE_ID;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
 import static com.ezee.web.common.EzeeWebCommonConstants.FILE_UPLOAD_FAIL;
 import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
 import static gwtupload.client.IFileInput.FileInputType.CUSTOM;
 
-import com.ezee.client.grid.invoice.EzeeInvoiceUpLoaderListener;
-import com.ezee.model.entity.EzeeInvoice;
+import com.ezee.model.entity.lease.EzeeLease;
+import com.ezee.model.entity.lease.EzeeLeaseFile;
+import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.web.common.ui.dialog.EzeeDialog;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -24,25 +25,26 @@ import gwtupload.client.IUploader.OnFinishUploaderHandler;
 import gwtupload.client.ModalUploadStatus;
 import gwtupload.client.SingleUploader;
 
-public class EzeeUploadInvoiceForm extends EzeeDialog {
+public class EzeeUploadLeaseFileForm extends EzeeDialog {
 
-	private static EzeeUploadInvoiceFormUiBinder uiBinder = GWT.create(EzeeUploadInvoiceFormUiBinder.class);
+	private static EzeeUploadLeaseFileFormUiBinder uiBinder = GWT.create(EzeeUploadLeaseFileFormUiBinder.class);
 
-	private static final String UPLOAD_INVOICE = "Upload Invoice File";
+	interface EzeeUploadLeaseFileFormUiBinder extends UiBinder<Widget, EzeeUploadLeaseFileForm> {
+	}
+
+	private static final String UPLOAD_FILE = "Upload File";
 
 	@UiField
 	HorizontalPanel uploadPanel;
 
-	private final EzeeInvoice invoice;
+	private final EzeeLease lease;
 
-	private final EzeeInvoiceUpLoaderListener listener;
+	private final EzeeCreateUpdateDeleteEntityHandler<EzeeLeaseFile> handler;
 
-	interface EzeeUploadInvoiceFormUiBinder extends UiBinder<Widget, EzeeUploadInvoiceForm> {
-	}
-
-	public EzeeUploadInvoiceForm(final EzeeInvoice invoice, final EzeeInvoiceUpLoaderListener listener) {
-		this.invoice = invoice;
-		this.listener = listener;
+	public EzeeUploadLeaseFileForm(final EzeeLease lease,
+			final EzeeCreateUpdateDeleteEntityHandler<EzeeLeaseFile> handler) {
+		this.lease = lease;
+		this.handler = handler;
 		setWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -53,7 +55,7 @@ public class EzeeUploadInvoiceForm extends EzeeDialog {
 	}
 
 	private void initForm() {
-		setText(UPLOAD_INVOICE + " (" + invoice.getInvoiceId() + ")");
+		setText(UPLOAD_FILE);
 		initUploader();
 	}
 
@@ -61,7 +63,7 @@ public class EzeeUploadInvoiceForm extends EzeeDialog {
 		Button choose = new Button("Choose File");
 		choose.setStyleName(INSTANCE.css().gwtButton());
 		final SingleUploader uploader = new SingleUploader(CUSTOM.with(choose), new ModalUploadStatus());
-		uploader.setServletPath(uploader.getServletPath() + "?" + INVOICE_ID + "=" + invoice.getId());
+		uploader.setServletPath(uploader.getServletPath() + "?" + LEASE_ID + "=" + lease.getId());
 		uploader.setAutoSubmit(true);
 		uploader.setValidExtensions("pdf");
 		uploader.addOnFinishUploadHandler(new OnFinishUploaderHandler() {
@@ -72,7 +74,7 @@ public class EzeeUploadInvoiceForm extends EzeeDialog {
 					showNew(ERROR, "File upload failed, please see log for details.");
 					close();
 				} else {
-					listener.invoiceUploaded(result);
+					handler.onSave(EzeeLeaseFile.getFile(result));
 					close();
 				}
 			}
@@ -81,7 +83,6 @@ public class EzeeUploadInvoiceForm extends EzeeDialog {
 		Button cancel = new Button("Cancel");
 		cancel.setStyleName(INSTANCE.css().gwtButton());
 		cancel.addClickHandler(new ClickHandler() {
-
 			@Override
 			public void onClick(ClickEvent event) {
 				close();

@@ -1,6 +1,5 @@
 package com.ezee.client.crud.leasenote;
 
-import static com.ezee.common.web.EzeeFormatUtils.getDateBoxFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.create;
 
@@ -11,15 +10,16 @@ import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
+import com.ezee.web.common.ui.utils.EzeeRichTextAreaUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.datepicker.client.DateBox;
 
 public class EzeeCreateUpdateDeleteLeaseNote extends EzeeCreateUpdateDeleteEntity<EzeeLeaseNote> {
 
@@ -29,8 +29,8 @@ public class EzeeCreateUpdateDeleteLeaseNote extends EzeeCreateUpdateDeleteEntit
 	interface EzeeCreateUpdateDeleteLeaseNoteUiBinder extends UiBinder<Widget, EzeeCreateUpdateDeleteLeaseNote> {
 	}
 
-	@UiField
-	DateBox dtNoteDate;
+	// @UiField
+	// DateBox dtNoteDate;
 
 	@UiField
 	RichTextArea txtNoteValue;
@@ -59,7 +59,6 @@ public class EzeeCreateUpdateDeleteLeaseNote extends EzeeCreateUpdateDeleteEntit
 
 	@Override
 	protected void initialise() {
-		dtNoteDate.setValue(DATE_UTILS.fromString(entity.getDate()));
 		txtNoteValue.setText(entity.getNote());
 	}
 
@@ -67,8 +66,8 @@ public class EzeeCreateUpdateDeleteLeaseNote extends EzeeCreateUpdateDeleteEntit
 	protected void bind() {
 		if (entity == null) {
 			entity = new EzeeLeaseNote();
+			entity.setDate(DATE_UTILS.toString(new Date()));
 		}
-		entity.setDate(DATE_UTILS.toString(dtNoteDate.getValue()));
 		entity.setNote(txtNoteValue.getText());
 	}
 
@@ -78,11 +77,12 @@ public class EzeeCreateUpdateDeleteLeaseNote extends EzeeCreateUpdateDeleteEntit
 		switch (type) {
 		case create:
 			setText(headers[NEW_HEADER_INDEX]);
-			initialiseNew();
+			setFocus(txtNoteValue);
 			break;
 		case update:
 			setText(headers[EDIT_HEADER_INDEX]);
 			initialise();
+			setFocus(txtNoteValue);
 			break;
 		case delete:
 			setText(headers[EDIT_HEADER_INDEX]);
@@ -94,16 +94,13 @@ public class EzeeCreateUpdateDeleteLeaseNote extends EzeeCreateUpdateDeleteEntit
 		super.show();
 	}
 
-	private void initialiseNew() {
-		dtNoteDate.setValue(new Date());
-	}
-
 	private void initForm() {
-		dtNoteDate.setFormat(getDateBoxFormat());
+		KeyPressHandler handler = new EzeeRichTextAreaUtils.TabKeyPressHandler(null, new Widget[] { btnSave });
+		txtNoteValue.addKeyPressHandler(handler);
+
 	}
 
 	private void disable() {
-		dtNoteDate.setEnabled(false);
 		txtNoteValue.setEnabled(false);
 		btnSave.setEnabled(false);
 	}

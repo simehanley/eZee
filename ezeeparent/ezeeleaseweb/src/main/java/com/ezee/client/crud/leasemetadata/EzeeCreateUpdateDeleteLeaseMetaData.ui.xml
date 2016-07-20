@@ -5,15 +5,24 @@
 
 	<g:HTMLPanel>
 		<g:VerticalPanel>
+			<g:VerticalPanel>
+				<g:HorizontalPanel>
+					<g:Label styleName="{res.css.gwtLabelSmall}" text="Type" />
+					<g:ListBox styleName="{res.css.gwtListBoxMedium}" ui:field="lstType" />
+				</g:HorizontalPanel>
+			</g:VerticalPanel>
+			<g:VerticalPanel>
+				<g:HorizontalPanel>
+					<g:Label styleName="{res.css.gwtLabelSmall}" text="Description" />
+					<g:Label styleName="{res.css.gwtLabelSmall}" text="Value" />
+					<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtValue" />
+				</g:HorizontalPanel>
+				<g:HorizontalPanel>
+					<g:RichTextArea styleName="{res.css.gwtRichTextAreaMedium}" width="385px" height="80px" ui:field="txtDescription" />
+				</g:HorizontalPanel>
+			</g:VerticalPanel>
 			<g:HorizontalPanel>
-				<g:ListBox styleName="{res.css.gwtListBoxMedium}" ui:field="lstType" />
-				<g:TextBox styleName="{res.css.gwtTextBoxMedium}" ui:field="txtValue" />
-			</g:HorizontalPanel>
-			<g:HorizontalPanel>
-				<g:RichTextArea styleName="{res.css.gwtRichTextAreaMedium}" width="422px" height="79px" ui:field="txtDescription" />
-			</g:HorizontalPanel>
-			<g:HorizontalPanel>
-				<g:HorizontalPanel width="141px" />
+				<g:HorizontalPanel width="105px" />
 				<g:HorizontalPanel>
 					<g:Button styleName="{res.css.gwtButton}" text="Delete" enabled="false" ui:field="btnDelete" />
 					<g:Button styleName="{res.css.gwtButton}" text="Save" ui:field="btnSave" />

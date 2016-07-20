@@ -1,0 +1,14 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:with type="com.ezee.web.common.ui.css.EzeeDefaultResources" field="res" />
+
+	<g:HTMLPanel>
+		<g:AbsolutePanel width="219px" height="60px">
+			<g:at top="7" left="6">
+				<g:HorizontalPanel width="185px" height="36px" styleName="{res.css.gwtPanelBorder}" ui:field="uploadPanel" />
+			</g:at>
+		</g:AbsolutePanel>
+	</g:HTMLPanel>
+
+</ui:UiBinder> 

@@ -1,10 +1,10 @@
 package com.ezee.client.grid.invoice;
 
-import static com.ezee.client.EzeeInvoiceWebConstants.FILE_DOWNLOAD_SERVICE;
 import static com.ezee.client.EzeeInvoiceWebConstants.INVOICE_ID;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
+import static com.ezee.web.common.EzeeWebCommonConstants.FILE_DOWNLOAD_SERVICE;
 import static com.ezee.web.common.ui.css.EzeeDefaultResources.INSTANCE;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_RIGHT;

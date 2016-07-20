@@ -32,12 +32,6 @@ public interface EzeeInvoiceWebConstants {
 
 	String INVOICE_ID = "invoiceId";
 
-	String FILE_UPLOAD_SUCCESS = "File Upload Succeeded";
-	String FILE_UPLOAD_FAIL = "File Upload Failed";
-	String FILE_UPLOAD_CANCELLED = "File Upload Cancelled";
-
-	String FILE_DOWNLOAD_SERVICE = "downloadservice";
-
 	String LOGIN_USER = "eZee Invoices Login";
 	String REGISTER_USER = "eZee Invoices Register User";
 

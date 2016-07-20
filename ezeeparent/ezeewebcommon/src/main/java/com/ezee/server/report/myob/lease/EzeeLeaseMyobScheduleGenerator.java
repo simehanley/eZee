@@ -7,6 +7,7 @@ import static com.ezee.common.EzeeCommonConstants.TAB;
 import static com.ezee.common.EzeeCommonConstants.TWO;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
+import static com.ezee.common.numeric.EzeeNumericUtils.isCloseToZero;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.LEASE_ID;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.OUTGOINGS;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.PARKING;
@@ -124,7 +125,7 @@ public class EzeeLeaseMyobScheduleGenerator extends AbstractMyobReportGenerator 
 	private void generateMyobSchedule(final LocalDate date, final String type, final EzeeLease lease,
 			final PrintWriter writer) {
 		EzeeLeaseIncidental incidental = lease.getIncidental(type);
-		if (incidental != null) {
+		if (incidental != null && !isCloseToZero(incidental.getAmount())) {
 			StringBuilder builder = new StringBuilder();
 			builder.append(lease.getTenant().getName() + TAB + TAB);
 			builder.append(resolveAddressLineOne(lease));

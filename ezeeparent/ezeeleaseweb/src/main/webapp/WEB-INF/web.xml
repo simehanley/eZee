@@ -53,7 +53,7 @@
 		<servlet-name>configservice</servlet-name>
 		<url-pattern>/EzeeLeaseWeb/configservice</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>reportService</servlet-name>
 		<servlet-class>com.ezee.server.report.EzeeReportService</servlet-class>
@@ -62,6 +62,26 @@
 	<servlet-mapping>
 		<servlet-name>reportService</servlet-name>
 		<url-pattern>/EzeeLeaseWeb/reportservice</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>uploadServlet</servlet-name>
+		<servlet-class>com.ezee.server.upload.EzeeLeaseFileUploadService</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>uploadServlet</servlet-name>
+		<url-pattern>*.gupld</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>downloadServlet</servlet-name>
+		<servlet-class>com.ezee.server.download.EzeeLeaseFileDownloadService</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>downloadServlet</servlet-name>
+		<url-pattern>/EzeeLeaseWeb/downloadservice</url-pattern>
 	</servlet-mapping>
 
 	<filter>

@@ -370,15 +370,16 @@ public class EzeeLease extends EzeeAuditableDatabaseEntity implements IsSerializ
 
 	public double monthlyAmount(final String type) {
 		double monthlyAmount = ZERO_DBL;
-		if (TOTAL.equals(type)) {
-			for (EzeeLeaseIncidental incidental : getIncidentals()) {
-				monthlyAmount += incidental.monthlyAmount();
+		if (!isEmpty(getIncidentals())) {
+			if (TOTAL.equals(type)) {
+				for (EzeeLeaseIncidental incidental : getIncidentals()) {
+					monthlyAmount += incidental.monthlyAmount();
+				}
+			} else {
+				if (getIncidental(type) != null) {
+					monthlyAmount = getIncidental(type).monthlyAmount();
+				}
 			}
-		} else {
-			if (getIncidental(type) != null) {
-				monthlyAmount = getIncidental(type).monthlyAmount();
-			}
-
 		}
 		return monthlyAmount;
 	}
@@ -386,13 +387,15 @@ public class EzeeLease extends EzeeAuditableDatabaseEntity implements IsSerializ
 	public double monthlyGst(final String type) {
 		double monthlyGst = ZERO_DBL;
 		if (!residential) {
-			if (TOTAL.equals(type)) {
-				for (EzeeLeaseIncidental incidental : getIncidentals()) {
-					monthlyGst += incidental.monthlyGst();
-				}
-			} else {
-				if (getIncidental(type) != null) {
-					monthlyGst = getIncidental(type).monthlyGst();
+			if (!isEmpty(getIncidentals())) {
+				if (TOTAL.equals(type)) {
+					for (EzeeLeaseIncidental incidental : getIncidentals()) {
+						monthlyGst += incidental.monthlyGst();
+					}
+				} else {
+					if (getIncidental(type) != null) {
+						monthlyGst = getIncidental(type).monthlyGst();
+					}
 				}
 			}
 		}
@@ -405,15 +408,17 @@ public class EzeeLease extends EzeeAuditableDatabaseEntity implements IsSerializ
 
 	public double yearlyAmount(final String type) {
 		double yearlyAmount = ZERO_DBL;
-		if (TOTAL.equals(type)) {
-			for (EzeeLeaseIncidental incidental : getIncidentals()) {
-				yearlyAmount += incidental.yearlyAmount();
-			}
-		} else {
-			if (getIncidental(type) != null) {
-				yearlyAmount = getIncidental(type).yearlyAmount();
-			}
+		if (!isEmpty(getIncidentals())) {
+			if (TOTAL.equals(type)) {
+				for (EzeeLeaseIncidental incidental : getIncidentals()) {
+					yearlyAmount += incidental.yearlyAmount();
+				}
+			} else {
+				if (getIncidental(type) != null) {
+					yearlyAmount = getIncidental(type).yearlyAmount();
+				}
 
+			}
 		}
 		return yearlyAmount;
 	}
@@ -421,13 +426,15 @@ public class EzeeLease extends EzeeAuditableDatabaseEntity implements IsSerializ
 	public double yearlyGst(final String type) {
 		double yearlyGst = ZERO_DBL;
 		if (!residential) {
-			if (TOTAL.equals(type)) {
-				for (EzeeLeaseIncidental incidental : getIncidentals()) {
-					yearlyGst += incidental.yearlyGst();
-				}
-			} else {
-				if (getIncidental(type) != null) {
-					yearlyGst = getIncidental(type).yearlyGst();
+			if (!isEmpty(getIncidentals())) {
+				if (TOTAL.equals(type)) {
+					for (EzeeLeaseIncidental incidental : getIncidentals()) {
+						yearlyGst += incidental.yearlyGst();
+					}
+				} else {
+					if (getIncidental(type) != null) {
+						yearlyGst = getIncidental(type).yearlyGst();
+					}
 				}
 			}
 		}
