@@ -14,6 +14,8 @@ public class EzeeFormatUtils {
 	private static final DateTimeFormat DATE_FORMAT = DateTimeFormat.getFormat("dd/MM/yyyy");
 
 	private static final NumberFormat AMOUNT_FORMAT = NumberFormat.getFormat("#,##0.00");
+	
+	private static final NumberFormat CURRENCY_FORMAT = NumberFormat.getFormat("$#,##0.00");
 
 	private static final NumberFormat PERCENT_FORMAT = NumberFormat.getFormat("##0.00%");
 
@@ -31,6 +33,10 @@ public class EzeeFormatUtils {
 
 	public static final NumberFormat getAmountFormat() {
 		return AMOUNT_FORMAT;
+	}
+	
+	public static final NumberFormat getCurrencyFormat() {
+		return CURRENCY_FORMAT;
 	}
 
 	public static final NumberFormat getPercentFormat() {

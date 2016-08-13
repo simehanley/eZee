@@ -59,6 +59,10 @@ public final class EzeeLeaseDateUtils {
 		return first.isBefore(second) || first.isEqual(second);
 	}
 
+	public static boolean isBefore(final LocalDate first, final LocalDate second) {
+		return first.isBefore(second);
+	}
+
 	public static boolean isGreaterThan(final String firstLeaseDate, final String secondLeaseDate) {
 		return !isBeforeOrEqual(firstLeaseDate, secondLeaseDate);
 	}
@@ -75,5 +79,9 @@ public final class EzeeLeaseDateUtils {
 
 	public static boolean isGreaterThanOrEqualTo(final LocalDate first, final LocalDate second) {
 		return first.isAfter(second) || first.isEqual(second);
+	}
+
+	public static boolean isBetween(final LocalDate date, final LocalDate lower, final LocalDate upper) {
+		return isGreaterThanOrEqualTo(date, lower) && isBefore(date, upper);
 	}
 }

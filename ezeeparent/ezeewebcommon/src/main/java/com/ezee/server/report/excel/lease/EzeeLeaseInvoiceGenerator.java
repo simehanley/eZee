@@ -1,7 +1,6 @@
 package com.ezee.server.report.excel.lease;
 
 import static com.ezee.common.string.EzeeStringUtils.getStringValue;
-import static com.ezee.server.EzeeServerDateUtils.SERVER_DATE_UTILS;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.LEASE_ID;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.OUTGOINGS;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.PARKING;
@@ -92,6 +91,7 @@ public class EzeeLeaseInvoiceGenerator extends AbstractExcelReportGenerator impl
 	}
 
 	private void generateExcelInvoice(final EzeeLease lease, final Workbook book, final Sheet sheet) {
+		EzeePair<LocalDate, LocalDate> dates = generator.resolveCurrentPeriod(lease);
 		sheet.getRow(CATEGORY_COMPANY_INDEX.getFirst()).getCell(CATEGORY_COMPANY_INDEX.getSecond())
 				.setCellValue(getStringValue(lease.getCategory().getCategoryCompany()));
 		sheet.getRow(CATEGORY_ABN_INDEX.getFirst()).getCell(CATEGORY_ABN_INDEX.getSecond())
@@ -101,7 +101,7 @@ public class EzeeLeaseInvoiceGenerator extends AbstractExcelReportGenerator impl
 		sheet.getRow(CATEGORY_PHONE_INDEX.getFirst()).getCell(CATEGORY_PHONE_INDEX.getSecond())
 				.setCellValue(getStringValue(lease.getCategory().getPhone()));
 		sheet.getRow(CURRENT_DATE_INDEX.getFirst()).getCell(CURRENT_DATE_INDEX.getSecond())
-				.setCellValue(SERVER_DATE_UTILS.fromString(lease.getUpdated()));
+				.setCellValue(dates.getFirst().toDate());
 		sheet.getRow(TENANT_INDEX.getFirst()).getCell(TENANT_INDEX.getSecond())
 				.setCellValue(lease.getTenant().getName());
 		sheet.getRow(PREMISES_ADDRESS_1_INDEX.getFirst()).getCell(PREMISES_ADDRESS_1_INDEX.getSecond())
@@ -109,7 +109,7 @@ public class EzeeLeaseInvoiceGenerator extends AbstractExcelReportGenerator impl
 		sheet.getRow(RENTAL_LINE_1_INDEX.getFirst()).getCell(RENTAL_LINE_1_INDEX.getSecond())
 				.setCellValue(resolveRentalLineOne(lease));
 		sheet.getRow(RENTAL_LINE_2_INDEX.getFirst()).getCell(RENTAL_LINE_2_INDEX.getSecond())
-				.setCellValue(resolveRentalLineTwo(lease));
+				.setCellValue(resolveRentalLineTwo(lease, dates));
 		sheet.getRow(PREMISES_ADDRESS_2_INDEX.getFirst()).getCell(PREMISES_ADDRESS_2_INDEX.getSecond())
 				.setCellValue(lease.getPremises().getAddressLineTwo());
 		sheet.getRow(YEARLY_RENT_INDEX.getFirst()).getCell(YEARLY_RENT_INDEX.getSecond())
@@ -162,8 +162,7 @@ public class EzeeLeaseInvoiceGenerator extends AbstractExcelReportGenerator impl
 		return builder.toString();
 	}
 
-	private String resolveRentalLineTwo(final EzeeLease lease) {
-		EzeePair<LocalDate, LocalDate> dates = generator.resolveCurrentPeriod(lease);
+	private String resolveRentalLineTwo(final EzeeLease lease, final EzeePair<LocalDate, LocalDate> dates) {
 		StringBuilder builder = new StringBuilder(
 				"For the period " + formatFullDate(dates.getFirst()) + "-" + formatFullDate(dates.getSecond()) + ".");
 		return builder.toString();

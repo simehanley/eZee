@@ -11,6 +11,7 @@ import static com.ezee.common.numeric.EzeeNumericUtils.isCloseToZero;
 import static com.ezee.common.numeric.EzeeNumericUtils.round;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.common.web.EzeeFormatUtils.getAmountFormat;
+import static com.ezee.common.web.EzeeFormatUtils.getCurrencyFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getDateBoxFormat;
 import static com.ezee.common.web.EzeeFormatUtils.getPercentFormat;
 import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
@@ -20,6 +21,7 @@ import static com.ezee.model.entity.lease.EzeeLeaseConstants.PARKING;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.RENT;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.SIGNAGE;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.TOTAL;
+import static com.ezee.model.entity.lease.EzeeLeaseMetaDataType.historic_rents;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
@@ -32,6 +34,7 @@ import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.getEnum;
 import static com.ezee.web.common.ui.utils.EzeeListBoxUtils.getItemIndex;
+import static java.util.logging.Level.SEVERE;
 
 import java.util.Date;
 import java.util.SortedSet;
@@ -55,6 +58,7 @@ import com.ezee.model.entity.lease.EzeeLeaseMetaData;
 import com.ezee.model.entity.lease.EzeeLeaseNote;
 import com.ezee.model.entity.lease.EzeeLeasePremises;
 import com.ezee.model.entity.lease.EzeeLeaseTenant;
+import com.ezee.web.common.EzeeWebCommonConstants;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntity;
 import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
@@ -62,6 +66,7 @@ import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType;
 import com.ezee.web.common.ui.dialog.EzeeConfirmDialog;
 import com.ezee.web.common.ui.dialog.EzeeConfirmDialogResult;
 import com.ezee.web.common.ui.dialog.EzeeConfirmDialogResultHandler;
+import com.ezee.web.common.ui.utils.EzeeCursorUtils;
 import com.ezee.web.common.ui.utils.EzeeListBoxUtils;
 import com.ezee.web.common.ui.utils.EzeeTextBoxUtils;
 import com.google.gwt.core.client.GWT;
@@ -558,18 +563,18 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 						showNew("Comfirm Create Vacancy",
 								"Would you like to create a 'vacant lease' for this premises? ",
 								new EzeeConfirmDialogResultHandler() {
-							@Override
-							public void confrimResult(EzeeConfirmDialogResult result) {
-								switch (result) {
-								case ok:
-									leaseUtils.createVacantLease(cache, entity, handler);
-									break;
-								default:
-									/* do nothing */
-								}
+									@Override
+									public void confrimResult(EzeeConfirmDialogResult result) {
+										switch (result) {
+										case ok:
+											leaseUtils.createVacantLease(cache, entity, handler);
+											break;
+										default:
+											/* do nothing */
+										}
 
-							}
-						});
+									}
+								});
 					}
 					setEdited();
 				}
@@ -752,6 +757,31 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		}
 	}
 
+	private void updateLeaseMetaData(final double historicalRent) {
+		EzeeCursorUtils.showWaitCursor();
+		btnClose.setEnabled(false);
+		EzeeWebCommonConstants.LEASE_UTILITY_SERVICE.getCurrentLeasePeriodString(entity, new AsyncCallback<String>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				log.log(SEVERE, "Unable to resolve meta data description for historical rent.", caught);
+				EzeeCursorUtils.showDefaultCursor();
+				btnClose.setEnabled(true);
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				EzeeLeaseMetaData metaData = new EzeeLeaseMetaData();
+				metaData.setDate(DATE_UTILS.toString(new Date()));
+				metaData.setType(historic_rents.key());
+				metaData.setValue(getCurrencyFormat().format(historicalRent));
+				metaData.setDescription(result);
+				metaDataGrid.onSave(metaData);
+				EzeeCursorUtils.showDefaultCursor();
+				btnClose.setEnabled(true);
+			}
+		});
+	}
+
 	@UiHandler("btnUpdate")
 	void onBtnUpdateClick(final ClickEvent event) {
 		EzeeConfirmDialog.showNew("Renew Lease",
@@ -761,12 +791,12 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 					public void confrimResult(EzeeConfirmDialogResult result) {
 						if (result == ok) {
 							bind();
+							final double historicalRent = entity.getIncidental(RENT).yearlyAmount();
+							updateLeaseMetaData(historicalRent);
 							updateIncidental(RENT);
 							updateIncidental(OUTGOINGS);
 							updateIncidental(PARKING);
 							updateIncidental(SIGNAGE);
-							/* TODO */
-							// insert new meta data item for last rental period
 							setEdited();
 						}
 					}

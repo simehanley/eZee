@@ -63,6 +63,16 @@
 		<servlet-name>reportService</servlet-name>
 		<url-pattern>/EzeeLeaseWeb/reportservice</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>leaseutilityservice</servlet-name>
+		<servlet-class>com.ezee.server.EzeeLeaseUtilityServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>leaseutilityservice</servlet-name>
+		<url-pattern>/EzeeLeaseWeb/leaseutilityservice</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>uploadServlet</servlet-name>

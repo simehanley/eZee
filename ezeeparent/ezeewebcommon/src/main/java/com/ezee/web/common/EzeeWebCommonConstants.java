@@ -7,6 +7,8 @@ import com.ezee.web.common.service.EzeeConfigurationService;
 import com.ezee.web.common.service.EzeeConfigurationServiceAsync;
 import com.ezee.web.common.service.EzeeEntityService;
 import com.ezee.web.common.service.EzeeEntityServiceAsync;
+import com.ezee.web.common.service.EzeeLeaseUtilityService;
+import com.ezee.web.common.service.EzeeLeaseUtilityServiceAsync;
 import com.ezee.web.common.service.EzeeUserService;
 import com.ezee.web.common.service.EzeeUserServiceAsync;
 import com.ezee.web.common.service.EzeeUtilityService;
@@ -66,4 +68,5 @@ public interface EzeeWebCommonConstants {
 	EzeeUtilityServiceAsync UTILITY_SERVICE = GWT.create(EzeeUtilityService.class);
 	EzeeEntityServiceAsync ENTITY_SERVICE = GWT.create(EzeeEntityService.class);
 	EzeeConfigurationServiceAsync CONFIG_SERVICE = GWT.create(EzeeConfigurationService.class);
+	EzeeLeaseUtilityServiceAsync LEASE_UTILITY_SERVICE = GWT.create(EzeeLeaseUtilityService.class);
 }

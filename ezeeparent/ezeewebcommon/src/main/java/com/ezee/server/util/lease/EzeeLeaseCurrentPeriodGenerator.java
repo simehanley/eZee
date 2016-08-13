@@ -2,6 +2,7 @@ package com.ezee.server.util.lease;
 
 import static com.ezee.common.EzeeCommonConstants.ONE;
 import static com.ezee.server.EzeeServerDateUtils.SERVER_DATE_UTILS;
+import static com.ezee.server.util.lease.EzeeLeaseDateUtils.isBetween;
 import static com.ezee.server.util.lease.EzeeLeaseDateUtils.isGreaterThan;
 import static com.ezee.server.util.lease.EzeeLeaseDateUtils.isGreaterThanOrEqualTo;
 
@@ -20,6 +21,25 @@ public class EzeeLeaseCurrentPeriodGenerator {
 
 	public EzeeLeaseCurrentPeriodGenerator(int minimumToleranceInMonths) {
 		this.minimumToleranceInMonths = minimumToleranceInMonths;
+	}
+
+	public EzeePair<LocalDate, LocalDate> resolveCurrentPeriod(final EzeeLease lease, final LocalDate current) {
+		LocalDate leaseEnd = new LocalDate(SERVER_DATE_UTILS.fromString(lease.getEffectiveLeaseEnd()));
+		LocalDate leaseStart = new LocalDate(SERVER_DATE_UTILS.fromString(lease.getLeaseStart()));
+		if (isGreaterThanOrEqualTo(current, leaseEnd)) {
+			LocalDate start = leaseEnd.minusYears(ONE).plusDays(ONE);
+			return new EzeePair<LocalDate, LocalDate>(start, leaseEnd);
+		} else if (isGreaterThanOrEqualTo(leaseStart, current)) {
+			LocalDate end = leaseStart.plusYears(ONE).minusDays(ONE);
+			return new EzeePair<LocalDate, LocalDate>(leaseStart, end);
+		} else {
+			leaseEnd = leaseStart.plusYears(ONE).minusDays(ONE);
+			while (!isBetween(current, leaseStart, leaseEnd)) {
+				leaseStart = leaseStart.plusYears(ONE);
+				leaseEnd = leaseStart.plusYears(ONE).minusDays(ONE);
+			}
+			return new EzeePair<LocalDate, LocalDate>(leaseStart, leaseEnd);
+		}
 	}
 
 	public EzeePair<LocalDate, LocalDate> resolveCurrentPeriod(final EzeeLease lease) {
