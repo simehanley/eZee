@@ -20,7 +20,6 @@
 		<property name="locations">
 			<list>
 				<value>classpath:ezee-web-default.properties</value>
-				<value>classpath:ezee-lease-web-default.properties</value>
 				<value>classpath:override.properties</value>
 			</list>
 		</property>
