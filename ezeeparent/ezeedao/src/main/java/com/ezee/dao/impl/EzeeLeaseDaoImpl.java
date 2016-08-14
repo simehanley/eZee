@@ -50,6 +50,7 @@ public class EzeeLeaseDaoImpl extends EzeeBaseDaoImpl<EzeeLease> implements Ezee
 	}
 
 	@Override
+	@Transactional(propagation = REQUIRED, readOnly = false)
 	public void save(final EzeeLease entity) {
 		if (doPreProcessFiles(entity)) {
 			preprocess(entity);
