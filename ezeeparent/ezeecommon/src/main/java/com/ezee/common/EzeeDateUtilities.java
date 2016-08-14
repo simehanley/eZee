@@ -16,4 +16,6 @@ public interface EzeeDateUtilities {
 	Date addDays(Date date, int days);
 
 	Date addYears(Date date, int years);
+	
+	Date addYearsAsDays(Date date, int years);
 }

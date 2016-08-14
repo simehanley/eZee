@@ -1,5 +1,6 @@
 package com.ezee.common.web;
 
+import static com.ezee.common.EzeeCommonConstants.MINUS_ONE;
 import static com.ezee.common.EzeeCommonConstants.MONTHS_PER_YEAR;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.common.web.EzeeFormatUtils.getDateFormat;
@@ -11,7 +12,7 @@ import java.util.Date;
 import com.ezee.common.EzeeDateUtilities;
 
 public final class EzeeClientDateUtils implements EzeeDateUtilities {
-	
+
 	public static final EzeeClientDateUtils INSTANCE = new EzeeClientDateUtils();
 
 	public final Date fromString(final String date) {
@@ -41,6 +42,17 @@ public final class EzeeClientDateUtils implements EzeeDateUtilities {
 		if (date != null) {
 			Date modified = new Date(date.getTime());
 			addMonthsToDate(modified, years * MONTHS_PER_YEAR);
+			return modified;
+		}
+		return null;
+	}
+
+	@Override
+	public Date addYearsAsDays(final Date date, final int years) {
+		if (date != null) {
+			Date modified = new Date(date.getTime());
+			addMonthsToDate(modified, years * MONTHS_PER_YEAR);
+			addDaysToDate(modified, MINUS_ONE);
 			return modified;
 		}
 		return null;

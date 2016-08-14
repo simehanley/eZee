@@ -308,8 +308,8 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			dtOptionStart.setValue(DATE_UTILS.fromString(entity.getOptionStartDate()));
 			dtOptionEnd.setValue(DATE_UTILS.fromString(entity.getOptionEndDate()));
 		} else {
-			Date optionStart = DATE_UTILS.fromString(entity.getLeaseEnd());
-			Date optionEnd = DATE_UTILS.addYears(optionStart, TWO);
+			Date optionStart = DATE_UTILS.addDays(DATE_UTILS.fromString(entity.getLeaseEnd()), ONE);
+			Date optionEnd = DATE_UTILS.addYearsAsDays(optionStart, TWO);
 			dtOptionStart.setValue(optionStart);
 			dtOptionEnd.setValue(optionEnd);
 		}
@@ -483,9 +483,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		txtArea.setValue(getAmountFormat().format(ZERO_DBL));
 		txtUnits.setValue(EMPTY_STRING);
 		Date start = new Date();
-		Date end = DATE_UTILS.addYears(start, TWO);
-		Date optionStart = DATE_UTILS.addYears(start, TWO);
-		Date optionEnd = DATE_UTILS.addYears(optionStart, TWO);
+		Date end = DATE_UTILS.addYearsAsDays(start, TWO);
+		Date optionStart = DATE_UTILS.addDays(end, ONE);
+		Date optionEnd = DATE_UTILS.addYearsAsDays(optionStart, TWO);
 		dtStart.setValue(start);
 		dtEnd.setValue(end);
 		dtUpdate.setValue(start);
@@ -584,9 +584,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		dtStart.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<Date> event) {
-				Date end = DATE_UTILS.addYears(event.getValue(), TWO);
-				Date optionStart = end;
-				Date optionEnd = DATE_UTILS.addYears(optionStart, TWO);
+				Date end = DATE_UTILS.addYearsAsDays(event.getValue(), TWO);
+				Date optionStart = DATE_UTILS.addDays(end, ONE);
+				Date optionEnd = DATE_UTILS.addYearsAsDays(optionStart, TWO);
 				dtEnd.setValue(end);
 				dtOptionStart.setValue(optionStart);
 				dtOptionEnd.setValue(optionEnd);
@@ -595,8 +595,8 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		dtEnd.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<Date> event) {
-				Date optionStart = event.getValue();
-				Date optionEnd = DATE_UTILS.addYears(optionStart, TWO);
+				Date optionStart = DATE_UTILS.addDays(event.getValue(), ONE);
+				Date optionEnd = DATE_UTILS.addYearsAsDays(optionStart, TWO);
 				dtOptionStart.setValue(optionStart);
 				dtOptionEnd.setValue(optionEnd);
 			}
@@ -604,7 +604,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		dtOptionStart.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<Date> event) {
-				Date optionEnd = DATE_UTILS.addYears(event.getValue(), TWO);
+				Date optionEnd = DATE_UTILS.addYearsAsDays(event.getValue(), TWO);
 				dtOptionEnd.setValue(optionEnd);
 			}
 		});

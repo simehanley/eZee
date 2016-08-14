@@ -1,5 +1,6 @@
 package com.ezee.server;
 
+import static com.ezee.common.EzeeCommonConstants.ONE;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 
 import java.util.Date;
@@ -44,6 +45,15 @@ public final class EzeeServerDateUtils implements EzeeDateUtilities {
 		if (date != null) {
 			LocalDate modified = new LocalDate(date);
 			return modified.plusYears(years).toDate();
+		}
+		return null;
+	}
+
+	@Override
+	public Date addYearsAsDays(final Date date, final int years) {
+		if (date != null) {
+			LocalDate modified = new LocalDate(date);
+			return modified.plusYears(years).minusDays(ONE).toDate();
 		}
 		return null;
 	}

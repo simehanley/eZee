@@ -1,6 +1,8 @@
 package com.ezee.client.crud.lease.util;
 
 import static com.ezee.client.EzeeLeaseWebConstants.VACANT_TENANT_NAME;
+import static com.ezee.common.EzeeCommonConstants.ONE;
+import static com.ezee.common.EzeeCommonConstants.TWO;
 import static com.ezee.common.EzeeCommonConstants.ZERO_DBL;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
@@ -19,9 +21,6 @@ import com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityHandler;
 
 public class EzeeLeaseUtils {
 
-	@SuppressWarnings("deprecation")
-	private static final String VACANT_LEASE_DATE = DATE_UTILS.toString(new Date(1099, 11, 31));
-
 	public void createVacantLease(final EzeeEntityCache cache, final EzeeLease lease,
 			final EzeeCreateUpdateDeleteEntityHandler<EzeeLease> handler) {
 		if (lease != null) {
@@ -35,11 +34,13 @@ public class EzeeLeaseUtils {
 	private EzeeLease cloneToVacantLease(final EzeeEntityCache cache, final EzeeLease lease) {
 		if (lease != null) {
 			String created = DATE_UTILS.toString(new Date());
+			Date start = DATE_UTILS.addDays(DATE_UTILS.fromString(lease.getLeaseEnd()), ONE);
+			Date end = DATE_UTILS.addYearsAsDays(start, TWO);
 			Set<EzeeLeaseIncidental> incidentals = cloneToVacantLeaseIncidentals(cache, lease.getIncidentals());
 			EzeeLeaseTenant tenant = resolveVacantTenant(cache);
-			EzeeLease vacantLease = new EzeeLease(lease.getLeaseEnd(), VACANT_LEASE_DATE, lease.getLeasedArea(),
-					lease.getLeasedUnits(), incidentals, tenant, lease.getPremises(), lease.getCategory(), null,
-					lease.isResidential(), false, lease.getJobNo(), created, created);
+			EzeeLease vacantLease = new EzeeLease(DATE_UTILS.toString(start), DATE_UTILS.toString(end),
+					lease.getLeasedArea(), lease.getLeasedUnits(), incidentals, tenant, lease.getPremises(),
+					lease.getCategory(), null, lease.isResidential(), false, lease.getJobNo(), created, created);
 			vacantLease.setEdited(true);
 			return vacantLease;
 		}

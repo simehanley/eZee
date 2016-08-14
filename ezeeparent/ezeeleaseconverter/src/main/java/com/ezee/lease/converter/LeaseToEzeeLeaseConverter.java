@@ -1,6 +1,7 @@
 package com.ezee.lease.converter;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
+import static com.ezee.common.EzeeCommonConstants.ONE;
 import static com.ezee.common.EzeeCommonConstants.TWO;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
@@ -17,6 +18,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import org.joda.time.LocalDate;
 
 import com.ezee.model.entity.lease.EzeeLease;
 import com.ezee.model.entity.lease.EzeeLeaseBond;
@@ -67,12 +70,14 @@ public class LeaseToEzeeLeaseConverter {
 			if (lease.getOptionStartDate() != null) {
 				ezeeLease.setOptionStartDate(SERVER_DATE_UTILS.toString(lease.getOptionStartDate().toDate()));
 			} else {
-				ezeeLease.setOptionStartDate(SERVER_DATE_UTILS.toString(lease.getLeaseEnd().toDate()));
+				LocalDate optionStart = lease.getLeaseEnd().plusDays(ONE);
+				ezeeLease.setOptionStartDate(SERVER_DATE_UTILS.toString(optionStart.toDate()));
 			}
 			if (lease.getOptionEndDate() != null) {
 				ezeeLease.setOptionEndDate(SERVER_DATE_UTILS.toString(lease.getOptionEndDate().toDate()));
 			} else {
-				ezeeLease.setOptionEndDate(SERVER_DATE_UTILS.toString(lease.getLeaseEnd().plusYears(TWO).toDate()));
+				LocalDate optionEnd = lease.getLeaseEnd().plusYears(TWO).minusDays(ONE);
+				ezeeLease.setOptionEndDate(SERVER_DATE_UTILS.toString(optionEnd.toDate()));
 			}
 		} else {
 			ezeeLease.setHasOption(false);
