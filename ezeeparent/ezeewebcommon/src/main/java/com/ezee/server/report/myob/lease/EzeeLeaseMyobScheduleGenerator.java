@@ -2,7 +2,6 @@ package com.ezee.server.report.myob.lease;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.EzeeCommonConstants.RETURN;
-import static com.ezee.common.EzeeCommonConstants.SPACE;
 import static com.ezee.common.EzeeCommonConstants.TAB;
 import static com.ezee.common.EzeeCommonConstants.TWO;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
@@ -16,7 +15,6 @@ import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.SIGNAG
 import static com.ezee.server.util.lease.EzeeLeaseDateUtils.format;
 import static com.ezee.server.util.lease.EzeeLeaseDateUtils.formatInvoiceDate;
 import static com.ezee.server.util.lease.EzeeLeaseDateUtils.formatShortDate;
-import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -195,10 +193,12 @@ public class EzeeLeaseMyobScheduleGenerator extends AbstractMyobReportGenerator 
 	}
 
 	private String resolveNotes(final EzeeLease lease) {
-		if (isEmpty(lease.getNotes())) {
-			return EMPTY_STRING;
-		}
-		return lease.getNotes().last().getNote().replace(RETURN, SPACE).replace(RETURN, SPACE);
+		/* as per the last release a lease can now contain multiple notes */
+//		if (isEmpty(lease.getNotes())) {
+//			return EMPTY_STRING;
+//		}
+//		return lease.getNotes().last().getNote().replace(RETURN, SPACE).replace(RETURN, SPACE);
+		return EMPTY_STRING;
 	}
 
 	private String resolveInvoiceNumber(final EzeeLease lease, final LocalDate date) {

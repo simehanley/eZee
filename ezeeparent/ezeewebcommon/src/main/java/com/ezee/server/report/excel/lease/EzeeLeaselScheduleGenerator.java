@@ -7,6 +7,7 @@ import static com.ezee.model.entity.lease.EzeeLeaseConstants.HISTORICAL_RENT;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.NOTICE;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.OPTION;
 import static com.ezee.model.entity.lease.EzeeLeaseConstants.SPECIAL_CONDITION;
+import static com.ezee.server.EzeeServerDateUtils.SERVER_DATE_UTILS;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.LEASE_ID;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.OUTGOINGS;
 import static com.ezee.server.report.excel.lease.EzeeLeaseReportConstants.PARKING;
@@ -27,6 +28,7 @@ import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,7 @@ import com.ezee.model.entity.lease.EzeeLeaseIncidental;
 import com.ezee.model.entity.lease.EzeeLeaseMetaData;
 import com.ezee.server.report.EzeeReportGenerator;
 import com.ezee.server.report.excel.AbstractExcelReportGenerator;
+import com.ezee.server.util.lease.EzeeLeaseCurrentPeriodGenerator;
 import com.ezee.web.common.datastructures.EzeePair;
 
 public class EzeeLeaselScheduleGenerator extends AbstractExcelReportGenerator implements EzeeReportGenerator {
@@ -44,6 +47,9 @@ public class EzeeLeaselScheduleGenerator extends AbstractExcelReportGenerator im
 	private static final Logger log = LoggerFactory.getLogger(EzeeLeaselScheduleGenerator.class);
 
 	private static final String SCHEDULE_TEMPLATE_NAME = "RENT_SCHEDULE_TEMPLATE.xls";
+
+	@Autowired
+	private EzeeLeaseCurrentPeriodGenerator generator;
 
 	@Autowired
 	private EzeeLeaseDao dao;
@@ -95,10 +101,11 @@ public class EzeeLeaselScheduleGenerator extends AbstractExcelReportGenerator im
 	}
 
 	private void generateExcelSchedule(final EzeeLease lease, final Workbook book, final Sheet sheet) {
+		EzeePair<LocalDate, LocalDate> dates = generator.resolveCurrentPeriod(lease);
 		sheet.getRow(SCHEDULE_TITLE_1_INDEX.getFirst()).getCell(SCHEDULE_TITLE_1_INDEX.getSecond())
 				.setCellValue(resolveTitleLineOne(lease));
 		sheet.getRow(SCHEDULE_TITLE_2_INDEX.getFirst()).getCell(SCHEDULE_TITLE_2_INDEX.getSecond())
-				.setCellValue(resolveTitleLineTwo(lease));
+				.setCellValue(resolveTitleLineTwo(lease, dates.getFirst()));
 		sheet.getRow(SCHEDULE_ADDRESS_INDEX.getFirst()).getCell(SCHEDULE_ADDRESS_INDEX.getSecond())
 				.setCellValue(resolveAddress(lease));
 		sheet.getRow(SCHEDULE_DEVELOPMENT_INDEX.getFirst()).getCell(SCHEDULE_DEVELOPMENT_INDEX.getSecond())
@@ -186,8 +193,9 @@ public class EzeeLeaselScheduleGenerator extends AbstractExcelReportGenerator im
 		return lease.getCategory().getName() + " - RENT SCHEDULE";
 	}
 
-	private String resolveTitleLineTwo(final EzeeLease lease) {
-		return "UNIT " + lease.getLeasedUnits() + " - " + lease.getTenant().getName() + " @ " + lease.getUpdated();
+	private String resolveTitleLineTwo(final EzeeLease lease, final LocalDate rollDate) {
+		return "UNIT " + lease.getLeasedUnits() + " - " + lease.getTenant().getName() + " @ "
+				+ SERVER_DATE_UTILS.toString(rollDate.toDate());
 	}
 
 	private String resolveAddress(final EzeeLease lease) {
