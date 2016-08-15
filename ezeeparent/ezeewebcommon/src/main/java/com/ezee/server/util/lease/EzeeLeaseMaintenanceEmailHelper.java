@@ -1,4 +1,4 @@
-package com.ezee.server;
+package com.ezee.server.util.lease;
 
 import java.util.Properties;
 

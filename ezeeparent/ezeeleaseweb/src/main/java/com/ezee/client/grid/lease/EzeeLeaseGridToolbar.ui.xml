@@ -16,6 +16,7 @@
 		<g:Button text="Save" ui:field="btnSave" styleName="{res.css.gwtButton}" />
 		<g:Button text="Refresh" ui:field="btnRefresh" styleName="{res.css.gwtButton}" />
 		<g:Button text="Clear" ui:field="btnClear" styleName="{res.css.gwtButton}" />
+		<g:Button text="Email" ui:field="btnEmail" styleName="{res.css.gwtButton}" />
 		<g:CheckBox text="Show Inactive" styleName="{res.css.gwtCheckBoxSmall}"
 			ui:field="chkShowInactive" wordWrap="false" />
 		<g:CheckBox text="Summary" styleName="{res.css.gwtCheckBoxSmall}"

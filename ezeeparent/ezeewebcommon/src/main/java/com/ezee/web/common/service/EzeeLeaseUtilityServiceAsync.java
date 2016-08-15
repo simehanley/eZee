@@ -6,4 +6,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface EzeeLeaseUtilityServiceAsync {
 
 	void getCurrentLeasePeriodString(EzeeLease lease, AsyncCallback<String> result);
+	
+	void sendEmail(AsyncCallback<Void> result);
 }

@@ -8,4 +8,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface EzeeLeaseUtilityService extends RemoteService {
 
 	String getCurrentLeasePeriodString(EzeeLease lease);
+
+	void sendEmail();
 }

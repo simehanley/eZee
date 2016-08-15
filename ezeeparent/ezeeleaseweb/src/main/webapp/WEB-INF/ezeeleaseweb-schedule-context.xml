@@ -6,7 +6,7 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="leaseMaintenanceEmailHelper" class="com.ezee.server.EzeeLeaseMaintenanceEmailHelper">
+	<bean id="leaseMaintenanceEmailHelper" class="com.ezee.server.util.lease.EzeeLeaseMaintenanceEmailHelper">
 		<constructor-arg name="username" value="${ezee.lease.maintenance.email.user}" />
 		<constructor-arg name="password" value="${ezee.lease.maintenance.email.password}" />
 		<constructor-arg name="emailFrom" value="${ezee.lease.maintenance.email.from}" />
@@ -14,7 +14,7 @@
 		<constructor-arg name="emailCc" value="${ezee.lease.maintenance.email.cc}" />
 	</bean>
 
-	<bean id="leaseMaintenanceService" class="com.ezee.server.EzeeLeaseMaintenanceService">
+	<bean id="leaseMaintenanceService" class="com.ezee.server.util.lease.EzeeLeaseMaintenanceService">
 		<constructor-arg name="monthlyUpdateInterval" value="${ezee.lease.maintenance.update.interval.months}" />
 	</bean>
 

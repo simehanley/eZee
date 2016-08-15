@@ -1,4 +1,4 @@
-package com.ezee.server;
+package com.ezee.server.util.lease;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.EzeeCommonConstants.ONE;

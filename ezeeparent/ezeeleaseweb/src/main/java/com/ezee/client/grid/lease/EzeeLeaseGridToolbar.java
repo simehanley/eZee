@@ -7,7 +7,9 @@ import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.ERROR;
+import static com.ezee.web.common.EzeeWebCommonConstants.LEASE_UTILITY_SERVICE;
 import static com.ezee.web.common.EzeeWebCommonConstants.LOCAL_STORAGE;
 import static com.ezee.web.common.ui.dialog.EzeeMessageDialog.showNew;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
@@ -20,7 +22,6 @@ import java.util.logging.Logger;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.ezee.model.entity.filter.lease.EzeeLeaseFilter;
 import com.ezee.model.entity.lease.EzeeLease;
-import com.ezee.web.common.EzeeWebCommonConstants;
 import com.ezee.web.common.localstorage.EzeeLocalStroage;
 import com.ezee.web.common.ui.grid.EzeeGridToolbar;
 import com.google.gwt.core.client.GWT;
@@ -61,6 +62,9 @@ public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
 
 	@UiField
 	Button btnClear;
+
+	@UiField
+	Button btnEmail;
 
 	@UiField
 	CheckBox chkShowInactive;
@@ -188,27 +192,47 @@ public class EzeeLeaseGridToolbar extends EzeeGridToolbar<EzeeLease> {
 		if (!isEmpty(edited)) {
 			btnSave.setEnabled(false);
 			showWaitCursor();
-			EzeeWebCommonConstants.ENTITY_SERVICE.saveEntities(EzeeLease.class.getName(), edited,
-					new AsyncCallback<List<EzeeLease>>() {
-						@Override
-						public void onFailure(final Throwable caught) {
-							btnSave.setEnabled(true);
-							showDefaultCursor();
-							log.log(Level.SEVERE, "Error saving leases.", caught);
-							showNew(ERROR, "Error saving leases. Please see log for details.");
-						}
+			ENTITY_SERVICE.saveEntities(EzeeLease.class.getName(), edited, new AsyncCallback<List<EzeeLease>>() {
+				@Override
+				public void onFailure(final Throwable caught) {
+					btnSave.setEnabled(true);
+					showDefaultCursor();
+					log.log(Level.SEVERE, "Error saving leases.", caught);
+					showNew(ERROR, "Error saving leases. Please see log for details.");
+				}
 
-						@Override
-						public void onSuccess(final List<EzeeLease> result) {
-							if (!isEmpty(result)) {
-								refreshLeases(result);
-							}
-							btnSave.setEnabled(true);
-							showDefaultCursor();
-							log.log(Level.INFO, "Leases asved successfully.");
-						}
-					});
+				@Override
+				public void onSuccess(final List<EzeeLease> result) {
+					if (!isEmpty(result)) {
+						refreshLeases(result);
+					}
+					btnSave.setEnabled(true);
+					showDefaultCursor();
+					log.log(Level.INFO, "Leases saved successfully.");
+				}
+			});
 		}
+	}
+
+	@UiHandler("btnEmail")
+	public void onEmailClick(final ClickEvent event) {
+		btnEmail.setEnabled(false);
+		showWaitCursor();
+		LEASE_UTILITY_SERVICE.sendEmail(new AsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				btnEmail.setEnabled(true);
+				showDefaultCursor();
+				log.log(Level.INFO, "Email sent successfully.");
+			}
+
+			@Override
+			public void onFailure(final Throwable caught) {
+				btnEmail.setEnabled(true);
+				showDefaultCursor();
+				log.log(Level.SEVERE, "Error sending email.", caught);
+			}
+		});
 	}
 
 	private void refreshLeases(final List<EzeeLease> result) {
