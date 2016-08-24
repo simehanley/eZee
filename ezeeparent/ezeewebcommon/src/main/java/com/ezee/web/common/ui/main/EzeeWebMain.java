@@ -98,7 +98,7 @@ public class EzeeWebMain extends Composite {
 	}
 
 	protected void initUser() {
-		user.setText("Logged in as : " + ezeeUser.getUsername());
+		user.setText("Logged in as : " + ezeeUser.getUsername() + " (" + ezeeUser.getType() + ")");
 	}
 
 	protected void editUser() {

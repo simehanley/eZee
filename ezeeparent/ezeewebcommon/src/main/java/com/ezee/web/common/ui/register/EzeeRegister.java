@@ -2,6 +2,7 @@ package com.ezee.web.common.ui.register;
 
 import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
+import static com.ezee.model.entity.enums.EzeeUserType.read_only;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.USER_SERVICE;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
@@ -88,7 +89,7 @@ public class EzeeRegister extends Composite {
 		if (validRegistration()) {
 			showWaitCursor();
 			EzeeUser created = new EzeeUser(txtFirstname.getText(), txtLastname.getText(), txtUsername.getText(),
-					txtPassword.getText(), txtEmail.getText(), DATE_UTILS.toString(new Date()), null);
+					txtPassword.getText(), txtEmail.getText(), read_only, DATE_UTILS.toString(new Date()), null);
 			USER_SERVICE.register(created, new AsyncCallback<EzeeUserResult>() {
 
 				@Override

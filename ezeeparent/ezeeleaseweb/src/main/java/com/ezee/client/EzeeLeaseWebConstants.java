@@ -30,18 +30,22 @@ public interface EzeeLeaseWebConstants {
 	String EDIT_LEASE = "Edit Lease";
 	String NEW_LEASE = "New Lease";
 	String DELETE_LEASE = "Delete Lease";
-	String[] LEASE_CRUD_HEADERS = new String[] { NEW_LEASE, EDIT_LEASE, DELETE_LEASE };
+	String VIEW_LEASE = "View Lease";
+	String[] LEASE_CRUD_HEADERS = new String[] { NEW_LEASE, EDIT_LEASE, DELETE_LEASE, VIEW_LEASE };
 
 	String EDIT_LEASE_META_DATA = "Edit Lease Meta Data";
 	String NEW_LEASE_META_DATA = "New Lease Meta Data";
 	String DELETE_LEASE_META_DATA = "Delete Lease Meta Data";
+	String VIEW_LEASE_META_DATA = "View Lease Meta Data";
 	String[] LEASE_META_DATA_CRUD_HEADERS = new String[] { NEW_LEASE_META_DATA, EDIT_LEASE_META_DATA,
-			DELETE_LEASE_META_DATA };
+			DELETE_LEASE_META_DATA, VIEW_LEASE_META_DATA };
 
 	String EDIT_LEASE_NOTE = "Edit Lease Note";
 	String NEW_LEASE_NOTE = "New Lease Note";
 	String DELETE_LEASE_NOTE = "Delete Lease Note";
-	String[] LEASE_NOTE_CRUD_HEADERS = new String[] { NEW_LEASE_NOTE, EDIT_LEASE_NOTE, DELETE_LEASE_NOTE };
+	String VIEW_LEASE_NOTE = "View Lease Note";
+	String[] LEASE_NOTE_CRUD_HEADERS = new String[] { NEW_LEASE_NOTE, EDIT_LEASE_NOTE, DELETE_LEASE_NOTE,
+			VIEW_LEASE_NOTE };
 
 	String SHOW_INACTIVE_LEASES = "SHOW_INACTIVE";
 	String SHOW_LEASE_SUMMARY = "SHOW_SUMMARY";

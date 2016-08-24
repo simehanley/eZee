@@ -104,8 +104,8 @@ public class EzeeEditUser extends EzeeDialog {
 			if (validateUser()) {
 				showWaitCursor();
 				EzeeUser edited = new EzeeUser(existing.getId(), txtFirstname.getText(), txtLastname.getText(),
-						username, txtNewPassword.getText(), txtEmail.getText(), existing.getCreated(),
-						DATE_UTILS.toString(new Date()));
+						username, txtNewPassword.getText(), txtEmail.getText(), existing.getType(),
+						existing.getCreated(), DATE_UTILS.toString(new Date()));
 
 				USER_SERVICE.edit(existing, edited, txtOldPassword.getText(), new AsyncCallback<EzeeUserResult>() {
 

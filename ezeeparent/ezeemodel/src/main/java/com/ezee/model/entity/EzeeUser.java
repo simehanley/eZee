@@ -4,8 +4,11 @@ import static com.ezee.model.entity.EzeeEntityConstants.NULL_ID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
+import com.ezee.model.entity.enums.EzeeUserType;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 @Entity
@@ -29,23 +32,29 @@ public class EzeeUser extends EzeeAuditableDatabaseEntity implements EzeeHasName
 	@Column(name = "EMAIL")
 	private String email;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "USER_TYPE")
+	private EzeeUserType type;
+
 	public EzeeUser() {
 		super();
 	}
 
 	public EzeeUser(final String firstname, final String lastname, final String username, final String password,
-			final String email, final String created, final String updated) {
-		this(NULL_ID, firstname, lastname, username, password, email, created, updated);
+			final String email, final EzeeUserType type, final String created, final String updated) {
+		this(NULL_ID, firstname, lastname, username, password, email, type, created, updated);
 	}
 
 	public EzeeUser(final Long id, final String firstname, final String lastname, final String username,
-			final String password, final String email, final String created, final String updated) {
+			final String password, final String email, final EzeeUserType type, final String created,
+			final String updated) {
 		super(id, created, updated);
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.type = type;
 	}
 
 	@Override
@@ -91,6 +100,14 @@ public class EzeeUser extends EzeeAuditableDatabaseEntity implements EzeeHasName
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public EzeeUserType getType() {
+		return type;
+	}
+
+	public void setType(EzeeUserType type) {
+		this.type = type;
 	}
 
 	@Override

@@ -90,6 +90,11 @@ public class EzeePaymentGrid extends EzeeGrid<EzeePayment> implements EzeePaymen
 	}
 
 	@Override
+	public void viewEntity() {
+		// TODO Implement read-only functionality
+	}
+
+	@Override
 	public void onCreatePayment(final Set<EzeeInvoice> invoices) {
 		if (!isEmpty(invoices)) {
 			new EzeeCreateUpdateDeletePayment(cache, this, invoices, PAYMENT_CRUD_HEADERS).show();

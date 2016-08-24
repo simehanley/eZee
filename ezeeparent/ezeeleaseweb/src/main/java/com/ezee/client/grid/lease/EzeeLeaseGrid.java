@@ -15,11 +15,13 @@ import static com.ezee.web.common.enums.EzeeReportType.lease_myob_schedule;
 import static com.ezee.web.common.enums.EzeeReportType.lease_schedule_report_excel;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.delete;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.update;
+import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.view;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.ezee.client.crud.lease.EzeeCreateUpdateDeleteLease;
+import com.ezee.model.entity.EzeeUser;
 import com.ezee.model.entity.lease.EzeeLease;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.enums.EzeeReportType;
@@ -32,8 +34,8 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 public class EzeeLeaseGrid extends EzeeGrid<EzeeLease> implements EzeeLeaseSummaryHandler {
 
-	public EzeeLeaseGrid(final EzeeEntityCache cache) {
-		super(cache);
+	public EzeeLeaseGrid(final EzeeEntityCache cache, final EzeeUser user) {
+		super(user, cache, DEFAULT_PAGE_SIZE, false);
 	}
 
 	@Override
@@ -56,20 +58,28 @@ public class EzeeLeaseGrid extends EzeeGrid<EzeeLease> implements EzeeLeaseSumma
 	public void deleteEntity() {
 		EzeeLease entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeleteLease(cache, this, entity, delete, LEASE_CRUD_HEADERS).show();
+			new EzeeCreateUpdateDeleteLease(user, cache, this, entity, delete, LEASE_CRUD_HEADERS).show();
 		}
 	}
 
 	@Override
 	public void newEntity() {
-		new EzeeCreateUpdateDeleteLease(cache, this, LEASE_CRUD_HEADERS).show();
+		new EzeeCreateUpdateDeleteLease(user, cache, this, LEASE_CRUD_HEADERS).show();
 	}
 
 	@Override
 	public void editEntity() {
 		EzeeLease entity = getSelected();
 		if (entity != null) {
-			new EzeeCreateUpdateDeleteLease(cache, this, entity, update, LEASE_CRUD_HEADERS).show();
+			new EzeeCreateUpdateDeleteLease(user, cache, this, entity, update, LEASE_CRUD_HEADERS).show();
+		}
+	}
+
+	@Override
+	public void viewEntity() {
+		EzeeLease entity = getSelected();
+		if (entity != null) {
+			new EzeeCreateUpdateDeleteLease(user, cache, this, entity, view, LEASE_CRUD_HEADERS).show();
 		}
 	}
 

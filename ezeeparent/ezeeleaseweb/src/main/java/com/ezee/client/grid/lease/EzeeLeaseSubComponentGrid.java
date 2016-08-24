@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.SortedSet;
 
 import com.ezee.model.entity.EzeeDateSortableDatabaseEntity;
+import com.ezee.model.entity.EzeeUser;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.grid.EzeeGrid;
 
@@ -20,7 +21,12 @@ public abstract class EzeeLeaseSubComponentGrid<T extends EzeeDateSortableDataba
 
 	public EzeeLeaseSubComponentGrid(final EzeeEntityCache cache, final int pageSize, final boolean disableContextMenu,
 			final EzeeLeaseSubComponentChangeListener listener) {
-		super(cache, pageSize, disableContextMenu);
+		this(null, cache, pageSize, disableContextMenu, listener);
+	}
+
+	public EzeeLeaseSubComponentGrid(final EzeeUser user, final EzeeEntityCache cache, final int pageSize,
+			final boolean disableContextMenu, final EzeeLeaseSubComponentChangeListener listener) {
+		super(user, cache, pageSize, disableContextMenu);
 		init();
 		this.listener = listener;
 	}

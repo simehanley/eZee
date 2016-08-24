@@ -82,6 +82,11 @@ public class EzeeProjectGrid extends EzeeFinancialEntityGrid<EzeeProject> implem
 		}
 	}
 
+	@Override
+	public void viewEntity() {
+		// TODO Implement read-only functionality
+	}
+
 	public void editProject() {
 		EzeeProject entity = getSelected();
 		if (entity != null) {

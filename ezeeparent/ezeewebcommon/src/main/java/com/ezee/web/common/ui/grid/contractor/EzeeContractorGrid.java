@@ -45,4 +45,9 @@ public class EzeeContractorGrid extends EzeePayeeGrid<EzeeContractor> {
 			new EzeeCreateUpdateDeleteContractor(cache, this, entity, update, crudHeaders).show();
 		}
 	}
+	
+	@Override
+	public void viewEntity() {
+		// TODO Implement read-only functionality
+	}
 }

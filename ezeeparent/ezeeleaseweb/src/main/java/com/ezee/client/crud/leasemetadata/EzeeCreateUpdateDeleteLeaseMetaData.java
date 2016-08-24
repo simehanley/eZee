@@ -104,6 +104,11 @@ public class EzeeCreateUpdateDeleteLeaseMetaData extends EzeeCreateUpdateDeleteE
 			btnDelete.setEnabled(true);
 			disable();
 			break;
+		case view:
+			setText(headers[VIEW_HEADER_INDEX]);
+			initialise();
+			disable();
+			break;
 		}
 		super.show();
 	}

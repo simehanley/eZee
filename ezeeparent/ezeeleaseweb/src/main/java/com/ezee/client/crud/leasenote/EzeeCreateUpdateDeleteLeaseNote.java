@@ -87,6 +87,11 @@ public class EzeeCreateUpdateDeleteLeaseNote extends EzeeCreateUpdateDeleteEntit
 			btnDelete.setEnabled(true);
 			disable();
 			break;
+		case view:
+			setText(headers[VIEW_HEADER_INDEX]);
+			initialise();
+			disable();
+			break;
 		}
 		super.show();
 	}

@@ -62,8 +62,8 @@ public interface EzeeWebCommonConstants {
 
 	EzeeDateUtilities DATE_UTILS = new EzeeClientDateUtils();
 	EzeeLocalStroage LOCAL_STORAGE = new EzeeLocalStroage();
-
 	EzeeAutoLogin AUTO_LOGIN_HELPER = new EzeeAutoLogin();
+
 	EzeeUserServiceAsync USER_SERVICE = GWT.create(EzeeUserService.class);
 	EzeeUtilityServiceAsync UTILITY_SERVICE = GWT.create(EzeeUtilityService.class);
 	EzeeEntityServiceAsync ENTITY_SERVICE = GWT.create(EzeeEntityService.class);

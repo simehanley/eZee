@@ -3,6 +3,7 @@ package com.ezee.web.common.ui.grid;
 import static com.ezee.common.EzeeCommonConstants.ONE;
 import static com.ezee.common.EzeeCommonConstants.ZERO;
 import static com.ezee.common.collections.EzeeCollectionUtils.isEmpty;
+import static com.ezee.model.entity.enums.EzeeUserType.read_only;
 import static com.ezee.web.common.EzeeWebCommonConstants.ENTITY_SERVICE;
 import static com.google.gwt.event.dom.client.KeyCodes.KEY_ENTER;
 import static com.google.gwt.user.cellview.client.SimplePager.TextLocation.CENTER;
@@ -15,6 +16,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import com.ezee.model.entity.EzeeDatabaseEntity;
+import com.ezee.model.entity.EzeeUser;
 import com.ezee.model.entity.filter.EzeeEmptyFilter;
 import com.ezee.model.entity.filter.EzeeEntityFilter;
 import com.ezee.web.common.cache.EzeeEntityCache;
@@ -70,6 +72,8 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 
 	protected EzeeGridToolbar<T> toolBar;
 
+	protected EzeeUser user;
+
 	protected EzeeEntityCache cache;
 
 	protected PopupPanel contextMenu;
@@ -88,6 +92,12 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	}
 
 	public EzeeGrid(final EzeeEntityCache cache, final int pageSize, final boolean disableContextMenu) {
+		this(null, cache, pageSize, disableContextMenu);
+	}
+
+	public EzeeGrid(final EzeeUser user, final EzeeEntityCache cache, final int pageSize,
+			final boolean disableContextMenu) {
+		this.user = user;
 		this.cache = cache;
 		this.pageSize = pageSize;
 		init(disableContextMenu);
@@ -203,27 +213,37 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	protected MenuBar createContextMenu() {
 		MenuBar menu = new MenuBar(true);
 		menu.setAnimationEnabled(true);
-		menu.addItem("New", new Command() {
-			@Override
-			public void execute() {
-				newEntity();
-				contextMenu.hide();
-			}
-		});
-		menu.addItem("Edit", new Command() {
-			@Override
-			public void execute() {
-				editEntity();
-				contextMenu.hide();
-			}
-		});
-		menu.addItem("Delete", new Command() {
-			@Override
-			public void execute() {
-				deleteEntity();
-				contextMenu.hide();
-			}
-		});
+		if (user != null && user.getType() == read_only) {
+			menu.addItem("View", new Command() {
+				@Override
+				public void execute() {
+					viewEntity();
+					contextMenu.hide();
+				}
+			});
+		} else {
+			menu.addItem("New", new Command() {
+				@Override
+				public void execute() {
+					newEntity();
+					contextMenu.hide();
+				}
+			});
+			menu.addItem("Edit", new Command() {
+				@Override
+				public void execute() {
+					editEntity();
+					contextMenu.hide();
+				}
+			});
+			menu.addItem("Delete", new Command() {
+				@Override
+				public void execute() {
+					deleteEntity();
+					contextMenu.hide();
+				}
+			});
+		}
 		return menu;
 	}
 
@@ -279,7 +299,11 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 
 		@Override
 		public void onDoubleClick(DoubleClickEvent event) {
-			editEntity();
+			if (user != null && user.getType() == read_only) {
+				viewEntity();
+			} else {
+				editEntity();
+			}
 		}
 	}
 
@@ -288,7 +312,11 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
 			if (event.getNativeEvent().getKeyCode() == KEY_ENTER) {
-				editEntity();
+				if (user != null && user.getType() == read_only) {
+					viewEntity();
+				} else {
+					editEntity();
+				}
 			}
 		}
 	}
@@ -306,6 +334,8 @@ public abstract class EzeeGrid<T extends EzeeDatabaseEntity> extends Composite
 	public abstract void newEntity();
 
 	public abstract void editEntity();
+
+	public abstract void viewEntity();
 
 	public abstract String getGridClass();
 }

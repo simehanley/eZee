@@ -1,11 +1,8 @@
 package com.ezee.web.common.ui.utils;
 
-import static com.ezee.common.EzeeCommonConstants.EMPTY_STRING;
 import static com.ezee.web.common.EzeeWebCommonConstants.LOCAL_STORAGE;
 import static com.ezee.web.common.EzeeWebCommonConstants.REMEMBER_ME;
 import static com.ezee.web.common.EzeeWebCommonConstants.REMEMBER_ME_USER;
-
-import com.ezee.model.entity.EzeeUser;
 
 public final class EzeeAutoLogin {
 
@@ -61,13 +58,5 @@ public final class EzeeAutoLogin {
 
 	public boolean isSupported() {
 		return LOCAL_STORAGE.isSupported();
-	}
-
-	public EzeeUser getAutoLoginUser() {
-		if (doAutoLogin()) {
-			return new EzeeUser(EMPTY_STRING, EMPTY_STRING, getRememberMeUserName(), EMPTY_STRING, EMPTY_STRING,
-					EMPTY_STRING, EMPTY_STRING);
-		}
-		return null;
 	}
 }

@@ -120,6 +120,11 @@ public class EzeeInvoiceGrid extends EzeeGrid<EzeeInvoice>
 		}
 	}
 
+	@Override
+	public void viewEntity() {
+		// TODO Implement read-only functionality
+	}
+
 	public void newSupplierInvoice(final String supplierName) {
 		new EzeeCreateUpdateDeleteInvoice(cache, this, supplierName, INVOICE_CRUD_HEADERS).show();
 	}

@@ -40,6 +40,11 @@ public class EzeeLeasePremisesGrid extends EzeePayeeGrid<EzeeLeasePremises> {
 			new EzeeCreateUpdateDeleteLeasePremises(cache, this, entity, update, crudHeaders).show();
 		}
 	}
+	
+	@Override
+	public void viewEntity() {
+		// TODO Implement read-only functionality
+	}
 
 	@Override
 	public String getGridClass() {

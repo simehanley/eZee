@@ -54,6 +54,11 @@ public class EzeeLeaseFileGrid extends EzeeLeaseSubComponentGrid<EzeeLeaseFile> 
 	}
 
 	@Override
+	public void viewEntity() {
+		/* not implemented */
+	}
+
+	@Override
 	public String getGridClass() {
 		return EzeeLeaseFile.class.getName();
 	}

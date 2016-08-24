@@ -48,6 +48,7 @@ import com.ezee.client.grid.leasefile.EzeeLeaseFileGrid;
 import com.ezee.client.grid.leasemetadata.EzeeLeaseMetaDataGrid;
 import com.ezee.client.grid.leasenote.EzeeLeaseNoteGrid;
 import com.ezee.model.entity.EzeeDateSortableDatabaseEntity;
+import com.ezee.model.entity.EzeeUser;
 import com.ezee.model.entity.lease.EzeeLease;
 import com.ezee.model.entity.lease.EzeeLeaseBond;
 import com.ezee.model.entity.lease.EzeeLeaseBondType;
@@ -250,15 +251,15 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	private final EzeeLeaseUtils leaseUtils = new EzeeLeaseUtils();
 
-	public EzeeCreateUpdateDeleteLease(EzeeEntityCache cache, EzeeCreateUpdateDeleteEntityHandler<EzeeLease> handler,
-			String[] headers) {
-		this(cache, handler, null, create, headers);
+	public EzeeCreateUpdateDeleteLease(final EzeeUser user, final EzeeEntityCache cache,
+			final EzeeCreateUpdateDeleteEntityHandler<EzeeLease> handler, final String[] headers) {
+		this(user, cache, handler, null, create, headers);
 	}
 
-	public EzeeCreateUpdateDeleteLease(final EzeeEntityCache cache,
+	public EzeeCreateUpdateDeleteLease(final EzeeUser user, final EzeeEntityCache cache,
 			final EzeeCreateUpdateDeleteEntityHandler<EzeeLease> handler, final EzeeLease entity,
 			final EzeeCreateUpdateDeleteEntityType type, final String[] headers) {
-		super(cache, handler, entity, type, headers);
+		super(user, cache, handler, entity, type, headers);
 		initGrids();
 		setWidget(uiBinder.createAndBindUi(this));
 		setModal(true);
@@ -266,8 +267,8 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 
 	private void initGrids() {
 		boolean disableContextMenu = (type == delete) ? true : false;
-		metaDataGrid = new EzeeLeaseMetaDataGrid(cache, META_DATA_PAGE_SIZE, disableContextMenu, this);
-		noteGrid = new EzeeLeaseNoteGrid(cache, NOTE_PAGE_SIZE, disableContextMenu, this);
+		metaDataGrid = new EzeeLeaseMetaDataGrid(user, cache, META_DATA_PAGE_SIZE, disableContextMenu, this);
+		noteGrid = new EzeeLeaseNoteGrid(user, cache, NOTE_PAGE_SIZE, disableContextMenu, this);
 		fileGrid = new EzeeLeaseFileGrid(entity, cache, FILE_PAGE_SIZE, disableContextMenu, this);
 	}
 
@@ -529,8 +530,8 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 				switch (type) {
 				case none:
 					txtBondAmount.setEnabled(false);
-					txtBondAmount.setValue(getAmountFormat().format(ZERO_DBL));
 					txtBondDetail.setEnabled(false);
+					txtBondAmount.setValue(getAmountFormat().format(ZERO_DBL));
 					txtBondDetail.setText(EMPTY_STRING);
 					break;
 				default:
@@ -664,6 +665,11 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			btnDelete.setEnabled(true);
 			disable();
 			break;
+		case view:
+			setText(headers[VIEW_HEADER_INDEX]);
+			initialise();
+			disable();
+			break;
 		}
 		super.show();
 	}
@@ -713,9 +719,11 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		disableIncidental(txtOutgoing, txtOutgoingPercent, txtOutgoingAccount, !inactive);
 		disableIncidental(txtSignage, txtSignagePercent, txtSignageAccount, !inactive);
 		disableIncidental(txtParking, txtParkingPercent, txtParkingAccount, !inactive);
-		lstBondType.setEnabled(!inactive);
-		txtBondAmount.setEnabled(!inactive);
-		txtBondDetail.setEnabled(!inactive);
+		if (entity != null && entity.getBond() != null) {
+			lstBondType.setEnabled(!inactive);
+			txtBondAmount.setEnabled(!inactive);
+			txtBondDetail.setEnabled(!inactive);
+		}
 		txtMyobJobNo.setEnabled(!inactive);
 		btnUpdate.setEnabled(!inactive);
 		chkResidential.setEnabled(!inactive);

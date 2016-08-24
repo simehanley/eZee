@@ -1,6 +1,8 @@
 package com.ezee.web.common.ui.entrypoint;
 
+import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.web.common.EzeeWebCommonConstants.AUTO_LOGIN_HELPER;
+import static com.ezee.web.common.EzeeWebCommonConstants.USER_SERVICE;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showDefaultCursor;
 import static com.ezee.web.common.ui.utils.EzeeCursorUtils.showWaitCursor;
 
@@ -11,6 +13,7 @@ import java.util.logging.Logger;
 import com.ezee.model.entity.EzeeUser;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.cache.EzeeEntityCacheListener;
+import com.ezee.web.common.ui.EzeeUserResult;
 import com.ezee.web.common.ui.css.EzeeDefaultResources;
 import com.ezee.web.common.ui.css.EzeeGwtOverridesResources;
 import com.ezee.web.common.ui.login.EzeeLogin;
@@ -18,6 +21,7 @@ import com.ezee.web.common.ui.login.EzeeLoginListener;
 import com.ezee.web.common.ui.register.EzeeRegister;
 import com.ezee.web.common.ui.register.EzeeRegisterListener;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public abstract class EzeeWebEntryPoint
@@ -47,12 +51,36 @@ public abstract class EzeeWebEntryPoint
 		initResources();
 		if (AUTO_LOGIN_HELPER.doAutoLogin()) {
 			showWaitCursor();
-			user = AUTO_LOGIN_HELPER.getAutoLoginUser();
-			initApplication();
-			showDefaultCursor();
+			String username = AUTO_LOGIN_HELPER.getRememberMeUserName();
+			resolveUser(username);
 		} else {
 			initLogin();
 		}
+	}
+
+	private void resolveUser(final String username) {
+		USER_SERVICE.retrieve(username, new AsyncCallback<EzeeUserResult>() {
+			@Override
+			public void onSuccess(final EzeeUserResult result) {
+				showDefaultCursor();
+				if (!hasLength(result.getError())) {
+					user = result.getUser();
+					initApplication();
+				} else {
+					log.log(Level.SEVERE, "Error resolving user for username '" + username + "'.");
+					AUTO_LOGIN_HELPER.clearAutoLogin();
+					initLogin();
+				}
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				showDefaultCursor();
+				log.log(Level.SEVERE, "Error resolving user for username '" + username + "'.");
+				AUTO_LOGIN_HELPER.clearAutoLogin();
+				initLogin();
+			}
+		});
 	}
 
 	protected void initCache() {

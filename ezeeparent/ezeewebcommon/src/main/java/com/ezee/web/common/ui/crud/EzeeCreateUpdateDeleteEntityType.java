@@ -6,5 +6,5 @@ package com.ezee.web.common.ui.crud;
  *
  */
 public enum EzeeCreateUpdateDeleteEntityType {
-	create, update, delete;
+	create, update, delete, view;
 }

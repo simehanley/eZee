@@ -3,18 +3,20 @@ package com.ezee.client.grid.leasenote;
 import static com.ezee.client.EzeeLeaseWebConstants.LEASE_NOTE_CRUD_HEADERS;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.delete;
 import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.update;
+import static com.ezee.web.common.ui.crud.EzeeCreateUpdateDeleteEntityType.view;
 
 import com.ezee.client.crud.leasenote.EzeeCreateUpdateDeleteLeaseNote;
 import com.ezee.client.grid.lease.EzeeLeaseSubComponentChangeListener;
 import com.ezee.client.grid.lease.EzeeLeaseSubComponentGrid;
+import com.ezee.model.entity.EzeeUser;
 import com.ezee.model.entity.lease.EzeeLeaseNote;
 import com.ezee.web.common.cache.EzeeEntityCache;
 
 public class EzeeLeaseNoteGrid extends EzeeLeaseSubComponentGrid<EzeeLeaseNote> {
 
-	public EzeeLeaseNoteGrid(EzeeEntityCache cache, int pageSize, boolean disableContextMenu,
+	public EzeeLeaseNoteGrid(EzeeUser user, EzeeEntityCache cache, int pageSize, boolean disableContextMenu,
 			EzeeLeaseSubComponentChangeListener listener) {
-		super(cache, pageSize, disableContextMenu, listener);
+		super(user, cache, pageSize, disableContextMenu, listener);
 	}
 
 	@Override
@@ -42,6 +44,14 @@ public class EzeeLeaseNoteGrid extends EzeeLeaseSubComponentGrid<EzeeLeaseNote> 
 		EzeeLeaseNote entity = getSelected();
 		if (entity != null) {
 			new EzeeCreateUpdateDeleteLeaseNote(cache, this, entity, update, LEASE_NOTE_CRUD_HEADERS).show();
+		}
+	}
+
+	@Override
+	public void viewEntity() {
+		EzeeLeaseNote entity = getSelected();
+		if (entity != null) {
+			new EzeeCreateUpdateDeleteLeaseNote(cache, this, entity, view, LEASE_NOTE_CRUD_HEADERS).show();
 		}
 	}
 

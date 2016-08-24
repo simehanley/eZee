@@ -38,6 +38,11 @@ public class EzeeSupplierGrid extends EzeePayeeGrid<EzeeSupplier> {
 	public void newEntity() {
 		new EzeeCreateUpdateDeleteSupplier(cache, this, crudHeaders).show();
 	}
+	
+	@Override
+	public void viewEntity() {
+		// TODO Implement read-only functionality
+	}
 
 	@Override
 	public void editEntity() {

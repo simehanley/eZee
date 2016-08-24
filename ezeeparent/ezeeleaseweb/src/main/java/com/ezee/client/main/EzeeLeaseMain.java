@@ -4,6 +4,7 @@ import static com.ezee.web.common.ui.utils.EzeeTabLayoutPanelUtils.getFirstInsta
 
 import com.ezee.client.grid.lease.EzeeLeaseGrid;
 import com.ezee.model.entity.EzeeUser;
+import com.ezee.model.entity.enums.EzeeUserType;
 import com.ezee.web.common.cache.EzeeEntityCache;
 import com.ezee.web.common.ui.grid.leasecategory.EzeeLeaseCategoryGrid;
 import com.ezee.web.common.ui.grid.leasepremises.EzeeLeasePremisesGrid;
@@ -29,6 +30,9 @@ public class EzeeLeaseMain extends EzeeWebMain {
 
 	@UiField
 	HTML deleteLease;
+
+	@UiField
+	HTML viewLease;
 
 	@UiField
 	HTML newTenant;
@@ -71,9 +75,21 @@ public class EzeeLeaseMain extends EzeeWebMain {
 	protected void initMain() {
 		super.initMain();
 		ClickHandler mainClickHandler = new EzeeLeaseMainStackPanelClickHandler();
-		newLease.addClickHandler(mainClickHandler);
-		editLease.addClickHandler(mainClickHandler);
-		deleteLease.addClickHandler(mainClickHandler);
+		if (ezeeUser.getType() == EzeeUserType.admin) {
+			newLease.setVisible(true);
+			editLease.addClickHandler(mainClickHandler);
+			newLease.setVisible(true);
+			editLease.addClickHandler(mainClickHandler);
+			deleteLease.setVisible(true);
+			deleteLease.addClickHandler(mainClickHandler);
+			viewLease.setVisible(false);
+		} else {
+			newLease.setVisible(false);
+			editLease.setVisible(false);
+			deleteLease.setVisible(false);
+			viewLease.addClickHandler(mainClickHandler);
+			viewLease.setVisible(true);
+		}
 		newTenant.addClickHandler(mainClickHandler);
 		editTenant.addClickHandler(mainClickHandler);
 		deleteTenant.addClickHandler(mainClickHandler);
@@ -97,6 +113,8 @@ public class EzeeLeaseMain extends EzeeWebMain {
 				getFirstInstanceOf(EzeeLeaseGrid.class, tab).editEntity();
 			} else if (event.getSource().equals(deleteLease)) {
 				getFirstInstanceOf(EzeeLeaseGrid.class, tab).deleteEntity();
+			} else if (event.getSource().equals(viewLease)) {
+				getFirstInstanceOf(EzeeLeaseGrid.class, tab).viewEntity();
 			} else if (event.getSource().equals(newTenant)) {
 				getFirstInstanceOf(EzeeLeaseTenantGrid.class, tab).newEntity();
 			} else if (event.getSource().equals(editTenant)) {

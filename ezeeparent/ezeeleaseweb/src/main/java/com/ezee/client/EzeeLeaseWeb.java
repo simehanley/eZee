@@ -64,7 +64,7 @@ public class EzeeLeaseWeb extends EzeeWebEntryPoint {
 	}
 
 	private EzeeLeaseGrid createLeaseGrid() {
-		return new EzeeLeaseGrid(cache);
+		return new EzeeLeaseGrid(cache, user);
 	}
 
 	private EzeeLeaseTenantGrid createTenantGrid() {
