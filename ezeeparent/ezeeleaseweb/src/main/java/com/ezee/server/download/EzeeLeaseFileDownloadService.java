@@ -63,8 +63,7 @@ public class EzeeLeaseFileDownloadService extends HttpServlet {
 	}
 
 	private void generateLeaseFile(final EzeeLeaseFile file, final HttpServletResponse resp) throws IOException {
-		String filename = file.getFilename();
-		OutputStream stream = createFilenameResponseHeader(resp, filename);
+		OutputStream stream = createFilenameResponseHeader(resp, file);
 		byte[] filebytes = file.getFile();
 		if (file != null) {
 			resp.setContentLength(filebytes.length);
@@ -73,12 +72,13 @@ public class EzeeLeaseFileDownloadService extends HttpServlet {
 		stream.close();
 	}
 
-	private OutputStream createFilenameResponseHeader(final HttpServletResponse resp, final String filename)
+	private OutputStream createFilenameResponseHeader(final HttpServletResponse resp, final EzeeLeaseFile file)
 			throws IOException {
 		OutputStream stream = resp.getOutputStream();
-		resp.setContentType("application/pdf");
-		resp.addHeader("Content-Type", "application/pdf");
-		resp.setHeader("Content-Disposition", "attachement;filename=" + filename);
+		String contentType = hasLength(file.getContentType()) ? file.getContentType() : "application/pdf";
+		resp.setContentType(contentType);
+		resp.addHeader("Content-Type", contentType);
+		resp.setHeader("Content-Disposition", "attachement;filename=" + file.getFilename());
 		return stream;
 	}
 

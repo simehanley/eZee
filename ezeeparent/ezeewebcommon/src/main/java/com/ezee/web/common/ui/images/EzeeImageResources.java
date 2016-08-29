@@ -16,6 +16,18 @@ public interface EzeeImageResources extends ClientBundle {
 	@Source("pdf.jpeg")
 	ImageResource pdf();
 
+	@Source("word.png")
+	ImageResource word();
+
+	@Source("excel.png")
+	ImageResource excel();
+
+	@Source("image.jpg")
+	ImageResource image();
+	
+	@Source("mail.png")
+	ImageResource mail();
+
 	@Source("bank.png")
 	ImageResource bank();
 

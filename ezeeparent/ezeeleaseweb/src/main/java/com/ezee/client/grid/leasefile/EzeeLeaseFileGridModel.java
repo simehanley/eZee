@@ -5,6 +5,7 @@ import static com.ezee.client.EzeeLeaseWebConstants.LEASE_ID;
 import static com.ezee.common.string.EzeeStringUtils.hasLength;
 import static com.ezee.web.common.EzeeWebCommonConstants.DATE_UTILS;
 import static com.ezee.web.common.EzeeWebCommonConstants.FILE_DOWNLOAD_SERVICE;
+import static com.ezee.web.common.ui.images.EzeeImageResources.INSTANCE;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
 
 import java.util.Comparator;
@@ -17,7 +18,6 @@ import java.util.Set;
 import com.ezee.model.entity.lease.EzeeLease;
 import com.ezee.model.entity.lease.EzeeLeaseFile;
 import com.ezee.web.common.ui.grid.EzeeGridModel;
-import com.ezee.web.common.ui.images.EzeeImageResources;
 import com.ezee.web.common.ui.utils.EzeeDateComparator;
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.ImageResourceCell;
@@ -130,7 +130,20 @@ public class EzeeLeaseFileGridModel extends EzeeGridModel<EzeeLeaseFile> {
 				@Override
 				public ImageResource getValue(final EzeeLeaseFile file) {
 					if (hasLength(file.getFilename())) {
-						return EzeeImageResources.INSTANCE.pdf();
+						String contentType = file.getContentType();
+						switch (contentType) {
+						case "application/msword":
+						case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+							return INSTANCE.word();
+						case "application/octet-stream":
+						case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+							return INSTANCE.excel();
+						case "image/jpeg":
+						case "image/png":
+							return INSTANCE.image();
+						default:
+							return INSTANCE.pdf();
+						}
 					}
 					return null;
 				}

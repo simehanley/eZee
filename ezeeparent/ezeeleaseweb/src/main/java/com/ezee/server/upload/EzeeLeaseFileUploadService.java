@@ -39,9 +39,10 @@ public class EzeeLeaseFileUploadService extends UploadAction {
 			if (!isEmpty(sessionFiles)) {
 				FileItem file = sessionFiles.get(ZERO);
 				String filename = file.getName();
+				String type = file.getContentType();
 				byte[] content = file.get();
 				EzeeLeaseFile leaseFile = new EzeeLeaseFile(resolveOrder(lease), SERVER_DATE_UTILS.toString(new Date()),
-						filename);
+						filename, type);
 				leaseFile.setFile(content);
 				lease.addFile(leaseFile);
 				try {

@@ -65,7 +65,7 @@ public class EzeeUploadLeaseFileForm extends EzeeDialog {
 		final SingleUploader uploader = new SingleUploader(CUSTOM.with(choose), new ModalUploadStatus());
 		uploader.setServletPath(uploader.getServletPath() + "?" + LEASE_ID + "=" + lease.getId());
 		uploader.setAutoSubmit(true);
-		uploader.setValidExtensions("pdf");
+		uploader.setValidExtensions("pdf,doc,docx,xls,xlsx,jpeg,jpg,png");
 		uploader.addOnFinishUploadHandler(new OnFinishUploaderHandler() {
 			@Override
 			public void onFinish(IUploader iUploader) {
