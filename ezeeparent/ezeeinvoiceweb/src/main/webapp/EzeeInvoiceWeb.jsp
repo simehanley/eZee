@@ -6,7 +6,7 @@
 <link type="text/css" rel="stylesheet" href="EzeeInvoiceWeb.css">
 <title>eZee Invoices</title>
 <script type="text/javascript"
-	src="EzeeInvoiceWeb/EzeeInvoiceWeb.nocache.js?version=${currentTime}"></script>
+	src="EzeeInvoiceWeb/EzeeInvoiceWeb.nocache.js?version=2016-08-26"></script>
 </head>
 
 <body>

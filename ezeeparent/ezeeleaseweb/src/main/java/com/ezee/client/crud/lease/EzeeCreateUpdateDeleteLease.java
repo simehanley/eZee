@@ -202,10 +202,22 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 	TextBox txtSignageAccount;
 
 	@UiField
-	Label lblTotal;
+	Label lblNet;
 
 	@UiField
-	TextBox txtTotal;
+	TextBox txtNet;
+
+	@UiField
+	Label lblGst;
+
+	@UiField
+	TextBox txtGst;
+
+	@UiField
+	Label lblGross;
+
+	@UiField
+	TextBox txtGross;
 
 	@UiField
 	ListBox lstBondType;
@@ -318,7 +330,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		initialiseLeaseIncideantal(OUTGOINGS, txtOutgoing, txtOutgoingPercent, txtOutgoingAccount, false);
 		initialiseLeaseIncideantal(PARKING, txtParking, txtParkingPercent, txtParkingAccount, false);
 		initialiseLeaseIncideantal(SIGNAGE, txtSignage, txtSignagePercent, txtSignageAccount, false);
-		initialiseLeaseIncideantal(TOTAL, txtTotal, null, null, false);
+		initialiseLeaseIncideantal(TOTAL, txtNet, null, null, false);
 		initialiseLeaseBond();
 		initialiseLeaseMetaData();
 		txtMyobJobNo.setText(entity.getJobNo());
@@ -341,8 +353,12 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			if (incidental != null || TOTAL.equals(type)) {
 				if (monthly) {
 					amount.setValue(getAmountFormat().format(entity.monthlyAmount(type)));
+					txtGst.setValue(getAmountFormat().format(entity.monthlyGst(type)));
+					txtGross.setValue(getAmountFormat().format(entity.monthlyTotal(type)));
 				} else {
 					amount.setValue(getAmountFormat().format(entity.yearlyAmount(type)));
+					txtGst.setValue(getAmountFormat().format(entity.yearlyGst(type)));
+					txtGross.setValue(getAmountFormat().format(entity.yearlyTotal(type)));
 				}
 				if (!TOTAL.equals(type)) {
 					percent.setValue(getPercentFormat().format(incidental.getPercentage()));
@@ -480,7 +496,9 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		txtOutgoingPercent.setValue(getPercentFormat().format(ZERO_DBL));
 		txtParkingPercent.setValue(getPercentFormat().format(ZERO_DBL));
 		txtSignagePercent.setValue(getPercentFormat().format(ZERO_DBL));
-		txtTotal.setValue(getAmountFormat().format(ZERO_DBL));
+		txtNet.setValue(getAmountFormat().format(ZERO_DBL));
+		txtGst.setValue(getAmountFormat().format(ZERO_DBL));
+		txtGross.setValue(getAmountFormat().format(ZERO_DBL));
 		txtArea.setValue(getAmountFormat().format(ZERO_DBL));
 		txtUnits.setValue(EMPTY_STRING);
 		Date start = new Date();
@@ -910,19 +928,23 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 			lblOutgoing.setText("O/gng.(M)");
 			lblParking.setText("Park.(M)");
 			lblSignage.setText("Sign.(M)");
-			lblTotal.setText("Total(M)");
+			lblNet.setText("Net(M)");
+			lblGst.setText("Gst(M)");
+			lblGross.setText("Gross(M)");
 		} else {
 			lblRent.setText("Rent(A)");
 			lblOutgoing.setText("O/gng.(A)");
 			lblParking.setText("Park.(A)");
 			lblSignage.setText("Sign.(A)");
-			lblTotal.setText("Total(A)");
+			lblNet.setText("Net(A)");
+			lblGst.setText("Gst(A)");
+			lblGross.setText("Gross(A)");
 		}
 		initialiseLeaseIncideantal(RENT, txtRent, txtRentPercent, txtRentAccount, monthly);
 		initialiseLeaseIncideantal(OUTGOINGS, txtOutgoing, txtOutgoingPercent, txtOutgoingAccount, monthly);
 		initialiseLeaseIncideantal(PARKING, txtParking, txtParkingPercent, txtParkingAccount, monthly);
 		initialiseLeaseIncideantal(SIGNAGE, txtSignage, txtSignagePercent, txtSignageAccount, monthly);
-		initialiseLeaseIncideantal(TOTAL, txtTotal, null, null, monthly);
+		initialiseLeaseIncideantal(TOTAL, txtNet, null, null, monthly);
 	}
 
 	private class EzeeUpdateLeaseTotalHandler implements BlurHandler {
@@ -930,7 +952,7 @@ public class EzeeCreateUpdateDeleteLease extends EzeeCreateUpdateDeleteEntity<Ez
 		public void onBlur(BlurEvent event) {
 			bind();
 			boolean monthly = chkToggleMonthly.getValue();
-			initialiseLeaseIncideantal(TOTAL, txtTotal, null, null, monthly);
+			initialiseLeaseIncideantal(TOTAL, txtNet, null, null, monthly);
 		}
 	}
 }

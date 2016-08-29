@@ -6,7 +6,7 @@
 <link type="text/css" rel="stylesheet" href="EzeeConstructionWeb.css">
 <title>eZee Project</title>
 <script type="text/javascript"
-	src="EzeeConstructionWeb/EzeeConstructionWeb.nocache.js?version=${currentTime}"></script>
+	src="EzeeConstructionWeb/EzeeConstructionWeb.nocache.js?version=2016-08-26"></script>
 </head>
 
 <body>

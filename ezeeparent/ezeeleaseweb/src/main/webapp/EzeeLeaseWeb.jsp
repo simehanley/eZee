@@ -6,7 +6,7 @@
 <link type="text/css" rel="stylesheet" href="EzeeLeaseWeb.css">
 <title>eZee Lease</title>
 <script type="text/javascript"
-	src="EzeeLeaseWeb/EzeeLeaseWeb.nocache.js?version=${currentTime}"></script>
+	src="EzeeLeaseWeb/EzeeLeaseWeb.nocache.js?version==2016-08-26"></script>
 </head>
 
 <body>

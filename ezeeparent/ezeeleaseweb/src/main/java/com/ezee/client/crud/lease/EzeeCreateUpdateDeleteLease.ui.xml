@@ -96,8 +96,12 @@
 										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtSignageAccount" />
 									</g:HorizontalPanel>
 									<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
-										<g:Label text="Total(A)" styleName="{res.css.gwtLabelSmall}" ui:field="lblTotal" />
-										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtTotal" enabled="false" />
+										<g:Label text="Net(A)" styleName="{res.css.gwtLabelSmall}" ui:field="lblNet" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtNet" enabled="false" />
+										<g:Label text="Gst(A)" styleName="{res.css.gwtLabelSmall}" ui:field="lblGst" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtGst" enabled="false" />
+										<g:Label text="Gross(A)" styleName="{res.css.gwtLabelSmall}" ui:field="lblGross" />
+										<g:TextBox styleName="{res.css.gwtTextBoxSmall}" ui:field="txtGross" enabled="false" />
 									</g:HorizontalPanel>
 								</g:VerticalPanel>
 								<g:VerticalPanel width="411px">
